@@ -1,25 +1,25 @@
 package logico;
 
 public class Moneda {
-	private float ValorMoneda;
-	private String Moneda;
+	private float valorMoneda;
+	private String moneda;
 	
 	public Moneda(float valorMoneda, String moneda) {
 		super();
-		this.ValorMoneda = valorMoneda;
-		this.Moneda = moneda;
+		this.valorMoneda = valorMoneda;
+		this.moneda = moneda;
 	}
-	public float getValorMoneda() {
-		return ValorMoneda;
+	public float getvalorMoneda() {
+		return valorMoneda;
 	}
-	public void setValorMoneda(float valorMoneda) {
-		ValorMoneda = valorMoneda;
+	public void setvalorMoneda(float valorMoneda) {
+		this.valorMoneda = valorMoneda;
 	}
-	public String getMoneda() {
-		return Moneda;
+	public String getmoneda() {
+		return moneda;
 	}
-	public void setMoneda(String moneda) {
-		Moneda = moneda;
+	public void setmoneda(String moneda) {
+		this.moneda = moneda;
 	}
 	
 	
