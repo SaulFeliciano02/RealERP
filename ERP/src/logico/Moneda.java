@@ -1,4 +1,4 @@
-ñpackage logico;
+package logico;
 
 public class Moneda {
 	private float valorMoneda;
