@@ -29,7 +29,7 @@ public class Producto {
 	public Producto(String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, Impuestos impuesto,
 			String observaciones, ArrayList<CostoIndirectoProducto> costosIndirectos,
-			UnidadMedida unidadMedida, Precio precio, ArrayList<DescuentosAutomaticos> descuentos,
+			UnidadMedida unidadMedida, Precio precio,
 			String comision, String codigoBarra, float costoManoDeObra, boolean tipo_descripcion) {
 		super();
 		this.codigo = "";
@@ -45,7 +45,6 @@ public class Producto {
 		this.costosIndirectos = costosIndirectos;
 		this.unidadMedida = unidadMedida;
 		this.precio = precio;
-		this.descuentos = descuentos;
 		this.comision = comision;
 		this.codigoBarra = codigoBarra;
 		this.costoManoDeObra = costoManoDeObra;
