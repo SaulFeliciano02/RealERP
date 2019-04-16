@@ -25,13 +25,13 @@ public class Producto {
 	private boolean tipo_descripcion; //Variable o Fija
 	
 		
-	public Producto(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
+	public Producto(String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, Impuestos impuesto,
 			String observaciones, ArrayList<Producto> sustitutos, ArrayList<CostoIndirectoProducto> costosIndirectos,
 			UnidadMedida unidadMedida, ArrayList<Precio> precios, ArrayList<DescuentosAutomaticos> descuentos,
 			String comision, Promocion promocion, String codigoBarra, float costoManoDeObra, boolean tipo_descripcion) {
 		super();
-		this.codigo = codigo;
+		this.codigo = "";
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.rubroProducto = rubroProducto;
