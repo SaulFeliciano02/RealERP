@@ -7,29 +7,31 @@ public class Producto {
 	private String nombre;
 	private String descripcion;
 	private Rubro rubroProducto;
-	private String tipoProducto;
+	private String tipoProducto;	//Fabricable (Mano de obra habilitado + ventana de partida) o Terminado :D
 	private Proveedores ProveedorPrin;
 	private ArrayList<Proveedores> ProveedoresSec;
 	private Moneda moneda;
 	private Impuestos impuesto;
 	private String observaciones;
 	private ArrayList<Producto> sustitutos;
-	private ArrayList<CostoIndirectoProducto> costosIndirectos;
+	private ArrayList<CostoIndirectoProducto> costosIndirectos; //Preguntar a Alonso si esto va con todos los tipos de productos.
 	private UnidadMedida unidadMedida;
+	private Precio precio;
 	private ArrayList<Precio> precios;
 	private ArrayList<DescuentosAutomaticos> descuentos;
 	private String comision;
 	private Promocion promocion;
 	private String codigoBarra;
 	private float costoManoDeObra;
-	private boolean tipo_descripcion; //Variable o Fija
+	private String descripcionFija;
+	private String descripcionVariable;
 	
-		
+
 	public Producto(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
-			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, Impuestos impuesto,
-			String observaciones, ArrayList<Producto> sustitutos, ArrayList<CostoIndirectoProducto> costosIndirectos,
-			UnidadMedida unidadMedida, ArrayList<Precio> precios, ArrayList<DescuentosAutomaticos> descuentos,
-			String comision, Promocion promocion, String codigoBarra, float costoManoDeObra, boolean tipo_descripcion) {
+			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda,
+			String observaciones,
+			UnidadMedida unidadMedida, Precio precio,
+			String comision, String codigoBarra, float costoManoDeObra, String descripcionFija, String descripcionVariable) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -39,18 +41,43 @@ public class Producto {
 		ProveedorPrin = proveedorPrin;
 		ProveedoresSec = proveedoresSec;
 		this.moneda = moneda;
-		this.impuesto = impuesto;
 		this.observaciones = observaciones;
-		this.sustitutos = sustitutos;
-		this.costosIndirectos = costosIndirectos;
+		this.costosIndirectos = new ArrayList<CostoIndirectoProducto>();
+		this.sustitutos = new ArrayList<Producto>();
+		this.precios = new ArrayList<Precio>();
+		this.descuentos = new ArrayList<DescuentosAutomaticos>();
 		this.unidadMedida = unidadMedida;
-		this.precios = precios;
-		this.descuentos = descuentos;
+		this.precio = precio;
 		this.comision = comision;
-		this.promocion = promocion;
 		this.codigoBarra = codigoBarra;
 		this.costoManoDeObra = costoManoDeObra;
-		this.tipo_descripcion = tipo_descripcion;
+		this.descripcionFija = descripcionFija;
+		this.descripcionVariable = descripcionVariable;
+	}
+	
+	
+	public Precio getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Precio precio) {
+		this.precio = precio;
+	}
+
+	public String getDescripcionFija() {
+		return descripcionFija;
+	}
+
+	public void setDescripcionFija(String descripcionFija) {
+		this.descripcionFija = descripcionFija;
+	}
+
+	public String getDescripcionVariable() {
+		return descripcionVariable;
+	}
+
+	public void setDescripcionVariable(String descripcionVariable) {
+		this.descripcionVariable = descripcionVariable;
 	}
 	
 	public String getCodigo() {
@@ -167,16 +194,4 @@ public class Producto {
 	public void setCostoManoDeObra(float costoManoDeObra) {
 		this.costoManoDeObra = costoManoDeObra;
 	}
-	public boolean isTipo_descripcion() {
-		return tipo_descripcion;
-	}
-	public void setTipo_descripcion(boolean tipo_descripcion) {
-		this.tipo_descripcion = tipo_descripcion;
-	}
-	
-	
-	
-	
-	
-
 }
