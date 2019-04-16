@@ -1,7 +1,7 @@
 package logico;
 
 import java.util.ArrayList;
-
+//hey
 public class Producto {
 	private String codigo;
 	private String nombre;
