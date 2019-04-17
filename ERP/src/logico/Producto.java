@@ -2,12 +2,11 @@ package logico;
 
 import java.util.ArrayList;
 //hey
-public class Producto {
+abstract public class Producto {
 	private String codigo;
 	private String nombre;
 	private String descripcion;
 	private Rubro rubroProducto;
-	private String tipoProducto;	//Fabricable (Mano de obra habilitado + ventana de partida) o Terminado :D
 	private Proveedores ProveedorPrin;
 	private ArrayList<Proveedores> ProveedoresSec;
 	private Moneda moneda;
@@ -21,7 +20,6 @@ public class Producto {
 	private ArrayList<DescuentosAutomaticos> descuentos;
 	private String comision;
 	private Promocion promocion;
-	private String codigoBarra;
 	private float costoManoDeObra;
 	private String descripcionFija;
 	private String descripcionVariable;
@@ -37,7 +35,6 @@ public class Producto {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.rubroProducto = rubroProducto;
-		this.tipoProducto = tipoProducto;
 		ProveedorPrin = proveedorPrin;
 		ProveedoresSec = proveedoresSec;
 		this.moneda = moneda;
@@ -49,7 +46,6 @@ public class Producto {
 		this.unidadMedida = unidadMedida;
 		this.precio = precio;
 		this.comision = comision;
-		this.codigoBarra = codigoBarra;
 		this.costoManoDeObra = costoManoDeObra;
 		this.descripcionFija = descripcionFija;
 		this.descripcionVariable = descripcionVariable;
@@ -103,12 +99,6 @@ public class Producto {
 	}
 	public void setRubroProducto(Rubro rubroProducto) {
 		this.rubroProducto = rubroProducto;
-	}
-	public String getTipoProducto() {
-		return tipoProducto;
-	}
-	public void setTipoProducto(String tipoProducto) {
-		this.tipoProducto = tipoProducto;
 	}
 	public Proveedores getProveedorPrin() {
 		return ProveedorPrin;
@@ -181,12 +171,6 @@ public class Producto {
 	}
 	public void setPromocion(Promocion promocion) {
 		this.promocion = promocion;
-	}
-	public String getCodigoBarra() {
-		return codigoBarra;
-	}
-	public void setCodigoBarra(String codigoBarra) {
-		this.codigoBarra = codigoBarra;
 	}
 	public float getCostoManoDeObra() {
 		return costoManoDeObra;

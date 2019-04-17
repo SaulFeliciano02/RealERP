@@ -1,6 +1,6 @@
 package logico;
 
-public class Persona {
+abstract public class Persona {
 	
 	public String codigo;
 	public String nombre;
