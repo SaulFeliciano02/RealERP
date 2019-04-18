@@ -11,7 +11,6 @@ public class Servicio extends Persona {
 		super(codigo, nombre, telefono);
 		this.empleado = empleado;
 		this.materialesUtilizados = new ArrayList<>();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Empleado getEmpleado() {
