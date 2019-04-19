@@ -12,8 +12,8 @@ public class Estandar extends Producto{
 	public ArrayList<Combinaciones> combinaciones;
 	public boolean fabricado;
 	
-	public Estandar(float existenciaMinima, float existenciaMaxima, Date fechaVencimiento, float costoDeCompra,
-			ArrayList<Combinaciones> combinaciones, boolean fabricado, String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
+	public Estandar(float existenciaMinima, float existenciaMaxima, Date fechaVencimiento, float costoDeCompra, boolean fabricado, String codigo, String nombre, 
+			String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, float costoManoDeObra,
 			String descripcionFija, String descripcionVariable) {
@@ -23,7 +23,7 @@ public class Estandar extends Producto{
 		this.existenciaMaxima = existenciaMaxima;
 		this.fechaVencimiento = fechaVencimiento;
 		this.costoDeCompra = costoDeCompra;
-		this.combinaciones = combinaciones;
+		this.combinaciones = new ArrayList<>();
 		this.fabricado = fabricado;
 		// TODO Auto-generated constructor stub
 	}

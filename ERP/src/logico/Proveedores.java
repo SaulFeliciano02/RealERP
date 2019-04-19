@@ -9,10 +9,10 @@ public class Proveedores extends Persona {
 	public Rubro rubro;
 	public String sitioWeb;
 
-	public Proveedores(String codigo, String nombre, String telefono, float saldo, String domicilio, String correo,
+	public Proveedores(String codigo, String nombre, String telefono, String domicilio, String correo,
 			String rnc, Rubro rubro, String sitioWeb) {
 		super(codigo, nombre, telefono);
-		this.saldo = saldo;
+		this.saldo = 0;
 		this.domicilio = domicilio;
 		this.correo = correo;
 		this.rnc = rnc;
@@ -25,7 +25,7 @@ public class Proveedores extends Persona {
 	}
 
 	public void setSaldo(float saldo) {
-		this.saldo = saldo;
+		this.saldo += saldo;
 	}
 
 	public String getDomicilio() {
