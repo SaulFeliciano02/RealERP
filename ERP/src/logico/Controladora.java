@@ -17,7 +17,10 @@ public class Controladora implements Serializable{
 	
 	private ArrayList<Producto> misProductos;
 	
+	private static Controladora controladora;
+	
 	public Controladora() {
+		super();
 		this.misClientes = new ArrayList<>();
 		this.misEmpleados = new ArrayList<>();
 		this.misProveedores = new ArrayList<>();
@@ -25,6 +28,13 @@ public class Controladora implements Serializable{
 		this.misPromociones = new ArrayList<>();
 		this.misRubros = new ArrayList<>();
 		this.misProductos = new ArrayList<>();	
+	}
+	
+	public static Controladora getInstance() {
+		if (controladora == null) {
+			controladora = new Controladora();
+		}
+		return controladora;
 	}
 	
 	private void addCliente(Cliente c) {
