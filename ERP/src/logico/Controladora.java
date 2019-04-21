@@ -37,25 +37,25 @@ public class Controladora implements Serializable{
 		return controladora;
 	}
 	
-	private void addCliente(Cliente c) {
+	public void addCliente(Cliente c) {
 		misClientes.add(c);
 	}
-	private void addEmpleado(Empleado e) {
+	public void addEmpleado(Empleado e) {
 		misEmpleados.add(e);
 	}
-	private void addProveedor(Proveedores p) {
+	public void addProveedor(Proveedores p) {
 		misProveedores.add(p);
 	}
-	private void addDescuento(DescuentosAutomaticos d) {
+	public void addDescuento(DescuentosAutomaticos d) {
 		misDescuentos.add(d);
 	}
-	private void addPromocion(Promocion p) {
+	public void addPromocion(Promocion p) {
 		misPromociones.add(p);
 	}
-	private void addRubro(Rubro r) {
+	public void addRubro(Rubro r) {
 		misRubros.add(r);
 	}
-	private void addProducto(Producto p) {
+	public void addProducto(Producto p) {
 		misProductos.add(p);
 	}
 
@@ -89,8 +89,8 @@ public class Controladora implements Serializable{
 	
 	/**FUNCION PARA BUSCAR UN PRODUCTO**/
 	
-	public ArrayList<Producto> searchProducts(String buscador, String tipoBusqueda) {
-		ArrayList<Producto> searchProducto = new ArrayList<>();
+	public Producto searchProducts(String buscador, String tipoBusqueda) {
+		Producto searchProducto = null;
 		for(int i = 0; i < misProductos.size(); i++) {
 			int boolCount = 0;
 			/**Con motivo de no repetir la misma funcion varias veces, se penso hacerlo un switch**/
@@ -125,7 +125,7 @@ public class Controladora implements Serializable{
 				
 			}
 			if(boolCount == buscador.length()) {
-				searchProducto.add(misProductos.get(i));
+				searchProducto = misProductos.get(i);
 			}
 		}
 		return searchProducto;
@@ -134,8 +134,8 @@ public class Controladora implements Serializable{
 
 /**FUNCION PARA BUSCAR PROVEEDOR**/
 	
-	public ArrayList<Proveedores> searchProveedores(String buscador, String tipoBusqueda){
-		ArrayList<Proveedores> searchProveedor = new ArrayList<>();
+	public Proveedores searchProveedores(String buscador, String tipoBusqueda){
+		Proveedores searchProveedor = null;
 		for(int i = 0; i < misProveedores.size(); i++) {
 			int boolCount = 0;
 			for(int j = 0; j < tipoBusqueda.length(); j++) {
@@ -159,7 +159,7 @@ public class Controladora implements Serializable{
 				}
 			}
 			if(boolCount == buscador.length()) {
-				searchProveedor.add(misProveedores.get(i));
+				searchProveedor = misProveedores.get(i);
 			}
 		}
 		return searchProveedor;
@@ -167,8 +167,8 @@ public class Controladora implements Serializable{
 	
 /**FUNCION PARA BUSCAR CLIENTES**/
 	
-	public ArrayList<Cliente> searchClientes(String buscador, String tipoBusqueda){
-		ArrayList<Cliente> searchCliente = new ArrayList<>();
+	public Cliente searchClientes(String buscador, String tipoBusqueda){
+		Cliente searchCliente = null;
 		for(int i = 0; i < misClientes.size(); i++) {
 			int boolCount = 0;
 			for(int j = 0; j < buscador.length(); j++) {
@@ -186,7 +186,7 @@ public class Controladora implements Serializable{
 				}
 			}
 			if(boolCount == buscador.length()) {
-				searchCliente.add(misClientes.get(i));
+				searchCliente = misClientes.get(i);
 			}
 		}
 		return searchCliente;
@@ -194,8 +194,8 @@ public class Controladora implements Serializable{
 	
 /**FUNCION PARA BUSCAR EMPLEADOS**/
 	
-	public ArrayList<Empleado> searchEmpleados(String buscador, String tipoBusqueda){
-		ArrayList<Empleado> searchEmpleado = new ArrayList<>();
+	public Empleado searchEmpleados(String buscador, String tipoBusqueda){
+		Empleado searchEmpleado = null;
 		for(int i = 0; i < misEmpleados.size(); i++) {
 			int boolCount = 0;
 			for(int j = 0; j < buscador.length(); j++) {
@@ -213,7 +213,7 @@ public class Controladora implements Serializable{
 				}
 			}
 			if(boolCount == buscador.length()) {
-				searchEmpleado.add(misEmpleados.get(i));
+				searchEmpleado = misEmpleados.get(i);
 			}
 		}
 		return searchEmpleado;
