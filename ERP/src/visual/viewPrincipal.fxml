@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar fx:id="menuBar" layoutX="16.0" prefHeight="32.0" prefWidth="1111.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </top>
+   
+   
+   <left>
+      <AnchorPane fx:id="menuPane" prefHeight="712.0" prefWidth="169.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="712.0" fitWidth="263.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0">
+               <image>
+                  <Image url="@images/background/Menu.png" />
+               </image>
+            </ImageView>
+            <VBox prefHeight="712.0" prefWidth="249.0">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Logo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <HBox fx:id="box_Principal" alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_Principal" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="true">
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_principal" mnemonicParsing="false" onAction="#principal_pressed" prefHeight="31.0" prefWidth="190.0" text="Principal">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/selected_button_principal.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_Inventario" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_inventario" mnemonicParsing="false" onAction="#inventario_pressed" prefHeight="31.0" prefWidth="190.0" text="Inventario">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_inventario.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_productos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" text="Productos">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_productos.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_ventas" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_ventas" mnemonicParsing="false" onAction="#ventas_pressed" prefHeight="31.0" prefWidth="190.0" text="Ventas">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_ventas.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_historial" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" text="Historial">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_historial.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_config" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_config" mnemonicParsing="false" onAction="#config_pressed" prefHeight="31.0" prefWidth="190.0" text="Configuración">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_config.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_admin" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_admin" mnemonicParsing="false" onAction="#admin_pressed" prefHeight="31.0" prefWidth="190.0" text="Administración">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_admin.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <padding>
+                        <Insets bottom="10.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <Button fx:id="selected_help" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_help" mnemonicParsing="false" onAction="#help_pressed" prefHeight="31.0" prefWidth="190.0" text="Ayuda">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="@images/buttons/button_help.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   
+   
+   <center>
+      <AnchorPane fx:id="bodyPane" prefHeight="712.0" prefWidth="839.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="713.0" fitWidth="867.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/background/BodyInterface.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="1.0" fitWidth="866.0" layoutX="-2.0" layoutY="97.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/background/BodyDivid.png" />
+               </image>
+            </ImageView>
+            <Text fill="#6b6868" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N O M B R E   N E G O C I O" />
+            <Text fx:id="text_menuName" fill="#6f6d6d" layoutX="23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Principal" />
+            <AnchorPane fx:id="pane_Productos" layoutY="98.0" prefHeight="616.0" prefWidth="867.0">
+               <children>
+                  <TableView layoutX="12.0" layoutY="65.0" prefHeight="382.0" prefWidth="843.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                  <HBox layoutX="20.0" layoutY="457.0" prefHeight="100.0" prefWidth="835.0">
+                     <children>
+                        <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#clicked_nuevoProducto" prefHeight="76.0" prefWidth="215.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="40.0" top="10.0" />
+                           </HBox.margin>
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/buttons/producto_nuevo.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                        </Button>
+                        <Button fx:id="button_modificarProducto" mnemonicParsing="false" prefHeight="76.0" prefWidth="244.0">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/buttons/producto_modificar.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="40.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_eliminarProducto" mnemonicParsing="false" prefHeight="76.0" prefWidth="231.0">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/buttons/producto_eliminar.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect>
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </center>
+   
+   
+</BorderPane>
