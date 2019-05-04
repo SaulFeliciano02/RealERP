@@ -3,6 +3,7 @@
 	<name>ERP</name>
 	<comment></comment>
 	<projects>
+		<project>RealERP</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
