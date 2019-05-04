@@ -3,6 +3,8 @@ package visual;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +25,8 @@ import javafx.scene.Node;
 
 
 public class Controller implements Initializable{
-
+	
+	/**VARIABLES DE LA PANTALLA PRINCIPAL**/
     @FXML private HBox box_Principal;
 
     @FXML private Button selected_Inventario;
@@ -107,7 +110,13 @@ public class Controller implements Initializable{
 	
 	ImageInput nonclicked_nuevoProducto1 = new ImageInput(); 
 	ImageInput nonclicked_modificarProducto1 = new ImageInput(); 
-	ImageInput nonclicked_eliminarProducto1 = new ImageInput(); 
+	ImageInput nonclicked_eliminarProducto1 = new ImageInput();
+	/**FIN VARIABLE PANTALLA PRINCIPAL**/
+	
+	
+	/**VARIABLES PARA CREAR PRODUCTOS**/
+	@FXML private ComboBox<String> familiaBox;
+	@FXML private ComboBox<String> proveedorBox;
 	
     public void principal_pressed(ActionEvent event){
     	pressed_principal1.setSource(pressed_principal); 
@@ -416,7 +425,6 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	
     }
     
 }
