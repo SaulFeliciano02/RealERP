@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <TabPane layoutX="205.0" layoutY="88.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
+                           <children>
+                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
+                              <TextField layoutX="42.0" layoutY="43.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text layoutX="42.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
+                              <TextArea layoutX="42.0" layoutY="121.0" prefHeight="94.0" prefWidth="863.0" />
+                              <Text layoutX="42.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
+                              <TextField layoutX="42.0" layoutY="274.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Text layoutX="536.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
+                              <TextField layoutX="536.0" layoutY="274.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Button layoutX="350.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
+                              <Button layoutX="838.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
+                              <Text layoutX="42.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
+                              <TextField layoutX="42.0" layoutY="392.0" promptText="0" />
+                              <Text layoutX="376.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
+                              <Text layoutX="694.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
+                              <TextField layoutX="374.0" layoutY="392.0" promptText="0" />
+                              <TextField layoutX="694.0" layoutY="392.0" promptText="0" />
+                              <RadioButton layoutX="47.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
+                              <RadioButton layoutX="529.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
+                              <Text layoutX="475.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
+                              <TextField layoutX="475.0" layoutY="43.0" promptText="000000001" />
+                              <MenuButton layoutX="671.0" layoutY="43.0" mnemonicParsing="false" text="UPC-B">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                              </MenuButton>
+                              <Button layoutX="765.0" layoutY="43.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Partida">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="551.0" prefWidth="932.0">
+                           <children>
+                              <Text layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Partida" />
+                              <ScrollPane layoutX="43.0" layoutY="57.0" prefHeight="430.0" prefWidth="322.0">
+                                 <content>
+                                    <ListView prefHeight="431.0" prefWidth="322.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Button layoutX="448.0" layoutY="116.0" mnemonicParsing="false" text="-&gt;" />
+                              <Button layoutX="448.0" layoutY="351.0" mnemonicParsing="false" text="&lt;-" />
+                              <Text layoutX="436.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad" />
+                              <TextField alignment="CENTER_RIGHT" layoutX="428.0" layoutY="236.0" prefHeight="31.0" prefWidth="77.0" promptText="0" />
+                              <ListView layoutX="578.0" layoutY="51.0" prefHeight="431.0" prefWidth="322.0" />
+                              <TextField layoutX="138.0" layoutY="25.0" prefHeight="31.0" prefWidth="176.0" promptText="Búsqueda" />
+                              <Button layoutX="322.0" layoutY="25.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="41.0" text="B" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Costos Directos">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane layoutX="36.0" layoutY="43.0" prefHeight="203.0" prefWidth="861.0" style="-fx-background-color: #DEDDDD;">
+                                 <children>
+                                    <Text layoutX="35.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                    <TextField layoutX="35.0" layoutY="47.0" prefHeight="31.0" prefWidth="276.0" />
+                                    <Text layoutX="35.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
+                                    <TextField alignment="CENTER_RIGHT" layoutX="35.0" layoutY="123.0" prefHeight="31.0" prefWidth="174.0" promptText="0" />
+                                    <Text layoutX="209.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                    <Button layoutX="730.0" layoutY="154.0" mnemonicParsing="false" text="Agregar" />
+                                    <Text layoutX="446.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción" />
+                                    <TextArea layoutX="446.0" layoutY="47.0" prefHeight="95.0" prefWidth="358.0" />
+                                 </children>
+                              </Pane>
+                              <TableView layoutX="36.0" layoutY="269.0" prefHeight="200.0" prefWidth="861.0">
+                                <columns>
+                                  <TableColumn prefWidth="308.0" text="Nombre" />
+                                  <TableColumn minWidth="0.0" prefWidth="136.0" text="Valor" />
+                                    <TableColumn prefWidth="416.0" text="Descripción" />
+                                </columns>
+                              </TableView>
+                              <Button layoutX="36.0" layoutY="489.0" mnemonicParsing="false" text="Modificar" />
+                              <Button layoutX="136.0" layoutY="489.0" mnemonicParsing="false" text="Eliminar" />
+                              <Text layoutX="36.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos Directos" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Costos Indirectos">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane layoutX="36.0" layoutY="43.0" prefHeight="203.0" prefWidth="861.0" style="-fx-background-color: #DEDDDD;">
+                                 <children>
+                                    <Text layoutX="35.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                    <TextField layoutX="35.0" layoutY="47.0" prefHeight="31.0" prefWidth="276.0" />
+                                    <Text layoutX="35.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
+                                    <TextField alignment="CENTER_RIGHT" layoutX="35.0" layoutY="123.0" prefHeight="31.0" prefWidth="174.0" promptText="0" />
+                                    <Text layoutX="209.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                    <Button layoutX="730.0" layoutY="154.0" mnemonicParsing="false" text="Agregar" />
+                                    <Text layoutX="446.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción" />
+                                    <TextArea layoutX="446.0" layoutY="47.0" prefHeight="95.0" prefWidth="358.0" />
+                                 </children>
+                              </Pane>
+                              <TableView layoutX="36.0" layoutY="269.0" prefHeight="200.0" prefWidth="861.0">
+                                 <columns>
+                                    <TableColumn prefWidth="308.0" text="Nombre" />
+                                    <TableColumn minWidth="0.0" prefWidth="136.0" text="Valor" />
+                                    <TableColumn prefWidth="416.0" text="Descripción" />
+                                 </columns>
+                              </TableView>
+                              <Button layoutX="36.0" layoutY="489.0" mnemonicParsing="false" text="Modificar" />
+                              <Button layoutX="136.0" layoutY="489.0" mnemonicParsing="false" text="Eliminar" />
+                              <Text layoutX="36.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos Indirectos" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                <Tab text="Precios">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="64.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costo" />
+                              <TextField editable="false" layoutX="64.0" layoutY="90.0" />
+                              <Text layoutX="446.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porciento de ganancia" />
+                              <TextField alignment="CENTER_RIGHT" editable="false" layoutX="446.0" layoutY="90.0" prefHeight="31.0" prefWidth="101.0" promptText="0" />
+                              <CheckBox layoutX="446.0" layoutY="131.0" mnemonicParsing="false" text="Habilitar" />
+                              <Text layoutX="553.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                              <Text layoutX="64.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio" />
+                              <TextField layoutX="64.0" layoutY="229.0" />
+                              <TextField layoutX="446.0" layoutY="229.0" />
+                              <Text layoutX="446.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impuestos" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Imagen">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane layoutX="141.0" layoutY="46.0" prefHeight="325.0" prefWidth="650.0" style="-fx-background-color: #EEE7E7;">
+                                 <children>
+                                    <ImageView fitHeight="350.0" fitWidth="650.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </Pane>
+                              <Text layoutX="53.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de la imagen:" />
+                              <TextField layoutX="211.0" layoutY="380.0" prefHeight="31.0" prefWidth="265.0" />
+                              <Button layoutX="586.0" layoutY="380.0" mnemonicParsing="false" text="Agregar" />
+                              <Button layoutX="671.0" layoutY="380.0" mnemonicParsing="false" text="Eliminar" />
+                              <RadioButton layoutX="53.0" layoutY="466.0" mnemonicParsing="false" text="Mostrar imagen al facturar" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Sustitutos">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="40.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posibles productos sustitutos" />
+                              <Text layoutX="46.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Al momento de facturar, el sistema te va a sugerir estos sustitutos cuando no existan unidades disponibles para vender." wrappingWidth="275.6337890625" />
+                              <TableView layoutX="40.0" layoutY="70.0" prefHeight="313.0" prefWidth="851.0">
+                                <columns>
+                                  <TableColumn prefWidth="182.0" text="Campo 1" />
+                                  <TableColumn prefWidth="228.0" text="Campo 2" />
+                                    <TableColumn prefWidth="176.0" text="Campo 3" />
+                                    <TableColumn prefWidth="205.0" text="Campo 4" />
+                                </columns>
+                              </TableView>
+                              <Button layoutX="817.0" layoutY="407.0" mnemonicParsing="false" text="Agregar" />
+                              <Button layoutX="724.0" layoutY="407.0" mnemonicParsing="false" text="Modificar" />
+                              <Button layoutX="629.0" layoutY="407.0" mnemonicParsing="false" text="Eliminar" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Promoción">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
+            <Button layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

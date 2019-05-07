@@ -33,13 +33,15 @@ public class Main extends Application{
 		try {
 			
 			FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+			//FXMLLoader f = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 		 
 		    Parent root = f.load();
-		    Scene sc = new Scene(root, 1150, 730);
+		    Scene sc = new Scene(root, 1150, 750);
 		    primaryStage.setScene(sc);
 		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.show();
+
 		    
 		 /*   sc.heightProperty().addListener(new ChangeListener() {
 		    		@Override
