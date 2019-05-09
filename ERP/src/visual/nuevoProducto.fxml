@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -28,11 +39,11 @@
                               <Button layoutX="350.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
                               <Button layoutX="838.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
                               <Text layoutX="42.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
-                              <TextField layoutX="42.0" layoutY="392.0" promptText="0" />
+                              <TextField fx:id="exAct" layoutX="42.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
                               <Text layoutX="376.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
                               <Text layoutX="694.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
-                              <TextField layoutX="374.0" layoutY="392.0" promptText="0" />
-                              <TextField layoutX="694.0" layoutY="392.0" promptText="0" />
+                              <TextField fx:id="exMin" layoutX="374.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
+                              <TextField fx:id="exMax" layoutX="694.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
                               <RadioButton layoutX="47.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
                               <RadioButton layoutX="529.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
                               <Text layoutX="475.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
@@ -194,7 +205,7 @@
               </tabs>
             </TabPane>
             <Button layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
-            <Button layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="button_productCancel" layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>
