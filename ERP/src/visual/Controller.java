@@ -142,7 +142,7 @@ public class Controller implements Initializable{
 	
 	/**PARTIDA**/
 	@FXML private Tab tab_partida;
-	@FXML private ListView<String> listview_partida;
+	@FXML private ListView<String> listview_partida = new ListView<>();
 	@FXML private ListView<String> listview_partidaSelect;
 	@FXML private Button button_partidaSendTo;
 	@FXML private Button button_partidaSendBack;
@@ -663,19 +663,26 @@ public class Controller implements Initializable{
     }
     
     public void movePartida(ActionEvent event) {
-    	ObservableList<String> select_items = listview_partida.getSelectionModel().getSelectedItems();
-    	listview_partida.getSelectionModel().clearSelection();
+    	String select_items = listview_partida.getSelectionModel().getSelectedItem();
+    	listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	listview_partidaSelect.getItems().addAll(select_items);
+    	button_partidaSendTo.setDisable(true);
+    	textfield_partidaCantidad.clear();
     }
     
     public void movePartidaSelect(ActionEvent event) {
-    	ObservableList<String> select_items = listview_partidaSelect.getSelectionModel().getSelectedItems();
-    	listview_partidaSelect.getSelectionModel().clearSelection();
-    	listview_partida.getItems().addAll(select_items);
+    	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
+    	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
+    	listview_partida.getItems().add(select_items);
+    	button_partidaSendBack.setDisable(true);
     }
-    
+    ObservableList<String> observableList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	observableList.add("Help");
+    	listview_partida.setItems(observableList);
+    	//listview_partida.getSelectionModel().set
+ 
     }
     
 }
