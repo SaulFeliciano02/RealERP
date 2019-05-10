@@ -135,11 +135,20 @@ public class Controller implements Initializable{
 	
 	
 	/**VARIABLES PARA CREAR PRODUCTOS**/
+	/**GENERAL**/
 	@FXML TextField exAct;
 	@FXML TextField exMin;
 	@FXML TextField exMax;
 	
-	@FXML Button button_productCancel;
+	/**PARTIDA**/
+	@FXML private Tab tab_partida;
+	@FXML private ListView<String> listview_partida = new ListView<>();
+	@FXML private ListView<String> listview_partidaSelect;
+	@FXML private Button button_partidaSendTo;
+	@FXML private Button button_partidaSendBack;
+	@FXML private TextField textfield_partidaCantidad;
+	@FXML private Button button_productCancel;
+	
 	
 /**FUNCIONES MENU PRINCIPAL**/
 	
@@ -578,7 +587,7 @@ public class Controller implements Initializable{
             	button_nuevoProducto.setEffect(nonclicked_nuevoProducto1);
             }
         });
-    	
+    	/**ABRIENDO nuevoProducto.fxml**/
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 			Parent root1;
@@ -593,7 +602,6 @@ public class Controller implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     }
     
     public void pressed_modificarProducto(ActionEvent event){
@@ -624,6 +632,7 @@ public class Controller implements Initializable{
 
     /**FUNCIONES CREACION DE PRODUCTO**/
     
+    
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
@@ -635,8 +644,45 @@ public class Controller implements Initializable{
         stage.close();
     }
     
+    public void listview_PartidaClicked(MouseEvent event) {
+    	if(!listview_partida.getSelectionModel().isEmpty() && textfield_partidaCantidad.getLength() > 0) {
+    		button_partidaSendTo.setDisable(false);
+    	}
+    	else if (listview_partida.getSelectionModel().isEmpty() || textfield_partidaCantidad.getLength() == 0) {
+    		button_partidaSendTo.setDisable(true);
+    	}
+    }
+    
+    public void listview_partidaSelectClicked(MouseEvent event) {
+    	if(!listview_partidaSelect.getSelectionModel().isEmpty()) {
+    		button_partidaSendBack.setDisable(false);
+    	}
+    	else {
+    		button_partidaSendBack.setDisable(true);
+    	}
+    }
+    
+    public void movePartida(ActionEvent event) {
+    	String select_items = listview_partida.getSelectionModel().getSelectedItem();
+    	listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
+    	listview_partidaSelect.getItems().addAll(select_items);
+    	button_partidaSendTo.setDisable(true);
+    	textfield_partidaCantidad.clear();
+    }
+    
+    public void movePartidaSelect(ActionEvent event) {
+    	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
+    	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
+    	listview_partida.getItems().add(select_items);
+    	button_partidaSendBack.setDisable(true);
+    }
+    ObservableList<String> observableList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	observableList.add("Help");
+    	listview_partida.setItems(observableList);
+    	//listview_partida.getSelectionModel().set
+ 
     }
     
 }
