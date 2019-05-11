@@ -87,24 +87,24 @@
                               <Pane layoutX="36.0" layoutY="43.0" prefHeight="203.0" prefWidth="861.0" style="-fx-background-color: #DEDDDD;">
                                  <children>
                                     <Text layoutX="35.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                    <TextField layoutX="35.0" layoutY="47.0" prefHeight="31.0" prefWidth="276.0" />
+                                    <TextField fx:id="textfield_costosDirectosNombre" layoutX="35.0" layoutY="47.0" onKeyTyped="#costoDirectoActivarAgregar" prefHeight="31.0" prefWidth="276.0" />
                                     <Text layoutX="35.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
-                                    <TextField alignment="CENTER_RIGHT" layoutX="35.0" layoutY="123.0" prefHeight="31.0" prefWidth="174.0" promptText="0" />
+                                    <TextField fx:id="textfield_costosDirectosValor" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="123.0" onAction="#costoDirectoActivarAgregar" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="174.0" promptText="0" />
                                     <Text layoutX="209.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                                    <Button layoutX="730.0" layoutY="154.0" mnemonicParsing="false" text="Agregar" />
+                                    <Button fx:id="button_costosDirectosAgregar" disable="true" layoutX="730.0" layoutY="154.0" mnemonicParsing="false" onAction="#costoDirectoIngresarTableView" text="Agregar" />
                                     <Text layoutX="446.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción" />
-                                    <TextArea layoutX="446.0" layoutY="47.0" prefHeight="95.0" prefWidth="358.0" />
+                                    <TextArea fx:id="textarea_costosDirectosDescripcion" layoutX="446.0" layoutY="47.0" prefHeight="95.0" prefWidth="358.0" />
                                  </children>
                               </Pane>
-                              <TableView layoutX="36.0" layoutY="269.0" prefHeight="200.0" prefWidth="861.0">
+                              <TableView fx:id="tableview_costosDirectos" layoutX="36.0" layoutY="269.0" onMouseClicked="#costosDirectosTableViewClicked" prefHeight="200.0" prefWidth="861.0">
                                 <columns>
-                                  <TableColumn prefWidth="308.0" text="Nombre" />
-                                  <TableColumn minWidth="0.0" prefWidth="136.0" text="Valor" />
-                                    <TableColumn prefWidth="416.0" text="Descripción" />
+                                  <TableColumn fx:id="tablecolumn_costosDirectosNombre" prefWidth="308.0" text="Nombre" />
+                                  <TableColumn fx:id="tablecolumn_costosDirectosValor" minWidth="0.0" prefWidth="136.0" text="Valor" />
+                                    <TableColumn fx:id="tablecolumn_costosDirectosDescripcion" prefWidth="416.0" text="Descripcion" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="36.0" layoutY="489.0" mnemonicParsing="false" text="Modificar" />
-                              <Button layoutX="136.0" layoutY="489.0" mnemonicParsing="false" text="Eliminar" />
+                              <Button fx:id="button_costosDirectosModificar" disable="true" layoutX="36.0" layoutY="489.0" mnemonicParsing="false" text="Modificar" />
+                              <Button fx:id="button_costosDirectosEliminar" disable="true" layoutX="136.0" layoutY="489.0" mnemonicParsing="false" onAction="#costosDirectosEliminar" text="Eliminar" />
                               <Text layoutX="36.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos Directos" />
                            </children>
                         </AnchorPane>
@@ -204,7 +204,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
+            <Button disable="true" layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
             <Button fx:id="button_productCancel" layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
