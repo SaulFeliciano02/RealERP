@@ -28,7 +28,7 @@
                   </ImageView>
                   <Text fill="#6b6868" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N O M B R E   N E G O C I O" />
                   <Text fx:id="text_menuName" fill="#6f6d6d" layoutX="23.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Principal" />
-                  <Pane fx:id="pane_Principal" disable="false" layoutY="98.0" prefHeight="616.0" prefWidth="867.0" visible="true">
+                  <Pane fx:id="pane_Principal" layoutY="98.0" prefHeight="616.0" prefWidth="867.0">
                      <children>
                         <Text layoutX="347.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Principal" />
                      </children></Pane>
@@ -107,9 +107,29 @@
                                     </AnchorPane>
                               </content>
                             </Tab>
-                            <Tab text="Untitled Tab 2">
+                            <Tab text="Rubros">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="14.0" layoutY="78.0" prefHeight="289.0" prefWidth="846.0">
+                                            <columns>
+                                              <TableColumn prefWidth="218.0" text="Código" />
+                                              <TableColumn prefWidth="627.0" text="Nombre" />
+                                            </columns>
+                                          </TableView>
+                                          <Pane layoutX="15.0" layoutY="63.0" prefHeight="195.0" prefWidth="844.0" style="-fx-background-color: LIGHTGRAY;">
+                                             <children>
+                                                <Text layoutX="26.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
+                                                <Text layoutX="406.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                                <TextField layoutX="26.0" layoutY="62.0" prefHeight="31.0" prefWidth="279.0" />
+                                                <TextField layoutX="406.0" layoutY="62.0" prefHeight="31.0" prefWidth="372.0" />
+                                                <Button layoutX="713.0" layoutY="150.0" mnemonicParsing="false" text="Guardar" />
+                                             </children>
+                                          </Pane>
+                                          <Button layoutX="14.0" layoutY="400.0" mnemonicParsing="false" text="Nuevo Rubro" />
+                                          <Button layoutX="186.0" layoutY="400.0" mnemonicParsing="false" text="Modificar Rubro" />
+                                          <Button layoutX="366.0" layoutY="400.0" mnemonicParsing="false" text="Eliminar Rubro" />
+                                       </children></AnchorPane>
                               </content>
                             </Tab>
                           </tabs>
@@ -128,12 +148,93 @@
                   </Pane>
                   <Pane fx:id="pane_rh" disable="true" layoutY="98.0" prefHeight="616.0" prefWidth="867.0" visible="false">
                      <children>
+                        <TabPane layoutX="14.0" layoutY="42.0" prefHeight="561.0" prefWidth="840.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Clientes">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="35.0" layoutY="58.0" prefHeight="361.0" prefWidth="757.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="C1" />
+                                              <TableColumn prefWidth="75.0" text="C2" />
+                                            </columns>
+                                          </TableView>
+                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Cliente" />
+                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Cliente" />
+                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Cliente" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                              <Tab text="Proveedores">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="35.0" layoutY="58.0" prefHeight="361.0" prefWidth="757.0">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="C1" />
+                                                <TableColumn prefWidth="75.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Proveedor" />
+                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Proveedor" />
+                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Proveedor" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Vendedores">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="35.0" layoutY="58.0" prefHeight="361.0" prefWidth="757.0">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="C1" />
+                                                <TableColumn prefWidth="75.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Vendedor" />
+                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Vendedor" />
+                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Vendedor" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
                         <Text layoutX="331.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Recursos Humanos" />
                      </children>
                   </Pane>
                   <Pane fx:id="pane_Admin" disable="true" layoutY="98.0" prefHeight="616.0" prefWidth="867.0" visible="false">
                      <children>
                         <Text layoutX="347.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Administracion" />
+                        <TabPane layoutX="14.0" layoutY="91.0" prefHeight="486.0" prefWidth="839.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Monedas">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="18.0" layoutY="35.0" prefHeight="317.0" prefWidth="803.0">
+                                            <columns>
+                                              <TableColumn prefWidth="128.0" text="Código" />
+                                              <TableColumn prefWidth="256.0" text="Nombre" />
+                                                <TableColumn prefWidth="228.0" text="Valor" />
+                                                <TableColumn prefWidth="190.0" text="Fecha" />
+                                            </columns>
+                                          </TableView>
+                                          <Button layoutX="626.0" layoutY="372.0" mnemonicParsing="false" text="Modificar valor de moneda" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Untitled Tab 2">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
                      </children>
                   </Pane>
                   <Pane fx:id="pane_Ayuda" disable="true" layoutY="98.0" prefHeight="616.0" prefWidth="867.0" visible="false">

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <TabPane layoutX="205.0" layoutY="88.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
+                           <children>
+                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Cliente" />
+                              <TextField layoutX="42.0" layoutY="43.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text layoutX="433.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                              <TextField layoutX="433.0" layoutY="44.0" prefHeight="31.0" prefWidth="294.0" />
+                              <TextField layoutX="42.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
+                              <Text layoutX="42.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" />
+                              <Text layoutX="438.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
+                              <TextField layoutX="438.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
+                              <Text layoutX="40.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección" />
+                              <TextArea layoutX="40.0" layoutY="204.0" prefHeight="74.0" prefWidth="679.0" />
+                              <Text layoutX="42.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
+                              <TextField layoutX="42.0" layoutY="328.0" prefHeight="31.0" prefWidth="260.0" />
+                              <Text layoutX="42.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Cliente" />
+                              <TextField layoutX="40.0" layoutY="411.0" />
+                              <Button layoutX="229.0" layoutY="411.0" mnemonicParsing="false" text="+" />
+                              <Text layoutX="355.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cumpleaños" />
+                              <DatePicker layoutX="344.0" layoutY="411.0" prefHeight="31.0" prefWidth="203.0" />
+                              <TextField layoutX="614.0" layoutY="412.0" prefHeight="31.0" prefWidth="260.0" />
+                              <Text layoutX="614.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC" />
+                              <Text layoutX="42.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electrónico" />
+                              <TextField layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="344.0" />
+                              <TextField layoutX="483.0" layoutY="484.0" prefHeight="31.0" prefWidth="362.0" />
+                              <Text layoutX="483.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sitio Web" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Enviar a...">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField layoutX="60.0" layoutY="91.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="451.0" layoutY="91.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="60.0" layoutY="172.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="451.0" layoutY="172.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="451.0" layoutY="248.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="457.0" layoutY="323.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="60.0" layoutY="329.0" prefHeight="31.0" prefWidth="271.0" />
+                              <TextField layoutX="60.0" layoutY="248.0" prefHeight="31.0" prefWidth="271.0" />
+                              <RadioButton layoutX="70.0" layoutY="457.0" mnemonicParsing="false" text="Utilizar estos datos con cada comprobante de venta como dominicilio de envío" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Opcional">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="56.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendedor" />
+                              <TextField editable="false" layoutX="56.0" layoutY="85.0" promptText="000001" />
+                              <Button layoutX="243.0" layoutY="85.0" mnemonicParsing="false" text="Seleccionar" />
+                              <Text layoutX="56.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de precios" />
+                              <Text layoutX="372.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Límite de deuda en Cuenta Corriente" />
+                              <TextField alignment="CENTER_RIGHT" layoutX="373.0" layoutY="201.0" prefHeight="31.0" prefWidth="241.0" promptText="0.00" />
+                              <Text layoutX="704.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descuento" />
+                              <TextField alignment="CENTER_RIGHT" layoutX="704.0" layoutY="201.0" promptText="0.00" />
+                              <RadioButton layoutX="56.0" layoutY="336.0" mnemonicParsing="false" text="Permitir pago con tarjeta de crédito" />
+                              <RadioButton layoutX="56.0" layoutY="374.0" mnemonicParsing="false" text="Permitir facturar a Cuenta Corriente" />
+                              <RadioButton layoutX="56.0" layoutY="413.0" mnemonicParsing="false" text="Avisar al facturar cuando existan Remitos o Presupuestos pendientes" />
+                              <ComboBox layoutX="56.0" layoutY="201.0" prefHeight="31.0" prefWidth="229.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
+            <Button layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
