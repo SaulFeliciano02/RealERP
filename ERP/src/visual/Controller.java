@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import logico.Controladora;
+import logico.CostoDirecto;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -135,6 +137,7 @@ public class Controller implements Initializable{
 	
 	
 	/**VARIABLES PARA CREAR PRODUCTOS**/
+	
 	/**GENERAL**/
 	@FXML TextField exAct;
 	@FXML TextField exMin;
@@ -143,13 +146,26 @@ public class Controller implements Initializable{
 	/**PARTIDA**/
 	@FXML private Tab tab_partida;
 	@FXML private ListView<String> listview_partida = new ListView<>();
-	@FXML private ListView<String> listview_partidaSelect;
+	@FXML private ListView<String> listview_partidaSelect = new ListView<>();
 	@FXML private Button button_partidaSendTo;
 	@FXML private Button button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
 	@FXML private Button button_productCancel;
 	
+	/**COSTOS DIRECTOS**/
+	@FXML private TextField textfield_costosDirectosNombre;
+	@FXML private TextField textfield_costosDirectosValor;
+	@FXML private TextArea textarea_costosDirectosDescripcion;
+	@FXML private Button button_costosDirectosAgregar;
+	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosNombre;
+	@FXML private TableColumn<CostoDirecto, Double> tablecolumn_costosDirectosValor;
+	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosDescripcion;
+	@FXML private TableView<CostoDirecto> tableview_costosDirectos;
+	@FXML private Button button_costosDirectosModificar;
+	@FXML private Button button_costosDirectosEliminar; 
 	
+
+
 /**FUNCIONES MENU PRINCIPAL**/
 	
     public void principal_pressed(ActionEvent event){
@@ -632,18 +648,23 @@ public class Controller implements Initializable{
 
     /**FUNCIONES CREACION DE PRODUCTO**/
     
-    
+    //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
     	}
+    	//Especifico sobre que variable el evento surgio
+    	if(event.getSource() == textfield_costosDirectosValor) {
+    		costoDirectoActivarAgregar(event);
+    	}
     }
     
+    //Cierra la venta de nuevoProducto
     public void cancelCreation(ActionEvent event) {
     	Stage stage = (Stage) button_productCancel.getScene().getWindow();
         stage.close();
     }
-    
+   
     public void listview_PartidaClicked(MouseEvent event) {
     	if(!listview_partida.getSelectionModel().isEmpty() && textfield_partidaCantidad.getLength() > 0) {
     		button_partidaSendTo.setDisable(false);
@@ -676,6 +697,54 @@ public class Controller implements Initializable{
     	listview_partida.getItems().add(select_items);
     	button_partidaSendBack.setDisable(true);
     }
+    
+    public void costoDirectoActivarAgregar(KeyEvent event) {
+    	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() > 0) {
+    		button_costosDirectosAgregar.setDisable(false);
+    	}
+    	else {
+    		button_costosDirectosAgregar.setDisable(true);
+    	}
+    }
+    
+	public void costoDirectoIngresarTableView(ActionEvent event) {
+    	CostoDirecto costodirecto = new CostoDirecto(textfield_costosDirectosNombre.getText(), Double.parseDouble(textfield_costosDirectosValor.getText()), textarea_costosDirectosDescripcion.getText());
+    	ObservableList<CostoDirecto> data = FXCollections.observableArrayList();
+    	data.add(costodirecto);
+    	tablecolumn_costosDirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+    	tablecolumn_costosDirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
+    	tablecolumn_costosDirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
+    	tableview_costosDirectos.getItems().add(costodirecto);
+    	textfield_costosDirectosNombre.clear();
+    	textfield_costosDirectosValor.clear();
+    	textarea_costosDirectosDescripcion.clear();
+    	button_costosDirectosAgregar.setDisable(true);
+    }
+	
+	public void costosDirectosTableViewClicked(MouseEvent event) {
+		if(tableview_costosDirectos.getSelectionModel().isEmpty()) {
+			button_costosDirectosModificar.setDisable(true);
+			button_costosDirectosEliminar.setDisable(true);
+		}
+		else if(!tableview_costosDirectos.getSelectionModel().isEmpty()) {
+			button_costosDirectosModificar.setDisable(false);
+			button_costosDirectosEliminar.setDisable(false);
+		}
+	}
+	
+	//El boton de modificar es redundante
+	/**public void costosDirectosModificar(ActionEvent event) {
+		System.out.println(tableview_costosDirectos.getSelectionModel().getSelectedIndex());
+		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosNombre);
+		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosValor);
+		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosDescripcion);
+	}**/
+	
+	public void costosDirectosEliminar(ActionEvent event) {
+		int index = tableview_costosDirectos.getSelectionModel().getSelectedIndex();
+		tableview_costosDirectos.getItems().remove(index);
+	}
+    
     ObservableList<String> observableList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
