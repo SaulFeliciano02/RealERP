@@ -32,6 +32,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import logico.Controladora;
 import logico.CostoDirecto;
+import logico.CostoIndirecto;
+import logico.CostoIndirectoProducto;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -162,7 +164,19 @@ public class Controller implements Initializable{
 	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosDescripcion;
 	@FXML private TableView<CostoDirecto> tableview_costosDirectos;
 	@FXML private Button button_costosDirectosModificar;
-	@FXML private Button button_costosDirectosEliminar; 
+	@FXML private Button button_costosDirectosEliminar;
+	
+	/**COSTOS INDIRECTOS**/
+	@FXML private TextField textfield_costosIndirectosNombre;
+	@FXML private TextField textfield_costosIndirectosValor;
+	@FXML private TextArea textarea_costosIndirectosDescripcion;
+	@FXML private Button button_costosIndirectosAgregar;
+	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosNombre;
+	@FXML private TableColumn<CostoIndirectoProducto, Double> tablecolumn_costosIndirectosValor;
+	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosDescripcion;
+	@FXML private TableView<CostoIndirectoProducto> tableview_costosIndirectos;
+	@FXML private Button button_costosIndirectosModificar;
+	@FXML private Button button_costosIndirectosEliminar; 
 	
 
 
@@ -657,6 +671,9 @@ public class Controller implements Initializable{
     	if(event.getSource() == textfield_costosDirectosValor) {
     		costoDirectoActivarAgregar(event);
     	}
+    	else if(event.getSource() == textfield_costosIndirectosValor) {
+    		costoIndirectoActivarAgregar(event);
+    	}
     }
     
     //Cierra la venta de nuevoProducto
@@ -665,6 +682,7 @@ public class Controller implements Initializable{
         stage.close();
     }
    
+    //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
     	if(!listview_partida.getSelectionModel().isEmpty() && textfield_partidaCantidad.getLength() > 0) {
     		button_partidaSendTo.setDisable(false);
@@ -698,6 +716,7 @@ public class Controller implements Initializable{
     	button_partidaSendBack.setDisable(true);
     }
     
+    //FUNCIONES COSTO DIRECTO
     public void costoDirectoActivarAgregar(KeyEvent event) {
     	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() > 0) {
     		button_costosDirectosAgregar.setDisable(false);
@@ -732,17 +751,49 @@ public class Controller implements Initializable{
 		}
 	}
 	
-	//El boton de modificar es redundante
-	/**public void costosDirectosModificar(ActionEvent event) {
-		System.out.println(tableview_costosDirectos.getSelectionModel().getSelectedIndex());
-		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosNombre);
-		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosValor);
-		tableview_costosDirectos.edit(tableview_costosDirectos.getSelectionModel().getSelectedIndex(), tablecolumn_costosDirectosDescripcion);
-	}**/
-	
 	public void costosDirectosEliminar(ActionEvent event) {
 		int index = tableview_costosDirectos.getSelectionModel().getSelectedIndex();
 		tableview_costosDirectos.getItems().remove(index);
+	}
+	
+	//FUNCIONES COSTO INDIRECTO
+	public void costoIndirectoActivarAgregar(KeyEvent event) {
+    	if(textfield_costosIndirectosNombre.getLength() > 0 && textfield_costosIndirectosValor.getLength() > 0) {
+    		button_costosIndirectosAgregar.setDisable(false);
+    	}
+    	else {
+    		button_costosIndirectosAgregar.setDisable(true);
+    	}
+    }
+	
+	public void costoIndirectoIngresarTableView(ActionEvent event) {
+    	CostoIndirectoProducto costoindirectoProducto = new CostoIndirectoProducto(textfield_costosIndirectosNombre.getText(), Double.parseDouble(textfield_costosIndirectosValor.getText()), textarea_costosIndirectosDescripcion.getText());
+    	ObservableList<CostoIndirectoProducto> data = FXCollections.observableArrayList();
+    	data.add(costoindirectoProducto);
+    	tablecolumn_costosIndirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+    	tablecolumn_costosIndirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
+    	tablecolumn_costosIndirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
+    	tableview_costosIndirectos.getItems().add(costoindirectoProducto);
+    	textfield_costosIndirectosNombre.clear();
+    	textfield_costosIndirectosValor.clear();
+    	textarea_costosIndirectosDescripcion.clear();
+    	button_costosIndirectosAgregar.setDisable(true);
+    }
+	
+	public void costosIndirectosTableViewClicked(MouseEvent event) {
+		if(tableview_costosIndirectos.getSelectionModel().isEmpty()) {
+			button_costosIndirectosModificar.setDisable(true);
+			button_costosIndirectosEliminar.setDisable(true);
+		}
+		else if(!tableview_costosIndirectos.getSelectionModel().isEmpty()) {
+			button_costosIndirectosModificar.setDisable(false);
+			button_costosIndirectosEliminar.setDisable(false);
+		}
+	}
+	
+	public void costosIndirectosEliminar(ActionEvent event) {
+		int index = tableview_costosIndirectos.getSelectionModel().getSelectedIndex();
+		tableview_costosIndirectos.getItems().remove(index);
 	}
     
     ObservableList<String> observableList = FXCollections.observableArrayList();
