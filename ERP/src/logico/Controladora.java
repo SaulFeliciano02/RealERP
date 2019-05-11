@@ -218,4 +218,20 @@ public class Controladora implements Serializable{
 		}
 		return searchEmpleado;
 	}
+	/**FUNCION PARA VERIFICAR SI UN STRING DADO ES UN NUMERO**/
+	
+	public boolean isNumber(String string) {
+		boolean numeric = true;
+        try {
+            Double.parseDouble(string);
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+       return numeric;
+	}
+
 }
+
+
+
+
