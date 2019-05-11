@@ -2,29 +2,38 @@ package logico;
 
 public class CostoIndirectoProducto {
 	
-	private CostoIndirecto nombre;
-	private float precioCosto;
+	private String nombre;
+	private double valor;
+	private String descripcion;
 	
 	
 	
-	public CostoIndirectoProducto(CostoIndirecto nombre, float precioCosto) {
+	public CostoIndirectoProducto(String nombre, double valor, String descripcion) {
 		super();
 		this.nombre = nombre;
-		this.precioCosto = precioCosto;
+		this.valor = valor;
+		this.descripcion = descripcion;
 	}
 	
-	public CostoIndirecto getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
-	public void setNombre(CostoIndirecto nombre) {
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public float getPrecioCosto() {
-		return precioCosto;
+	public double getValor() {
+		return valor;
 	}
-	public void setPrecioCosto(float precioCosto) {
-		this.precioCosto = precioCosto;
+	public void setPrecioCosto(double valor) {
+		this.valor = valor;
 	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 	
 	
 
