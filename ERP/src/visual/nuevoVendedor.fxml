@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <TabPane layoutX="205.0" layoutY="88.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
+                           <children>
+                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Vendedor" />
+                              <TextField layoutX="42.0" layoutY="43.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text layoutX="433.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                              <TextField layoutX="433.0" layoutY="44.0" prefHeight="31.0" prefWidth="294.0" />
+                              <TextField layoutX="42.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
+                              <Text layoutX="42.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" />
+                              <Text layoutX="438.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
+                              <TextField layoutX="438.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
+                              <Text layoutX="40.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominicilio" />
+                              <TextArea layoutX="40.0" layoutY="204.0" prefHeight="74.0" prefWidth="679.0" />
+                              <Text layoutX="42.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cominisión" />
+                              <TextField alignment="CENTER_RIGHT" layoutX="42.0" layoutY="328.0" prefHeight="31.0" prefWidth="260.0" text="0.00" />
+                              <Text layoutX="42.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos/Servicios" />
+                              <Text layoutX="42.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electrónico" />
+                              <TextField layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="344.0" />
+                              <TextField layoutX="483.0" layoutY="484.0" prefHeight="31.0" prefWidth="362.0" />
+                              <Text layoutX="483.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sitio Web" />
+                              <ComboBox layoutX="42.0" layoutY="411.0" prefHeight="31.0" prefWidth="267.0" />
+                              <Text layoutX="515.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de comisión" />
+                              <RadioButton layoutX="517.0" layoutY="344.0" mnemonicParsing="false" text="Porcentaje de Venta" />
+                              <RadioButton layoutX="517.0" layoutY="381.0" mnemonicParsing="false" text="Porcentaje de la Ganancia" />
+                              <RadioButton layoutX="517.0" layoutY="416.0" mnemonicParsing="false" text="Monto fijo" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Button layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
+            <Button layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
