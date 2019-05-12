@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -201,6 +201,24 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
+                  </Tab>
+                  <Tab text="Combinaciones">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView layoutX="62.0" layoutY="89.0" prefHeight="402.0" prefWidth="220.0" />
+                              <ListView layoutX="347.0" layoutY="89.0" prefHeight="402.0" prefWidth="220.0" />
+                              <ListView layoutX="631.0" layoutY="89.0" prefHeight="402.0" prefWidth="220.0" />
+                              <TextField layoutX="62.0" layoutY="41.0" />
+                              <TextField layoutX="347.0" layoutY="41.0" />
+                              <TextField layoutX="631.0" layoutY="41.0" />
+                              <Button layoutX="252.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="42.0" text="Button" />
+                              <Button layoutX="537.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="42.0" text="Button" />
+                              <Button layoutX="821.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="42.0" text="Button" />
+                              <Button layoutX="819.0" layoutY="499.0" mnemonicParsing="false" text="Combinar" />
+                           </children>
+                        </AnchorPane>
+                    </content>
                   </Tab>
               </tabs>
             </TabPane>
