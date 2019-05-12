@@ -216,6 +216,7 @@
                               <Button layoutX="537.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="42.0" text="Button" />
                               <Button layoutX="821.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="42.0" text="Button" />
                               <Button layoutX="819.0" layoutY="499.0" mnemonicParsing="false" text="Combinar" />
+                              <Button layoutX="683.0" layoutY="499.0" mnemonicParsing="false" text="Nuevo atributo" />
                            </children>
                         </AnchorPane>
                     </content>
