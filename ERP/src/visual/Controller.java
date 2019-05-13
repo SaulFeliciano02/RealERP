@@ -2,11 +2,13 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -30,6 +33,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import logico.Cliente;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
@@ -64,6 +69,15 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProducto;
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
+    @FXML private Button button_nuevoCliente;
+    @FXML private Button button_modificarCliente;
+    @FXML private Button button_eliminarCliente;
+    @FXML private Button button_nuevoProveedor;
+    @FXML private Button button_modificarProveedor;
+    @FXML private Button button_eliminarProveedor;
+    @FXML private Button button_nuevoVendedor;
+    @FXML private Button button_modificarVendedor;
+    @FXML private Button button_eliminarVendedor;
 
 
     @FXML private AnchorPane menuPane;
@@ -140,21 +154,21 @@ public class Controller implements Initializable{
 	
 	/**VARIABLES PARA CREAR PRODUCTOS**/
 	
-	/**GENERAL**/
-	@FXML TextField exAct;
-	@FXML TextField exMin;
-	@FXML TextField exMax;
+	//GENERAL
+	@FXML private TextField exAct;
+	@FXML private TextField exMin;
+	@FXML private TextField exMax;
+	@FXML private Button button_productCancel;
 	
-	/**PARTIDA**/
+	//PARTIDA
 	@FXML private Tab tab_partida;
 	@FXML private ListView<String> listview_partida = new ListView<>();
 	@FXML private ListView<String> listview_partidaSelect = new ListView<>();
 	@FXML private Button button_partidaSendTo;
 	@FXML private Button button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
-	@FXML private Button button_productCancel;
 	
-	/**COSTOS DIRECTOS**/
+	//COSTOS DIRECTOS
 	@FXML private TextField textfield_costosDirectosNombre;
 	@FXML private TextField textfield_costosDirectosValor;
 	@FXML private TextArea textarea_costosDirectosDescripcion;
@@ -166,7 +180,7 @@ public class Controller implements Initializable{
 	@FXML private Button button_costosDirectosModificar;
 	@FXML private Button button_costosDirectosEliminar;
 	
-	/**COSTOS INDIRECTOS**/
+	//COSTOS INDIRECTOS
 	@FXML private TextField textfield_costosIndirectosNombre;
 	@FXML private TextField textfield_costosIndirectosValor;
 	@FXML private TextArea textarea_costosIndirectosDescripcion;
@@ -176,7 +190,25 @@ public class Controller implements Initializable{
 	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosDescripcion;
 	@FXML private TableView<CostoIndirectoProducto> tableview_costosIndirectos;
 	@FXML private Button button_costosIndirectosModificar;
-	@FXML private Button button_costosIndirectosEliminar; 
+	@FXML private Button button_costosIndirectosEliminar;
+	
+	//PRECIOS
+	@FXML private Tab precios;
+	@FXML private TextField textfield_preciosCostos;
+	@FXML private TextField textfield_preciosPorcientoGanancia;
+	@FXML private TextField textfield_preciosImpuestos;
+	@FXML private TextField textfield_preciosPrecio;
+	@FXML private CheckBox checkbox_preciosHabilitar;
+	
+	/**VARIABLES PARA LA CREACION DE UN CLIENTE**/
+	@FXML private Button button_clienteCancel;
+	@FXML private Button button_clienteGuardar;
+	@FXML private TextField textfield_codigoCliente;
+	@FXML private TextField textfield_nombreCliente;
+	@FXML private TextField textfield_telefonoCliente;
+	@FXML private TextField textfield_tipoCliente;
+	@FXML private TextField textfield_rncCliente;
+	@FXML private DatePicker datepicker_cumpleCliente;
 	
 
 
@@ -623,8 +655,8 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initStyle(StageStyle.UNDECORATED);
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Producto");
 			stage.setScene(new Scene(root1, 1150, 750));  
 			stage.show();
@@ -660,27 +692,86 @@ public class Controller implements Initializable{
         });
     }
 
-    /**FUNCIONES CREACION DE PRODUCTO**/
+    public void pressed_nuevoCliente(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoCliente.fxml"));
+			Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Nuevo Cliente");
+			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
+    public void pressed_nuevoProveedor(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProveedor.fxml"));
+			Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Nuevo Proveedor");
+			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void pressed_nuevoVendedor(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoVendedor.fxml"));
+			Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Nuevo Vendedor");
+			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
     	}
     	//Especifico sobre que variable el evento surgio
-    	if(event.getSource() == textfield_costosDirectosValor) {
+    	if(event.getSource().equals(textfield_costosDirectosValor)) {
     		costoDirectoActivarAgregar(event);
     	}
-    	else if(event.getSource() == textfield_costosIndirectosValor) {
+    	else if(event.getSource().equals(textfield_costosIndirectosValor)) {
     		costoIndirectoActivarAgregar(event);
+    	}
+    	else if(event.getSource().equals(textfield_telefonoCliente)) {
+    		clienteActivarGuardar(event);
+    	}
+    	else if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
+    		calcularPrecio(event);
     	}
     }
     
     //Cierra la venta de nuevoProducto
     public void cancelCreation(ActionEvent event) {
-    	Stage stage = (Stage) button_productCancel.getScene().getWindow();
+    	Button button = (Button) event.getSource();
+    	Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
     }
+    
+    /**FUNCIONES CREACION DE PRODUCTO**/  
    
     //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
@@ -718,7 +809,7 @@ public class Controller implements Initializable{
     
     //FUNCIONES COSTO DIRECTO
     public void costoDirectoActivarAgregar(KeyEvent event) {
-    	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() > 0) {
+    	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() >= 0) {
     		button_costosDirectosAgregar.setDisable(false);
     	}
     	else {
@@ -796,7 +887,100 @@ public class Controller implements Initializable{
 		tableview_costosIndirectos.getItems().remove(index);
 	}
     
-    ObservableList<String> observableList = FXCollections.observableArrayList();
+   //FUNCIONES PRECIO
+	public void setCostoYPrecioTotal(Event event) {
+		double valorDirecto = 0;
+		double valorIndirecto = 0;
+		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
+			valorDirecto += valor.getValor();
+		}
+		for(CostoIndirectoProducto valor : tableview_costosIndirectos.getItems()) {
+			valorIndirecto += valor.getValor();
+		}
+		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto));
+		if(checkbox_preciosHabilitar.isSelected()) {
+			textfield_preciosPorcientoGanancia.setDisable(false);
+		}
+		else {
+			textfield_preciosPorcientoGanancia.setDisable(true);
+		}
+		try {
+			double precioTotal = Controladora.getInstance().calcularPrecio
+					(Double.parseDouble(textfield_preciosCostos.getText()),
+					Double.parseDouble(textfield_preciosPorcientoGanancia.getText()) ,
+					Double.parseDouble(textfield_preciosImpuestos.getText()));	
+			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+		}
+		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
+		catch (NumberFormatException e) {
+			double precioTotal = Controladora.getInstance().calcularPrecio
+					(Double.parseDouble(textfield_preciosCostos.getText()),
+					0 ,
+					Double.parseDouble(textfield_preciosImpuestos.getText()));			
+			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+		}		
+	}
+		
+	
+	public void habilitarPorcientoGanancia(ActionEvent event) {
+		if(checkbox_preciosHabilitar.isSelected()) {
+			textfield_preciosPorcientoGanancia.setDisable(false);
+		}
+		else {
+			textfield_preciosPorcientoGanancia.setDisable(true);
+		}
+		
+	}
+	
+	public void calcularPrecio(KeyEvent event) {
+		//Tengo que sumarle el caracter del evento.
+		String textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
+		try {
+			double precioTotal = Controladora.getInstance().calcularPrecio
+					(Double.parseDouble(textfield_preciosCostos.getText()),
+					Double.parseDouble(textfield) ,
+					Double.parseDouble(textfield_preciosImpuestos.getText()));	
+			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+		}
+		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
+		catch (NumberFormatException e) {
+			double precioTotal = Controladora.getInstance().calcularPrecio
+					(Double.parseDouble(textfield_preciosCostos.getText()),
+					0 ,
+					Double.parseDouble(textfield_preciosImpuestos.getText()));			
+			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+		}		
+	}
+	
+	/**FUNCIONES AGREGAR CLIENTE**/
+	
+	public void clienteActivarGuardar(KeyEvent event) {
+		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
+				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
+			button_clienteGuardar.setDisable(false);
+		}
+		else {
+			button_clienteGuardar.setDisable(true);
+		}
+	}
+	
+	public void clienteActivarGuardarDatePicker(ActionEvent event) {
+		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
+				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
+			button_clienteGuardar.setDisable(false);
+		}
+		else {
+			button_clienteGuardar.setDisable(true);
+		}
+	}
+	
+	public void guardarCliente(ActionEvent event) {
+		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
+				 datepicker_cumpleCliente.getValue(), textfield_rncCliente.getText());
+		Controladora.getInstance().addCliente(cliente);
+	}
+	
+	ObservableList<String> observableList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	observableList.add("Help");

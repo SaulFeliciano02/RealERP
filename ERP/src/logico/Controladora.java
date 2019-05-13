@@ -229,6 +229,12 @@ public class Controladora implements Serializable{
         }
        return numeric;
 	}
+	
+	public double calcularPrecio(double costo, double porcientoGanancia, double impuesto) {
+		double precio = (costo * (porcientoGanancia/100)) + (costo * (impuesto/100));
+		double precioTotal = costo+precio;		
+		return precioTotal;
+	}
 
 }
 
