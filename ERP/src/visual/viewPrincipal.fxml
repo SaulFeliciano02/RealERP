@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <BorderPane>
          <center>
@@ -192,9 +192,9 @@
                                               <TableColumn prefWidth="75.0" text="C2" />
                                             </columns>
                                           </TableView>
-                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Cliente" />
-                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Cliente" />
-                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Cliente" />
+                                          <Button fx:id="button_nuevoCliente" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#pressed_nuevoCliente" text="Nuevo Cliente" />
+                                          <Button fx:id="button_modificarCliente" layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Cliente" />
+                                          <Button fx:id="button_eliminarCliente" layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Cliente" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -209,9 +209,9 @@
                                                 <TableColumn prefWidth="75.0" text="C2" />
                                              </columns>
                                           </TableView>
-                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Proveedor" />
-                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Proveedor" />
-                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Proveedor" />
+                                          <Button fx:id="button_nuevoProveedor" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" text="Nuevo Proveedor" />
+                                          <Button fx:id="button_modificarProveedor" layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Proveedor" />
+                                          <Button fx:id="button_eliminarProveedor" layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Proveedor" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -226,9 +226,9 @@
                                                 <TableColumn prefWidth="75.0" text="C2" />
                                              </columns>
                                           </TableView>
-                                          <Button layoutX="35.0" layoutY="448.0" mnemonicParsing="false" text="Nuevo Vendedor" />
-                                          <Button layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Vendedor" />
-                                          <Button layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Vendedor" />
+                                          <Button fx:id="button_nuevoVendedor" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#pressed_nuevoVendedor" text="Nuevo Vendedor" />
+                                          <Button fx:id="button_modificarVendedor" layoutX="342.0" layoutY="448.0" mnemonicParsing="false" text="Modificar Vendedor" />
+                                          <Button fx:id="button_eliminarVendedor" layoutX="650.0" layoutY="448.0" mnemonicParsing="false" text="Eliminar Vendedor" />
                                        </children>
                                     </AnchorPane>
                                  </content>

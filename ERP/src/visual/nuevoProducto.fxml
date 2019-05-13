@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -140,19 +140,19 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab text="Precios">
+                <Tab fx:id="tab_precios" onSelectionChanged="#setCostoYPrecioTotal" text="Precios">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Text layoutX="64.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costo" />
-                              <TextField editable="false" layoutX="64.0" layoutY="90.0" />
+                              <TextField fx:id="textfield_preciosCostos" editable="false" layoutX="64.0" layoutY="90.0" />
                               <Text layoutX="446.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porciento de ganancia" />
-                              <TextField alignment="CENTER_RIGHT" editable="false" layoutX="446.0" layoutY="90.0" prefHeight="31.0" prefWidth="101.0" promptText="0" />
-                              <CheckBox layoutX="446.0" layoutY="131.0" mnemonicParsing="false" text="Habilitar" />
+                              <TextField fx:id="textfield_preciosPorcientoGanancia" alignment="CENTER_RIGHT" layoutX="446.0" layoutY="90.0" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="101.0" promptText="0" />
+                              <CheckBox fx:id="checkbox_preciosHabilitar" layoutX="446.0" layoutY="131.0" mnemonicParsing="false" onAction="#habilitarPorcientoGanancia" text="Habilitar" />
                               <Text layoutX="553.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
                               <Text layoutX="64.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio" />
-                              <TextField layoutX="64.0" layoutY="229.0" />
-                              <TextField layoutX="446.0" layoutY="229.0" />
+                              <TextField fx:id="textfield_preciosPrecio" layoutX="64.0" layoutY="229.0" onKeyTyped="#numericFieldPressed" />
+                              <TextField fx:id="textfield_preciosImpuestos" layoutX="454.0" layoutY="229.0" onKeyTyped="#numericFieldPressed" text="18" />
                               <Text layoutX="446.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impuestos" />
                            </children>
                         </AnchorPane>
