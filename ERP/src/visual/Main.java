@@ -17,8 +17,6 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -29,7 +27,6 @@ import javafx.scene.text.Text;
 
 public class Main extends Application{
 	
-	//ImageView menu_bckgrnd = new ImageView("../images/background/Menu.png");
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -39,15 +36,10 @@ public class Main extends Application{
 			//FXMLLoader f = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 		 
 		    Parent root = f.load();
-		    Scene sc = new Scene(root);
+		    Scene sc = new Scene(root, 1150, 750);
 		    primaryStage.setScene(sc);
 		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
-		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    primaryStage.setMaximized(true);
-		    
-		  //  menu_bckgrnd.fitWidthProperty().bind(primaryStage.widthProperty()); 
-		    
 		    primaryStage.show();
 
 		    
