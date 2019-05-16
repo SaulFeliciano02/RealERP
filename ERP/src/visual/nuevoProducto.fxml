@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ListView?>
@@ -18,11 +23,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
-      <AnchorPane layoutX="-6.0" prefHeight="800.0" prefWidth="1200.0">
+      <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
-            <TabPane layoutX="205.0" layoutY="88.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+            <ImageView fitHeight="790.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/background/Popup_background.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="69.0" fitWidth="190.0" layoutX="9.0" layoutY="32.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Logo.png" />
+               </image>
+            </ImageView>
+            <TabPane layoutX="218.0" layoutY="67.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General">
                   <content>
@@ -224,8 +239,8 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button disable="true" layoutX="971.0" layoutY="693.0" mnemonicParsing="false" text="Guardar" />
-            <Button fx:id="button_productCancel" layoutX="1062.0" layoutY="693.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
+            <Button disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
+            <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>

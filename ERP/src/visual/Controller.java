@@ -648,7 +648,9 @@ public class Controller implements Initializable{
             } else {
             	button_nuevoProducto.setEffect(nonclicked_nuevoProducto1);
             }
+    
         });
+    	
     	/**ABRIENDO nuevoProducto.fxml**/
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
@@ -658,8 +660,12 @@ public class Controller implements Initializable{
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Producto");
-			stage.setScene(new Scene(root1, 1150, 750));  
-			stage.show();
+			stage.setScene(new Scene(root1, 1150, 750)); 
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(button_nuevoProducto.getScene().getWindow());
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -702,7 +708,11 @@ public class Controller implements Initializable{
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Cliente");
 			stage.setScene(new Scene(root1, 1150, 750));  
-			stage.show();
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(button_nuevoCliente.getScene().getWindow());
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -719,7 +729,11 @@ public class Controller implements Initializable{
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Proveedor");
 			stage.setScene(new Scene(root1, 1150, 750));  
-			stage.show();
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(button_nuevoProveedor.getScene().getWindow());
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -736,7 +750,11 @@ public class Controller implements Initializable{
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Vendedor");
 			stage.setScene(new Scene(root1, 1150, 750));  
-			stage.show();
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(button_nuevoVendedor.getScene().getWindow());
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
