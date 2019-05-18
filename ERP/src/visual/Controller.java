@@ -3,6 +3,7 @@ package visual;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -71,12 +72,25 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProducto;
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
+    
+    //DESPLIEGUE DE CLIENTE
+    @FXML private TableColumn<Cliente, String> tablecolumn_clienteCodigo;
+    @FXML private TableColumn<Cliente, String> tablecolumn_clienteNombre;
+    @FXML private TableColumn<Cliente, String> tablecolumn_clienteTelefono;
+    @FXML private TableColumn<Cliente, LocalDate> tablecolumn_clienteCumple;
+    @FXML private TableColumn<Cliente, String> tablecolumn_clienteRNC;
+    @FXML private TableColumn<Cliente, String> tablecolumn_clienteTipo;
+    @FXML private TableView<Cliente> tableview_clientesList;
     @FXML private Button button_nuevoCliente;
     @FXML private Button button_modificarCliente;
     @FXML private Button button_eliminarCliente;
+    
+    //DESPLIEGUE DE PROVEEDOR
     @FXML private Button button_nuevoProveedor;
     @FXML private Button button_modificarProveedor;
     @FXML private Button button_eliminarProveedor;
+    
+    //DESPLIEGUE DE VENDEDOR
     @FXML private Button button_nuevoVendedor;
     @FXML private Button button_modificarVendedor;
     @FXML private Button button_eliminarVendedor;
@@ -1009,9 +1023,24 @@ public class Controller implements Initializable{
 	}
 	
 	public void guardarCliente(ActionEvent event) {
+		cancelCreation(event);
 		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
 				 datepicker_cumpleCliente.getValue(), textfield_rncCliente.getText());
+		//tableview_clientesList.getItems().clear();
 		Controladora.getInstance().addCliente(cliente);
+		//fillClientList();
+		//ObservableList<Cliente> data = FXCollections.observableArrayList();
+		
+		//data.addAll(Controladora.getInstance().getMisClientes());
+		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("cumpleanos"));
+    	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
+		tableview_clientesList.getItems().add(cliente);
+		System.out.println(tableview_clientesList.getItems().size() + " " + datepicker_cumpleCliente.getValue());
+		System.out.println("Klk");
 	}
 	
 	/**FUNCIONES AGREGAR PROVEEDOR**/
@@ -1036,11 +1065,38 @@ public class Controller implements Initializable{
 	
 	/**FUNCIONES PARA AGREGAR VENDEDOR**/
 	
+	public void fillClientList() {
+		Cliente cliente = new Cliente("dasdas", "dasdasd0", "dasdasdas", "adasdas", (LocalDate) null, "dasdasd");
+		Controladora.getInstance().addCliente(cliente);
+		ObservableList<Cliente> data = FXCollections.observableArrayList();
+    	data.addAll(Controladora.getInstance().getMisClientes());
+    	tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("Codigo"));
+    	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+    	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
+    	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("Cumpleanos"));
+    	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
+    	tableview_clientesList.getItems().addAll(data);
+    	
+    	System.out.println("Added: " + tableview_clientesList.getItems().size());
+	}
 	ObservableList<String> observableList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	observableList.add("Help");
     	listview_partida.setItems(observableList);
+    	//fillClientList();
+    	//OBTENIENDO LISTA DE CLIENTES
+    	tablecolumn_clienteCodigo = new TableColumn<>();
+    	tablecolumn_clienteNombre = new TableColumn<>();
+    	tablecolumn_clienteTelefono = new TableColumn<>();
+    	tablecolumn_clienteCumple = new TableColumn<>();
+    	tablecolumn_clienteRNC = new TableColumn<>();
+    	tablecolumn_clienteTipo = new TableColumn<>();
+    	tableview_clientesList = new TableView<>();
+    	//Cliente cliente = new Cliente("dasdas", "dasdasd0", "dasdasdas", "adasdas", (LocalDate) null, "dasdasd");
+    	//Controladora.getInstance().addCliente(cliente);
+    	
  
     }
     
