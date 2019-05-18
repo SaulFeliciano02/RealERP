@@ -1,10 +1,13 @@
 package visual;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import com.sun.org.apache.xml.internal.serializer.SerializerTrace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +52,9 @@ import javafx.scene.Scene;
 
 public class Controller implements Initializable{
 	
+	
 	/**VARIABLES DE LA PANTALLA PRINCIPAL**/
+	@FXML private Pane mainPane;
     @FXML private HBox box_Principal;
 
     @FXML private Button selected_Inventario;
@@ -166,76 +171,6 @@ public class Controller implements Initializable{
 	ImageInput nonclicked_modificarProducto1 = new ImageInput(); 
 	ImageInput nonclicked_eliminarProducto1 = new ImageInput();
 	/**FIN VARIABLE PANTALLA PRINCIPAL**/
-	
-	
-	/**VARIABLES PARA CREAR PRODUCTOS**/
-	
-	//GENERAL
-	@FXML private TextField exAct;
-	@FXML private TextField exMin;
-	@FXML private TextField exMax;
-	@FXML private Button button_productCancel;
-	
-	//PARTIDA
-	@FXML private Tab tab_partida;
-	@FXML private ListView<String> listview_partida = new ListView<>();
-	@FXML private ListView<String> listview_partidaSelect = new ListView<>();
-	@FXML private Button button_partidaSendTo;
-	@FXML private Button button_partidaSendBack;
-	@FXML private TextField textfield_partidaCantidad;
-	
-	//COSTOS DIRECTOS
-	@FXML private TextField textfield_costosDirectosNombre;
-	@FXML private TextField textfield_costosDirectosValor;
-	@FXML private TextArea textarea_costosDirectosDescripcion;
-	@FXML private Button button_costosDirectosAgregar;
-	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosNombre;
-	@FXML private TableColumn<CostoDirecto, Double> tablecolumn_costosDirectosValor;
-	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosDescripcion;
-	@FXML private TableView<CostoDirecto> tableview_costosDirectos;
-	@FXML private Button button_costosDirectosModificar;
-	@FXML private Button button_costosDirectosEliminar;
-	
-	//COSTOS INDIRECTOS
-	@FXML private TextField textfield_costosIndirectosNombre;
-	@FXML private TextField textfield_costosIndirectosValor;
-	@FXML private TextArea textarea_costosIndirectosDescripcion;
-	@FXML private Button button_costosIndirectosAgregar;
-	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosNombre;
-	@FXML private TableColumn<CostoIndirectoProducto, Double> tablecolumn_costosIndirectosValor;
-	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosDescripcion;
-	@FXML private TableView<CostoIndirectoProducto> tableview_costosIndirectos;
-	@FXML private Button button_costosIndirectosModificar;
-	@FXML private Button button_costosIndirectosEliminar;
-	
-	//PRECIOS
-	@FXML private Tab precios;
-	@FXML private TextField textfield_preciosCostos;
-	@FXML private TextField textfield_preciosPorcientoGanancia;
-	@FXML private TextField textfield_preciosImpuestos;
-	@FXML private TextField textfield_preciosPrecio;
-	@FXML private CheckBox checkbox_preciosHabilitar;
-	
-	/**VARIABLES PARA LA CREACION DE UN CLIENTE**/
-	@FXML private Button button_clienteCancel;
-	@FXML private Button button_clienteGuardar;
-	@FXML private TextField textfield_codigoCliente;
-	@FXML private TextField textfield_nombreCliente;
-	@FXML private TextField textfield_telefonoCliente;
-	@FXML private TextField textfield_tipoCliente;
-	@FXML private TextField textfield_rncCliente;
-	@FXML private DatePicker datepicker_cumpleCliente;
-	
-	/**VARIABLE PARA LA CREACION DE UN PROVEEDOR**/
-	@FXML private Button button_proveedorCancel;
-	@FXML private Button button_proveedorGuardar;
-	@FXML private TextField textfield_codigoProveedor;
-	@FXML private TextField textfield_nombreProveedor;
-	@FXML private TextField textfield_telefonoProveedor;
-	@FXML private TextArea textarea_direccionProveedor;
-	@FXML private TextField textfield_rncProveedor;
-	@FXML private TextField textfield_correoElectronicoProveedor;
-	@FXML private TextField textfield_sitioWebProveedor;
 	
 
 
@@ -794,22 +729,6 @@ public class Controller implements Initializable{
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
     	}
-    	//Especifico sobre que variable el evento surgio
-    	if(event.getSource().equals(textfield_costosDirectosValor)) {
-    		costoDirectoActivarAgregar(event);
-    	}
-    	else if(event.getSource().equals(textfield_costosIndirectosValor)) {
-    		costoIndirectoActivarAgregar(event);
-    	}
-    	else if(event.getSource().equals(textfield_telefonoCliente)) {
-    		clienteActivarGuardar(event);
-    	}
-    	else if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
-    		calcularPrecio(event);
-    	}
-    	else if(event.getSource().equals(textfield_telefonoProveedor)) {
-    		proveedorActivarGuardar(event);
-    	}
     }
     
     //Cierra la venta de nuevoProducto
@@ -818,286 +737,32 @@ public class Controller implements Initializable{
     	Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
     }
+	
+
+	
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    	fillClientList();
+    }
     
-    /**FUNCIONES CREACION DE PRODUCTO**/  
    
-    //FUNCIONES CREACION DE LA PARTIDA
-    public void listview_PartidaClicked(MouseEvent event) {
-    	if(!listview_partida.getSelectionModel().isEmpty() && textfield_partidaCantidad.getLength() > 0) {
-    		button_partidaSendTo.setDisable(false);
-    	}
-    	else if (listview_partida.getSelectionModel().isEmpty() || textfield_partidaCantidad.getLength() == 0) {
-    		button_partidaSendTo.setDisable(true);
-    	}
-    }
     
-    public void listview_partidaSelectClicked(MouseEvent event) {
-    	if(!listview_partidaSelect.getSelectionModel().isEmpty()) {
-    		button_partidaSendBack.setDisable(false);
-    	}
-    	else {
-    		button_partidaSendBack.setDisable(true);
-    	}
-    }
-    
-    public void movePartida(ActionEvent event) {
-    	String select_items = listview_partida.getSelectionModel().getSelectedItem();
-    	listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
-    	listview_partidaSelect.getItems().addAll(select_items);
-    	button_partidaSendTo.setDisable(true);
-    	textfield_partidaCantidad.clear();
-    }
-    
-    public void movePartidaSelect(ActionEvent event) {
-    	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
-    	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
-    	listview_partida.getItems().add(select_items);
-    	button_partidaSendBack.setDisable(true);
-    }
-    
-    //FUNCIONES COSTO DIRECTO
-    public void costoDirectoActivarAgregar(KeyEvent event) {
-    	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() >= 0) {
-    		button_costosDirectosAgregar.setDisable(false);
-    	}
-    	else {
-    		button_costosDirectosAgregar.setDisable(true);
-    	}
-    }
-    
-	public void costoDirectoIngresarTableView(ActionEvent event) {
-    	CostoDirecto costodirecto = new CostoDirecto(textfield_costosDirectosNombre.getText(), Double.parseDouble(textfield_costosDirectosValor.getText()), textarea_costosDirectosDescripcion.getText());
-    	ObservableList<CostoDirecto> data = FXCollections.observableArrayList();
-    	data.add(costodirecto);
-    	tablecolumn_costosDirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-    	tablecolumn_costosDirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
-    	tablecolumn_costosDirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-    	tableview_costosDirectos.getItems().add(costodirecto);
-    	textfield_costosDirectosNombre.clear();
-    	textfield_costosDirectosValor.clear();
-    	textarea_costosDirectosDescripcion.clear();
-    	button_costosDirectosAgregar.setDisable(true);
-    }
-	
-	public void costosDirectosTableViewClicked(MouseEvent event) {
-		if(tableview_costosDirectos.getSelectionModel().isEmpty()) {
-			button_costosDirectosModificar.setDisable(true);
-			button_costosDirectosEliminar.setDisable(true);
-		}
-		else if(!tableview_costosDirectos.getSelectionModel().isEmpty()) {
-			button_costosDirectosModificar.setDisable(false);
-			button_costosDirectosEliminar.setDisable(false);
-		}
-	}
-	
-	public void costosDirectosEliminar(ActionEvent event) {
-		int index = tableview_costosDirectos.getSelectionModel().getSelectedIndex();
-		tableview_costosDirectos.getItems().remove(index);
-	}
-	
-	//FUNCIONES COSTO INDIRECTO
-	public void costoIndirectoActivarAgregar(KeyEvent event) {
-    	if(textfield_costosIndirectosNombre.getLength() > 0 && textfield_costosIndirectosValor.getLength() > 0) {
-    		button_costosIndirectosAgregar.setDisable(false);
-    	}
-    	else {
-    		button_costosIndirectosAgregar.setDisable(true);
-    	}
-    }
-	
-	public void costoIndirectoIngresarTableView(ActionEvent event) {
-    	CostoIndirectoProducto costoindirectoProducto = new CostoIndirectoProducto(textfield_costosIndirectosNombre.getText(), Double.parseDouble(textfield_costosIndirectosValor.getText()), textarea_costosIndirectosDescripcion.getText());
-    	ObservableList<CostoIndirectoProducto> data = FXCollections.observableArrayList();
-    	data.add(costoindirectoProducto);
-    	tablecolumn_costosIndirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-    	tablecolumn_costosIndirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
-    	tablecolumn_costosIndirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-    	tableview_costosIndirectos.getItems().add(costoindirectoProducto);
-    	textfield_costosIndirectosNombre.clear();
-    	textfield_costosIndirectosValor.clear();
-    	textarea_costosIndirectosDescripcion.clear();
-    	button_costosIndirectosAgregar.setDisable(true);
-    }
-	
-	public void costosIndirectosTableViewClicked(MouseEvent event) {
-		if(tableview_costosIndirectos.getSelectionModel().isEmpty()) {
-			button_costosIndirectosModificar.setDisable(true);
-			button_costosIndirectosEliminar.setDisable(true);
-		}
-		else if(!tableview_costosIndirectos.getSelectionModel().isEmpty()) {
-			button_costosIndirectosModificar.setDisable(false);
-			button_costosIndirectosEliminar.setDisable(false);
-		}
-	}
-	
-	public void costosIndirectosEliminar(ActionEvent event) {
-		int index = tableview_costosIndirectos.getSelectionModel().getSelectedIndex();
-		tableview_costosIndirectos.getItems().remove(index);
-	}
-    
-   //FUNCIONES PRECIO
-	public void setCostoYPrecioTotal(Event event) {
-		double valorDirecto = 0;
-		double valorIndirecto = 0;
-		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
-			valorDirecto += valor.getValor();
-		}
-		for(CostoIndirectoProducto valor : tableview_costosIndirectos.getItems()) {
-			valorIndirecto += valor.getValor();
-		}
-		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto));
-		if(checkbox_preciosHabilitar.isSelected()) {
-			textfield_preciosPorcientoGanancia.setDisable(false);
-		}
-		else {
-			textfield_preciosPorcientoGanancia.setDisable(true);
-		}
-		try {
-			double precioTotal = Controladora.getInstance().calcularPrecio
-					(Double.parseDouble(textfield_preciosCostos.getText()),
-					Double.parseDouble(textfield_preciosPorcientoGanancia.getText()) ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));	
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
-		}
-		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
-		catch (NumberFormatException e) {
-			double precioTotal = Controladora.getInstance().calcularPrecio
-					(Double.parseDouble(textfield_preciosCostos.getText()),
-					0 ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));			
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
-		}		
-	}
-		
-	
-	public void habilitarPorcientoGanancia(ActionEvent event) {
-		if(checkbox_preciosHabilitar.isSelected()) {
-			textfield_preciosPorcientoGanancia.setDisable(false);
-		}
-		else {
-			textfield_preciosPorcientoGanancia.setDisable(true);
-		}
-		
-	}
-	
-	public void calcularPrecio(KeyEvent event) {
-		//Tengo que sumarle el caracter del evento.
-		String textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
-		try {
-			double precioTotal = Controladora.getInstance().calcularPrecio
-					(Double.parseDouble(textfield_preciosCostos.getText()),
-					Double.parseDouble(textfield) ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));	
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
-		}
-		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
-		catch (NumberFormatException e) {
-			double precioTotal = Controladora.getInstance().calcularPrecio
-					(Double.parseDouble(textfield_preciosCostos.getText()),
-					0 ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));			
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
-		}		
-	}
-	
-	/**FUNCIONES AGREGAR CLIENTE**/
-	
-	public void clienteActivarGuardar(KeyEvent event) {
-		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
-				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
-			button_clienteGuardar.setDisable(false);
-		}
-		else {
-			button_clienteGuardar.setDisable(true);
-		}
-	}
-	
-	public void clienteActivarGuardarDatePicker(ActionEvent event) {
-		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
-				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
-			button_clienteGuardar.setDisable(false);
-		}
-		else {
-			button_clienteGuardar.setDisable(true);
-		}
-	}
-	
-	public void guardarCliente(ActionEvent event) {
-		cancelCreation(event);
-		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
-				 datepicker_cumpleCliente.getValue(), textfield_rncCliente.getText());
-		//tableview_clientesList.getItems().clear();
-		Controladora.getInstance().addCliente(cliente);
-		//fillClientList();
-		//ObservableList<Cliente> data = FXCollections.observableArrayList();
-		
-		//data.addAll(Controladora.getInstance().getMisClientes());
+    public void fillClientList() {
+    	ObservableList<Cliente> data = FXCollections.observableArrayList();
+    	data.addAll(Controladora.getInstance().getMisClientes());
 		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
     	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("cumpleanos"));
     	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
     	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
-		tableview_clientesList.getItems().add(cliente);
-		System.out.println(tableview_clientesList.getItems().size() + " " + datepicker_cumpleCliente.getValue());
-		System.out.println("Klk");
+    	tableview_clientesList.setItems(data);;
+    	tableview_clientesList.refresh();
 	}
-	
-	/**FUNCIONES AGREGAR PROVEEDOR**/
-	
-	public void proveedorActivarGuardar(KeyEvent event) {
-		if(textfield_codigoProveedor.getLength() > 0 && textfield_nombreProveedor.getLength() > 0 && textfield_rncProveedor.getLength() > 0
-				&& textfield_telefonoProveedor.getLength() > 0) {
-			button_proveedorGuardar.setDisable(false);
-		}
-		else {
-			button_proveedorGuardar.setDisable(true);
-		}
-	}
-	
-	public void guardarProveedor(ActionEvent Event) {
-		Rubro rubro = null;
-		Proveedores proveedor = new Proveedores(textfield_codigoProveedor.getText(), textfield_nombreProveedor.getText(), textfield_telefonoProveedor.getText(),
-				textarea_direccionProveedor.getText(), textfield_correoElectronicoProveedor.getText(), textfield_rncProveedor.getText(),
-				rubro, textfield_sitioWebProveedor.getText());
-		Controladora.getInstance().addProveedor(proveedor);
-	}
-	
-	/**FUNCIONES PARA AGREGAR VENDEDOR**/
-	
-	public void fillClientList() {
-		Cliente cliente = new Cliente("dasdas", "dasdasd0", "dasdasdas", "adasdas", (LocalDate) null, "dasdasd");
-		Controladora.getInstance().addCliente(cliente);
-		ObservableList<Cliente> data = FXCollections.observableArrayList();
-    	data.addAll(Controladora.getInstance().getMisClientes());
-    	tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("Codigo"));
-    	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-    	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
-    	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("Cumpleanos"));
-    	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
-    	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
-    	tableview_clientesList.getItems().addAll(data);
-    	
-    	System.out.println("Added: " + tableview_clientesList.getItems().size());
-	}
-	ObservableList<String> observableList = FXCollections.observableArrayList();
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    	observableList.add("Help");
-    	listview_partida.setItems(observableList);
-    	//fillClientList();
-    	//OBTENIENDO LISTA DE CLIENTES
-    	tablecolumn_clienteCodigo = new TableColumn<>();
-    	tablecolumn_clienteNombre = new TableColumn<>();
-    	tablecolumn_clienteTelefono = new TableColumn<>();
-    	tablecolumn_clienteCumple = new TableColumn<>();
-    	tablecolumn_clienteRNC = new TableColumn<>();
-    	tablecolumn_clienteTipo = new TableColumn<>();
-    	tableview_clientesList = new TableView<>();
-    	//Cliente cliente = new Cliente("dasdas", "dasdasd0", "dasdasdas", "adasdas", (LocalDate) null, "dasdasd");
-    	//Controladora.getInstance().addCliente(cliente);
-    	
- 
-    }
     
+    public TableView<Cliente> getTableview_clientesList(){
+    	//tableview_clientesList.setId("tableview_clientesList");
+    	return this.tableview_clientesList;
+    }
 }
