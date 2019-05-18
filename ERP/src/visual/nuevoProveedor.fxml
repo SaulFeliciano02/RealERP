@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -27,24 +32,24 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
                            <children>
-                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Proveedor" />
-                              <TextField layoutX="42.0" layoutY="43.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
-                              <Text layoutX="433.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                              <TextField layoutX="433.0" layoutY="44.0" prefHeight="31.0" prefWidth="294.0" />
-                              <TextField layoutX="42.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
-                              <Text layoutX="42.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" />
+                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Proveedor*" />
+                              <TextField fx:id="textfield_codigoProveedor" layoutX="42.0" layoutY="43.0" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text layoutX="433.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre*" />
+                              <TextField fx:id="textfield_nombreProveedor" layoutX="433.0" layoutY="44.0" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="294.0" />
+                              <TextField fx:id="textfield_telefonoProveedor" layoutX="42.0" layoutY="110.0" onAction="#numericFieldPressed" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="285.0" />
+                              <Text layoutX="42.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono*" />
                               <Text layoutX="438.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
                               <TextField layoutX="438.0" layoutY="110.0" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="40.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección" />
-                              <TextArea layoutX="40.0" layoutY="204.0" prefHeight="74.0" prefWidth="679.0" />
+                              <TextArea fx:id="textfield_direccionProveedor" layoutX="40.0" layoutY="204.0" prefHeight="74.0" prefWidth="679.0" />
                               <Text layoutX="42.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
                               <TextField layoutX="42.0" layoutY="328.0" prefHeight="31.0" prefWidth="260.0" />
                               <Text layoutX="42.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos/Servicios" />
-                              <TextField layoutX="460.0" layoutY="406.0" prefHeight="31.0" prefWidth="299.0" />
-                              <Text layoutX="460.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC" />
+                              <TextField fx:id="textfield_rncProveedor" layoutX="466.0" layoutY="411.0" onAction="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="299.0" />
+                              <Text layoutX="460.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC*" />
                               <Text layoutX="42.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electrónico" />
-                              <TextField layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="344.0" />
-                              <TextField layoutX="483.0" layoutY="484.0" prefHeight="31.0" prefWidth="362.0" />
+                              <TextField fx:id="textfield_correoElectronicoProveedor" layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="344.0" />
+                              <TextField fx:id="textfield_sitioWebProveedor" layoutX="483.0" layoutY="484.0" prefHeight="31.0" prefWidth="362.0" />
                               <Text layoutX="483.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sitio Web" />
                               <ComboBox layoutX="42.0" layoutY="411.0" prefHeight="31.0" prefWidth="267.0" />
                               <Button layoutX="302.0" layoutY="328.0" mnemonicParsing="false" text="Seleccionar" />
@@ -54,8 +59,8 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
-            <Button layoutX="1062.0" layoutY="670.0" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="button_proveedorGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
+            <Button fx:id="button_proveedorCancel" layoutX="1062.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>
