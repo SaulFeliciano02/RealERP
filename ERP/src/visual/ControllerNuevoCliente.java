@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,12 +24,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import logico.Cliente;
 import logico.Controladora;
 
 public class ControllerNuevoCliente implements Initializable {
 	
 	/**VARIABLES PARA LA CREACION DE UN CLIENTE**/
+	@FXML private Pane nuevoClientePane;
 	@FXML private Button button_clienteCancel;
 	@FXML private Button button_clienteGuardar;
 	@FXML private TextField textfield_codigoCliente;
@@ -37,6 +41,28 @@ public class ControllerNuevoCliente implements Initializable {
 	@FXML private TextField textfield_rncCliente;
 	@FXML private DatePicker datepicker_cumpleCliente;
 /**FUNCIONES AGREGAR CLIENTE**/
+	
+	public void reload(Stage stage) {
+    	Window owner = stage.getOwner();
+		owner.hide();
+   		try {
+        	Stage primaryStage = new Stage();
+        	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+		 
+		    Parent root = f.load();
+		    Scene sc = new Scene(root);
+		    primaryStage.setScene(sc);
+		    primaryStage.sizeToScene();
+		    primaryStage.setTitle("Centro Pymes");
+		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+		    primaryStage.setMaximized(true);
+		    
+		    primaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+	}
 	
 	public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
@@ -48,11 +74,11 @@ public class ControllerNuevoCliente implements Initializable {
     	}
     }
     
-    //Cierra la venta de nuevoProducto
+    //Cierra la ventana
     public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
-        stage.close();
+    	reload(stage);
     }
 	
 	public void clienteActivarGuardar(KeyEvent event) {
@@ -77,28 +103,15 @@ public class ControllerNuevoCliente implements Initializable {
 	
 	/**AQUI ESTA EL ASUNTO DE LAS TABLEVIEW**/
 	public void guardarCliente(ActionEvent event) {
-		cancelCreation(event);
 		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
 				 datepicker_cumpleCliente.getValue(), textfield_rncCliente.getText());
+		textfield_codigoCliente.setText("");
+		textfield_nombreCliente.setText("");
+		textfield_telefonoCliente.setText("");
+		textfield_tipoCliente.setText("");
+		textfield_rncCliente.setText("");
+		datepicker_cumpleCliente.setValue(null);
 		Controladora.getInstance().addCliente(cliente);
-		
-       try {
-        	Stage primaryStage = new Stage();
-        	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
-		 
-		    Parent root = f.load();
-		    Scene sc = new Scene(root);
-		    primaryStage.setScene(sc);
-		    primaryStage.sizeToScene();
-		    primaryStage.setTitle("Centro Pymes");
-		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    primaryStage.setMaximized(true);
-		    
-		    primaryStage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override

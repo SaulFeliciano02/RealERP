@@ -37,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Cliente;
 import logico.Controladora;
@@ -666,14 +667,38 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			Window owner = button_nuevoCliente.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Cliente");
 			stage.setScene(new Scene(root1, 1150, 750));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoCliente.getScene().getWindow());
+			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//SI CIERRO LA VENTANA DE REGISTROS DE CLIENTES CIERRO LA PRINCIPAL Y LA VUELVO A ABRIR
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          owner.hide();
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+			  		 
+			  		    Parent root = f.load();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.sizeToScene();
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+			  		    
+			  		    primaryStage.show();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  }); 
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
