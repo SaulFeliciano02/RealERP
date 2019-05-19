@@ -6,6 +6,11 @@ import java.util.ArrayList;
 public class Controladora implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	Cliente cliente1 = new Cliente("000001", "Marcos", "312312", "Activo", null, "2312313");
+	Cliente cliente2 = new Cliente("000002", "Saul", "312312", "Activo", null, "2312313");
+	Cliente cliente3 = new Cliente("000003", "Yorman", "312312", "Activo", null, "2312313");
+	Cliente cliente4 = new Cliente("000004", "Sarah", "312312", "Activo", null, "2312313");
+	Cliente cliente5 = new Cliente("000005", "Michael", "312312", "Activo", null, "2312313");
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Proveedores> misProveedores;
@@ -27,7 +32,12 @@ public class Controladora implements Serializable{
 		this.misDescuentos = new ArrayList<>();
 		this.misPromociones = new ArrayList<>();
 		this.misRubros = new ArrayList<>();
-		this.misProductos = new ArrayList<>();	
+		this.misProductos = new ArrayList<>();
+		misClientes.add(cliente1);
+		misClientes.add(cliente2);
+		misClientes.add(cliente3);
+		misClientes.add(cliente4);
+		misClientes.add(cliente5);
 	}
 	
 	public static Controladora getInstance() {
@@ -89,43 +99,67 @@ public class Controladora implements Serializable{
 	
 	/**FUNCION PARA BUSCAR UN PRODUCTO**/
 	
-	public Producto searchProducts(String buscador, String tipoBusqueda) {
-		Producto searchProducto = null;
+	public ArrayList<Producto> searchProducts(String buscador, String tipoBusqueda) {
+		int j = 0;
+		ArrayList<Producto> searchProducto = new ArrayList<>();
 		for(int i = 0; i < misProductos.size(); i++) {
 			int boolCount = 0;
+			j = 0;
 			/**Con motivo de no repetir la misma funcion varias veces, se penso hacerlo un switch**/
-			for(int j = 0; j < buscador.length(); j++) {
-				switch(tipoBusqueda) {
+			switch(tipoBusqueda) {
 				case "Codigo":
-					if(misProductos.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+					for(int k = 0; k < misProductos.get(i).getCodigo().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductos.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
 					}
 					break;
 				case "Nombre":
-					if(misProductos.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
+					for(int k = 0; k < misProductos.get(i).getNombre().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductos.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}	
 					break;
 				case "Descripcion":
-					if(misProductos.get(i).getDescripcion().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+					for(int k = 0; k < misProductos.get(i).getDescripcion().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductos.get(i).getDescripcion().toLowerCase().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
 					}
 					break;
 				case "Proveedor":
-					if(misProductos.get(i).getProveedorPrin().getCodigo().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+					for(int k = 0; k < misProductos.get(i).getProveedorPrin().getCodigo().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductos.get(i).getProveedorPrin().getCodigo().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
 					}
 					break;
 				case "Rubro":
-					if(misProductos.get(i).getRubroProducto().getNombreRubro().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
+					for(int k = 0; k < misProductos.get(i).getRubroProducto().getNombreRubro().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductos.get(i).getRubroProducto().getNombreRubro().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}	
 					break;
-				}
-				
 			}
 			if(boolCount == buscador.length()) {
-				searchProducto = misProductos.get(i);
+				searchProducto.add(misProductos.get(i));
 			}
 		}
 		return searchProducto;
@@ -134,32 +168,46 @@ public class Controladora implements Serializable{
 
 /**FUNCION PARA BUSCAR PROVEEDOR**/
 	
-	public Proveedores searchProveedores(String buscador, String tipoBusqueda){
-		Proveedores searchProveedor = null;
+	public ArrayList<Proveedores> searchProveedores(String buscador, String tipoBusqueda){
+		int j = 0;
+		ArrayList<Proveedores> searchProveedor = new ArrayList<>();
 		for(int i = 0; i < misProveedores.size(); i++) {
 			int boolCount = 0;
-			for(int j = 0; j < tipoBusqueda.length(); j++) {
-				switch(tipoBusqueda) {
-				case "Codigo":
-					if(misProveedores.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+			j = 0;
+			switch(tipoBusqueda) {
+			case "Codigo":
+				for(int k = 0; k < misProveedores.get(i).getCodigo().length(); k++) {
+					if(j < buscador.length()) {
+						if(misProveedores.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
+							boolCount++;
+						}
 					}
-					break;
-				
-				case "Nombre":
-					if(misProveedores.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
-					break;
-				case "Rubro":
-					if(misProveedores.get(i).getRubro().getNombreRubro().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
-					break;
+					j++;
 				}
+				break;
+			case "Nombre":
+				for(int k = 0; k < misProveedores.get(i).getNombre().length(); k++) {
+					if(j < buscador.length()) {
+						if(misProveedores.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
+							boolCount++;
+						}
+					}
+					j++;
+				}
+				break;
+			case "Rubro":
+				for(int k = 0; k < misProveedores.get(i).getRubro().getNombreRubro().length(); k++) {
+					if(j < buscador.length()) {
+						if(misProveedores.get(i).getRubro().getNombreRubro().toLowerCase().charAt(j) == buscador.charAt(j)) {
+							boolCount++;
+						}
+					}
+					j++;
+				}
+				break;
 			}
 			if(boolCount == buscador.length()) {
-				searchProveedor = misProveedores.get(i);
+				searchProveedor.add(misProveedores.get(i));
 			}
 		}
 		return searchProveedor;
@@ -167,26 +215,36 @@ public class Controladora implements Serializable{
 	
 /**FUNCION PARA BUSCAR CLIENTES**/
 	
-	public Cliente searchClientes(String buscador, String tipoBusqueda){
-		Cliente searchCliente = null;
+	public ArrayList<Cliente> searchClientes(String buscador, String tipoBusqueda){
+		int j = 0;
+		ArrayList<Cliente> searchCliente = new ArrayList<>();
 		for(int i = 0; i < misClientes.size(); i++) {
 			int boolCount = 0;
-			for(int j = 0; j < buscador.length(); j++) {
-				switch(tipoBusqueda) {
+			j = 0;
+			switch(tipoBusqueda) {
 				case "Codigo":
-					if(misClientes.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
+					for(int k = 0; k < misClientes.get(i).getCodigo().length(); k++) {
+						if(j < buscador.length()) {
+							if(misClientes.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}				
 					break;
 				case "Nombre":
-					if(misClientes.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+					for(int k = 0; k < misClientes.get(i).getNombre().length(); k++) {
+						if(j < buscador.length()) {
+							if(misClientes.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
 					}
 					break;
 				}
-			}
 			if(boolCount == buscador.length()) {
-				searchCliente = misClientes.get(i);
+				searchCliente.add(misClientes.get(i));
 			}
 		}
 		return searchCliente;
@@ -194,26 +252,36 @@ public class Controladora implements Serializable{
 	
 /**FUNCION PARA BUSCAR EMPLEADOS**/
 	
-	public Empleado searchEmpleados(String buscador, String tipoBusqueda){
-		Empleado searchEmpleado = null;
+	public ArrayList<Empleado> searchEmpleados(String buscador, String tipoBusqueda){
+		int j = 0;
+		ArrayList<Empleado> searchEmpleado = new ArrayList<>();
 		for(int i = 0; i < misEmpleados.size(); i++) {
 			int boolCount = 0;
-			for(int j = 0; j < buscador.length(); j++) {
-				switch(tipoBusqueda) {
-				case "Codigo":
+			j = 0;
+			switch(tipoBusqueda) {
+			case "Codigo":
+				for(int k = 0; k < misEmpleados.get(i).getCodigo().length(); k++) {
+					if(j < buscador.length()) {
 					if(misEmpleados.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
+							boolCount++;
+						}
 					}
-					break;
-				case "Nombre":
-					if(misEmpleados.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
-						boolCount++;
-					}
-					break;
+					j++;
 				}
-			}
+				break;
+			case "Nombre":
+				for(int k = 0; k < misEmpleados.get(i).getNombre().length(); k++) {
+					if(j < buscador.length()) {
+						if(misEmpleados.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
+							boolCount++;
+						}
+					}
+					j++;
+				}
+				break;
+			}		
 			if(boolCount == buscador.length()) {
-				searchEmpleado = misEmpleados.get(i);
+				searchEmpleado.add(misEmpleados.get(i));
 			}
 		}
 		return searchEmpleado;

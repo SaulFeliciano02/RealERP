@@ -227,7 +227,7 @@
                                           <Button fx:id="button_nuevoCliente" layoutX="37.0" layoutY="697.0" mnemonicParsing="false" onAction="#pressed_nuevoCliente" text="Nuevo Cliente" />
                                           <Button fx:id="button_modificarCliente" layoutX="762.0" layoutY="697.0" mnemonicParsing="false" text="Modificar Cliente" />
                                           <Button fx:id="button_eliminarCliente" layoutX="1487.0" layoutY="697.0" mnemonicParsing="false" text="Eliminar Cliente" />
-                                          <TextField layoutX="1200.0" layoutY="35.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
+                                          <TextField fx:id="textfield_clienteBusqueda" layoutX="1200.0" layoutY="35.0" onKeyTyped="#buscarClientes" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1580.0" layoutY="35.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
                                                 <ImageInput>
