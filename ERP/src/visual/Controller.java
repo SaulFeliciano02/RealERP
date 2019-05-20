@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.sun.org.apache.xml.internal.serializer.SerializerTrace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Cliente;
 import logico.Controladora;
@@ -89,6 +90,7 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoCliente;
     @FXML private Button button_modificarCliente;
     @FXML private Button button_eliminarCliente;
+    @FXML private TextField textfield_clienteBusqueda;
     
     //DESPLIEGUE DE PROVEEDOR
     @FXML private Button button_nuevoProveedor;
@@ -666,14 +668,38 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			Window owner = button_nuevoCliente.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Cliente");
 			stage.setScene(new Scene(root1, 1150, 750));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoCliente.getScene().getWindow());
+			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//SI CIERRO LA VENTANA DE REGISTROS DE CLIENTES CIERRO LA PRINCIPAL Y LA VUELVO A ABRIR
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          owner.hide();
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+			  		 
+			  		    Parent root = f.load();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.sizeToScene();
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+			  		    
+			  		    primaryStage.show();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  }); 
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -737,27 +763,51 @@ public class Controller implements Initializable{
     	Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
     }
+    
+    //Busqueda de clientes
+    public void buscarClientes(KeyEvent event) {
+    	ArrayList<Cliente> clientes = new ArrayList<>();
+    	if(Character.isLetter(event.getCharacter().charAt(0))) {
+    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase() + event.getCharacter(), "Nombre");
+    	}
+    	else {
+    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase(), "Nombre");
+    	}
+    	//System.out.println(clientes.size());
+    	//System.out.println(textfield_clienteBusqueda.getText().toLowerCase());
+    	if(clientes.size() == 0) {
+    		fillClientList(null);
+    	}
+    	else {
+    		fillClientList(clientes);
+    	}
+    }
 	
 
 	
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	fillClientList();
+    	fillClientList(null);
     }
     
    
     
-    public void fillClientList() {
+    public void fillClientList(ArrayList<Cliente> c) {
     	ObservableList<Cliente> data = FXCollections.observableArrayList();
-    	data.addAll(Controladora.getInstance().getMisClientes());
+    	if(c == null) {
+    		data.addAll(Controladora.getInstance().getMisClientes());
+    	}
+    	else {
+    		data.addAll(c);
+    	}
 		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
     	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("cumpleanos"));
     	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
     	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
-    	tableview_clientesList.setItems(data);;
+    	tableview_clientesList.setItems(data);
     	tableview_clientesList.refresh();
 	}
     

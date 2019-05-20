@@ -22,7 +22,7 @@ public class Main {
 		Producto pro = new Estandar(5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
 		Controladora.getInstance().addProducto(pro);
 		
-		System.out.println(Controladora.getInstance().searchProducts("pitola", "Nombre").getNombre());
+		//System.out.println(Controladora.getInstance().searchProducts("pitola", "Nombre").getNombre());
 	}
 
 }
