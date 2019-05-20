@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.sun.org.apache.xml.internal.serializer.SerializerTrace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
