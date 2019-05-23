@@ -127,7 +127,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
@@ -169,7 +169,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
@@ -271,7 +271,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
@@ -309,7 +309,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
@@ -337,7 +337,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
@@ -373,7 +373,7 @@
                                              <effect>
                                                 <ImageInput>
                                                    <source>
-                                                      <Image url="file:/C:/Users/Yorma/OneDrive/Escritorio/Images/icons/icon_search.png" />
+                                                      <Image url="@images/icons/icon_search.png" />
                                                    </source>
                                                 </ImageInput>
                                              </effect>
