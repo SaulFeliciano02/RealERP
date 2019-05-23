@@ -8,13 +8,11 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
@@ -27,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <BorderPane prefHeight="1000.0" prefWidth="1920.0">
          <center>
@@ -176,40 +174,6 @@
                                              </effect>
                                           </Button>
                                           <ComboBox layoutX="1059.0" layoutY="33.0" prefWidth="150.0" promptText="Buscar por: " />
-                                          <TitledPane layoutX="127.0" layoutY="26.0" prefHeight="731.0" prefWidth="1091.0" text="Busqueda de rubros">
-                                            <content>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Button layoutX="93.0" layoutY="451.0" mnemonicParsing="false" text="Nuevo Rubro" />
-                                                      <Button layoutX="223.0" layoutY="451.0" mnemonicParsing="false" text="Modificar Rubro" />
-                                                      <Button layoutX="372.0" layoutY="451.0" mnemonicParsing="false" text="Eliminar Rubro" />
-                                                      <TextField layoutX="661.0" layoutY="31.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
-                                                      <ComboBox layoutX="504.0" layoutY="31.0" prefWidth="150.0" promptText="Buscar por: " />
-                                                      <Button layoutX="982.0" layoutY="451.0" mnemonicParsing="false" text="Salir" />
-                                                      <TableView layoutX="68.0" layoutY="88.0" prefHeight="340.0" prefWidth="971.0">
-                                                        <columns>
-                                                          <TableColumn prefWidth="75.0" text="C1" />
-                                                          <TableColumn prefWidth="75.0" text="C2" />
-                                                        </columns>
-                                                      </TableView>
-                                                      <Pane layoutX="70.0" layoutY="502.0" prefHeight="189.0" prefWidth="967.0" style="-fx-background-color: TRANSPARENT;">
-                                                         <children>
-                                                            <Text disable="true" layoutX="27.0" layoutY="91.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
-                                                            <Text disable="true" layoutX="440.0" layoutY="91.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                                            <TextField disable="true" layoutX="27.0" layoutY="96.0" prefHeight="31.0" prefWidth="367.0" />
-                                                            <TextField disable="true" layoutX="440.0" layoutY="97.0" prefHeight="31.0" prefWidth="372.0" />
-                                                            <Button disable="true" layoutX="847.0" layoutY="99.0" mnemonicParsing="false" text="Guardar" />
-                                                            <Text disable="true" layoutX="27.0" layoutY="36.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar nuevo rubro">
-                                                               <font>
-                                                                  <Font size="20.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </Pane>
-                                                   </children>
-                                                </AnchorPane>
-                                            </content>
-                                          </TitledPane>
                                        </children></AnchorPane>
                               </content>
                             </Tab>
@@ -217,37 +181,6 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TitledPane animated="false" disable="true" layoutX="709.0" layoutY="36.0" prefHeight="617.0" prefWidth="934.0" text="Listado de atributos" visible="false">
-                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="595.0" prefWidth="933.0">
-                                                   <children>
-                                                      <TextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="196.0" promptText="Búsqueda" />
-                                                      <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="497.0" prefWidth="196.0">
-                                                         <content>
-                                                            <ListView prefHeight="514.0" prefWidth="194.0" />
-                                                         </content>
-                                                      </ScrollPane>
-                                                      <TableView layoutX="214.0" layoutY="43.0" prefHeight="478.0" prefWidth="718.0">
-                                                         <columns>
-                                                            <TableColumn prefWidth="350.0" text="Atributo" />
-                                                            <TableColumn prefWidth="360.0" text="Familia" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="223.0" layoutY="14.0" prefHeight="19.0" prefWidth="686.0" promptText="Resumen de la Familia" />
-                                                      <Button layoutX="342.0" layoutY="548.0" mnemonicParsing="false" text="Agregar" />
-                                                      <Button layoutX="869.0" layoutY="548.0" mnemonicParsing="false" text="Salir" />
-                                                      <Button layoutX="411.0" layoutY="548.0" mnemonicParsing="false" text="Modificar" />
-                                                      <Button layoutX="487.0" layoutY="548.0" mnemonicParsing="false" text="Eliminar" />
-                                                      <RadioButton layoutX="223.0" layoutY="543.0" mnemonicParsing="false" selected="true" text="Atributos">
-                                                         <toggleGroup>
-                                                            <ToggleGroup fx:id="manejarAtributoFamilia" />
-                                                         </toggleGroup></RadioButton>
-                                                      <RadioButton layoutX="223.0" layoutY="561.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
-                                                      <Text layoutX="223.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
-                                                   </children>
-                                                </AnchorPane>
-                                             </content>
-                                          </TitledPane>
                                           <TextField layoutX="146.0" layoutY="66.0" prefHeight="26.0" prefWidth="196.0" promptText="Búsqueda" />
                                           <ListView layoutX="147.0" layoutY="93.0" prefHeight="514.0" prefWidth="194.0" />
                                           <TableView layoutX="365.0" layoutY="93.0" prefHeight="478.0" prefWidth="718.0">
@@ -260,7 +193,10 @@
                                           <Button layoutX="489.0" layoutY="607.0" mnemonicParsing="false" text="Agregar" />
                                           <Button layoutX="580.0" layoutY="607.0" mnemonicParsing="false" text="Modificar" />
                                           <Button layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
-                                          <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos" toggleGroup="$manejarAtributoFamilia" />
+                                          <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="manejarAtributoFamilia" />
+                                             </toggleGroup></RadioButton>
                                           <RadioButton layoutX="381.0" layoutY="637.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
                                           <Text layoutX="381.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
                                        </children>
