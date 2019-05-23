@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProveedor">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProveedor">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -35,15 +35,15 @@
                               <TextField fx:id="textfield_codigoProveedor" layoutX="42.0" layoutY="43.0" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
                               <Text layoutX="433.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre*" />
                               <TextField fx:id="textfield_nombreProveedor" layoutX="433.0" layoutY="44.0" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="294.0" />
-                              <TextField fx:id="textfield_telefonoProveedor" layoutX="42.0" layoutY="116.0" onAction="#numericFieldPressed" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="285.0" />
+                              <TextField fx:id="textfield_telefonoProveedor" layoutX="42.0" layoutY="116.0" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="42.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono*" />
                               <Text layoutX="438.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
                               <TextField layoutX="438.0" layoutY="116.0" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="40.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección" />
                               <TextArea fx:id="textfield_direccionProveedor" layoutX="40.0" layoutY="199.0" prefHeight="74.0" prefWidth="679.0" />
                               <Text layoutX="483.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
-                              <TextField layoutX="483.0" layoutY="334.0" prefHeight="31.0" prefWidth="260.0" />
-                              <TextField fx:id="textfield_rncProveedor" layoutX="43.0" layoutY="335.0" onAction="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="299.0" />
+                              <TextField layoutX="483.0" layoutY="334.0" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="260.0" />
+                              <TextField fx:id="textfield_rncProveedor" layoutX="43.0" layoutY="335.0" onAction="#proveedorActivarGuardar" onKeyTyped="#proveedorActivarGuardar" prefHeight="31.0" prefWidth="299.0" />
                               <Text layoutX="44.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC*" />
                               <Text layoutX="42.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electrónico" />
                               <TextField fx:id="textfield_correoElectronicoProveedor" layoutX="42.0" layoutY="426.0" prefHeight="31.0" prefWidth="344.0" />
@@ -56,7 +56,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="button_proveedorGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
+            <Button fx:id="button_proveedorGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" onAction="#guardarProveedor" text="Guardar" />
             <Button fx:id="button_proveedorCancel" layoutX="1062.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>

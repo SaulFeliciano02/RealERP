@@ -96,6 +96,16 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProveedor;
     @FXML private Button button_modificarProveedor;
     @FXML private Button button_eliminarProveedor;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCodigo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorNombre;
+    @FXML private TableColumn<Proveedores, Rubro> tablecolumn_proveedorRubro;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorDomicilio;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCorreo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorTelefono;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorRNC;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorSitioWeb;
+    @FXML private TableView<Proveedores> tableview_proveedoresList;
+    @FXML private TextField textfield_proveedorBusqueda;
     
     //DESPLIEGUE DE VENDEDOR
     @FXML private Button button_nuevoVendedor;
@@ -713,14 +723,37 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			Window owner = button_nuevoCliente.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Proveedor");
 			stage.setScene(new Scene(root1, 1150, 750));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoProveedor.getScene().getWindow());
+			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          owner.hide();
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+			  		 
+			  		    Parent root = f.load();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.sizeToScene();
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+			  		    
+			  		    primaryStage.show();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  }); 
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -782,6 +815,22 @@ public class Controller implements Initializable{
     		fillClientList(clientes);
     	}
     }
+    
+    public void buscarProveedores(KeyEvent event) {
+    	ArrayList<Proveedores> proveedores = new ArrayList<>();
+    	if(Character.isLetter(event.getCharacter().charAt(0))) {
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase() + event.getCharacter(), "Nombre");
+    	}
+    	else {
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase(), "Nombre");
+    	}
+    	if(proveedores.size() == 0) {
+    		fillClientList(null);
+    	}
+    	else {
+    		fillProveedorList(proveedores);
+    	}
+    }
 	
 
 	
@@ -789,6 +838,7 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	fillClientList(null);
+    	fillProveedorList(null);
     }
     
    
@@ -810,6 +860,26 @@ public class Controller implements Initializable{
     	tableview_clientesList.setItems(data);
     	tableview_clientesList.refresh();
 	}
+    
+    public void fillProveedorList(ArrayList<Proveedores> p) {
+    	ObservableList<Proveedores> data = FXCollections.observableArrayList();
+    	if(p == null) {
+    		data.addAll(Controladora.getInstance().getMisProveedores());
+    	}
+    	else {
+    		data.addAll(p);
+    	}
+    	tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_proveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_proveedorRubro.setCellValueFactory(new PropertyValueFactory<>("rubro"));
+    	tablecolumn_proveedorDomicilio.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    	tablecolumn_proveedorCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    	tablecolumn_proveedorTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    	tablecolumn_proveedorRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_proveedorSitioWeb.setCellValueFactory(new PropertyValueFactory<>("sitioWeb"));
+    	tableview_proveedoresList.setItems(data);
+    	tableview_proveedoresList.refresh();
+    }
     
     public TableView<Cliente> getTableview_clientesList(){
     	//tableview_clientesList.setId("tableview_clientesList");

@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <BorderPane prefHeight="1000.0" prefWidth="1920.0">
          <center>
@@ -245,16 +245,22 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
+                                          <TableView fx:id="tableview_proveedoresList" layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="C1" />
-                                                <TableColumn prefWidth="75.0" text="C2" />
+                                                <TableColumn fx:id="tablecolumn_proveedorCodigo" prefWidth="75.0" text="Codigo" />
+                                                <TableColumn fx:id="tablecolumn_proveedorNombre" prefWidth="75.0" text="Nombre" />
+                                                <TableColumn fx:id="tablecolumn_proveedorRubro" prefWidth="75.0" text="Rubro" />
+                                                <TableColumn fx:id="tablecolumn_proveedorDomicilio" prefWidth="75.0" text="Domicilio" />
+                                                <TableColumn fx:id="tablecolumn_proveedorCorreo" prefWidth="75.0" text="Correo" />
+                                                <TableColumn fx:id="tablecolumn_proveedorTelefono" prefWidth="75.0" text="Telefono" />
+                                                <TableColumn fx:id="tablecolumn_proveedorRNC" prefWidth="75.0" text="RNC" />
+                                                <TableColumn fx:id="tablecolumn_proveedorSitioWeb" prefWidth="75.0" text="Sitio Web" />
                                              </columns>
                                           </TableView>
                                           <Button fx:id="button_nuevoProveedor" layoutX="35.0" layoutY="697.0" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" text="Nuevo Proveedor" />
                                           <Button fx:id="button_modificarProveedor" layoutX="746.0" layoutY="697.0" mnemonicParsing="false" text="Modificar Proveedor" />
                                           <Button fx:id="button_eliminarProveedor" layoutX="1465.0" layoutY="697.0" mnemonicParsing="false" text="Eliminar Proveedor" />
-                                          <TextField layoutX="1200.0" layoutY="35.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
+                                          <TextField fx:id="textfield_proveedorBusqueda" layoutX="1200.0" layoutY="35.0" onKeyTyped="#buscarProveedores" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1580.0" layoutY="35.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
                                                 <ImageInput>
