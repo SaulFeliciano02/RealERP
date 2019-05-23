@@ -56,10 +56,10 @@
                      <children>
                         <Text layoutX="347.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Principal" />
                      </children></Pane>
-                  <Pane fx:id="pane_Inventario" disable="true" layoutY="120.0" prefHeight="880.0" prefWidth="1657.0" visible="false">
+                  <Pane fx:id="pane_Inventario" layoutY="120.0" prefHeight="880.0" prefWidth="1657.0">
                      <children>
                         <Text layoutX="287.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Inventario" wrappingWidth="129.6708984375" />
-                        <TableView layoutX="31.0" layoutY="92.0" prefHeight="691.0" prefWidth="1596.0">
+                        <TableView layoutX="31.0" layoutY="92.0" prefHeight="620.0" prefWidth="1596.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Campo 1" />
                               <TableColumn prefWidth="75.0" text="Campo 2" />
@@ -77,6 +77,62 @@
                               </ImageInput>
                            </effect>
                         </Button>
+                        <TitledPane disable="true" layoutX="69.0" layoutY="54.0" prefHeight="547.0" prefWidth="1115.0" text="Información adicional producto" visible="false">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TabPane layoutX="17.0" layoutY="61.0" prefHeight="387.0" prefWidth="1081.0" tabClosingPolicy="UNAVAILABLE">
+                                      <tabs>
+                                        <Tab text="Productos Sustitutos">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutY="6.0" prefHeight="348.0" prefWidth="1081.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columns>
+                                                          <TableColumn prefWidth="540.9999694824219" text="Código" />
+                                                          <TableColumn minWidth="0.0" prefWidth="539.0" text="Nombre" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Combinaciones">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="98.0" layoutY="34.0" prefHeight="348.0" prefWidth="1081.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columns>
+                                                          <TableColumn prefWidth="329.9999694824219" text="Atributo 1" />
+                                                          <TableColumn minWidth="0.0" prefWidth="425.0" text="Atributo 2" />
+                                                            <TableColumn prefWidth="325.0" text="Atributo 3" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                    <TextField layoutX="865.0" layoutY="15.0" promptText="Búsqueda" />
+                                    <Button alignment="CENTER_RIGHT" layoutX="1058.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
+                                       <effect>
+                                          <ImageInput>
+                                             <source>
+                                                <Image url="@images/icons/icon_search.png" />
+                                             </source>
+                                          </ImageInput>
+                                       </effect>
+                                    </Button>
+                                    <ComboBox layoutX="708.0" layoutY="15.0" prefWidth="150.0" promptText="Buscar por:" />
+                                    <Button layoutX="991.0" layoutY="460.0" mnemonicParsing="false" text="Cerrar" />
+                                    <Button layoutX="909.0" layoutY="460.0" mnemonicParsing="false" text="Eliminar" />
+                                    <Button layoutX="817.0" layoutY="460.0" mnemonicParsing="false" text="Modificar" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <Button layoutX="1374.0" layoutY="742.0" mnemonicParsing="false" text="Información adicional del producto" />
                      </children>
                   </Pane>
                   <Pane fx:id="pane_Productos" disable="true" layoutY="121.0" prefHeight="959.0" prefWidth="1657.0" visible="false">
