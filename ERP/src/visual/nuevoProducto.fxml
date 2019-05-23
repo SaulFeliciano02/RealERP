@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -13,10 +14,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
@@ -39,33 +44,106 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
                            <children>
-                              <Text layoutX="42.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
-                              <TextField layoutX="42.0" layoutY="43.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
-                              <Text layoutX="42.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
-                              <TextArea layoutX="42.0" layoutY="121.0" prefHeight="94.0" prefWidth="863.0" />
-                              <Text layoutX="42.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
-                              <TextField layoutX="42.0" layoutY="274.0" prefHeight="30.0" prefWidth="300.0" />
-                              <Text layoutX="536.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
-                              <TextField layoutX="536.0" layoutY="274.0" prefHeight="30.0" prefWidth="300.0" />
-                              <Button layoutX="350.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
+                              <Text layoutX="42.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
+                              <TextField layoutX="42.0" layoutY="94.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
+                              <TextArea layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
+                              <Text layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
+                              <TextField layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Text layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
+                              <TextField layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Button layoutX="350.0" layoutY="325.0" mnemonicParsing="false" text="Buscar" />
                               <Button layoutX="838.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
-                              <Text layoutX="42.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
-                              <TextField fx:id="exAct" layoutX="42.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
-                              <Text layoutX="376.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
-                              <Text layoutX="694.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
-                              <TextField fx:id="exMin" layoutX="374.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
-                              <TextField fx:id="exMax" layoutX="694.0" layoutY="392.0" onKeyTyped="#numericFieldPressed" promptText="0" />
-                              <RadioButton layoutX="47.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
-                              <RadioButton layoutX="529.0" layoutY="456.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
-                              <Text layoutX="475.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
-                              <TextField layoutX="475.0" layoutY="43.0" promptText="000000001" />
-                              <MenuButton layoutX="671.0" layoutY="43.0" mnemonicParsing="false" text="UPC-B">
+                              <Text layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
+                              <TextField fx:id="exAct" layoutX="42.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
+                              <Text layoutX="376.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
+                              <Text layoutX="694.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
+                              <TextField fx:id="exMin" layoutX="374.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
+                              <TextField fx:id="exMax" layoutX="694.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
+                              <RadioButton layoutX="47.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
+                              <RadioButton layoutX="529.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
+                              <Text layoutX="475.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
+                              <TextField layoutX="475.0" layoutY="94.0" promptText="000000001" />
+                              <MenuButton layoutX="671.0" layoutY="94.0" mnemonicParsing="false" text="UPC-B">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </MenuButton>
-                              <Button layoutX="765.0" layoutY="43.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
+                              <Button layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
+                              <TitledPane disable="true" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField layoutX="571.0" layoutY="14.0" prefHeight="31.0" prefWidth="304.0" promptText="Búsqueda" />
+                                          <Button alignment="CENTER_RIGHT" layoutX="875.0" layoutY="16.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
+                                             <effect>
+                                                <ImageInput>
+                                                   <source>
+                                                      <Image url="@images/icons/icon_search.png" />
+                                                   </source>
+                                                </ImageInput>
+                                             </effect>
+                                          </Button>
+                                          <ComboBox layoutX="467.0" layoutY="16.0" prefHeight="26.0" prefWidth="103.0" promptText="Buscar por:" />
+                                          <Button fx:id="button_nuevoProveedor" layoutX="22.0" layoutY="468.0" mnemonicParsing="false" text="Nuevo Proveedor" />
+                                          <Button fx:id="button_modificarProveedor" layoutX="207.0" layoutY="468.0" mnemonicParsing="false" text="Modificar Proveedor" />
+                                          <Button fx:id="button_eliminarProveedor" layoutX="395.0" layoutY="468.0" mnemonicParsing="false" text="Eliminar Proveedor" />
+                                          <Button layoutX="810.0" layoutY="468.0" mnemonicParsing="false" text="Cerrar" />
+                                          <TableView layoutX="14.0" layoutY="47.0" prefHeight="408.0" prefWidth="892.0">
+                                            <columns>
+                                                <TableColumn prefWidth="75.0" text="Código" />
+                                                <TableColumn prefWidth="75.0" text="Nombre" />
+                                                <TableColumn prefWidth="75.0" text="RNC" />
+                                              <TableColumn prefWidth="75.0" text="Rubro" />
+                                              <TableColumn prefWidth="75.0" text="Teléfono" />
+                                                <TableColumn prefWidth="75.0" text="Celular" />
+                                                <TableColumn prefWidth="75.0" text="Saldo" />
+                                                <TableColumn prefWidth="75.0" text="Domicilio" />
+                                                <TableColumn prefWidth="75.0" text="Correo" />
+                                                <TableColumn prefWidth="75.0" text="SitioWeb" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                              <TitledPane disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros" visible="false">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Button layoutX="14.0" layoutY="352.0" mnemonicParsing="false" text="Nuevo Rubro" />
+                                          <Button layoutX="120.0" layoutY="352.0" mnemonicParsing="false" text="Modificar Rubro" />
+                                          <Button layoutX="240.0" layoutY="352.0" mnemonicParsing="false" text="Eliminar Rubro" />
+                                          <TextField layoutX="680.0" layoutY="14.0" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
+                                          <ComboBox layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
+                                          <Button layoutX="810.0" layoutY="469.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
+                                          <TableView layoutX="12.0" layoutY="48.0" prefHeight="292.0" prefWidth="894.0">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="C1" />
+                                                <TableColumn prefWidth="75.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Pane layoutX="14.0" layoutY="382.0" prefHeight="134.0" prefWidth="505.0" style="-fx-background-color: TRANSPARENT; -fx-border-color: LIGHTGRAY;">
+                                             <children>
+                                                <Text disable="true" layoutX="14.0" layoutY="47.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
+                                                <Text disable="true" layoutX="202.0" layoutY="47.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                                <TextField disable="true" layoutX="14.0" layoutY="52.0" prefHeight="31.0" prefWidth="159.0" />
+                                                <TextField disable="true" layoutX="202.0" layoutY="53.0" prefHeight="31.0" prefWidth="270.0" />
+                                                <Button disable="true" layoutX="413.0" layoutY="95.0" mnemonicParsing="false" text="Guardar" />
+                                                <Text disable="true" layoutX="14.0" layoutY="20.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar nuevo rubro">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <ComboBox layoutX="41.0" layoutY="26.0" prefHeight="26.0" prefWidth="203.0" />
+                              <Text layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -229,6 +307,38 @@
                               <Button layoutX="819.0" layoutY="499.0" mnemonicParsing="false" text="Combinar" />
                               <Button layoutX="683.0" layoutY="499.0" mnemonicParsing="false" text="Nuevo atributo" />
                               <Button layoutX="516.0" layoutY="499.0" mnemonicParsing="false" text="Listado de atributos" />
+                              <TitledPane disable="true" layoutX="6.0" prefHeight="548.0" prefWidth="921.0" text="Listado de familias y atributos" visible="false">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="595.0" prefWidth="933.0">
+                                       <children>
+                                          <TextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="196.0" promptText="Búsqueda" />
+                                          <ScrollPane layoutX="14.0" layoutY="43.0" prefHeight="393.0" prefWidth="196.0">
+                                             <content>
+                                                <ListView prefHeight="390.0" prefWidth="194.0" />
+                                             </content>
+                                          </ScrollPane>
+                                          <TableView layoutX="214.0" layoutY="43.0" prefHeight="394.0" prefWidth="700.0">
+                                             <columns>
+                                                <TableColumn prefWidth="350.0" text="Atributo" />
+                                                <TableColumn prefWidth="360.0" text="Familia" />
+                                             </columns>
+                                          </TableView>
+                                          <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="223.0" layoutY="14.0" prefHeight="19.0" prefWidth="686.0" promptText="Resumen de la Familia" />
+                                          <Button layoutX="351.0" layoutY="471.0" mnemonicParsing="false" text="Agregar" />
+                                          <Button layoutX="869.0" layoutY="471.0" mnemonicParsing="false" text="Cerrar" />
+                                          <Button layoutX="421.0" layoutY="471.0" mnemonicParsing="false" text="Modificar" />
+                                          <Button layoutX="497.0" layoutY="471.0" mnemonicParsing="false" text="Eliminar" />
+                                          <RadioButton layoutX="223.0" layoutY="464.0" mnemonicParsing="false" selected="true" text="Atributos">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="manejarAtributoFamilia" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton layoutX="223.0" layoutY="482.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
+                                          <Text layoutX="223.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
                            </children>
                         </AnchorPane>
                     </content>
