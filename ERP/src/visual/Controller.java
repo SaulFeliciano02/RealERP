@@ -112,6 +112,23 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Proveedores, Float> tablecolumn_proveedorSaldo;
     @FXML private TableView<Proveedores> tableview_proveedoresList;
     @FXML private TextField textfield_proveedorBusqueda;
+    
+    
+    //DESPLIEGUE DE RUBROS
+    @FXML private Button button_rubroNuevo;
+    @FXML private Button button_rubroModificar;
+    @FXML private Button button_rubroEliminar;
+    @FXML private TextField textfield_rubroBusqueda;
+    @FXML private ComboBox<String> combobox_rubroBusqueda;
+    @FXML private TableColumn<Rubro, String> tablecolumn_rubroCodigo;
+    @FXML private TableColumn<Rubro, String> tablecolumn_rubroNombre;
+    @FXML private TableView<Rubro> tableview_rubro;
+    
+    //CREACION DE RUBROS
+    @FXML private Pane pane_rubroCreate;
+    @FXML private TextField textfield_rubroCodigo;
+    @FXML private TextField textfield_rubroNombre;
+    @FXML private Button button_rubroGuardar;
 
 
     @FXML private AnchorPane menuPane;
@@ -819,7 +836,6 @@ public class Controller implements Initializable{
     
     //Busqueda de proveedores
     public void buscarProveedores(KeyEvent event) {
-    	System.out.println("Klk");
     	ArrayList<Proveedores> proveedores = new ArrayList<>();
     	if(Character.isLetter(event.getCharacter().charAt(0))) {
     		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase() + event.getCharacter(), "Nombre");
@@ -833,6 +849,53 @@ public class Controller implements Initializable{
     	else {
     		fillProveedorList(proveedores);
     	}
+    }
+    
+    //FUNCIONES PARA CREAR RUBROS
+    
+    public void activarRegistro(ActionEvent event) {
+    	pane_rubroCreate.setDisable(false);
+    	button_rubroGuardar.setDisable(true);
+    }
+    
+    public void activarGuardarRubro(KeyEvent event) {
+    	if(textfield_rubroCodigo.getLength() > 0 && textfield_rubroNombre.getLength() > 0) {
+    		button_rubroGuardar.setDisable(false);
+    	}
+    	else {
+    		button_rubroGuardar.setDisable(true);
+    	}
+    }
+    
+    public void guardarRubro(ActionEvent event) {
+    	ObservableList<Rubro> data = FXCollections.observableArrayList();
+    	String codigo = textfield_rubroCodigo.getText();
+    	String nombre = textfield_rubroNombre.getText();
+    	Rubro rubro = new Rubro(codigo, nombre);
+    	data.add(rubro);
+    	Controladora.getInstance().addRubro(rubro);
+    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    	tableview_rubro.getItems().add(rubro);
+    	tableview_rubro.refresh();
+    	textfield_rubroCodigo.setText("");
+    	textfield_rubroNombre.setText("");
+    	pane_rubroCreate.setDisable(true);
+    }
+    
+    public void rubroTableViewClicked(MouseEvent event) {
+    	System.out.print("klk");
+    	if(!tableview_rubro.getSelectionModel().isEmpty()) {
+    		button_rubroEliminar.setDisable(false);
+    	}
+    	else {
+    		button_rubroEliminar.setDisable(true);
+    	}
+    }
+    
+    public void eliminarRubro(ActionEvent event) {
+    	int index = tableview_rubro.getSelectionModel().getSelectedIndex();
+    	tableview_rubro.getItems().remove(index);
     }
 	
 

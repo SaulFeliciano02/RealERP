@@ -197,19 +197,19 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView layoutX="28.0" layoutY="78.0" prefHeight="342.0" prefWidth="1596.0">
+                                          <TableView fx:id="tableview_rubro" layoutX="28.0" layoutY="78.0" onMouseClicked="#rubroTableViewClicked" prefHeight="342.0" prefWidth="1596.0">
                                             <columns>
-                                              <TableColumn prefWidth="218.0" text="Código" />
-                                              <TableColumn prefWidth="627.0" text="Nombre" />
+                                              <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="218.0" text="Código" />
+                                              <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="627.0" text="Nombre" />
                                             </columns>
                                           </TableView>
-                                          <Pane disable="true" layoutX="31.0" layoutY="493.0" prefHeight="229.0" prefWidth="967.0" style="-fx-background-color: #E8E8E8;">
+                                          <Pane fx:id="pane_rubroCreate" disable="true" layoutX="31.0" layoutY="493.0" prefHeight="229.0" prefWidth="967.0" style="-fx-background-color: #E8E8E8;">
                                              <children>
                                                 <Text disable="true" layoutX="27.0" layoutY="91.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
                                                 <Text disable="true" layoutX="531.0" layoutY="91.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                                <TextField layoutX="27.0" layoutY="96.0" prefHeight="31.0" prefWidth="367.0" />
-                                                <TextField layoutX="531.0" layoutY="97.0" prefHeight="31.0" prefWidth="372.0" />
-                                                <Button layoutX="829.0" layoutY="178.0" mnemonicParsing="false" text="Guardar" />
+                                                <TextField fx:id="textfield_rubroCodigo" layoutX="27.0" layoutY="96.0" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="367.0" />
+                                                <TextField fx:id="textfield_rubroNombre" layoutX="531.0" layoutY="97.0" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="372.0" />
+                                                <Button fx:id="button_rubroGuardar" disable="true" layoutX="829.0" layoutY="178.0" mnemonicParsing="false" onAction="#guardarRubro" text="Guardar" />
                                                 <Text disable="true" layoutX="27.0" layoutY="36.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar nuevo rubro">
                                                    <font>
                                                       <Font size="20.0" />
@@ -217,10 +217,10 @@
                                                 </Text>
                                              </children>
                                           </Pane>
-                                          <Button layoutX="31.0" layoutY="445.0" mnemonicParsing="false" text="Nuevo Rubro" />
-                                          <Button layoutX="203.0" layoutY="445.0" mnemonicParsing="false" text="Modificar Rubro" />
-                                          <Button layoutX="383.0" layoutY="445.0" mnemonicParsing="false" text="Eliminar Rubro" />
-                                          <TextField layoutX="1215.0" layoutY="33.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
+                                          <Button fx:id="button_rubroNuevo" layoutX="31.0" layoutY="445.0" mnemonicParsing="false" onAction="#activarRegistro" text="Nuevo Rubro" />
+                                          <Button fx:id="button_rubroModificar" layoutX="203.0" layoutY="445.0" mnemonicParsing="false" text="Modificar Rubro" />
+                                          <Button fx:id="button_rubroEliminar" disable="true" layoutX="383.0" layoutY="445.0" mnemonicParsing="false" onAction="#eliminarRubro" text="Eliminar Rubro" />
+                                          <TextField fx:id="textfield_rubroBusqueda" layoutX="1215.0" layoutY="33.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1594.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
                                                 <ImageInput>
@@ -230,7 +230,7 @@
                                                 </ImageInput>
                                              </effect>
                                           </Button>
-                                          <ComboBox layoutX="1059.0" layoutY="33.0" prefWidth="150.0" promptText="Buscar por: " />
+                                          <ComboBox fx:id="combobox_rubroBusqueda" layoutX="1059.0" layoutY="33.0" prefWidth="150.0" promptText="Buscar por: " />
                                        </children></AnchorPane>
                               </content>
                             </Tab>
