@@ -11,16 +11,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logico.Controladora;
 import logico.CostoDirecto;
@@ -29,11 +35,34 @@ import logico.CostoIndirectoProducto;
 public class ControllerNuevoProducto implements Initializable {
 	
 /**VARIABLES PARA CREAR PRODUCTOS**/
+	@FXML TabPane tabpane_everything;
 	
 	//GENERAL
+	@FXML private Text text_generalTipoProducto;
+	@FXML private ComboBox<String> combobox_generalTipoProducto;
+	@FXML private CheckBox checkbox_generalProducible;
+	@FXML private Text text_generalCodigo;
+	@FXML private TextField textfield_generalCodigo;
+	@FXML private Text text_generalBarra;
+	@FXML private TextField textfield_generalBarra;
+	@FXML private MenuButton menubutton_generalBarra;
+	@FXML private Button button_generalImprimir;
+	@FXML private Text text_generalDescripcion;
+	@FXML private TextField textfield_generalDescripcion;
+	@FXML private Text text_generalRubro;
+	@FXML private TextField textfield_generalRubro;
+	@FXML private Button button_productoBuscarRubro;
+	@FXML private Text text_generalProveedor;
+	@FXML private TextField textfield_generalProveedor;
+	@FXML private Button button_productoBuscarProveedor;
+	@FXML private Text text_generalExistencia;
 	@FXML private TextField exAct;
+	@FXML private Text text_generalMinimo;
 	@FXML private TextField exMin;
+	@FXML private Text text_generalMaximo;
 	@FXML private TextField exMax;
+	@FXML private RadioButton radiobutton_generalSerie;
+	@FXML private RadioButton radiobutton_generalFecha;
 	@FXML private Button button_productCancel;
 	
 	//PARTIDA
@@ -76,26 +105,8 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_preciosPrecio;
 	@FXML private CheckBox checkbox_preciosHabilitar;
 	
-	/**VARIABLES PARA LA CREACION DE UN CLIENTE**/
-	@FXML private Button button_clienteCancel;
-	@FXML private Button button_clienteGuardar;
-	@FXML private TextField textfield_codigoCliente;
-	@FXML private TextField textfield_nombreCliente;
-	@FXML private TextField textfield_telefonoCliente;
-	@FXML private TextField textfield_tipoCliente;
-	@FXML private TextField textfield_rncCliente;
-	@FXML private DatePicker datepicker_cumpleCliente;
-	
-	/**VARIABLE PARA LA CREACION DE UN PROVEEDOR**/
-	@FXML private Button button_proveedorCancel;
-	@FXML private Button button_proveedorGuardar;
-	@FXML private TextField textfield_codigoProveedor;
-	@FXML private TextField textfield_nombreProveedor;
-	@FXML private TextField textfield_telefonoProveedor;
-	@FXML private TextArea textarea_direccionProveedor;
-	@FXML private TextField textfield_rncProveedor;
-	@FXML private TextField textfield_correoElectronicoProveedor;
-	@FXML private TextField textfield_sitioWebProveedor;
+	//VARIABLES PARA BUSQUEDA DE PROVEEDOR
+	@FXML private TitledPane titledpane_productoBuscarProveedor;
 	
     /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
@@ -302,6 +313,12 @@ public class ControllerNuevoProducto implements Initializable {
 					Double.parseDouble(textfield_preciosImpuestos.getText()));			
 			textfield_preciosPrecio.setText(Double.toString(precioTotal));
 		}		
+	}
+	
+	//FUNCIONES BUSQUEDA PROVEEDOR
+	public void buscarProveedor(ActionEvent event) {
+		titledpane_productoBuscarProveedor.setVisible(true);
+		titledpane_productoBuscarProveedor.setDisable(false);
 	}
 	
 	@Override

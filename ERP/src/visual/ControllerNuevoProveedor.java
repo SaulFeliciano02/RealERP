@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -83,6 +85,8 @@ public class ControllerNuevoProveedor {
 	
 	public void guardarProveedor(ActionEvent Event) {
 		boolean isEmpty = false;
+		boolean validRegister = true;
+		Alert a = new Alert(AlertType.NONE); 
 		Rubro rubro = null;
 		String codigo = textfield_codigoProveedor.getText();
 		String nombre = textfield_nombreProveedor.getText();
@@ -100,24 +104,34 @@ public class ControllerNuevoProveedor {
 		}
 		for(Proveedores p: Controladora.getInstance().getMisProveedores()) {
 			if(p.getCodigo().equalsIgnoreCase(codigo)) {
-				//Do something
+				a.setAlertType(AlertType.ERROR);
+				a.setContentText("Este codigo ya esta registrado");
+				a.show();
+				validRegister = false;
 			}
 			else if(p.getRnc().equalsIgnoreCase(rnc)) {
-				//Do More Stuff
+				a.setAlertType(AlertType.ERROR);
+				a.setContentText("Este rnc ya esta registrado");
+				a.show();
+				validRegister = false;
 			}
 		}
-		Proveedores proveedor = new Proveedores(codigo, nombre, telefono, direccion, correo, rnc, rubro, sitioweb);
-		Controladora.getInstance().addProveedor(proveedor);
-		textfield_codigoProveedor.setText("");
-		textfield_nombreProveedor.setText("");
-		textfield_telefonoProveedor.setText("");
-		textfield_rncProveedor.setText("");
-		if(!isEmpty) {
-			textarea_direccionProveedor.setText("");
-			textfield_correoElectronicoProveedor.setText("");
-			textfield_sitioWebProveedor.setText("");
+		if(validRegister) {
+			Proveedores proveedor = new Proveedores(codigo, nombre, telefono, direccion, correo, rnc, rubro, sitioweb);
+			Controladora.getInstance().addProveedor(proveedor);
+			textfield_codigoProveedor.setText("");
+			textfield_nombreProveedor.setText("");
+			textfield_telefonoProveedor.setText("");
+			textfield_rncProveedor.setText("");
+			if(!isEmpty) {
+				textarea_direccionProveedor.setText("");
+				textfield_correoElectronicoProveedor.setText("");
+				textfield_sitioWebProveedor.setText("");
+			}
+			button_proveedorGuardar.setDisable(true);
 		}
-		button_proveedorGuardar.setDisable(true);
+		
+		
 	}
 	
 

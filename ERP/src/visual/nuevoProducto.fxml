@@ -38,44 +38,47 @@
                   <Image url="@images/Logo.png" />
                </image>
             </ImageView>
-            <TabPane layoutX="218.0" layoutY="67.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabpane_everything" layoutX="218.0" layoutY="67.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
                            <children>
-                              <Text layoutX="42.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
-                              <TextField layoutX="42.0" layoutY="94.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
-                              <Text layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
-                              <TextArea layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
-                              <Text layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
-                              <TextField layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
-                              <Text layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
-                              <TextField layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
-                              <Button layoutX="350.0" layoutY="325.0" mnemonicParsing="false" text="Buscar" />
-                              <Button layoutX="838.0" layoutY="274.0" mnemonicParsing="false" text="Buscar" />
-                              <Text layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
+                              <Text fx:id="text_generalCodigo" layoutX="42.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
+                              <TextField fx:id="textfield_generalCodigo" layoutX="42.0" layoutY="94.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <Text fx:id="text_generalDescripcion" layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
+                              <TextArea fx:id="textarea_generalDescripcion" layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
+                              <Text fx:id="text_generalRubro" layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
+                              <TextField fx:id="textfield_generalRubro" layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Text fx:id="text_generalProveedor" layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
+                              <TextField fx:id="textfield_generalProveedor" layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" text="Buscar" />
+                              <Button fx:id="button_productoBuscarProveedor" layoutX="843.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
+                              <Text fx:id="text_generalExistencia" layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
                               <TextField fx:id="exAct" layoutX="42.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
-                              <Text layoutX="376.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
-                              <Text layoutX="694.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
+                              <Text fx:id="text_generalMinimo" layoutX="376.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
+                              <Text fx:id="text_generalMaximo" layoutX="694.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Máximo" />
                               <TextField fx:id="exMin" layoutX="374.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
                               <TextField fx:id="exMax" layoutX="694.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
-                              <RadioButton layoutX="47.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
-                              <RadioButton layoutX="529.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
-                              <Text layoutX="475.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
-                              <TextField layoutX="475.0" layoutY="94.0" promptText="000000001" />
-                              <MenuButton layoutX="671.0" layoutY="94.0" mnemonicParsing="false" text="UPC-B">
+                              <RadioButton fx:id="radiobutton_generalNumeroSerie" layoutX="47.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
+                              <RadioButton fx:id="radiobutton_generalFecha" layoutX="529.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
+                              <Text fx:id="text_generalBarra" layoutX="475.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
+                              <TextField fx:id="textfield_generalBarra" layoutX="475.0" layoutY="94.0" promptText="000000001" />
+                              <MenuButton fx:id="menubutton_generalBarra" layoutX="671.0" layoutY="94.0" mnemonicParsing="false" text="UPC-B">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </MenuButton>
-                              <Button layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
-                              <TitledPane disable="true" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
+                              <Button fx:id="button_generalImprimir" layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
+                              <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" prefHeight="26.0" prefWidth="203.0" />
+                              <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
+                              <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" text="Producible" />
+                              <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" disable="true" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TextField layoutX="571.0" layoutY="14.0" prefHeight="31.0" prefWidth="304.0" promptText="Búsqueda" />
+                                          <TextField fx:id="textfield_productoBusquedaProveedor" layoutX="571.0" layoutY="14.0" prefHeight="31.0" prefWidth="304.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="875.0" layoutY="16.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
                                                 <ImageInput>
@@ -142,8 +145,6 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <ComboBox layoutX="41.0" layoutY="26.0" prefHeight="26.0" prefWidth="203.0" />
-                              <Text layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                            </children>
                         </AnchorPane>
                   </content>
