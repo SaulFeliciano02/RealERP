@@ -11,6 +11,11 @@ public class Controladora implements Serializable{
 	Cliente cliente3 = new Cliente("000003", "Yorman", "312312", "Activo", null, "2312313");
 	Cliente cliente4 = new Cliente("000004", "Sarah", "312312", "Activo", null, "2312313");
 	Cliente cliente5 = new Cliente("000005", "Michael", "312312", "Activo", null, "2312313");
+	Proveedores proveedor1 = new Proveedores("000001", "Jose", "21312313", "Su casa", "", "", null, "");
+	Proveedores proveedor2 = new Proveedores("000002", "Marcos", "21312313", "Su casa", "", "", null, "");
+	Proveedores proveedor3 = new Proveedores("000003", "Maria", "21312313", "Su casa", "", "", null, "");
+	Proveedores proveedor4 = new Proveedores("000004", "Juan", "21312313", "Su casa", "", "", null, "");
+	Proveedores proveedor5 = new Proveedores("000005", "Luis", "21312313", "Su casa", "", "", null, "");
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Proveedores> misProveedores;
@@ -38,6 +43,11 @@ public class Controladora implements Serializable{
 		misClientes.add(cliente3);
 		misClientes.add(cliente4);
 		misClientes.add(cliente5);
+		misProveedores.add(proveedor1);
+		misProveedores.add(proveedor2);
+		misProveedores.add(proveedor3);
+		misProveedores.add(proveedor4);
+		misProveedores.add(proveedor5);
 	}
 	
 	public static Controladora getInstance() {
