@@ -97,7 +97,15 @@ public class ControllerNuevoProveedor {
 			sitioweb = textfield_sitioWebProveedor.getText();
 		}catch(NullPointerException e) {
 			isEmpty = true;
-		}	
+		}
+		for(Proveedores p: Controladora.getInstance().getMisProveedores()) {
+			if(p.getCodigo().equalsIgnoreCase(codigo)) {
+				//Do something
+			}
+			else if(p.getRnc().equalsIgnoreCase(rnc)) {
+				//Do More Stuff
+			}
+		}
 		Proveedores proveedor = new Proveedores(codigo, nombre, telefono, direccion, correo, rnc, rubro, sitioweb);
 		Controladora.getInstance().addProveedor(proveedor);
 		textfield_codigoProveedor.setText("");
