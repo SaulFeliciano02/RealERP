@@ -76,7 +76,7 @@
                               </ImageInput>
                            </effect>
                         </Button>
-                        <TitledPane disable="true" layoutX="69.0" layoutY="54.0" prefHeight="547.0" prefWidth="1115.0" text="Información adicional producto" visible="false">
+                        <TitledPane layoutX="69.0" layoutY="54.0" prefHeight="547.0" prefWidth="1115.0" text="Información adicional producto">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -111,6 +111,47 @@
                                                 </AnchorPane>
                                           </content>
                                         </Tab>
+                                          <Tab text="Costos Directos">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView prefHeight="309.0" prefWidth="1082.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="540.9999694824219" text="Nombre del producto" />
+                                                            <TableColumn minWidth="0.0" prefWidth="539.0" text="Monto" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button layoutX="936.0" layoutY="317.0" mnemonicParsing="false" text="Nuevo costo" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </Tab>
+                                          <Tab text="Costos Indirectos">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView prefHeight="309.0" prefWidth="1082.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="540.9999694824219" text="Nombre del producto" />
+                                                            <TableColumn minWidth="0.0" prefWidth="539.0" text="Monto" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button layoutX="936.0" layoutY="317.0" mnemonicParsing="false" text="Nuevo costo" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Imagen">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Pane layoutX="141.0" layoutY="14.0" prefHeight="303.0" prefWidth="628.0" style="-fx-background-color: LIGHTGRAY;" />
+                                                      <Button layoutX="843.0" layoutY="305.0" mnemonicParsing="false" text="Nueva Imagen" />
+                                                      <Button layoutX="954.0" layoutY="305.0" mnemonicParsing="false" text="Eliminar" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </Tab>
                                       </tabs>
                                     </TabPane>
                                     <TextField layoutX="865.0" layoutY="15.0" promptText="Búsqueda" />
@@ -246,9 +287,8 @@
                                                 <TableColumn prefWidth="350.0" text="Atributo" />
                                              </columns>
                                           </TableView>
-                                          <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="19.0" prefWidth="686.0" promptText="Resumen de la Familia" />
-                                          <Button layoutX="489.0" layoutY="607.0" mnemonicParsing="false" text="Agregar" />
-                                          <Button layoutX="580.0" layoutY="607.0" mnemonicParsing="false" text="Modificar" />
+                                          <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
+                                          <Button layoutX="555.0" layoutY="607.0" mnemonicParsing="false" text="Modificar" />
                                           <Button layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
                                           <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos">
                                              <toggleGroup>
@@ -256,6 +296,20 @@
                                              </toggleGroup></RadioButton>
                                           <RadioButton layoutX="381.0" layoutY="637.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
                                           <Text layoutX="381.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
+                                          <Pane layoutX="1121.0" layoutY="93.0" prefHeight="273.0" prefWidth="486.0" style="-fx-background-color: LIGHTGRAY;">
+                                             <children>
+                                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nueva Familia" />
+                                                <TextField layoutX="28.0" layoutY="71.0" />
+                                                <Text layoutX="28.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                                <Text layoutX="262.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo Atributo" />
+                                                <TextField layoutX="243.0" layoutY="67.0" prefHeight="25.0" prefWidth="193.0" />
+                                                <Text layoutX="243.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                                                <Text layoutX="243.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
+                                                <Button layoutX="410.0" layoutY="235.0" mnemonicParsing="false" text="Guardar" />
+                                                <Button layoutX="336.0" layoutY="235.0" mnemonicParsing="false" text="Cerrar" />
+                                                <TextField layoutX="240.0" layoutY="124.0" prefHeight="25.0" prefWidth="193.0" />
+                                             </children>
+                                          </Pane>
                                        </children>
                                     </AnchorPane>
                                 </content>
