@@ -93,18 +93,18 @@
                                           <Button fx:id="button_modificarProveedor" layoutX="207.0" layoutY="468.0" mnemonicParsing="false" text="Modificar Proveedor" />
                                           <Button fx:id="button_eliminarProveedor" layoutX="395.0" layoutY="468.0" mnemonicParsing="false" text="Eliminar Proveedor" />
                                           <Button layoutX="810.0" layoutY="468.0" mnemonicParsing="false" text="Cerrar" />
-                                          <TableView layoutX="14.0" layoutY="47.0" prefHeight="408.0" prefWidth="892.0">
+                                          <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" prefHeight="408.0" prefWidth="892.0">
                                             <columns>
-                                                <TableColumn prefWidth="75.0" text="Código" />
-                                                <TableColumn prefWidth="75.0" text="Nombre" />
-                                                <TableColumn prefWidth="75.0" text="RNC" />
-                                              <TableColumn prefWidth="75.0" text="Rubro" />
-                                              <TableColumn prefWidth="75.0" text="Teléfono" />
-                                                <TableColumn prefWidth="75.0" text="Celular" />
-                                                <TableColumn prefWidth="75.0" text="Saldo" />
-                                                <TableColumn prefWidth="75.0" text="Domicilio" />
-                                                <TableColumn prefWidth="75.0" text="Correo" />
-                                                <TableColumn prefWidth="75.0" text="SitioWeb" />
+                                                <TableColumn fx:id="tablecolumn_proveedorCodigo" prefWidth="75.0" text="Código" />
+                                                <TableColumn fx:id="tablecolumn_proveedorNombre" prefWidth="75.0" text="Nombre" />
+                                                <TableColumn fx:id="tablecolumn_proveedorRNC" prefWidth="75.0" text="RNC" />
+                                              <TableColumn fx:id="tablecolumn_proveedorRubro" prefWidth="75.0" text="Rubro" />
+                                              <TableColumn fx:id="tablecolumn_proveedorTelefono" prefWidth="75.0" text="Teléfono" />
+                                                <TableColumn fx:id="tablecolumn_proveedorCelular" prefWidth="75.0" text="Celular" />
+                                                <TableColumn fx:id="tablecolumn_proveedorSaldo" prefWidth="75.0" text="Saldo" />
+                                                <TableColumn fx:id="tablecolumn_proveedorDomicilio" prefWidth="75.0" text="Domicilio" />
+                                                <TableColumn fx:id="tablecolumn_proveedorCorreo" prefWidth="75.0" text="Correo" />
+                                                <TableColumn fx:id="tablecolumn_proveedorSitioWeb" prefWidth="75.0" text="SitioWeb" />
                                             </columns>
                                           </TableView>
                                        </children>
@@ -346,7 +346,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
+            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
             <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
