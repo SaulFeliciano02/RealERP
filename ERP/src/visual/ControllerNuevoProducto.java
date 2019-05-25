@@ -121,6 +121,18 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorSitioWeb;
     @FXML private TableColumn<Proveedores, Float> tablecolumn_proveedorSaldo;
     @FXML private TableView<Proveedores> tableview_proveedorBuscar;
+    @FXML private TextField textfield_productoBusquedaProveedor;
+    @FXML private ComboBox<String> combobox_productoBusquedaProveedor;
+    @FXML private Button button_cerrarBusquedaProveedor;
+    @FXML private Button button_aceptarBusquedaProveedor;
+    
+    //VARIABLES PARA BUSQUEDA DE RUBRO
+    
+   @FXML private TableColumn<Rubro, String> tablecolumn_rubroCodigo;
+   @FXML private TableColumn<Rubro, String> tablecolumn_rubroNombre;
+   @FXML private TableView<Rubro> tableview_rubroBuscar;
+   @FXML private ComboBox<String> combobox_productoBusquedaRubro;
+   @FXML private Button button_cerrarBusquedaRubro;
 	
     /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
@@ -372,8 +384,54 @@ public class ControllerNuevoProducto implements Initializable {
 		fillProveedorList(null);
 	}
 	
+    public void buscarProveedores(KeyEvent event) {
+    	ArrayList<Proveedores> proveedores = new ArrayList<>();
+    	System.out.println(combobox_productoBusquedaProveedor.getValue());
+    	if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_productoBusquedaProveedor.getText().toLowerCase() + event.getCharacter(), combobox_productoBusquedaProveedor.getValue());
+    		System.out.println(proveedores.size());
+    	}
+    	else {
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_productoBusquedaProveedor.getText().toLowerCase(), combobox_productoBusquedaProveedor.getValue());
+    	}
+    	if(proveedores.size() == 0) {
+    		fillProveedorList(null);
+    	}
+    	else {
+    		fillProveedorList(proveedores);
+    	}
+    }
+    
+    public void cerrarBusquedaProveedor(ActionEvent event) {
+    	titledpane_productoBuscarProveedor.setVisible(false);
+    }
+    
+    public void proveedorTableViewClicked(MouseEvent event) {
+    	if(!tableview_proveedorBuscar.getSelectionModel().isEmpty()) {
+    		button_aceptarBusquedaProveedor.setDisable(false);
+    	}
+    }
+    
+    public void returnProveedorSearch(ActionEvent event) {
+    	textfield_generalProveedor.setText(tableview_proveedorBuscar.getSelectionModel().getSelectedItem().getCodigo());
+    	button_aceptarBusquedaProveedor.setDisable(true);
+    	titledpane_productoBuscarProveedor.setVisible(false);
+    }
+    
+    //FUNCIONES BUSQUEDA DE RUBRO
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//Seteando busqueda de proveedores
+		ObservableList<String> dataProveedor = FXCollections.observableArrayList();
+		dataProveedor.addAll("Codigo", "Nombre", "Rubro");
+		combobox_productoBusquedaProveedor.setItems(dataProveedor);
+		combobox_productoBusquedaProveedor.getSelectionModel().select("Codigo");
+		
+		//Seteando busqueda de rubros
+		ObservableList<String> dataRubro = FXCollections.observableArrayList();
+		dataRubro.addAll("Codigo", "Nombre");		
 	}
 	
 	public void fillProveedorList(ArrayList<Proveedores> p) {

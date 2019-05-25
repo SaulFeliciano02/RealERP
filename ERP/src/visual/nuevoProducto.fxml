@@ -49,9 +49,9 @@
                               <Text fx:id="text_generalDescripcion" layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
                               <TextArea fx:id="textarea_generalDescripcion" layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
                               <Text fx:id="text_generalRubro" layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
-                              <TextField fx:id="textfield_generalRubro" layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <TextField fx:id="textfield_generalRubro" editable="false" layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
                               <Text fx:id="text_generalProveedor" layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
-                              <TextField fx:id="textfield_generalProveedor" layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
                               <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" text="Buscar" />
                               <Button fx:id="button_productoBuscarProveedor" layoutX="843.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
                               <Text fx:id="text_generalExistencia" layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
@@ -74,11 +74,11 @@
                               <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                               <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" text="Producible" />
-                              <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" disable="true" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
+                              <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TextField fx:id="textfield_productoBusquedaProveedor" layoutX="571.0" layoutY="14.0" prefHeight="31.0" prefWidth="304.0" promptText="Búsqueda" />
+                                          <TextField fx:id="textfield_productoBusquedaProveedor" layoutX="571.0" layoutY="14.0" onKeyTyped="#buscarProveedores" prefHeight="31.0" prefWidth="304.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="875.0" layoutY="16.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
                                                 <ImageInput>
@@ -88,12 +88,12 @@
                                                 </ImageInput>
                                              </effect>
                                           </Button>
-                                          <ComboBox layoutX="467.0" layoutY="16.0" prefHeight="26.0" prefWidth="103.0" promptText="Buscar por:" />
+                                          <ComboBox fx:id="combobox_productoBusquedaProveedor" layoutX="467.0" layoutY="16.0" prefHeight="26.0" prefWidth="103.0" promptText="Codigo" />
                                           <Button fx:id="button_nuevoProveedor" layoutX="22.0" layoutY="468.0" mnemonicParsing="false" text="Nuevo Proveedor" />
                                           <Button fx:id="button_modificarProveedor" layoutX="207.0" layoutY="468.0" mnemonicParsing="false" text="Modificar Proveedor" />
                                           <Button fx:id="button_eliminarProveedor" layoutX="395.0" layoutY="468.0" mnemonicParsing="false" text="Eliminar Proveedor" />
-                                          <Button layoutX="810.0" layoutY="468.0" mnemonicParsing="false" text="Cerrar" />
-                                          <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" prefHeight="408.0" prefWidth="892.0">
+                                          <Button fx:id="button_cerrarBusquedaProveedor" layoutX="810.0" layoutY="468.0" mnemonicParsing="false" onAction="#cerrarBusquedaProveedor" text="Cerrar" />
+                                          <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" onMouseClicked="#proveedorTableViewClicked" prefHeight="408.0" prefWidth="892.0">
                                             <columns>
                                                 <TableColumn fx:id="tablecolumn_proveedorCodigo" prefWidth="75.0" text="Código" />
                                                 <TableColumn fx:id="tablecolumn_proveedorNombre" prefWidth="75.0" text="Nombre" />
@@ -107,11 +107,12 @@
                                                 <TableColumn fx:id="tablecolumn_proveedorSitioWeb" prefWidth="75.0" text="SitioWeb" />
                                             </columns>
                                           </TableView>
+                                          <Button fx:id="button_aceptarBusquedaProveedor" disable="true" layoutX="723.0" layoutY="468.0" mnemonicParsing="false" onAction="#returnProveedorSearch" text="Aceptar" />
                                        </children>
                                     </AnchorPane>
                                 </content>
                               </TitledPane>
-                              <TitledPane disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros" visible="false">
+                              <TitledPane fx:id="titledpane_proveedorBuscarRubro" disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -119,12 +120,12 @@
                                           <Button layoutX="120.0" layoutY="352.0" mnemonicParsing="false" text="Modificar Rubro" />
                                           <Button layoutX="240.0" layoutY="352.0" mnemonicParsing="false" text="Eliminar Rubro" />
                                           <TextField layoutX="680.0" layoutY="14.0" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
-                                          <ComboBox layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
+                                          <ComboBox fx:id="combobox_productoBusquedaRubro" layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
                                           <Button layoutX="810.0" layoutY="469.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
-                                          <TableView layoutX="12.0" layoutY="48.0" prefHeight="292.0" prefWidth="894.0">
+                                          <TableView fx:id="tableview_rubroBuscar" layoutX="12.0" layoutY="48.0" prefHeight="292.0" prefWidth="894.0">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="C1" />
-                                                <TableColumn prefWidth="75.0" text="C2" />
+                                                <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="75.0" text="Codigo" />
+                                                <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="75.0" text="Nombre" />
                                              </columns>
                                           </TableView>
                                           <Pane layoutX="14.0" layoutY="382.0" prefHeight="134.0" prefWidth="505.0" style="-fx-background-color: TRANSPARENT; -fx-border-color: LIGHTGRAY;">
@@ -141,6 +142,7 @@
                                                 </Text>
                                              </children>
                                           </Pane>
+                                          <Button disable="true" layoutX="740.0" layoutY="470.0" mnemonicParsing="false" text="Aceptar" />
                                        </children>
                                     </AnchorPane>
                                  </content>
