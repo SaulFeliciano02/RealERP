@@ -296,7 +296,7 @@
                                              </columns>
                                           </TableView>
                                           <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
-                                          <Button layoutX="555.0" layoutY="607.0" mnemonicParsing="false" text="Modificar" />
+                                          <Button layoutX="575.0" layoutY="606.0" mnemonicParsing="false" text="Modificar" />
                                           <Button layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
                                           <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos">
                                              <toggleGroup>
@@ -304,18 +304,15 @@
                                              </toggleGroup></RadioButton>
                                           <RadioButton layoutX="381.0" layoutY="637.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
                                           <Text layoutX="381.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
-                                          <Pane layoutX="1121.0" layoutY="93.0" prefHeight="273.0" prefWidth="486.0" style="-fx-background-color: LIGHTGRAY;">
+                                          <Pane layoutX="1121.0" layoutY="100.0" prefHeight="207.0" prefWidth="486.0" style="-fx-background-color: LIGHTGRAY;">
                                              <children>
-                                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nueva Familia" />
-                                                <TextField layoutX="28.0" layoutY="71.0" />
-                                                <Text layoutX="28.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                                <Text layoutX="262.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo Atributo" />
-                                                <TextField layoutX="243.0" layoutY="67.0" prefHeight="25.0" prefWidth="193.0" />
-                                                <Text layoutX="243.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                                <Text layoutX="243.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
-                                                <Button layoutX="410.0" layoutY="235.0" mnemonicParsing="false" text="Guardar" />
-                                                <Button layoutX="336.0" layoutY="235.0" mnemonicParsing="false" text="Cerrar" />
-                                                <TextField layoutX="240.0" layoutY="124.0" prefHeight="25.0" prefWidth="193.0" />
+                                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                                <TextField fx:id="textfield_register_familia" layoutX="28.0" layoutY="71.0" />
+                                                <Text layoutX="28.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
+                                                <TextField fx:id="textfield_registrar_atributo" layoutX="243.0" layoutY="71.0" prefHeight="25.0" prefWidth="193.0" />
+                                                <Text layoutX="243.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atributo" />
+                                                <Button fx:id="button_agregar_atributo" layoutX="303.0" layoutY="155.0" mnemonicParsing="false" text="Agregar" />
+                                                <Button fx:id="button_cerrar_atributo" layoutX="383.0" layoutY="155.0" mnemonicParsing="false" text="Cerrar" />
                                              </children>
                                           </Pane>
                                        </children>

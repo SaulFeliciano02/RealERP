@@ -39,11 +39,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import logico.Atributos;
 import logico.Cliente;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
+import logico.GrupoAtributo;
 import logico.Proveedores;
 import logico.Rubro;
 import javafx.scene.Node;
@@ -78,6 +80,12 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProducto;
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
+    
+    //DESPLIEGUE DE PRODUCTOS
+    @FXML private TextField textfield_register_familia;
+    @FXML private TextField textfield_registrar_atributo;
+    @FXML private Button button_agregar_atributo;
+    @FXML private Button button_cerrar_atributo;
     
     //DESPLIEGUE DE CLIENTE
     @FXML private TableColumn<Cliente, String> tablecolumn_clienteCodigo;
@@ -628,6 +636,33 @@ public class Controller implements Initializable{
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(true);
     	
+    }
+    
+    public void activar_nuevoAtributo(KeyEvent event) {
+    	if(textfield_register_familia.getLength() > 0 && textfield_registrar_atributo.getLength() > 0) {
+    		button_agregar_atributo.setDisable(false);
+    	}
+    	else {
+    		button_agregar_atributo.setDisable(true);
+    	}
+    }
+    
+    public void pressed_nuevoAtributo(ActionEvent event) {
+    	/*ObservableList<Atributos> data = FXCollections.observableArrayList();
+    	ObservableList<GrupoAtributo> data2 = FXCollections.observableArrayList();
+    	String nombreAtributo = textfield_registrar_atributo.getText();
+    	String nombreFamilia = textfield_register_familia.getText();
+    	//if(Controladora.getInstance().getMisClientes())
+    	Atributos a = new Atributos(nombreAtributo, grupo);
+    	data.add(rubro);
+    	Controladora.getInstance().addRubro(rubro);
+    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    	tableview_rubro.getItems().add(rubro);
+    	tableview_rubro.refresh();
+    	textfield_rubroCodigo.setText("");
+    	textfield_rubroNombre.setText("");
+    	pane_rubroCreate.setDisable(true);*/
     }
     
     public void pressed_nuevoProducto(ActionEvent event){
