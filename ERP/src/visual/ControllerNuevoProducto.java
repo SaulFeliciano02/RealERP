@@ -1,6 +1,7 @@
 package visual;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -31,6 +32,8 @@ import javafx.stage.Stage;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
+import logico.Proveedores;
+import logico.Rubro;
 
 public class ControllerNuevoProducto implements Initializable {
 	
@@ -64,6 +67,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private RadioButton radiobutton_generalSerie;
 	@FXML private RadioButton radiobutton_generalFecha;
 	@FXML private Button button_productCancel;
+	@FXML private Button button_productGuardar;
 	
 	//PARTIDA
 	@FXML private Tab tab_partida;
@@ -107,6 +111,16 @@ public class ControllerNuevoProducto implements Initializable {
 	
 	//VARIABLES PARA BUSQUEDA DE PROVEEDOR
 	@FXML private TitledPane titledpane_productoBuscarProveedor;
+	@FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCodigo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorNombre;
+    @FXML private TableColumn<Proveedores, Rubro> tablecolumn_proveedorRubro;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorDomicilio;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCorreo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorTelefono;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorRNC;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorSitioWeb;
+    @FXML private TableColumn<Proveedores, Float> tablecolumn_proveedorSaldo;
+    @FXML private TableView<Proveedores> tableview_proveedorBuscar;
 	
     /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
@@ -124,6 +138,9 @@ public class ControllerNuevoProducto implements Initializable {
     	else if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
     		calcularPrecio(event);
     	}
+    	else if(event.getSource().equals(exAct) || event.getSource().equals(exMax) || event.getSource().equals(exMin)) {
+    		activarProductoGuardar(event);
+    	}
     }
     
     //Cierra la venta de nuevoProducto
@@ -131,6 +148,39 @@ public class ControllerNuevoProducto implements Initializable {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
+    }
+    
+    public void activarProductoGuardar(KeyEvent event) {
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
+    			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0) {
+    			button_productGuardar.setDisable(false);
+    		}
+    	}
+    	
+    }
+    
+    //Guardar Producto (En Progreso)
+    public void guardarProducto(ActionEvent event) {
+    	String codigo = textfield_generalCodigo.getText();
+    	Rubro rubro = null;
+    	Proveedores proveedor = null;
+    	for(Rubro r : Controladora.getInstance().getMisRubros()) {
+    		if(r.getCodigo().equalsIgnoreCase(textfield_generalRubro.getText())) {
+    			rubro = r;
+    		}
+    	}
+    	for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
+    		if(p.getCodigo().equalsIgnoreCase(textfield_generalProveedor.getText())) {
+    			proveedor = p;
+    		}
+    	}
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    		String existenciaActual = exAct.getText();
+    		String existenciaMinima = exMin.getText();
+    		String existenciaMaxima = exMax.getText();
+    	}
+    	
     }
     
     /**FUNCIONES CREACION DE PRODUCTO**/  
@@ -319,10 +369,32 @@ public class ControllerNuevoProducto implements Initializable {
 	public void buscarProveedor(ActionEvent event) {
 		titledpane_productoBuscarProveedor.setVisible(true);
 		titledpane_productoBuscarProveedor.setDisable(false);
+		fillProveedorList(null);
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
+	
+	public void fillProveedorList(ArrayList<Proveedores> p) {
+    	ObservableList<Proveedores> data = FXCollections.observableArrayList();
+    	if(p == null) {
+    		data.addAll(Controladora.getInstance().getMisProveedores());
+    	}
+    	else {
+    		data.addAll(p);
+    	}
+    	tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_proveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_proveedorRubro.setCellValueFactory(new PropertyValueFactory<>("rubro"));
+    	tablecolumn_proveedorDomicilio.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    	tablecolumn_proveedorCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    	tablecolumn_proveedorTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    	tablecolumn_proveedorRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_proveedorSitioWeb.setCellValueFactory(new PropertyValueFactory<>("sitioWeb"));
+    	tablecolumn_proveedorSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
+    	tableview_proveedorBuscar.setItems(data);
+    	tableview_proveedorBuscar.refresh();
+    }
 
 }
