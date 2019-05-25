@@ -40,7 +40,7 @@
             </ImageView>
             <TabPane fx:id="tabpane_everything" layoutX="218.0" layoutY="67.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="General">
+                <Tab fx:id="tab_general" text="General">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
                            <children>
@@ -52,7 +52,7 @@
                               <TextField fx:id="textfield_generalRubro" editable="false" layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
                               <Text fx:id="text_generalProveedor" layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
                               <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
-                              <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" text="Buscar" />
+                              <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarRubro" text="Buscar" />
                               <Button fx:id="button_productoBuscarProveedor" layoutX="843.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
                               <Text fx:id="text_generalExistencia" layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
                               <TextField fx:id="exAct" layoutX="42.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
@@ -71,7 +71,7 @@
                                 </items>
                               </MenuButton>
                               <Button fx:id="button_generalImprimir" layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
-                              <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" prefHeight="26.0" prefWidth="203.0" />
+                              <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" onAction="#tipoProducto" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                               <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" text="Producible" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
@@ -112,17 +112,17 @@
                                     </AnchorPane>
                                 </content>
                               </TitledPane>
-                              <TitledPane fx:id="titledpane_proveedorBuscarRubro" disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros">
+                              <TitledPane fx:id="titledpane_productoBuscarRubro" disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros" visible="false">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <Button layoutX="14.0" layoutY="352.0" mnemonicParsing="false" text="Nuevo Rubro" />
                                           <Button layoutX="120.0" layoutY="352.0" mnemonicParsing="false" text="Modificar Rubro" />
                                           <Button layoutX="240.0" layoutY="352.0" mnemonicParsing="false" text="Eliminar Rubro" />
-                                          <TextField layoutX="680.0" layoutY="14.0" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
+                                          <TextField fx:id="textfield_productoBusquedaRubro" layoutX="680.0" layoutY="14.0" onKeyTyped="#buscarRubros" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
                                           <ComboBox fx:id="combobox_productoBusquedaRubro" layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
-                                          <Button layoutX="810.0" layoutY="469.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
-                                          <TableView fx:id="tableview_rubroBuscar" layoutX="12.0" layoutY="48.0" prefHeight="292.0" prefWidth="894.0">
+                                          <Button fx:id="button_cerrarBusquedaRubro" layoutX="810.0" layoutY="469.0" mnemonicParsing="false" onAction="#cerrarBusquedaRubro" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
+                                          <TableView fx:id="tableview_rubroBuscar" layoutX="12.0" layoutY="48.0" onMouseClicked="#rubroTableViewClicked" prefHeight="292.0" prefWidth="894.0">
                                              <columns>
                                                 <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="75.0" text="Codigo" />
                                                 <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="75.0" text="Nombre" />
@@ -142,7 +142,7 @@
                                                 </Text>
                                              </children>
                                           </Pane>
-                                          <Button disable="true" layoutX="740.0" layoutY="470.0" mnemonicParsing="false" text="Aceptar" />
+                                          <Button fx:id="button_aceptarBusquedaRubro" disable="true" layoutX="740.0" layoutY="470.0" mnemonicParsing="false" onAction="#returnRubroSearch" text="Aceptar" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -172,7 +172,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Costos Directos">
+                  <Tab fx:id="tab_costoDirecto" text="Costos Directos">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -202,7 +202,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Costos Indirectos">
+                  <Tab fx:id="tab_costoIndirecto" text="Costos Indirectos">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -250,7 +250,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Imagen">
+                  <Tab fx:id="tab_imagen" text="Imagen">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -268,7 +268,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Sustitutos">
+                  <Tab fx:id="tab_sustitutos" text="Sustitutos">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -289,12 +289,12 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Promoción">
+                  <Tab fx:id="tab_promocion" text="Promoción">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </Tab>
-                  <Tab text="Combinaciones">
+                  <Tab fx:id="tab_combinaciones" text="Combinaciones">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
