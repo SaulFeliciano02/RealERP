@@ -40,6 +40,16 @@ public class ControllerNuevoProducto implements Initializable {
 /**VARIABLES PARA CREAR PRODUCTOS**/
 	@FXML TabPane tabpane_everything;
 	
+	//TABS
+	@FXML private Tab tab_general;
+	@FXML private Tab tab_partida;
+	@FXML private Tab tab_costoDirecto;
+	@FXML private Tab tab_costoIndirecto;
+	@FXML private Tab tab_imagen;
+	@FXML private Tab tab_sustitutos;
+	@FXML private Tab tab_promocion;
+	@FXML private Tab tab_combinaciones;
+	
 	//GENERAL
 	@FXML private Text text_generalTipoProducto;
 	@FXML private ComboBox<String> combobox_generalTipoProducto;
@@ -70,7 +80,6 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_productGuardar;
 	
 	//PARTIDA
-	@FXML private Tab tab_partida;
 	@FXML private ListView<String> listview_partida = new ListView<>();
 	@FXML private ListView<String> listview_partidaSelect = new ListView<>();
 	@FXML private Button button_partidaSendTo;
@@ -102,7 +111,6 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_costosIndirectosEliminar;
 	
 	//PRECIOS
-	@FXML private Tab precios;
 	@FXML private TextField textfield_preciosCostos;
 	@FXML private TextField textfield_preciosPorcientoGanancia;
 	@FXML private TextField textfield_preciosImpuestos;
@@ -128,13 +136,17 @@ public class ControllerNuevoProducto implements Initializable {
     
     //VARIABLES PARA BUSQUEDA DE RUBRO
     
-   @FXML private TableColumn<Rubro, String> tablecolumn_rubroCodigo;
-   @FXML private TableColumn<Rubro, String> tablecolumn_rubroNombre;
-   @FXML private TableView<Rubro> tableview_rubroBuscar;
-   @FXML private ComboBox<String> combobox_productoBusquedaRubro;
-   @FXML private Button button_cerrarBusquedaRubro;
-	
+    @FXML private TitledPane titledpane_productoBuscarRubro;
+    @FXML private TableColumn<Rubro, String> tablecolumn_rubroCodigo;
+    @FXML private TableColumn<Rubro, String> tablecolumn_rubroNombre;
+    @FXML private TableView<Rubro> tableview_rubroBuscar;
+    @FXML private TextField textfield_productoBusquedaRubro;
+    @FXML private ComboBox<String> combobox_productoBusquedaRubro;
+    @FXML private Button button_cerrarBusquedaRubro;
+    @FXML private Button button_aceptarBusquedaRubro;
+   
     /**FUNCIONES GENERALES**/
+    
     //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
@@ -196,6 +208,39 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     /**FUNCIONES CREACION DE PRODUCTO**/  
+    
+    public void tipoProducto(ActionEvent event) {
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    		tab_combinaciones.setDisable(true);
+    		
+    		tab_partida.setDisable(false);
+    		exAct.setDisable(false);
+    		exMin.setDisable(false);
+    		exMax.setDisable(false);
+    	}
+    	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
+    		exAct.setDisable(false);
+    		exMin.setDisable(false);
+    		exMax.setDisable(false);
+    		
+    		tab_partida.setDisable(true);
+    	}
+    	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
+    		exAct.setDisable(true);
+    		exMin.setDisable(true);
+    		exMax.setDisable(true);
+    		tab_combinaciones.setDisable(true);
+    		
+    		tab_partida.setDisable(false);
+    	}
+    	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
+    		tab_combinaciones.setDisable(false);
+    		exAct.setDisable(false);
+    		exMin.setDisable(false);
+    		exMax.setDisable(false);
+    		tab_partida.setDisable(false);
+    	}
+    }
     
     //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
@@ -382,6 +427,7 @@ public class ControllerNuevoProducto implements Initializable {
 		titledpane_productoBuscarProveedor.setVisible(true);
 		titledpane_productoBuscarProveedor.setDisable(false);
 		fillProveedorList(null);
+		combobox_productoBusquedaProveedor.getSelectionModel().select("Codigo");
 	}
 	
     public void buscarProveedores(KeyEvent event) {
@@ -419,9 +465,55 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     //FUNCIONES BUSQUEDA DE RUBRO
+    
+    public void buscarRubro(ActionEvent event) {
+    	titledpane_productoBuscarRubro.setVisible(true);
+		titledpane_productoBuscarRubro.setDisable(false);
+		fillRubroList(null);
+		button_aceptarBusquedaRubro.setDisable(true);
+    }
+    
+    public void buscarRubros(KeyEvent event) {
+    	ArrayList<Rubro> rubros = new ArrayList<>();
+    	if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    		rubros = Controladora.getInstance().searchRubro(textfield_productoBusquedaRubro.getText().toLowerCase() + event.getCharacter(), combobox_productoBusquedaRubro.getValue());
+    	}
+    	else {
+    		rubros = Controladora.getInstance().searchRubro(textfield_productoBusquedaRubro.getText().toLowerCase(), combobox_productoBusquedaRubro.getValue());
+    	}
+    	if(rubros.size() == 0) {
+    		fillRubroList(null);
+    	}
+    	else {
+    		fillRubroList(rubros);
+    	}
+    }
+    
+    public void cerrarBusquedaRubro(ActionEvent event) {
+    	titledpane_productoBuscarRubro.setVisible(false);
+    }
+    
+    public void rubroTableViewClicked(MouseEvent event) {
+    	if(!tableview_rubroBuscar.getSelectionModel().isEmpty()) {
+    		button_aceptarBusquedaRubro.setDisable(false);
+    	}
+    }
+    
+    public void returnRubroSearch(ActionEvent event) {
+    	textfield_generalRubro.setText(tableview_rubroBuscar.getSelectionModel().getSelectedItem().getNombreRubro());
+    	button_aceptarBusquedaRubro.setDisable(true);
+    	titledpane_productoBuscarRubro.setVisible(false);
+    }
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//Seteando combobox de general
+		ObservableList<String> dataType = FXCollections.observableArrayList();
+		dataType.addAll("Estandar", "Kit", "Servicio", "Matriz");
+		combobox_generalTipoProducto.setItems(dataType);
+		combobox_generalTipoProducto.getSelectionModel().select("Estandar");
+		tipoProducto(null);
 		
 		//Seteando busqueda de proveedores
 		ObservableList<String> dataProveedor = FXCollections.observableArrayList();
@@ -454,5 +546,19 @@ public class ControllerNuevoProducto implements Initializable {
     	tableview_proveedorBuscar.setItems(data);
     	tableview_proveedorBuscar.refresh();
     }
+	
+	public void fillRubroList(ArrayList<Rubro> r) {
+		ObservableList<Rubro> data = FXCollections.observableArrayList();
+    	if(r == null) {
+    		data.addAll(Controladora.getInstance().getMisRubros());
+    	}
+    	else {
+    		data.addAll(r);
+    	}
+    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    	tableview_rubroBuscar.setItems(data);
+    	tableview_rubroBuscar.refresh();
+	}
 
 }
