@@ -188,7 +188,7 @@ public class Controladora implements Serializable{
 			case "Codigo":
 				for(int k = 0; k < misProveedores.get(i).getCodigo().length(); k++) {
 					if(j < buscador.length()) {
-						if(misProveedores.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
+						if(misProveedores.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
 							boolCount++;
 						}
 					}
@@ -198,7 +198,7 @@ public class Controladora implements Serializable{
 			case "Nombre":
 				for(int k = 0; k < misProveedores.get(i).getNombre().length(); k++) {
 					if(j < buscador.length()) {
-						if(misProveedores.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
+						if(misProveedores.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
 							boolCount++;
 						}
 					}
@@ -208,7 +208,7 @@ public class Controladora implements Serializable{
 			case "Rubro":
 				for(int k = 0; k < misProveedores.get(i).getRubro().getNombreRubro().length(); k++) {
 					if(j < buscador.length()) {
-						if(misProveedores.get(i).getRubro().getNombreRubro().toLowerCase().charAt(j) == buscador.charAt(j)) {
+						if(misProveedores.get(i).getRubro().getNombreRubro().toLowerCase().charAt(k) == buscador.charAt(j)) {
 							boolCount++;
 						}
 					}
@@ -272,7 +272,7 @@ public class Controladora implements Serializable{
 			case "Codigo":
 				for(int k = 0; k < misEmpleados.get(i).getCodigo().length(); k++) {
 					if(j < buscador.length()) {
-					if(misEmpleados.get(i).getCodigo().charAt(j) == buscador.charAt(j)) {
+					if(misEmpleados.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
 							boolCount++;
 						}
 					}
@@ -282,7 +282,7 @@ public class Controladora implements Serializable{
 			case "Nombre":
 				for(int k = 0; k < misEmpleados.get(i).getNombre().length(); k++) {
 					if(j < buscador.length()) {
-						if(misEmpleados.get(i).getNombre().toLowerCase().charAt(j) == buscador.charAt(j)) {
+						if(misEmpleados.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
 							boolCount++;
 						}
 					}
@@ -296,6 +296,45 @@ public class Controladora implements Serializable{
 		}
 		return searchEmpleado;
 	}
+	
+	/**FUNCION PARA BUSCAR RUBROS**/
+	public ArrayList<Rubro> searchRubro(String buscador, String tipoBusqueda){
+		int j = 0;
+		ArrayList<Rubro> searchRubro = new ArrayList<>();
+		for(int i = 0; i < misRubros.size(); i++) {
+			int boolCount = 0;
+			j = 0;
+			switch(tipoBusqueda) {
+			case "Codigo":
+				for(int k = 0; k < misRubros.get(i).getCodigo().length(); k++) {
+					if(j < buscador.length()) {
+					if(misRubros.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
+							boolCount++;
+						}
+					}
+					j++;
+				}
+				break;
+			case "Nombre":
+				for(int k = 0; k < misRubros.get(i).getNombreRubro().length(); k++) {
+					if(j < buscador.length()) {
+						if(misRubros.get(i).getNombreRubro().toLowerCase().charAt(k) == buscador.charAt(j)) {
+							boolCount++;
+						}
+					}
+					j++;
+				}
+				break;
+			}		
+			if(boolCount == buscador.length()) {
+				searchRubro.add(misRubros.get(i));
+			}
+		}
+		return searchRubro;
+	}
+	
+	
+	
 	/**FUNCION PARA VERIFICAR SI UN STRING DADO ES UN NUMERO**/
 	
 	public boolean isNumber(String string) {
