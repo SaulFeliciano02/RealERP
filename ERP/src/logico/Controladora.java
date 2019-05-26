@@ -26,6 +26,8 @@ public class Controladora implements Serializable{
 	private ArrayList<Rubro> misRubros;
 	
 	private ArrayList<Producto> misProductos;
+	private ArrayList<GrupoAtributo> misGrupoAtributo;
+	private ArrayList<Atributos> misAtributos;
 	
 	private static Controladora controladora;
 	
@@ -48,6 +50,8 @@ public class Controladora implements Serializable{
 		misProveedores.add(proveedor3);
 		misProveedores.add(proveedor4);
 		misProveedores.add(proveedor5);
+		this.misAtributos = new ArrayList<>();
+		this.misGrupoAtributo = new ArrayList<>();
 	}
 	
 	public static Controladora getInstance() {
@@ -78,6 +82,12 @@ public class Controladora implements Serializable{
 	public void addProducto(Producto p) {
 		misProductos.add(p);
 	}
+	public void addGrupoAtributo(GrupoAtributo g) {
+		misGrupoAtributo.add(g);
+	}
+	public void addAtributo(Atributos a) {
+		misAtributos.add(a);
+	}
 
 	public ArrayList<Cliente> getMisClientes() {
 		return misClientes;
@@ -105,6 +115,32 @@ public class Controladora implements Serializable{
 
 	public ArrayList<Producto> getMisProductos() {
 		return misProductos;
+	}
+	
+	public ArrayList<GrupoAtributo> getMisGrupoAtributo() {
+		return misGrupoAtributo;
+	}
+	
+	public ArrayList<Atributos> getMisAtributos() {
+		return misAtributos;
+	}
+	
+	/**FUNCION PARA VERIFICAR UNA FAMILIA DE ATRIBUTO**/
+	
+	public boolean verificarFamiliaAtributo(String nombre) {
+		boolean existe = false;
+		if(!getMisGrupoAtributo().isEmpty()) {
+			int i;
+			for(i=0;i<getMisGrupoAtributo().size();i++)
+			{
+				if(nombre.equalsIgnoreCase(getMisGrupoAtributo().get(i).getNombre()) && existe == false)
+				{
+					existe = true;
+				}
+			}
+		}
+		
+		return existe;
 	}
 	
 	/**FUNCION PARA BUSCAR UN PRODUCTO**/

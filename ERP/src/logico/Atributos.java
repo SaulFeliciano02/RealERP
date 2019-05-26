@@ -19,8 +19,8 @@ public class Atributos {
 		this.nombre = nombre;
 	}
 
-	public GrupoAtributo getGrupo() {
-		return grupo;
+	public String getGrupo() {
+		return grupo.getNombre();
 	}
 
 	public void setGrupo(GrupoAtributo grupo) {
