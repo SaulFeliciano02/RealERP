@@ -183,7 +183,7 @@
                         <Button layoutX="1374.0" layoutY="742.0" mnemonicParsing="false" text="Información adicional del producto" />
                      </children>
                   </Pane>
-                  <Pane fx:id="pane_Productos" disable="true" layoutY="121.0" prefHeight="959.0" prefWidth="1657.0" visible="false">
+                  <Pane fx:id="pane_Productos" layoutY="121.0" prefHeight="959.0" prefWidth="1657.0" visible="false">
                      <children>
                         <TabPane prefHeight="959.0" prefWidth="1657.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
@@ -288,16 +288,16 @@
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <TextField layoutX="146.0" layoutY="66.0" prefHeight="26.0" prefWidth="196.0" promptText="Búsqueda" />
-                                          <ListView layoutX="147.0" layoutY="93.0" prefHeight="514.0" prefWidth="194.0" />
-                                          <TableView layoutX="365.0" layoutY="93.0" prefHeight="478.0" prefWidth="718.0">
+                                          <ListView fx:id="listView_grupoAtributos" layoutX="147.0" layoutY="93.0" onMouseClicked="#selected_familiaAtributoList" prefHeight="514.0" prefWidth="194.0" />
+                                          <TableView fx:id="tableView_atributos" layoutX="365.0" layoutY="93.0" prefHeight="478.0" prefWidth="718.0">
                                              <columns>
-                                                <TableColumn prefWidth="360.0" text="Familia" />
-                                                <TableColumn prefWidth="350.0" text="Atributo" />
+                                                <TableColumn fx:id="tablecolumn_atributogrupo" prefWidth="360.0" text="Familia" />
+                                                <TableColumn fx:id="tablecolumn_atributonombre" prefWidth="350.0" text="Atributo" />
                                              </columns>
                                           </TableView>
-                                          <TextField alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
-                                          <Button layoutX="575.0" layoutY="606.0" mnemonicParsing="false" text="Modificar" />
-                                          <Button layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
+                                          <TextField fx:id="textfield_infoFamilia" alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
+                                          <Button disable="true" layoutX="575.0" layoutY="606.0" mnemonicParsing="false" text="Modificar" />
+                                          <Button disable="true" layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
                                           <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="manejarAtributoFamilia" />
@@ -307,11 +307,11 @@
                                           <Pane layoutX="1121.0" layoutY="100.0" prefHeight="207.0" prefWidth="486.0" style="-fx-background-color: LIGHTGRAY;">
                                              <children>
                                                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                                <TextField fx:id="textfield_register_familia" layoutX="28.0" layoutY="71.0" />
+                                                <TextField fx:id="textfield_register_familia" layoutX="28.0" layoutY="71.0" onKeyTyped="#activar_nuevoAtributo" />
                                                 <Text layoutX="28.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
-                                                <TextField fx:id="textfield_registrar_atributo" layoutX="243.0" layoutY="71.0" prefHeight="25.0" prefWidth="193.0" />
+                                                <TextField fx:id="textfield_registrar_atributo" layoutX="243.0" layoutY="71.0" onKeyTyped="#activar_nuevoAtributo" prefHeight="25.0" prefWidth="193.0" />
                                                 <Text layoutX="243.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atributo" />
-                                                <Button fx:id="button_agregar_atributo" layoutX="303.0" layoutY="155.0" mnemonicParsing="false" text="Agregar" />
+                                                <Button fx:id="button_agregar_atributo" disable="true" layoutX="303.0" layoutY="155.0" mnemonicParsing="false" onAction="#pressed_nuevoAtributo" text="Agregar" />
                                                 <Button fx:id="button_cerrar_atributo" layoutX="383.0" layoutY="155.0" mnemonicParsing="false" text="Cerrar" />
                                              </children>
                                           </Pane>
