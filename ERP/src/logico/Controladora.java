@@ -2,10 +2,13 @@ package logico;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Controladora implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	Date date = null;
+	Rubro armas = new Rubro("00001", "Armas");
 	Cliente cliente1 = new Cliente("000001", "Marcos", "312312", "Activo", null, "2312313");
 	Cliente cliente2 = new Cliente("000002", "Saul", "312312", "Activo", null, "2312313");
 	Cliente cliente3 = new Cliente("000003", "Yorman", "312312", "Activo", null, "2312313");
@@ -16,6 +19,15 @@ public class Controladora implements Serializable{
 	Proveedores proveedor3 = new Proveedores("000003", "Maria", "21312313", "Su casa", "", "", null, "");
 	Proveedores proveedor4 = new Proveedores("000004", "Juan", "21312313", "Su casa", "", "", null, "");
 	Proveedores proveedor5 = new Proveedores("000005", "Luis", "21312313", "Su casa", "", "", null, "");
+	Proveedores prov1 = new Proveedores("Prov-01", "Juan", "777-777-7777", "Wareve", null, "011", null, null);
+	Proveedores prov2 = new Proveedores("Prov-02", "Pedro", "777-777-7777", "Wareve", null, "012", null, null);
+	Proveedores prov3 = new Proveedores("Prov-03", "Edualdo", "777-777-7777", "Wareve", null, "013", null, null);
+	ArrayList<Proveedores> provsec = new ArrayList<>();
+	Moneda dola = new Moneda(50, "dolar");
+	Precio pre = new Precio(1500f, "caro", true);
+	UnidadMedida lb = new UnidadMedida("Libra", "Lb");
+	Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
+	
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Proveedores> misProveedores;
@@ -26,6 +38,9 @@ public class Controladora implements Serializable{
 	private ArrayList<Rubro> misRubros;
 	
 	private ArrayList<Producto> misProductos;
+	private ArrayList<Estandar> misProductosEstandar;
+	private ArrayList<Kit> misProductosKit;
+	private ArrayList<Servicio> misProductosServicio;
 	private ArrayList<GrupoAtributo> misGrupoAtributo;
 	private ArrayList<Atributos> misAtributos;
 	
@@ -40,6 +55,9 @@ public class Controladora implements Serializable{
 		this.misPromociones = new ArrayList<>();
 		this.misRubros = new ArrayList<>();
 		this.misProductos = new ArrayList<>();
+		this.misProductosEstandar = new ArrayList<>();
+		this.misProductosKit = new ArrayList<>();
+		this.misProductosServicio = new ArrayList<>();
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
 		misClientes.add(cliente3);
@@ -50,6 +68,8 @@ public class Controladora implements Serializable{
 		misProveedores.add(proveedor3);
 		misProveedores.add(proveedor4);
 		misProveedores.add(proveedor5);
+		misProductos.add(pro);
+		misProductosEstandar.add(pro);
 		this.misAtributos = new ArrayList<>();
 		this.misGrupoAtributo = new ArrayList<>();
 	}
@@ -82,6 +102,16 @@ public class Controladora implements Serializable{
 	public void addProducto(Producto p) {
 		misProductos.add(p);
 	}
+	public void addProductoEstandar(Estandar e) {
+		misProductosEstandar.add(e);
+	}
+	public void addProductoKit(Kit k) {
+		misProductosKit.add(k);
+	}
+	public void addProductoServicio(Servicio s) {
+		misProductosServicio.add(s);
+	}
+	
 	public void addGrupoAtributo(GrupoAtributo g) {
 		misGrupoAtributo.add(g);
 	}
@@ -125,6 +155,18 @@ public class Controladora implements Serializable{
 		return misAtributos;
 	}
 	
+	public ArrayList<Estandar> getMisProductosEstandar() {
+		return misProductosEstandar;
+	}
+
+	public ArrayList<Kit> getMisProductosKit() {
+		return misProductosKit;
+	}
+
+	public ArrayList<Servicio> getMisProductosServicio() {
+		return misProductosServicio;
+	}
+
 	/**FUNCION PARA VERIFICAR UNA FAMILIA DE ATRIBUTO**/
 	
 	public boolean verificarFamiliaAtributo(String nombre) {
@@ -209,6 +251,72 @@ public class Controladora implements Serializable{
 			}
 		}
 		return searchProducto;
+	}
+	
+	public ArrayList<Estandar> searchProductsEstandar(String buscador, String tipoBusqueda){
+		int j = 0;
+		ArrayList<Estandar> searchProductoEstandar = new ArrayList<>();
+		for(int i = 0; i < misProductosEstandar.size(); i++) {
+			int boolCount = 0;
+			j = 0;
+			/**Con motivo de no repetir la misma funcion varias veces, se penso hacerlo un switch**/
+			switch(tipoBusqueda) {
+				case "Codigo":
+					for(int k = 0; k < misProductosEstandar.get(i).getCodigo().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductosEstandar.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}
+					break;
+				case "Nombre":
+					for(int k = 0; k < misProductosEstandar.get(i).getNombre().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductosEstandar.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}	
+					break;
+				case "Descripcion":
+					for(int k = 0; k < misProductosEstandar.get(i).getDescripcion().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductosEstandar.get(i).getDescripcion().toLowerCase().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}
+					break;
+				case "Proveedor":
+					for(int k = 0; k < misProductosEstandar.get(i).getProveedorPrin().getCodigo().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductosEstandar.get(i).getProveedorPrin().getCodigo().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}
+					break;
+				case "Rubro":
+					for(int k = 0; k < misProductosEstandar.get(i).getRubroProducto().getNombreRubro().length(); k++) {
+						if(j < buscador.length()) {
+							if(misProductosEstandar.get(i).getRubroProducto().getNombreRubro().charAt(k) == buscador.charAt(j)) {
+								boolCount++;
+							}
+						}
+						j++;
+					}	
+					break;
+			}
+			if(boolCount == buscador.length()) {
+				searchProductoEstandar.add(misProductosEstandar.get(i));
+			}
+		}
+		return searchProductoEstandar;
 	}
 	
 
@@ -388,7 +496,53 @@ public class Controladora implements Serializable{
 		double precioTotal = costo+precio;		
 		return precioTotal;
 	}
-
+	
+	
+	public String findPartidaNombre(String string) {
+		String nombre = "";
+		int i = 0;
+		while(string.charAt(i) != ':') {
+    		nombre += string.charAt(i);
+    		i++;
+    	} 
+		return nombre;
+	}
+	
+	public String findPartidaCantidad(String string) {
+		int i = 0;
+		int check = 0;
+		String cantidad = "";
+		while(i < string.length()) {
+    		if(string.charAt(i) == ':') {
+    			check++;
+    		}
+    		if(check == 2 && string.charAt(i) != ' ' && string.charAt(i) != ':') {
+    			cantidad += string.charAt(i);
+    		}
+    		i++;
+    	}
+		return cantidad;
+	}
+	
+	public String findPartidaCosto(String string) {
+		String partida = "";
+		int i = 0;
+		int check = 0;
+		while(i < string.length()) {
+			 if(Character.isDigit(string.charAt(i)) && check == 0) {
+				 check++;
+				 partida += string.charAt(i);
+			 }
+			 else if((Character.isDigit(string.charAt(i)) || string.charAt(i) == '.') && check == 1) {
+				 partida += string.charAt(i);
+			 }
+			 else if(Character.isLetter(string.charAt(i)) && check == 1) {
+				 check++;
+			 }
+			 i++;
+		}
+		return partida;
+	}
 }
 
 

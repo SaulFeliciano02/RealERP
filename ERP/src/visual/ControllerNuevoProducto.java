@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -24,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +34,8 @@ import javafx.stage.Stage;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
+import logico.Estandar;
+import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
 
@@ -80,8 +84,8 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_productGuardar;
 	
 	//PARTIDA
-	@FXML private ListView<String> listview_partida = new ListView<>();
-	@FXML private ListView<String> listview_partidaSelect = new ListView<>();
+	@FXML private ListView<String> listview_partida;
+	@FXML private ListView<String> listview_partidaSelect;
 	@FXML private Button button_partidaSendTo;
 	@FXML private Button button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
@@ -262,17 +266,78 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void movePartida(ActionEvent event) {
+    	Alert a = new Alert(AlertType.NONE); 
+    	boolean isAlreadySelected = false;
     	String select_items = listview_partida.getSelectionModel().getSelectedItem();
-    	listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
-    	listview_partidaSelect.getItems().addAll(select_items);
-    	button_partidaSendTo.setDisable(true);
-    	textfield_partidaCantidad.clear();
+    	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
+    	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
+    	String item_moved = "";
+    	if(Float.parseFloat(textfield_partidaCantidad.getText()) > Float.parseFloat(cantidad)) {
+    		a.setAlertType(AlertType.ERROR);
+			a.setContentText("No puede tomar mas productos de lo que tiene.");
+			a.show();
+    	}
+    	else {
+    		int i = 0;
+    		while(select_items.charAt(i) != ':') {
+    			item_moved += select_items.charAt(i);
+    			i++;
+    		}
+    		ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(item_moved, "Nombre");
+    		//Guardar este codigo para cuando guardemos un producto
+    		/**for(int j = 0; j < Controladora.getInstance().getMisProductosEstandar().size(); j++) {
+    			if(Controladora.getInstance().getMisProductosEstandar().get(j).equals(estandar.get(0))) {
+    				Controladora.getInstance().getMisProductosEstandar().get(j).setExistenciaActual(
+    					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
+    			}
+    		}**/
+    		item_moved += ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", Usando: " + 
+    				(Float.parseFloat(textfield_partidaCantidad.getText()));
+    		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
+    	
+    		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+    					(Double.parseDouble(cantidad) - Double.parseDouble(textfield_partidaCantidad.getText())));
+    		
+    			listview_partida.refresh();
+    		}
+    		for(String s : listview_partidaSelect.getItems()) {
+    			String nameSelect = Controladora.getInstance().findPartidaNombre(s);
+    			if(nameSelect.equalsIgnoreCase(nameOriginal)) {
+    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    				listview_partidaSelect.getItems().remove(s);
+    				item_moved = nameSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", Usando: " + 
+    						(Float.parseFloat(textfield_partidaCantidad.getText()) + Float.parseFloat(cantidadSelect));
+    				listview_partidaSelect.getItems().add(item_moved);
+    				isAlreadySelected = true;
+    			}
+    		}
+    		if(!isAlreadySelected) {
+    			listview_partidaSelect.getItems().addAll(item_moved);
+    		}
+    	
+    		button_partidaSendTo.setDisable(true);
+    		textfield_partidaCantidad.clear();
+    	}
     }
     
     public void movePartidaSelect(ActionEvent event) {
     	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
+    	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
+    	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
+    	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect, "Nombre");
+    	float backNumber = estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad);
+    	String item_moved = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", usando: " + 
+    	(backNumber + Float.parseFloat(cantidad));
+ 
+    	
+    	String original = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad));
+    	listview_partida.getItems().remove(original);
     	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
-    	listview_partida.getItems().add(select_items);
+    	listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+				(estandar.get(0).getExistenciaActual()));
+    	listview_partida.refresh();
     	button_partidaSendBack.setDisable(true);
     }
     
@@ -361,13 +426,21 @@ public class ControllerNuevoProducto implements Initializable {
 	public void setCostoYPrecioTotal(Event event) {
 		double valorDirecto = 0;
 		double valorIndirecto = 0;
+		double valorPartida = 0;
+		listview_partidaSelect.getItems();
 		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
 			valorDirecto += valor.getValor();
 		}
 		for(CostoIndirectoProducto valor : tableview_costosIndirectos.getItems()) {
 			valorIndirecto += valor.getValor();
 		}
-		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto));
+		for(String valor : listview_partidaSelect.getItems()) {
+			 String partida = Controladora.getInstance().findPartidaCosto(valor);
+			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
+			 valorPartida += Float.parseFloat(partida) * Float.parseFloat(cantidad);
+			 System.out.println(partida + " " + cantidad);
+		}
+		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida));
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
 		}
@@ -507,6 +580,15 @@ public class ControllerNuevoProducto implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//Seteando tableview de la partida
+		ObservableList<String> dataPartida = FXCollections.observableArrayList();
+		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
+			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecio().getPrecio() + ", disponibles: " + e.getExistenciaActual());
+			
+		}
+		listview_partida.setItems(dataPartida);
+		listview_partida.refresh();
 		
 		//Seteando combobox de general
 		ObservableList<String> dataType = FXCollections.observableArrayList();
