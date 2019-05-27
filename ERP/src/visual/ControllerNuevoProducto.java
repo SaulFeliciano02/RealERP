@@ -364,33 +364,48 @@ public class ControllerNuevoProducto implements Initializable {
     	String atributo1 = listView_atributos1.getSelectionModel().getSelectedItem();
     	String atributo2 = listView_atributos2.getSelectionModel().getSelectedItem();
     	String atributo3 = listView_atributos3.getSelectionModel().getSelectedItem();
+    	int i;
     	if((!textfield_numSerie.getText().isEmpty() && !textfield_cantidadComb.getText().isEmpty()))
     	{
     		String num = textfield_numSerie.getText();
     		float cant = Float.parseFloat(textfield_cantidadComb.getText());
     		ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
     		ArrayList<Atributos> b = new ArrayList<>(); 
-    		int i;
-    		for(i=0; i<a.size(); i++)
+    		int i1;
+    		for(i1=0; i1<a.size(); i1++)
     		{
-    			if(a.get(i).getNombre().equalsIgnoreCase(atributo1) && atributo1!=null)
+    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo1) && atributo1!=null)
     			{
-    				b.add(a.get(i));
+    				b.add(a.get(i1));
     			}
     			
-    			if(a.get(i).getNombre().equalsIgnoreCase(atributo2) && atributo2!=null)
+    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo2) && atributo2!=null)
     			{
-    				b.add(a.get(i));
+    				b.add(a.get(i1));
     			}
     			
-    			if(a.get(i).getNombre().equalsIgnoreCase(atributo3) && atributo3!=null)
+    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo3) && atributo3!=null)
     			{
-    				b.add(a.get(i));
+    				b.add(a.get(i1));
     			}
     		}
     		//System.out.println(atributo1 + " " + atributo2 + " " + atributo3);
     		Combinaciones comb = new Combinaciones(num, cant, b);
-    		String pcomb = comb.numeroSerie + " " + b.get(0).getGrupo() + ": " + b.get(0).getNombre() + ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre() + ", " + b.get(2).getGrupo() + ": " + b.get(2).getNombre() + ", " + comb.getExistenciaActual(); 
+    		String atri1 =  b.get(0).getGrupo() + ": " + b.get(0).getNombre();
+    		String atri2 = ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre();
+    		String pcomb;
+    		pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual(); 
+    		if(b.size()>2)
+    		{
+    			String atri3 = ", " + b.get(2).getGrupo() + ": " + b.get(2).getNombre();
+    			
+    			pcomb = comb.numeroSerie + " " + atri1 + atri2 + atri3 + ", " + "Existencia: " + comb.getExistenciaActual(); 
+    		}
+    		else
+    		{
+    			pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual();
+    		}
+    		 
     		listView_combinaciones.getItems().add(pcomb);
     	}
     }
