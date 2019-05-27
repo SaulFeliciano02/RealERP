@@ -9,13 +9,12 @@ public class Combinaciones {
 	public float existenciaActual;
 	public Partida partida;
 	
-	public Combinaciones(String numeroSerie, float existenciaActual,
-			Partida partida) {
+	public Combinaciones(String numeroSerie, float existenciaActual, ArrayList<Atributos> listaAtributos) {
 		super();
-		this.listaAtributos = new ArrayList<>();
+		this.listaAtributos = listaAtributos;
 		this.numeroSerie = numeroSerie;
 		this.existenciaActual = existenciaActual;
-		this.partida = partida;
+		//this.partida = partida;
 	}
 
 	public ArrayList<Atributos> getListaAtributos() {

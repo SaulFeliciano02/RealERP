@@ -18,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -31,6 +32,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logico.Atributos;
+import logico.Combinaciones;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
@@ -148,6 +151,21 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private ComboBox<String> combobox_productoBusquedaRubro;
     @FXML private Button button_cerrarBusquedaRubro;
     @FXML private Button button_aceptarBusquedaRubro;
+    
+    //COMBINACIONES
+    @FXML private TextField textfield_busquedaFamilia1;
+    @FXML private TextField textfield_busquedaFamilia2;
+    @FXML private TextField textfield_busquedaFamilia3;
+    @FXML private TextField textfield_numSerie;
+    @FXML private TextField textfield_cantidadComb;
+    @FXML private ListView<String> listView_atributos1;
+    @FXML private ListView<String> listView_atributos2;
+    @FXML private ListView<String> listView_atributos3;
+    @FXML private ListView<String> listView_combinaciones;
+    @FXML private Button button_combinar;
+    @FXML private Button button_buscarFamilia1;
+    @FXML private Button button_buscarFamilia2;
+    @FXML private Button button_buscarFamilia3;
    
     /**FUNCIONES GENERALES**/
     
@@ -243,6 +261,137 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		tab_partida.setDisable(false);
+    	}
+    }
+    
+    //FUNCIONES DE CREACION DE COMBINACION
+    public void habilitar_busqueda1(KeyEvent event) {
+    	if(!textfield_busquedaFamilia1.getText().isEmpty())
+    	{
+    		button_buscarFamilia1.setDisable(false);
+    	}
+    }
+    
+    public void habilitar_busqueda2(KeyEvent event) {
+    	if(!textfield_busquedaFamilia2.getText().isEmpty())
+    	{
+    		button_buscarFamilia2.setDisable(false);
+    	}
+    }
+    
+    public void habilitar_busqueda3(KeyEvent event) {
+    	if(!textfield_busquedaFamilia3.getText().isEmpty())
+    	{
+    		button_buscarFamilia3.setDisable(false);
+    	}
+    }
+    
+    public void rellenarListview_atributos1(ActionEvent event) {
+    	String familia = textfield_busquedaFamilia1.getText();
+    	ArrayList<String> a = new ArrayList<>();
+    	ArrayList<Atributos> b = Controladora.getInstance().getMisAtributos();
+    	int i;
+    	for(i=0; i<b.size(); i++)
+    	{
+    		if(b.get(i).getGrupo().equalsIgnoreCase(familia))
+    		{
+    			a.add(b.get(i).getNombre());
+    		}
+    	}
+    		
+    	listView_atributos1.getItems().addAll(a);
+    	
+    }
+    
+    public void rellenarListview_atributos2(ActionEvent event) {
+    		String familia = textfield_busquedaFamilia2.getText();
+    		ArrayList<String> a = new ArrayList<>();
+    		ArrayList<Atributos> b = Controladora.getInstance().getMisAtributos();
+    		int i;
+    		for(i=0; i<b.size(); i++)
+    		{
+    			if(b.get(i).getGrupo().equalsIgnoreCase(familia))
+    			{
+    				a.add(b.get(i).getNombre());
+    			}
+    		}
+    		
+    		listView_atributos2.getItems().addAll(a);
+    }
+    
+    public void rellenarListview_atributos3(ActionEvent event) {
+    		String familia = textfield_busquedaFamilia3.getText();
+    		ArrayList<String> a = new ArrayList<>();
+    		ArrayList<Atributos> b = Controladora.getInstance().getMisAtributos();
+    		int i;
+    		for(i=0; i<b.size(); i++)
+    		{
+    			if(b.get(i).getGrupo().equalsIgnoreCase(familia))
+    			{
+    				a.add(b.get(i).getNombre());
+    			}
+    		}
+    		
+    		listView_atributos3.getItems().addAll(a);
+    }
+    
+    public void habilitar_combinar(MouseEvent event) {
+    	listView_atributos1.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String atributo1 = listView_atributos1.getSelectionModel().getSelectedItem();
+    	listView_atributos2.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String atributo2 = listView_atributos2.getSelectionModel().getSelectedItem();
+    	listView_atributos3.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String atributo3 = listView_atributos3.getSelectionModel().getSelectedItem();
+    	
+    	if(atributo1!=null && (atributo2!=null || atributo3!=null))
+    	{
+    		button_combinar.setDisable(false);
+    	}
+    	
+    	if(atributo2!=null && (atributo1!=null || atributo3!=null))
+    	{
+    		button_combinar.setDisable(false);
+    	}
+    	
+    	if(atributo3!=null && (atributo1!=null || atributo2!=null))
+    	{
+    		button_combinar.setDisable(false);
+    	}
+    	
+    }
+    
+    public void createCombination(ActionEvent event) {
+    	String atributo1 = listView_atributos1.getSelectionModel().getSelectedItem();
+    	String atributo2 = listView_atributos2.getSelectionModel().getSelectedItem();
+    	String atributo3 = listView_atributos3.getSelectionModel().getSelectedItem();
+    	if((!textfield_numSerie.getText().isEmpty() && !textfield_cantidadComb.getText().isEmpty()))
+    	{
+    		String num = textfield_numSerie.getText();
+    		float cant = Float.parseFloat(textfield_cantidadComb.getText());
+    		ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
+    		ArrayList<Atributos> b = new ArrayList<>(); 
+    		int i;
+    		for(i=0; i<a.size(); i++)
+    		{
+    			if(a.get(i).getNombre().equalsIgnoreCase(atributo1) && atributo1!=null)
+    			{
+    				b.add(a.get(i));
+    			}
+    			
+    			if(a.get(i).getNombre().equalsIgnoreCase(atributo2) && atributo2!=null)
+    			{
+    				b.add(a.get(i));
+    			}
+    			
+    			if(a.get(i).getNombre().equalsIgnoreCase(atributo3) && atributo3!=null)
+    			{
+    				b.add(a.get(i));
+    			}
+    		}
+    		//System.out.println(atributo1 + " " + atributo2 + " " + atributo3);
+    		Combinaciones comb = new Combinaciones(num, cant, b);
+    		String pcomb = comb.numeroSerie + " " + b.get(0).getGrupo() + ": " + b.get(0).getNombre() + ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre() + ", " + b.get(2).getGrupo() + ": " + b.get(2).getNombre() + ", " + comb.getExistenciaActual(); 
+    		listView_combinaciones.getItems().add(pcomb);
     	}
     }
     
