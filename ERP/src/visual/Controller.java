@@ -142,7 +142,11 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_rubroCodigo;
     @FXML private TextField textfield_rubroNombre;
     @FXML private Button button_rubroGuardar;
-
+    
+    //Atributos
+    @FXML private TableView<Atributos> tableView_Atributos;
+    @FXML private Button button_atributosEliminar;
+	
 
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
@@ -983,6 +987,22 @@ public class Controller implements Initializable{
     	int index = tableview_rubro.getSelectionModel().getSelectedIndex();
     	tableview_rubro.getItems().remove(index);
     }
+    
+public void eliminarAtributo(ActionEvent event) {
+	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
+	tableView_Atributos.getItems().remove(index);
+}
+
+public void eliminarCliente(ActionEvent event) {
+	int index = tableview_clientesList.getSelectionModel().getSelectedIndex();
+	tableview_clientesList.getItems().remove(index);
+}
+
+public void eliminarProveedor(ActionEvent event) {
+	int index = tableview_proveedoresList.getSelectionModel().getSelectedIndex();
+	tableview_proveedoresList.getItems().remove(index);
+}
+
 	
 
 	

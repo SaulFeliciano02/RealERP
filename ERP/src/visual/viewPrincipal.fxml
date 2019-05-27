@@ -26,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <BorderPane prefHeight="1000.0" prefWidth="1920.0">
          <center>
@@ -246,7 +246,7 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableview_rubro" layoutX="28.0" layoutY="78.0" onMouseClicked="#rubroTableViewClicked" prefHeight="342.0" prefWidth="1596.0">
+                                          <TableView fx:id="tableview_rubro" editable="true" layoutX="28.0" layoutY="78.0" onMouseClicked="#rubroTableViewClicked" prefHeight="342.0" prefWidth="1596.0">
                                             <columns>
                                               <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="218.0" text="Código" />
                                               <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="627.0" text="Nombre" />
@@ -267,7 +267,6 @@
                                              </children>
                                           </Pane>
                                           <Button fx:id="button_rubroNuevo" layoutX="31.0" layoutY="445.0" mnemonicParsing="false" onAction="#activarRegistro" text="Nuevo Rubro" />
-                                          <Button fx:id="button_rubroModificar" layoutX="203.0" layoutY="445.0" mnemonicParsing="false" text="Modificar Rubro" />
                                           <Button fx:id="button_rubroEliminar" disable="true" layoutX="383.0" layoutY="445.0" mnemonicParsing="false" onAction="#eliminarRubro" text="Eliminar Rubro" />
                                           <TextField fx:id="textfield_rubroBusqueda" layoutX="1215.0" layoutY="33.0" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1594.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
@@ -289,15 +288,14 @@
                                        <children>
                                           <TextField layoutX="146.0" layoutY="66.0" prefHeight="26.0" prefWidth="196.0" promptText="Búsqueda" />
                                           <ListView fx:id="listView_grupoAtributos" layoutX="147.0" layoutY="93.0" onMouseClicked="#selected_familiaAtributoList" prefHeight="514.0" prefWidth="194.0" />
-                                          <TableView fx:id="tableView_atributos" layoutX="365.0" layoutY="93.0" prefHeight="478.0" prefWidth="718.0">
+                                          <TableView fx:id="tableView_atributos" editable="true" layoutX="365.0" layoutY="93.0" prefHeight="478.0" prefWidth="718.0">
                                              <columns>
                                                 <TableColumn fx:id="tablecolumn_atributogrupo" prefWidth="360.0" text="Familia" />
                                                 <TableColumn fx:id="tablecolumn_atributonombre" prefWidth="350.0" text="Atributo" />
                                              </columns>
                                           </TableView>
                                           <TextField fx:id="textfield_infoFamilia" alignment="TOP_CENTER" disable="true" editable="false" layoutX="365.0" layoutY="67.0" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
-                                          <Button disable="true" layoutX="575.0" layoutY="606.0" mnemonicParsing="false" text="Modificar" />
-                                          <Button disable="true" layoutX="665.0" layoutY="607.0" mnemonicParsing="false" text="Eliminar" />
+                                          <Button fx:id="button_atributosEliminar" disable="true" layoutX="665.0" layoutY="607.0" mnemonicParsing="false" onAction="#eliminarAtributo" text="Eliminar" />
                                           <RadioButton layoutX="381.0" layoutY="611.0" mnemonicParsing="false" selected="true" text="Atributos">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="manejarAtributoFamilia" />
@@ -341,7 +339,7 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableview_clientesList" layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
+                                          <TableView fx:id="tableview_clientesList" editable="true" layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
                                             <columns>
                                               <TableColumn fx:id="tablecolumn_clienteCodigo" prefWidth="75.0" text="Codigo" />
                                               <TableColumn fx:id="tablecolumn_clienteNombre" prefWidth="75.0" text="Nombre" />
@@ -352,8 +350,7 @@
                                             </columns>
                                           </TableView>
                                           <Button fx:id="button_nuevoCliente" layoutX="37.0" layoutY="697.0" mnemonicParsing="false" onAction="#pressed_nuevoCliente" text="Nuevo Cliente" />
-                                          <Button fx:id="button_modificarCliente" layoutX="762.0" layoutY="697.0" mnemonicParsing="false" text="Modificar Cliente" />
-                                          <Button fx:id="button_eliminarCliente" layoutX="1487.0" layoutY="697.0" mnemonicParsing="false" text="Eliminar Cliente" />
+                                          <Button fx:id="button_eliminarCliente" layoutX="1487.0" layoutY="697.0" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente" />
                                           <TextField fx:id="textfield_clienteBusqueda" layoutX="1200.0" layoutY="35.0" onKeyTyped="#buscarClientes" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1580.0" layoutY="35.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
@@ -373,7 +370,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableview_proveedoresList" layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
+                                          <TableView fx:id="tableview_proveedoresList" editable="true" layoutX="37.0" layoutY="79.0" prefHeight="558.0" prefWidth="1573.0">
                                              <columns>
                                                 <TableColumn fx:id="tablecolumn_proveedorCodigo" prefWidth="75.0" text="Codigo" />
                                                 <TableColumn fx:id="tablecolumn_proveedorNombre" prefWidth="75.0" text="Nombre" />
@@ -391,8 +388,7 @@
                                              </columnResizePolicy>
                                           </TableView>
                                           <Button fx:id="button_nuevoProveedor" layoutX="35.0" layoutY="697.0" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" text="Nuevo Proveedor" />
-                                          <Button fx:id="button_modificarProveedor" layoutX="746.0" layoutY="697.0" mnemonicParsing="false" text="Modificar Proveedor" />
-                                          <Button fx:id="button_eliminarProveedor" layoutX="1465.0" layoutY="697.0" mnemonicParsing="false" text="Eliminar Proveedor" />
+                                          <Button fx:id="button_eliminarProveedor" layoutX="1465.0" layoutY="697.0" mnemonicParsing="false" onAction="#eliminarProveedor" text="Eliminar Proveedor" />
                                           <TextField fx:id="textfield_proveedorBusqueda" layoutX="1200.0" layoutY="35.0" onKeyTyped="#buscarProveedores" prefHeight="31.0" prefWidth="370.0" promptText="Búsqueda" />
                                           <Button alignment="CENTER_RIGHT" layoutX="1580.0" layoutY="35.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                              <effect>
