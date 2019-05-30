@@ -483,10 +483,33 @@ public class Controladora implements Serializable{
 	
 	public boolean isNumber(String string) {
 		boolean numeric = true;
+		int count = 0;
         try {
             Double.parseDouble(string);
         } catch (NumberFormatException e) {
-            numeric = false;
+        	numeric = false;   
+        }
+       return numeric;
+	}
+	
+	public boolean isFloat(String fullString, String character) {
+		boolean numeric = true;
+		int count = 0;
+        try {
+            Double.parseDouble(character);
+        } catch (NumberFormatException e) {
+        	numeric = false;
+        	if(character.charAt(0) == '.') {
+        		for(int i = 0; i < fullString.length(); i++) {
+        			if(fullString.charAt(i) == '.') {
+        				count++;
+        			}	
+        		}
+        	}
+        	if(count == 0) {
+        		numeric = true;
+        	}
+        	    
         }
        return numeric;
 	}
