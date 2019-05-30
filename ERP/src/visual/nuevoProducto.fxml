@@ -25,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -74,7 +74,7 @@
                               <Button fx:id="button_generalImprimir" layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
                               <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" onAction="#tipoProducto" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
-                              <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" text="Producible" />
+                              <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -165,7 +165,7 @@
                               <Button fx:id="button_partidaSendTo" disable="true" layoutX="448.0" layoutY="116.0" mnemonicParsing="false" onAction="#movePartida" text="-&gt;" />
                               <Button fx:id="button_partidaSendBack" disable="true" layoutX="448.0" layoutY="351.0" mnemonicParsing="false" onAction="#movePartidaSelect" text="&lt;-" />
                               <Text layoutX="436.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad" />
-                              <TextField fx:id="textfield_partidaCantidad" alignment="CENTER_RIGHT" layoutX="428.0" layoutY="236.0" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="77.0" promptText="0" />
+                              <TextField fx:id="textfield_partidaCantidad" alignment="CENTER_RIGHT" disable="true" layoutX="428.0" layoutY="236.0" onKeyTyped="#floatFieldPressed" prefHeight="31.0" prefWidth="77.0" promptText="0" />
                               <ListView fx:id="listview_partidaSelect" layoutX="578.0" layoutY="51.0" onMouseClicked="#listview_partidaSelectClicked" prefHeight="431.0" prefWidth="322.0" />
                               <TextField layoutX="138.0" layoutY="25.0" prefHeight="31.0" prefWidth="176.0" promptText="Búsqueda" />
                               <Button layoutX="322.0" layoutY="25.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="41.0" text="B" />

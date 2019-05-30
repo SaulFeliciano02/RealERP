@@ -1,6 +1,7 @@
 package visual;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -189,6 +190,21 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
+    public void floatFieldPressed(KeyEvent event) {
+    	TextField source = (TextField) event.getSource();
+    	if(source.getLength() == 0) {
+    		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
+        		event.consume();
+        	}
+    	}
+    	else {
+    		if(!Controladora.getInstance().isFloat(source.getText(), event.getCharacter())) {
+    			event.consume();
+    		}
+    	}
+    	
+    }
+    
     //Cierra la venta de nuevoProducto
     public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
@@ -202,9 +218,18 @@ public class ControllerNuevoProducto implements Initializable {
     			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0) {
     			button_productGuardar.setDisable(false);
     		}
-    	}
-    	
+    	}	
     }
+    
+    public void activarPartida(ActionEvent event) {
+    	if(checkbox_generalProducible.isSelected()) {
+    		tab_partida.setDisable(true);
+    	}
+    	else {
+    		tab_partida.setDisable(false);
+    	}
+    }
+    
     
     //Guardar Producto (En Progreso)
     public void guardarProducto(ActionEvent event) {
@@ -239,6 +264,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setDisable(false);
     		exMin.setDisable(false);
     		exMax.setDisable(false);
+    		checkbox_generalProducible.setDisable(false);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
     		exAct.setDisable(false);
@@ -246,6 +272,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(false);
     		
     		tab_partida.setDisable(true);
+    		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
     		exAct.setDisable(true);
@@ -253,7 +280,8 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(true);
     		tab_combinaciones.setDisable(true);
     		
-    		tab_partida.setDisable(false);
+    		tab_partida.setDisable(true);
+    		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
     		tab_combinaciones.setDisable(false);
@@ -261,6 +289,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		tab_partida.setDisable(false);
+    		checkbox_generalProducible.setDisable(false);
     	}
     }
     
@@ -412,19 +441,21 @@ public class ControllerNuevoProducto implements Initializable {
     
     //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
-    	if(!listview_partida.getSelectionModel().isEmpty() && textfield_partidaCantidad.getLength() > 0) {
+    	if(!listview_partida.getSelectionModel().isEmpty()) {
     		button_partidaSendTo.setDisable(false);
+    		textfield_partidaCantidad.setDisable(false);
     	}
     	else if (listview_partida.getSelectionModel().isEmpty() || textfield_partidaCantidad.getLength() == 0) {
     		button_partidaSendTo.setDisable(true);
+    		textfield_partidaCantidad.setDisable(true);
     	}
     }
     
     public void listview_partidaSelectClicked(MouseEvent event) {
-    	if(!listview_partidaSelect.getSelectionModel().isEmpty()) {
+    	if(!listview_partidaSelect.getSelectionModel().isEmpty()) {	
     		button_partidaSendBack.setDisable(false);
     	}
-    	else {
+    	else {   		
     		button_partidaSendBack.setDisable(true);
     	}
     }
@@ -436,7 +467,12 @@ public class ControllerNuevoProducto implements Initializable {
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
     	String item_moved = "";
-    	if(Float.parseFloat(textfield_partidaCantidad.getText()) > Float.parseFloat(cantidad)) {
+    	if(textfield_partidaCantidad.getLength() == 0) {
+    		a.setAlertType(AlertType.ERROR);
+    		a.setContentText("Eliga la cantida que utilizara");
+    		a.show();
+    	}
+    	else if(Float.parseFloat(textfield_partidaCantidad.getText()) > Float.parseFloat(cantidad)) {
     		a.setAlertType(AlertType.ERROR);
 			a.setContentText("No puede tomar mas productos de lo que tiene.");
 			a.show();
@@ -459,9 +495,11 @@ public class ControllerNuevoProducto implements Initializable {
     				(Float.parseFloat(textfield_partidaCantidad.getText()));
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
+    		float cantidadRestante = (Float.parseFloat(cantidad) - Float.parseFloat(textfield_partidaCantidad.getText()));
+    		DecimalFormat formato1 = new DecimalFormat("0.00");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
     			listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
-    					(Double.parseDouble(cantidad) - Double.parseDouble(textfield_partidaCantidad.getText())));
+    					formato1.format(cantidadRestante));
     		
     			listview_partida.refresh();
     		}
@@ -481,6 +519,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     	
     		button_partidaSendTo.setDisable(true);
+    		textfield_partidaCantidad.setDisable(true);
     		textfield_partidaCantidad.clear();
     	}
     }
@@ -490,10 +529,6 @@ public class ControllerNuevoProducto implements Initializable {
     	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect, "Nombre");
-    	float backNumber = estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad);
-    	String item_moved = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", usando: " + 
-    	(backNumber + Float.parseFloat(cantidad));
- 
     	
     	String original = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
 				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad));
@@ -602,7 +637,6 @@ public class ControllerNuevoProducto implements Initializable {
 			 String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
 			 valorPartida += Float.parseFloat(partida) * Float.parseFloat(cantidad);
-			 System.out.println(partida + " " + cantidad);
 		}
 		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida));
 		if(checkbox_preciosHabilitar.isSelected()) {
