@@ -1,6 +1,7 @@
 package visual;
 
 import java.net.URL;
+import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -39,6 +40,7 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
 import logico.Estandar;
+import logico.Precio;
 import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
@@ -224,18 +226,35 @@ public class ControllerNuevoProducto implements Initializable {
     public void activarPartida(ActionEvent event) {
     	if(checkbox_generalProducible.isSelected()) {
     		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
+    		tab_costoIndirecto.setDisable(true);
     	}
     	else {
     		tab_partida.setDisable(false);
+    		tab_costoDirecto.setDisable(false);
+    		tab_costoIndirecto.setDisable(false);
     	}
     }
     
     
     //Guardar Producto (En Progreso)
     public void guardarProducto(ActionEvent event) {
+    	Alert a = new Alert(AlertType.NONE); 
     	String codigo = textfield_generalCodigo.getText();
     	Rubro rubro = null;
     	Proveedores proveedor = null;
+    	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
+    	String descripcion = "";
+    	String codigoBarra = "";
+    	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
+    	try {
+    		descripcion = textfield_generalDescripcion.getText();
+    		codigoBarra = textfield_generalBarra.getText();
+    	}
+    	catch(NullPointerException e) {
+    		
+    	}
+    	
     	for(Rubro r : Controladora.getInstance().getMisRubros()) {
     		if(r.getCodigo().equalsIgnoreCase(textfield_generalRubro.getText())) {
     			rubro = r;
@@ -246,11 +265,95 @@ public class ControllerNuevoProducto implements Initializable {
     			proveedor = p;
     		}
     	}
-    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    	if(tipoProducto.equalsIgnoreCase("Estandar")) {
+    		boolean canRegister = true;
     		String existenciaActual = exAct.getText();
     		String existenciaMinima = exMin.getText();
     		String existenciaMaxima = exMax.getText();
+    		float costo = 0;
+    		boolean fabricado = false;
+    		if(checkbox_generalProducible.isSelected()) {
+    			costo = Float.parseFloat(textfield_preciosCostos.getText());
+    			fabricado = true;
+    		}
+    		a.setAlertType(AlertType.WARNING);
+    		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
+    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
+    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+    			canRegister = false;
+    		}
+    		Date date = null;
+    		//No se registra nombre, fecha, y muchas otras cosas
+    		Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    		for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
+    			estandar.getCostosIndirectos().add(c);
+    		}
+    		Controladora.getInstance().addProducto(estandar);
+    		Controladora.getInstance().addProductoEstandar(estandar);
     	}
+    	
+		//Limpiando tab general
+		exAct.setText(""); exMin.setText(""); exMax.setText("");
+		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
+		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textfield_generalDescripcion.setText("");
+		
+		//Limpiando tab partida
+		for(String item : listview_partidaSelect.getItems()) {
+			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
+			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
+			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
+			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
+    				Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
+    					Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - Float.parseFloat(itemCantidad));
+    			}
+			}
+		}
+		int listview_partidaSize = listview_partida.getItems().size();
+		listview_partida.getItems().remove(0, listview_partidaSize);
+		int listview_partidaSelectSize = listview_partida.getItems().size();
+		listview_partidaSelect.getItems().remove(0, listview_partidaSelectSize);
+		fillPartida();
+		
+		//Limpiando costos directos
+		textfield_costosDirectosNombre.setText("");
+		textfield_costosDirectosValor.setText("");
+		textarea_costosDirectosDescripcion.setText("");
+		int tableview_costosDirectosSize = tableview_costosDirectos.getItems().size();
+		tableview_costosDirectos.getItems().remove(0, tableview_costosDirectosSize-1);
+		
+		//Limpiando costos indirectos
+		textfield_costosIndirectosNombre.setText("");
+		textfield_costosIndirectosValor.setText("");
+		textarea_costosIndirectosDescripcion.setText("");
+		int tableview_costosIndirectosSize = tableview_costosIndirectos.getItems().size();
+		tableview_costosIndirectos.getItems().remove(0, tableview_costosIndirectosSize);
+		
+		//Limpiando combinaciones
+		textfield_busquedaFamilia1.setText("");
+		textfield_busquedaFamilia2.setText("");
+		textfield_busquedaFamilia3.setText("");
+		int listView_atributos1Size = listView_atributos1.getItems().size();
+		listView_atributos1.getItems().remove(0, listView_atributos1Size);
+		int listView_atributos2Size = listView_atributos2.getItems().size();
+		listView_atributos2.getItems().remove(0, listView_atributos2Size);
+		int listView_atributos3Size = listView_atributos3.getItems().size();
+		listView_atributos3.getItems().remove(0, listView_atributos3Size);
+		int listView_combinacionesSize = listView_combinaciones.getItems().size();
+		listView_combinaciones.getItems().remove(0, listView_combinacionesSize);
     	
     }
     
@@ -261,6 +364,8 @@ public class ControllerNuevoProducto implements Initializable {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(false);
+    		tab_costoDirecto.setDisable(false);
+    		tab_costoIndirecto.setDisable(false);
     		exAct.setDisable(false);
     		exMin.setDisable(false);
     		exMax.setDisable(false);
@@ -272,6 +377,8 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(false);
     		
     		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
+    		tab_costoIndirecto.setDisable(true);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
@@ -281,6 +388,8 @@ public class ControllerNuevoProducto implements Initializable {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
+    		tab_costoIndirecto.setDisable(true);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
@@ -289,6 +398,8 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		tab_partida.setDisable(false);
+    		tab_costoDirecto.setDisable(false);
+    		tab_costoIndirecto.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
     	}
     }
@@ -780,13 +891,7 @@ public class ControllerNuevoProducto implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		//Seteando tableview de la partida
-		ObservableList<String> dataPartida = FXCollections.observableArrayList();
-		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
-			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecio().getPrecio() + ", disponibles: " + e.getExistenciaActual());
-			
-		}
-		listview_partida.setItems(dataPartida);
-		listview_partida.refresh();
+		fillPartida();
 		
 		//Seteando combobox de general
 		ObservableList<String> dataType = FXCollections.observableArrayList();
@@ -839,6 +944,16 @@ public class ControllerNuevoProducto implements Initializable {
     	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
     	tableview_rubroBuscar.setItems(data);
     	tableview_rubroBuscar.refresh();
+	}
+	
+	public void fillPartida() {
+		ObservableList<String> dataPartida = FXCollections.observableArrayList();
+		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
+			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecio().getPrecio() + ", disponibles: " + e.getExistenciaActual());
+			
+		}
+		listview_partida.setItems(dataPartida);
+		listview_partida.refresh();
 	}
 
 }
