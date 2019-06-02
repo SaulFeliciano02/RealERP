@@ -75,7 +75,7 @@
                               <Button fx:id="button_generalImprimir" layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
                               <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" onAction="#tipoProducto" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
-                              <CheckBox fx:id="checkbox_generalProducible" layoutX="430.0" layoutY="31.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
+                              <CheckBox fx:id="checkbox_generalProducible" layoutX="474.0" layoutY="30.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
