@@ -1,5 +1,6 @@
 package logico;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class GastoGeneral {
@@ -7,9 +8,9 @@ public class GastoGeneral {
 	private String nombre;
 	private float precioUnitario;
 	private String descripcion;
-	private Calendar remodelado;
+	private LocalDate remodelado;
 	
-	public GastoGeneral(String nombre, float precioUnitario, String descripcion, Calendar remodelado) {
+	public GastoGeneral(String nombre, float precioUnitario, String descripcion, LocalDate remodelado) {
 		super();
 		this.nombre = nombre;
 		this.precioUnitario = precioUnitario;
@@ -33,11 +34,11 @@ public class GastoGeneral {
 		this.precioUnitario = precioUnitario;
 	}
 
-	public Calendar getRemodelado() {
+	public LocalDate getRemodelado() {
 		return remodelado;
 	}
 
-	public void setRemodelado(Calendar remodelado) {
+	public void setRemodelado(LocalDate remodelado) {
 		this.remodelado = remodelado;
 	}
 
