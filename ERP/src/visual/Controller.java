@@ -146,11 +146,19 @@ public class Controller implements Initializable{
     //Atributos
     @FXML private TableView<Atributos> tableView_Atributos;
     @FXML private Button button_atributosEliminar;
-	
-
+    
+    //GASTOS GENERALES
+    @FXML private TextField textfield_nombreGastoG;
+    @FXML private TextField textfield_montoGastoG;
+    @FXML private TextField textfield_descricionGastoG;
+    @FXML private DatePicker datepicker_fechaGastoG;
+    @FXML private TextField textfield_busquedaGastoG;
+    @FXML private ListView<String> listview_gastosG;
+    
+    //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
-    
+
     @FXML private Pane pane_Principal;
     @FXML private Pane pane_Productos;
     @FXML private Pane pane_Inventario;
@@ -714,6 +722,12 @@ public class Controller implements Initializable{
     	textfield_register_familia.setText("");
     	//pane_rubroCreate.setDisable(true);
     	button_agregar_atributo.setDisable(true);
+    }
+    
+    public void pressed_nuevoGastoGeneral(ActionEvent event)
+    {
+    	String nombre = textfield_nombreGastoG.getText();
+    	//String 
     }
     
     public void pressed_modificarAtributoOGrupo(ActionEvent event) {
