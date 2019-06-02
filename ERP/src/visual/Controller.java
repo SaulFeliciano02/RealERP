@@ -673,27 +673,48 @@ public class Controller implements Initializable{
     {
     	listview_gastosG.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	String gasto = listview_gastosG.getSelectionModel().getSelectedItem();
-    	int i;
-    	ArrayList<GastoGeneral> m = Controladora.getInstance().getMisGastosGenerales();
-    	for(i=0; i<m.size(); i++)
+    	
+    	if(gasto == null)
     	{
-    		if(m.get(i).getNombre().equalsIgnoreCase(gasto))
-    		{
-    			GastoGeneral encontrado = m.get(i);
-    			textfield_nombreGastoG.setText(encontrado.getNombre());
-    			textfield_montoGastoG.setText(Float.toString(encontrado.getPrecioUnitario()));
-    			if(encontrado.getDescripcion() != null)
-    			{
-    				textarea_descricionGastoG.setText(encontrado.getDescripcion());
-    			}
-    			datepicker_fechaGastoG.setValue(encontrado.getRemodelado());
-    			break;
-    		}
+    		textfield_nombreGastoG.setDisable(false);
+    		textfield_montoGastoG.setDisable(false);
+    		textarea_descricionGastoG.setDisable(false);
+    		datepicker_fechaGastoG.setDisable(false);
+    		textfield_nombreGastoG.setText("");
+        	textfield_montoGastoG.setText("");
+        	textarea_descricionGastoG.setText("");
+        	datepicker_fechaGastoG.setValue(LocalDate.now());
+        	button_modificarGastoG.setDisable(true);
+        	button_eliminarGastoG.setDisable(true);
+    		
     	}
-    	
-    	button_modificarGastoG.setDisable(false);
-    	button_eliminarGastoG.setDisable(false);
-    	
+    	else
+    	{
+    		int i;
+        	ArrayList<GastoGeneral> m = Controladora.getInstance().getMisGastosGenerales();
+        	for(i=0; i<m.size(); i++)
+        	{
+        		if(m.get(i).getNombre().equalsIgnoreCase(gasto))
+        		{
+        			GastoGeneral encontrado = m.get(i);
+        			textfield_nombreGastoG.setText(encontrado.getNombre());
+        			textfield_montoGastoG.setText(Float.toString(encontrado.getPrecioUnitario()));
+        			if(encontrado.getDescripcion() != null)
+        			{
+        				textarea_descricionGastoG.setText(encontrado.getDescripcion());
+        			}
+        			datepicker_fechaGastoG.setValue(encontrado.getRemodelado());
+        			break;
+        		}
+        	}
+        	
+        	textfield_nombreGastoG.setDisable(true);
+    		textfield_montoGastoG.setDisable(true);
+    		textarea_descricionGastoG.setDisable(true);
+    		datepicker_fechaGastoG.setDisable(true);
+    		button_modificarGastoG.setDisable(false);
+        	button_eliminarGastoG.setDisable(false);
+    	}
     }
     
     public void selected_familiaAtributoList(MouseEvent event) {
@@ -758,23 +779,56 @@ public class Controller implements Initializable{
     
     public void pressed_nuevoGastoGeneral(ActionEvent event)
     {
-    	String nombre = textfield_nombreGastoG.getText();
-    	float monto = Float.parseFloat(textfield_montoGastoG.getText());
-    	String descripcion = textarea_descricionGastoG.getText();
-    	LocalDate fecha = datepicker_fechaGastoG.getValue();
-    	
-    	GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
-    	Controladora.getInstance().getMisGastosGenerales().add(g);
-    	
-    	listview_gastosG.getItems().add(g.getNombre());
-    	
-    	textfield_nombreGastoG.setText("");
-    	textfield_montoGastoG.setText("");
-    	textarea_descricionGastoG.setText("");
-    	datepicker_fechaGastoG.setValue(LocalDate.now());
-    	
+    	if (!textfield_nombreGastoG.isDisabled() && !textfield_montoGastoG.isDisabled() && !textarea_descricionGastoG.isDisabled() && !datepicker_fechaGastoG.isDisabled())
+    	{
+    		String nombre = textfield_nombreGastoG.getText();
+        	float monto = Float.parseFloat(textfield_montoGastoG.getText());
+        	String descripcion = textarea_descricionGastoG.getText();
+        	LocalDate fecha = datepicker_fechaGastoG.getValue();
+        	
+        	GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
+        	int indice = listview_gastosG.getSelectionModel().getSelectedIndex();
+        	
+        	if(indice <= -1)
+        	{
+        		Controladora.getInstance().getMisGastosGenerales().add(g);
+            	
+            	listview_gastosG.getItems().add(g.getNombre());
+            	
+        	}
+        	else
+        	{
+        		Controladora.getInstance().getMisGastosGenerales().remove(indice);
+        		Controladora.getInstance().getMisGastosGenerales().add(indice, g);
+        		listview_gastosG.getItems().remove(indice);
+        		listview_gastosG.getItems().add(indice, g.getNombre());
+        	}
+        	
+        	textfield_nombreGastoG.setText("");
+        	textfield_montoGastoG.setText("");
+        	textarea_descricionGastoG.setText("");
+        	datepicker_fechaGastoG.setValue(LocalDate.now());
+        	
+    	}
     }
     
+    public void pressed_modificarGastoGeneral(ActionEvent event)
+    {
+    	if(textfield_nombreGastoG.isDisabled() && textfield_montoGastoG.isDisabled() && textarea_descricionGastoG.isDisabled() && datepicker_fechaGastoG.isDisabled())
+    	{
+    		textfield_nombreGastoG.setDisable(false);
+    		textfield_montoGastoG.setDisable(false);
+    		textarea_descricionGastoG.setDisable(false);
+    		datepicker_fechaGastoG.setDisable(false);
+    	}
+    	else
+    	{
+    		textfield_nombreGastoG.setDisable(true);
+    		textfield_montoGastoG.setDisable(true);
+    		textarea_descricionGastoG.setDisable(true);
+    		datepicker_fechaGastoG.setDisable(true);
+    	}
+    }
     /*public void activarGuardarGastoG(KeyEvent event) // HACER UN WARNING QUE APAREZCA CUANDO INTENTA REGISTRAR UN GASTOGENERAL SIN NOMBRE, SIN MONTO O SIN FECHA
     {
     	String nombre = textfield_nombreGastoG.getText();
