@@ -18,8 +18,8 @@ public class Estandar extends Producto{
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, float costoManoDeObra,
 			String descripcionFija, String descripcionVariable) {
-		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, moneda, observaciones,
-				unidadMedida, precio, comision, codigoBarra, costoManoDeObra, descripcionFija, descripcionVariable);
+		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
+				unidadMedida, precio, comision, codigoBarra, descripcionFija);
 		this.existenciaActual = existenciaActual;
 		this.existenciaMinima = existenciaMinima;
 		this.existenciaMaxima = existenciaMaxima;
