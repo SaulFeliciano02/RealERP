@@ -189,6 +189,7 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void floatFieldPressed(KeyEvent event) {
+    	
     	TextField source = (TextField) event.getSource();
     	if(source.getLength() == 0) {
     		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
@@ -220,13 +221,28 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void activarPartida(ActionEvent event) {
+    	
     	if(checkbox_generalProducible.isSelected()) {
     		tab_partida.setDisable(false);
-    		tab_costos.setDisable(false);
+    		
+    		radiobutton_costosDirectos.setDisable(false);
+    		radiobutton_costosDirectos.setSelected(true);
+    		pane_costosDirectos.setVisible(true);
+    		
+    		radiobutton_costosIndirectos.setSelected(false);
+    		pane_costosIndirectos.setVisible(false);
+
     	}
     	else {
     		tab_partida.setDisable(true);
-    		tab_costos.setDisable(true);
+    		
+    		radiobutton_costosDirectos.setDisable(true);
+    		radiobutton_costosDirectos.setSelected(false);
+    		pane_costosDirectos.setVisible(false);
+    		
+    		radiobutton_costosIndirectos.setDisable(false);
+    		radiobutton_costosIndirectos.setSelected(true);
+    		pane_costosIndirectos.setVisible(true);
     	}
     }
     
@@ -356,11 +372,19 @@ public class ControllerNuevoProducto implements Initializable {
     /**FUNCIONES CREACION DE PRODUCTO**/  
     
     public void tipoProducto(ActionEvent event) {
+    	
+    	checkbox_generalProducible.setSelected(false);
+    	
     	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(true);
-    		tab_costos.setDisable(true);
+    		radiobutton_costosDirectos.setDisable(true);
+    		radiobutton_costosDirectos.setSelected(false);
+    		pane_costosDirectos.setVisible(false);
+    		radiobutton_costosIndirectos.setDisable(false);
+    		radiobutton_costosIndirectos.setSelected(true);
+    		pane_costosIndirectos.setVisible(true);
     		exAct.setDisable(false);
     		exMin.setDisable(false);
     		exMax.setDisable(false);
@@ -372,7 +396,14 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(false);
     		
     		tab_partida.setDisable(true);
-    		tab_costos.setDisable(true);
+    		
+    		radiobutton_costosDirectos.setDisable(true);
+    		radiobutton_costosDirectos.setSelected(false);
+    		pane_costosDirectos.setVisible(false);
+    		radiobutton_costosIndirectos.setDisable(false);
+    		radiobutton_costosIndirectos.setSelected(true);
+    		pane_costosIndirectos.setVisible(true);
+    		
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
@@ -382,7 +413,14 @@ public class ControllerNuevoProducto implements Initializable {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(false);
-    		tab_costos.setDisable(false);
+    		
+    		radiobutton_costosDirectos.setDisable(true);
+    		radiobutton_costosDirectos.setSelected(false);
+    		pane_costosDirectos.setVisible(false);
+    		radiobutton_costosIndirectos.setDisable(false);
+    		radiobutton_costosIndirectos.setSelected(true);
+    		pane_costosIndirectos.setVisible(true);
+    		
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
@@ -391,7 +429,14 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		tab_partida.setDisable(true);
-    		tab_costos.setDisable(true);
+    		
+    		radiobutton_costosDirectos.setDisable(true);
+    		radiobutton_costosDirectos.setSelected(false);
+    		pane_costosDirectos.setVisible(false);
+    		radiobutton_costosIndirectos.setDisable(false);
+    		radiobutton_costosIndirectos.setSelected(true);
+    		pane_costosIndirectos.setVisible(true);
+    		
     		checkbox_generalProducible.setDisable(false);
     	}
     }
