@@ -40,6 +40,7 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
 import logico.Estandar;
+import logico.GrupoAtributo;
 import logico.Precio;
 import logico.Producto;
 import logico.Proveedores;
@@ -169,6 +170,20 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private Button button_buscarFamilia1;
     @FXML private Button button_buscarFamilia2;
     @FXML private Button button_buscarFamilia3;
+    //Atributos y Familia en Combinaciones
+    @FXML private TextField textfield_register_familia;
+    @FXML private TextField textfield_registrar_atributo;
+    @FXML private Button button_agregar_atributo;
+    @FXML private Button button_cerrar_atributo;
+    @FXML private TableColumn<Atributos, GrupoAtributo> tablecolumn_atributogrupo; 
+    @FXML private TableColumn<Atributos, String> tablecolumn_atributonombre;
+    @FXML private TableView<Atributos> tableView_atributos;
+    @FXML private ListView<String> listView_grupoAtributos = new ListView<>();
+    @FXML private TextField textfield_infoFamilia;
+    @FXML private TableView<Atributos> tableView_Atributos;
+    @FXML private Button button_atributosEliminar;
+    @FXML private Button button_cerrarBusquedaAtributo;
+    @FXML private TitledPane titledpane_productoBuscarAtributo;
    
     /**FUNCIONES GENERALES**/
     
@@ -955,5 +970,102 @@ public class ControllerNuevoProducto implements Initializable {
 		listview_partida.setItems(dataPartida);
 		listview_partida.refresh();
 	}
+	
+    public void fillAtributesList(ArrayList<Atributos> a) {
+    	ObservableList<Atributos> data = FXCollections.observableArrayList();
+    	if(a == null) {
+    		data.addAll(Controladora.getInstance().getMisAtributos());
+    	}
+    	else {
+    		data.addAll(a);
+    	}
+		tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
+    	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tableView_atributos.setItems(data);
+    	tableView_atributos.refresh();
+    }
+    
+    public void selected_familiaAtributoList(MouseEvent event) {
+    	listView_grupoAtributos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String familia = listView_grupoAtributos.getSelectionModel().getSelectedItem();
+    	ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
+    	String info; 
+    	int cont = 0;
+    	ArrayList<Atributos> filtrados = new ArrayList<>();
+    	int i;
+    	
+    	if(familia.equalsIgnoreCase("Todos"))
+    	{
+    		fillAtributesList(null);
+    		cont = a.size();
+    	}
+    	else
+    	{
+    		for(i=0; i<a.size(); i++)
+        	{
+        		if(a.get(i).getGrupo().equalsIgnoreCase(familia))
+        		{
+        			filtrados.add(a.get(i));
+        			cont++;
+        		}
+        	}
+    		fillAtributesList(filtrados);
+    	}
+    	
+    	info = "Familia: " + familia + ", Cantidad de Atributos: " + cont;
+    	textfield_infoFamilia.setText(info);
+    }
+    
+    public void eliminarAtributo(ActionEvent event) {
+    	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
+    	tableView_Atributos.getItems().remove(index);
+    }
+    
+    public void activar_nuevoAtributo(KeyEvent event) {
+    	if(!textfield_register_familia.getText().isEmpty() && !textfield_registrar_atributo.getText().isEmpty()) {
+    		button_agregar_atributo.setDisable(false);
+    	}
+    	else {
+    		button_agregar_atributo.setDisable(true);
+    	}
+    }
+    
+    public void pressed_nuevoAtributo(ActionEvent event) {
+    	ObservableList<Atributos> data = FXCollections.observableArrayList();
+    	ObservableList<GrupoAtributo> data2 = FXCollections.observableArrayList();
+    	String nombreAtributo = textfield_registrar_atributo.getText();
+    	String nombreFamilia = textfield_register_familia.getText();
+    	GrupoAtributo g = new GrupoAtributo(nombreFamilia);
+    	if(!Controladora.getInstance().verificarFamiliaAtributo(nombreFamilia))
+    	{
+    		data2.add(g);
+    		if(listView_grupoAtributos.getItems().isEmpty())
+    		{
+    			listView_grupoAtributos.getItems().add("Todos");
+    		}
+    		listView_grupoAtributos.getItems().add(g.getNombre());
+    		Controladora.getInstance().addGrupoAtributo(g);
+    	}
+    	Atributos a = new Atributos(nombreAtributo, g);
+    	data.add(a);
+    	Controladora.getInstance().addAtributo(a);
+    	tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
+    	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tableView_atributos.getItems().add(a);
+    	tableView_atributos.refresh();
+    	textfield_registrar_atributo.setText("");
+    	textfield_register_familia.setText("");
+    	//pane_rubroCreate.setDisable(true);
+    	button_agregar_atributo.setDisable(true);
+    }
+    
+    public void cerrarBusquedaAtributo(ActionEvent event) {
+    	titledpane_productoBuscarAtributo.setVisible(false);
+    }
+    
+    public void abrirBusquedaAtributo(ActionEvent event) {
+    	titledpane_productoBuscarAtributo.setVisible(true);
+    }
+
 
 }
