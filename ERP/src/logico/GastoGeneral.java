@@ -6,12 +6,14 @@ public class GastoGeneral {
 	
 	private String nombre;
 	private float precioUnitario;
+	private String descripcion;
 	private Calendar remodelado;
 	
-	public GastoGeneral(String nombre, float precioUnitario, Calendar remodelado) {
+	public GastoGeneral(String nombre, float precioUnitario, String descripcion, Calendar remodelado) {
 		super();
 		this.nombre = nombre;
 		this.precioUnitario = precioUnitario;
+		this.descripcion = descripcion;
 		this.remodelado = remodelado; 
 	}
 
@@ -37,6 +39,14 @@ public class GastoGeneral {
 
 	public void setRemodelado(Calendar remodelado) {
 		this.remodelado = remodelado;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	
