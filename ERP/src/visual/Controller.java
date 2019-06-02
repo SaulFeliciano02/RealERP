@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 
@@ -45,6 +46,7 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
+import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Proveedores;
 import logico.Rubro;
@@ -141,7 +143,7 @@ public class Controller implements Initializable{
     @FXML private Pane pane_rubroCreate;
     @FXML private TextField textfield_rubroCodigo;
     @FXML private TextField textfield_rubroNombre;
-    @FXML private Button button_rubroGuardar;
+    @FXML private Button button_rubroGuardar;    
     
     //Atributos
     @FXML private TableView<Atributos> tableView_Atributos;
@@ -150,10 +152,13 @@ public class Controller implements Initializable{
     //GASTOS GENERALES
     @FXML private TextField textfield_nombreGastoG;
     @FXML private TextField textfield_montoGastoG;
-    @FXML private TextArea textfield_descricionGastoG;
+    @FXML private TextArea textarea_descricionGastoG;
     @FXML private DatePicker datepicker_fechaGastoG;
     @FXML private TextField textfield_busquedaGastoG;
     @FXML private ListView<String> listview_gastosG;
+    @FXML private Button button_guardarGastoG;
+    @FXML private Button button_modificarGastoG;
+    @FXML private Button button_eliminarGastoG;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -664,6 +669,33 @@ public class Controller implements Initializable{
     	}
     }
     
+    public void selected_gastoGeneral(MouseEvent event)
+    {
+    	listview_gastosG.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String gasto = listview_gastosG.getSelectionModel().getSelectedItem();
+    	int i;
+    	ArrayList<GastoGeneral> m = Controladora.getInstance().getMisGastosGenerales();
+    	for(i=0; i<m.size(); i++)
+    	{
+    		if(m.get(i).getNombre().equalsIgnoreCase(gasto))
+    		{
+    			GastoGeneral encontrado = m.get(i);
+    			textfield_nombreGastoG.setText(encontrado.getNombre());
+    			textfield_montoGastoG.setText(Float.toString(encontrado.getPrecioUnitario()));
+    			if(encontrado.getDescripcion() != null)
+    			{
+    				textarea_descricionGastoG.setText(encontrado.getDescripcion());
+    			}
+    			datepicker_fechaGastoG.setValue(encontrado.getRemodelado());
+    			break;
+    		}
+    	}
+    	
+    	button_modificarGastoG.setDisable(false);
+    	button_eliminarGastoG.setDisable(false);
+    	
+    }
+    
     public void selected_familiaAtributoList(MouseEvent event) {
     	listView_grupoAtributos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	String familia = listView_grupoAtributos.getSelectionModel().getSelectedItem();
@@ -727,8 +759,36 @@ public class Controller implements Initializable{
     public void pressed_nuevoGastoGeneral(ActionEvent event)
     {
     	String nombre = textfield_nombreGastoG.getText();
-    	//String 
+    	float monto = Float.parseFloat(textfield_montoGastoG.getText());
+    	String descripcion = textarea_descricionGastoG.getText();
+    	LocalDate fecha = datepicker_fechaGastoG.getValue();
+    	
+    	GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
+    	Controladora.getInstance().getMisGastosGenerales().add(g);
+    	
+    	listview_gastosG.getItems().add(g.getNombre());
+    	
+    	textfield_nombreGastoG.setText("");
+    	textfield_montoGastoG.setText("");
+    	textarea_descricionGastoG.setText("");
+    	datepicker_fechaGastoG.setValue(LocalDate.now());
+    	
     }
+    
+    /*public void activarGuardarGastoG(KeyEvent event) // HACER UN WARNING QUE APAREZCA CUANDO INTENTA REGISTRAR UN GASTOGENERAL SIN NOMBRE, SIN MONTO O SIN FECHA
+    {
+    	String nombre = textfield_nombreGastoG.getText();
+    	String monto = textfield_montoGastoG.getText();
+    	LocalDate fecha = datepicker_fechaGastoG.getValue();
+    	
+    	if(nombre!=null || monto!=null || fecha!=null)
+    	{
+    		Dialog<String> dialog = new Dialog<>();
+    		 dialog.getDialogPane().getButtonTypes().add(loginButtonType);
+    		 boolean disabled = false; // computed based on content of text fields, for example
+    		 dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
+    	}
+    }*/
     
     public void pressed_modificarAtributoOGrupo(ActionEvent event) {
     	//if()
