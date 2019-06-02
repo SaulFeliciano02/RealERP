@@ -492,7 +492,7 @@
                                                       <Text layoutX="925.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha " />
                                                       <DatePicker fx:id="datepicker_fechaGastoG" layoutX="925.0" layoutY="193.0" prefHeight="25.0" prefWidth="195.0" />
                                                       <Button fx:id="button_guardarGastoG" layoutX="1067.0" layoutY="549.0" mnemonicParsing="false" onAction="#pressed_nuevoGastoGeneral" text="Guardar" />
-                                                      <Button fx:id="button_modificarGastoG" disable="true" layoutX="967.0" layoutY="549.0" mnemonicParsing="false" text="Modificar" />
+                                                      <Button fx:id="button_modificarGastoG" disable="true" layoutX="967.0" layoutY="549.0" mnemonicParsing="false" onAction="#pressed_modificarGastoGeneral" text="Modificar" />
                                                       <Button fx:id="button_eliminarGastoG" disable="true" layoutX="883.0" layoutY="549.0" mnemonicParsing="false" text="Eliminar" />
                                                    </children>
                                                    <VBox.margin>
