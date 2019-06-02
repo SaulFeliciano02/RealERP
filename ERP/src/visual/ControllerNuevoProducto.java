@@ -32,6 +32,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logico.Atributos;
@@ -54,8 +55,7 @@ public class ControllerNuevoProducto implements Initializable {
 	//TABS
 	@FXML private Tab tab_general;
 	@FXML private Tab tab_partida;
-	@FXML private Tab tab_costoDirecto;
-	@FXML private Tab tab_costoIndirecto;
+	@FXML private Tab tab_costos;
 	@FXML private Tab tab_imagen;
 	@FXML private Tab tab_sustitutos;
 	@FXML private Tab tab_promocion;
@@ -97,29 +97,12 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
 	
-	//COSTOS DIRECTOS
-	@FXML private TextField textfield_costosDirectosNombre;
-	@FXML private TextField textfield_costosDirectosValor;
-	@FXML private TextArea textarea_costosDirectosDescripcion;
-	@FXML private Button button_costosDirectosAgregar;
-	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosNombre;
-	@FXML private TableColumn<CostoDirecto, Double> tablecolumn_costosDirectosValor;
-	@FXML private TableColumn<CostoDirecto, String> tablecolumn_costosDirectosDescripcion;
-	@FXML private TableView<CostoDirecto> tableview_costosDirectos;
-	@FXML private Button button_costosDirectosModificar;
-	@FXML private Button button_costosDirectosEliminar;
-	
-	//COSTOS INDIRECTOS
-	@FXML private TextField textfield_costosIndirectosNombre;
-	@FXML private TextField textfield_costosIndirectosValor;
-	@FXML private TextArea textarea_costosIndirectosDescripcion;
-	@FXML private Button button_costosIndirectosAgregar;
-	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosNombre;
-	@FXML private TableColumn<CostoIndirectoProducto, Double> tablecolumn_costosIndirectosValor;
-	@FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_costosIndirectosDescripcion;
-	@FXML private TableView<CostoIndirectoProducto> tableview_costosIndirectos;
-	@FXML private Button button_costosIndirectosModificar;
-	@FXML private Button button_costosIndirectosEliminar;
+	//COSTOS
+	@FXML private TextField textfield_costosValor;
+	@FXML private RadioButton radiobutton_costosDirectos;
+	@FXML private RadioButton radiobutton_costosIndirectos;
+	@FXML private Pane pane_costosDirectos;
+	@FXML private Pane pane_costosIndirectos;
 	
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -193,12 +176,10 @@ public class ControllerNuevoProducto implements Initializable {
     		event.consume();
     	}
     	//Especifico sobre que variable el evento surgio
-    	if(event.getSource().equals(textfield_costosDirectosValor)) {
+    	/*if(event.getSource().equals(textfield_costosValor)) {
     		costoDirectoActivarAgregar(event);
-    	}
-    	else if(event.getSource().equals(textfield_costosIndirectosValor)) {
-    		costoIndirectoActivarAgregar(event);
-    	}
+    	}*/
+
     	else if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
     		calcularPrecio(event);
     	}
@@ -241,11 +222,11 @@ public class ControllerNuevoProducto implements Initializable {
     public void activarPartida(ActionEvent event) {
     	if(checkbox_generalProducible.isSelected()) {
     		tab_partida.setDisable(false);
-    		tab_costoDirecto.setDisable(false);
+    		tab_costos.setDisable(false);
     	}
     	else {
     		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
+    		tab_costos.setDisable(true);
     	}
     }
     
@@ -311,9 +292,9 @@ public class ControllerNuevoProducto implements Initializable {
     		//No se registra nombre, fecha, y muchas otras cosas
     		Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
-    		for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
+    		/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     			estandar.getCostosIndirectos().add(c);
-    		}
+    		}*/
     		Controladora.getInstance().addProducto(estandar);
     		Controladora.getInstance().addProductoEstandar(estandar);
     	}
@@ -341,6 +322,7 @@ public class ControllerNuevoProducto implements Initializable {
 		listview_partidaSelect.getItems().remove(0, listview_partidaSelectSize);
 		fillPartida();
 		
+		/*
 		//Limpiando costos directos
 		textfield_costosDirectosNombre.setText("");
 		textfield_costosDirectosValor.setText("");
@@ -354,6 +336,7 @@ public class ControllerNuevoProducto implements Initializable {
 		textarea_costosIndirectosDescripcion.setText("");
 		int tableview_costosIndirectosSize = tableview_costosIndirectos.getItems().size();
 		tableview_costosIndirectos.getItems().remove(0, tableview_costosIndirectosSize);
+		*/
 		
 		//Limpiando combinaciones
 		textfield_busquedaFamilia1.setText("");
@@ -377,8 +360,7 @@ public class ControllerNuevoProducto implements Initializable {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(false);
+    		tab_costos.setDisable(true);
     		exAct.setDisable(false);
     		exMin.setDisable(false);
     		exMax.setDisable(false);
@@ -390,8 +372,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(false);
     		
     		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(false);
+    		tab_costos.setDisable(true);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
@@ -401,8 +382,7 @@ public class ControllerNuevoProducto implements Initializable {
     		tab_combinaciones.setDisable(true);
     		
     		tab_partida.setDisable(false);
-    		tab_costoDirecto.setDisable(false);
-    		tab_costoIndirecto.setDisable(false);
+    		tab_costos.setDisable(false);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
@@ -411,8 +391,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(false);
+    		tab_costos.setDisable(true);
     		checkbox_generalProducible.setDisable(false);
     	}
     }
@@ -664,6 +643,7 @@ public class ControllerNuevoProducto implements Initializable {
     	button_partidaSendBack.setDisable(true);
     }
     
+    /*
     //FUNCIONES COSTO DIRECTO
     public void costoDirectoActivarAgregar(KeyEvent event) {
     	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() >= 0) {
@@ -672,8 +652,9 @@ public class ControllerNuevoProducto implements Initializable {
     	else {
     		button_costosDirectosAgregar.setDisable(true);
     	}
-    }
+    } */
     
+    /*
 	public void costoDirectoIngresarTableView(ActionEvent event) {
     	CostoDirecto costodirecto = new CostoDirecto(textfield_costosDirectosNombre.getText(), Double.parseDouble(textfield_costosDirectosValor.getText()), textarea_costosDirectosDescripcion.getText());
     	ObservableList<CostoDirecto> data = FXCollections.observableArrayList();
@@ -713,8 +694,9 @@ public class ControllerNuevoProducto implements Initializable {
     	else {
     		button_costosIndirectosAgregar.setDisable(true);
     	}
-    }
+    } */
 	
+    /*
 	public void costoIndirectoIngresarTableView(ActionEvent event) {
     	CostoIndirectoProducto costoindirectoProducto = new CostoIndirectoProducto(textfield_costosIndirectosNombre.getText(), Double.parseDouble(textfield_costosIndirectosValor.getText()), textarea_costosIndirectosDescripcion.getText());
     	ObservableList<CostoIndirectoProducto> data = FXCollections.observableArrayList();
@@ -744,6 +726,7 @@ public class ControllerNuevoProducto implements Initializable {
 		int index = tableview_costosIndirectos.getSelectionModel().getSelectedIndex();
 		tableview_costosIndirectos.getItems().remove(index);
 	}
+	*/
     
    //FUNCIONES PRECIO
 	public void setCostoYPrecioTotal(Event event) {
@@ -751,12 +734,16 @@ public class ControllerNuevoProducto implements Initializable {
 		double valorIndirecto = 0;
 		double valorPartida = 0;
 		listview_partidaSelect.getItems();
+		
+		/*
 		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
 			valorDirecto += valor.getValor();
 		}
 		for(CostoIndirectoProducto valor : tableview_costosIndirectos.getItems()) {
 			valorIndirecto += valor.getValor();
 		}
+		
+		*/
 		for(String valor : listview_partidaSelect.getItems()) {
 			 String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
@@ -1064,6 +1051,17 @@ public class ControllerNuevoProducto implements Initializable {
     public void abrirBusquedaAtributo(ActionEvent event) {
     	titledpane_productoBuscarAtributo.setVisible(true);
     }
+    
+	public void costosRadioButton(ActionEvent event) {
+		if(radiobutton_costosDirectos.isSelected()) {
+			pane_costosDirectos.setVisible(true);
+			pane_costosIndirectos.setVisible(false);
+		}
+		else if(radiobutton_costosIndirectos.isSelected()) {
+			pane_costosDirectos.setVisible(false);
+			pane_costosIndirectos.setVisible(true);
+		}
+	}
 
 
 }
