@@ -9,7 +9,6 @@ abstract public class Producto {
 	private Rubro rubroProducto;
 	private Proveedores ProveedorPrin;
 	private ArrayList<Proveedores> ProveedoresSec;
-	private Moneda moneda;
 	private Impuestos impuesto;
 	private String observaciones;
 	private ArrayList<Producto> sustitutos;
@@ -20,16 +19,15 @@ abstract public class Producto {
 	private ArrayList<DescuentosAutomaticos> descuentos;
 	private String comision;
 	private Promocion promocion;
-	private float costoManoDeObra;
 	private String descripcionFija;
-	private String descripcionVariable;
+	private ArrayList<CostoDirecto> costosDirectos;
 	
 
 	public Producto(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
-			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda,
+			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, 
 			String observaciones,
 			UnidadMedida unidadMedida, Precio precio,
-			String comision, String codigoBarra, float costoManoDeObra, String descripcionFija, String descripcionVariable) {
+			String comision, String codigoBarra, String descripcionFija) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -37,7 +35,6 @@ abstract public class Producto {
 		this.rubroProducto = rubroProducto;
 		ProveedorPrin = proveedorPrin;
 		ProveedoresSec = proveedoresSec;
-		this.moneda = moneda;
 		this.observaciones = observaciones;
 		this.costosIndirectos = new ArrayList<CostoIndirectoProducto>();
 		this.sustitutos = new ArrayList<Producto>();
@@ -46,9 +43,8 @@ abstract public class Producto {
 		this.unidadMedida = unidadMedida;
 		this.precio = precio;
 		this.comision = comision;
-		this.costoManoDeObra = costoManoDeObra;
 		this.descripcionFija = descripcionFija;
-		this.descripcionVariable = descripcionVariable;
+		this.costosDirectos = new ArrayList<CostoDirecto>();
 	}
 	
 	
@@ -67,15 +63,6 @@ abstract public class Producto {
 	public void setDescripcionFija(String descripcionFija) {
 		this.descripcionFija = descripcionFija;
 	}
-
-	public String getDescripcionVariable() {
-		return descripcionVariable;
-	}
-
-	public void setDescripcionVariable(String descripcionVariable) {
-		this.descripcionVariable = descripcionVariable;
-	}
-	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -111,12 +98,6 @@ abstract public class Producto {
 	}
 	public void setProveedoresSec(ArrayList<Proveedores> proveedoresSec) {
 		ProveedoresSec = proveedoresSec;
-	}
-	public Moneda getMoneda() {
-		return moneda;
-	}
-	public void setMoneda(Moneda moneda) {
-		this.moneda = moneda;
 	}
 	public Impuestos getImpuesto() {
 		return impuesto;
@@ -172,10 +153,14 @@ abstract public class Producto {
 	public void setPromocion(Promocion promocion) {
 		this.promocion = promocion;
 	}
-	public float getCostoManoDeObra() {
-		return costoManoDeObra;
+
+
+	public ArrayList<CostoDirecto> getCostosDirectos() {
+		return costosDirectos;
 	}
-	public void setCostoManoDeObra(float costoManoDeObra) {
-		this.costoManoDeObra = costoManoDeObra;
+
+
+	public void setCostosDirectos(ArrayList<CostoDirecto> costosDirectos) {
+		this.costosDirectos = costosDirectos;
 	}
 }

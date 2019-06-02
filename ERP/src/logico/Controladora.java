@@ -43,6 +43,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Servicio> misProductosServicio;
 	private ArrayList<GrupoAtributo> misGrupoAtributo;
 	private ArrayList<Atributos> misAtributos;
+	private ArrayList<GastoGeneral> misGastosGenerales;
 	
 	private static Controladora controladora;
 	
@@ -72,6 +73,7 @@ public class Controladora implements Serializable{
 		misProductosEstandar.add(pro);
 		this.misAtributos = new ArrayList<>();
 		this.misGrupoAtributo = new ArrayList<>();
+		this.misGastosGenerales = new ArrayList<>();
 	}
 	
 	public static Controladora getInstance() {
@@ -565,6 +567,37 @@ public class Controladora implements Serializable{
 			 i++;
 		}
 		return partida;
+	}
+
+	public ArrayList<GastoGeneral> getMisGastosGenerales() {
+		return misGastosGenerales;
+	}
+
+	public void setMisGastosGenerales(ArrayList<GastoGeneral> misGastosGenerales) {
+		this.misGastosGenerales = misGastosGenerales;
+	}
+	
+	public ArrayList<GastoGeneral> searchGastoGeneral (String buscador)
+	{
+		int j = 0;
+		ArrayList<GastoGeneral> searchGastoGeneral = new ArrayList<>();
+		for(int i = 0; i < misGastosGenerales.size(); i++) {
+			int boolCount = 0;
+			j = 0;
+			
+			for(int k = 0; k < misGastosGenerales.get(i).getNombre().length(); k++) {
+				if(j < buscador.length()) {
+					if(misGastosGenerales.get(i).getNombre().charAt(k) == buscador.charAt(j)) {
+						boolCount++;
+					}
+				}
+				j++;
+			}
+			if(boolCount == buscador.length()) {
+				searchGastoGeneral.add(misGastosGenerales.get(i));
+			}
+		}
+		return searchGastoGeneral;
 	}
 }
 

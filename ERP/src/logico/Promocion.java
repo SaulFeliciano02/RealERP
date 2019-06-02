@@ -3,8 +3,8 @@ import java.util.*;
 
 public class Promocion {
 	private Float precioPromocion;
-	private Date fechaInicio;
-	private Date fechaFinal;
+	private Date fechaInicio; // Cambiarlo a Calendar
+	private Date fechaFinal; // Cambiarlo a Calendar
 	
 	
 	public Promocion(Float precioPromocion, Date fechaInicio, Date fechaFinal) {

@@ -16,8 +16,8 @@ public class Kit extends Producto{
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, float costoManoDeObra,
 			String descripcionFija, String descripcionVariable) {
-		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, moneda, observaciones,
-				unidadMedida, precio, comision, codigoBarra, costoManoDeObra, descripcionFija, descripcionVariable);
+		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
+				unidadMedida, precio, comision, codigoBarra, descripcionFija);
 		this.existencia = existencia;
 		this.existencia_minima = existencia_minima;
 		this.existencia_maxima = existencia_maxima;
