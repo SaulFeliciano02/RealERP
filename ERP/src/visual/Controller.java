@@ -111,7 +111,7 @@ public class Controller implements Initializable{
     @FXML private Button button_eliminarProveedor;
     
     //DESPLIEGUE DE VENDEDOR
-    @FXML private Button button_nuevoVendedor;
+    @FXML private Button button_nuevoEmpleado;
     @FXML private Button button_modificarVendedor;
     @FXML private Button button_eliminarVendedor;
     @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCodigo;
@@ -150,7 +150,7 @@ public class Controller implements Initializable{
     //GASTOS GENERALES
     @FXML private TextField textfield_nombreGastoG;
     @FXML private TextField textfield_montoGastoG;
-    @FXML private TextField textfield_descricionGastoG;
+    @FXML private TextArea textfield_descricionGastoG;
     @FXML private DatePicker datepicker_fechaGastoG;
     @FXML private TextField textfield_busquedaGastoG;
     @FXML private ListView<String> listview_gastosG;
@@ -756,7 +756,7 @@ public class Controller implements Initializable{
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Producto");
-			stage.setScene(new Scene(root1, 1150, 750)); 
+			stage.setScene(new Scene(root1)); 
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(button_nuevoProducto.getScene().getWindow());
@@ -804,7 +804,7 @@ public class Controller implements Initializable{
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Cliente");
-			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.setScene(new Scene(root1));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
@@ -849,7 +849,7 @@ public class Controller implements Initializable{
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Proveedor");
-			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.setScene(new Scene(root1));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
@@ -883,19 +883,19 @@ public class Controller implements Initializable{
 		}
     }
     
-    public void pressed_nuevoVendedor(ActionEvent event) {
+    public void pressed_nuevoEmpleado(ActionEvent event) {
     	try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoVendedor.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoEmpleado.fxml"));
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Vendedor");
-			stage.setScene(new Scene(root1, 1150, 750));  
+			stage.setScene(new Scene(root1));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoVendedor.getScene().getWindow());
+			stage.initOwner(button_nuevoEmpleado.getScene().getWindow());
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 			stage.showAndWait();
 		} catch (IOException e) {

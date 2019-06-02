@@ -240,14 +240,12 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void activarPartida(ActionEvent event) {
     	if(checkbox_generalProducible.isSelected()) {
-    		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(true);
-    	}
-    	else {
     		tab_partida.setDisable(false);
     		tab_costoDirecto.setDisable(false);
-    		tab_costoIndirecto.setDisable(false);
+    	}
+    	else {
+    		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
     	}
     }
     
@@ -378,8 +376,8 @@ public class ControllerNuevoProducto implements Initializable {
     	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
     		tab_combinaciones.setDisable(true);
     		
-    		tab_partida.setDisable(false);
-    		tab_costoDirecto.setDisable(false);
+    		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
     		tab_costoIndirecto.setDisable(false);
     		exAct.setDisable(false);
     		exMin.setDisable(false);
@@ -393,7 +391,7 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		tab_partida.setDisable(true);
     		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(true);
+    		tab_costoIndirecto.setDisable(false);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
@@ -402,9 +400,9 @@ public class ControllerNuevoProducto implements Initializable {
     		exMax.setDisable(true);
     		tab_combinaciones.setDisable(true);
     		
-    		tab_partida.setDisable(true);
-    		tab_costoDirecto.setDisable(true);
-    		tab_costoIndirecto.setDisable(true);
+    		tab_partida.setDisable(false);
+    		tab_costoDirecto.setDisable(false);
+    		tab_costoIndirecto.setDisable(false);
     		checkbox_generalProducible.setDisable(true);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
@@ -412,8 +410,8 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setDisable(false);
     		exMin.setDisable(false);
     		exMax.setDisable(false);
-    		tab_partida.setDisable(false);
-    		tab_costoDirecto.setDisable(false);
+    		tab_partida.setDisable(true);
+    		tab_costoDirecto.setDisable(true);
     		tab_costoIndirecto.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
     	}
