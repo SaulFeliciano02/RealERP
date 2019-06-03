@@ -51,9 +51,9 @@
                               <Text fx:id="text_generalDescripcion" layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
                               <TextArea fx:id="textarea_generalDescripcion" layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
                               <Text fx:id="text_generalRubro" layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
-                              <TextField fx:id="textfield_generalRubro" editable="false" layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <TextField fx:id="textfield_generalRubro" editable="false" layoutX="42.0" layoutY="325.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
                               <Text fx:id="text_generalProveedor" layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
-                              <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="536.0" layoutY="325.0" prefHeight="30.0" prefWidth="300.0" />
+                              <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="536.0" layoutY="325.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
                               <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarRubro" text="Buscar" />
                               <Button fx:id="button_productoBuscarProveedor" layoutX="843.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
                               <Text fx:id="text_generalExistencia" layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
@@ -432,7 +432,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
+            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
             <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
