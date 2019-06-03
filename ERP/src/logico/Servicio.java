@@ -2,15 +2,19 @@ package logico;
 
 import java.util.ArrayList;
 
-public class Servicio extends Persona {
+public class Servicio extends Producto{
 	
 	private Empleado empleado;
 	private ArrayList<CantProductosUtilizados> materialesUtilizados;
 
-	public Servicio(Empleado empleado, String codigo, String nombre, String telefono) {
-		super(codigo, nombre, telefono);
+	public Servicio(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
+			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, String observaciones,
+			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, String descripcionFija,
+			Empleado empleado, ArrayList<CantProductosUtilizados> materialesUtilizados) {
+		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
+				unidadMedida, precio, comision, codigoBarra, descripcionFija);
 		this.empleado = empleado;
-		this.materialesUtilizados = new ArrayList<>();
+		this.materialesUtilizados = materialesUtilizados;
 	}
 
 	public Empleado getEmpleado() {

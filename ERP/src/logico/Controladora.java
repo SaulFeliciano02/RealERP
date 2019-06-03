@@ -44,6 +44,7 @@ public class Controladora implements Serializable{
 	private ArrayList<GrupoAtributo> misGrupoAtributo;
 	private ArrayList<Atributos> misAtributos;
 	private ArrayList<GastoGeneral> misGastosGenerales;
+	private float ventaPromedioMensual;
 	
 	private static Controladora controladora;
 	
@@ -568,7 +569,25 @@ public class Controladora implements Serializable{
 		}
 		return partida;
 	}
-
+	
+	public GastoGeneral buscarGasto(String g)
+	{
+		GastoGeneral encontrado = null;
+		int i = 0;
+		
+		while(i < misGastosGenerales.size() || encontrado != null)
+		{
+			if(getMisGastosGenerales().get(i).getNombre().equals(g))
+			{
+				encontrado = getMisGastosGenerales().get(i);
+			}
+			
+			i++;
+		}
+		
+		return encontrado;
+	}
+	
 	public ArrayList<GastoGeneral> getMisGastosGenerales() {
 		return misGastosGenerales;
 	}
@@ -598,6 +617,28 @@ public class Controladora implements Serializable{
 			}
 		}
 		return searchGastoGeneral;
+	}
+	
+	public float calcularCostos(GastoGeneral g, float precioEstimadoProducto)
+	{
+		float atribucion = 0;
+		
+		if(precioEstimadoProducto > 0 && getVentaPromedioMensual()> 0)
+		{
+			float factor = precioEstimadoProducto/getVentaPromedioMensual();
+			
+			atribucion = g.getPrecioUnitario() * factor;
+		}
+		
+		return atribucion;
+	}
+
+	public float getVentaPromedioMensual() {
+		return ventaPromedioMensual;
+	}
+
+	public void setVentaPromedioMensual(float ventaPromedioAnual) {
+		this.ventaPromedioMensual = ventaPromedioAnual;
 	}
 }
 
