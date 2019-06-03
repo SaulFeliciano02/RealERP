@@ -42,6 +42,7 @@ import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
 import logico.Estandar;
 import logico.GrupoAtributo;
+import logico.Kit;
 import logico.Precio;
 import logico.Producto;
 import logico.Proveedores;
@@ -72,7 +73,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private MenuButton menubutton_generalBarra;
 	@FXML private Button button_generalImprimir;
 	@FXML private Text text_generalDescripcion;
-	@FXML private TextField textfield_generalDescripcion;
+	@FXML private TextArea textarea_generalDescripcion;
 	@FXML private Text text_generalRubro;
 	@FXML private TextField textfield_generalRubro;
 	@FXML private Button button_productoBuscarRubro;
@@ -153,6 +154,8 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private Button button_buscarFamilia1;
     @FXML private Button button_buscarFamilia2;
     @FXML private Button button_buscarFamilia3;
+    ArrayList<Combinaciones> combinacionFinal = new ArrayList<>();
+    
     //Atributos y Familia en Combinaciones
     @FXML private TextField textfield_register_familia;
     @FXML private TextField textfield_registrar_atributo;
@@ -250,6 +253,7 @@ public class ControllerNuevoProducto implements Initializable {
     //Guardar Producto (En Progreso)
     public void guardarProducto(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
+    	boolean canRegister = true;
     	String codigo = textfield_generalCodigo.getText();
     	Rubro rubro = null;
     	Proveedores proveedor = null;
@@ -258,7 +262,7 @@ public class ControllerNuevoProducto implements Initializable {
     	String codigoBarra = "";
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
     	try {
-    		descripcion = textfield_generalDescripcion.getText();
+    		descripcion = textarea_generalDescripcion.getText();
     		codigoBarra = textfield_generalBarra.getText();
     	}
     	catch(NullPointerException e) {
@@ -275,8 +279,8 @@ public class ControllerNuevoProducto implements Initializable {
     			proveedor = p;
     		}
     	}
+    	
     	if(tipoProducto.equalsIgnoreCase("Estandar")) {
-    		boolean canRegister = true;
     		String existenciaActual = exAct.getText();
     		String existenciaMinima = exMin.getText();
     		String existenciaMaxima = exMax.getText();
@@ -294,85 +298,203 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
     			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+    			a.show();
     			canRegister = false;
     		}
     		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
     			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+    			a.show();
     			canRegister = false;
     		}
     		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
     			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+    			a.show();
     			canRegister = false;
     		}
     		Date date = null;
     		//No se registra nombre, fecha, y muchas otras cosas
-    		Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
+    		if(canRegister) {
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
-    		/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
-    			estandar.getCostosIndirectos().add(c);
-    		}*/
-    		Controladora.getInstance().addProducto(estandar);
-    		Controladora.getInstance().addProductoEstandar(estandar);
+    			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
+    				estandar.getCostosIndirectos().add(c);
+    			}*/
+    			Controladora.getInstance().addProducto(estandar);
+    			Controladora.getInstance().addProductoEstandar(estandar);
+    		}
     	}
     	
-		//Limpiando tab general
-		exAct.setText(""); exMin.setText(""); exMax.setText("");
-		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
-		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textfield_generalDescripcion.setText("");
-		
-		//Limpiando tab partida
-		for(String item : listview_partidaSelect.getItems()) {
-			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
-			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
-			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
-			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
-				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
-    				Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
-    					Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - Float.parseFloat(itemCantidad));
+    	else if(tipoProducto.equalsIgnoreCase("Kit")) {
+    		String existenciaActual = exAct.getText();
+    		String existenciaMinima = exMin.getText();
+    		String existenciaMaxima = exMax.getText();
+    		float costo = 0;
+    		a.setAlertType(AlertType.WARNING);
+    		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
+    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
+    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(listview_partidaSelect.getItems().size() == 0) {
+    			a.setContentText("Debe elegir los productos que conforman el kit");
+    			a.show();
+    			canRegister = false;
+    		}
+    		Date date = null;
+    		ArrayList<Producto> productsForKit = new ArrayList<>();
+    		for(String item : listview_partidaSelect.getItems()) {
+    			String nombre = Controladora.getInstance().findPartidaNombre(item);
+    			for(Producto p : Controladora.getInstance().getMisProductosEstandar()) {
+    				if(nombre.equals(p.getNombre())) {
+    					productsForKit.add(p);
+    				}
     			}
-			}
-		}
-		int listview_partidaSize = listview_partida.getItems().size();
-		listview_partida.getItems().remove(0, listview_partidaSize);
-		int listview_partidaSelectSize = listview_partida.getItems().size();
-		listview_partidaSelect.getItems().remove(0, listview_partidaSelectSize);
-		fillPartida();
+    		}
+    		//Visitar esto nuevamente
+    		if(canRegister) {
+    			Kit kit = new Kit(productsForKit, Integer.parseInt(existenciaActual), Integer.parseInt(existenciaMinima), Integer.parseInt(existenciaMaxima), date, codigo, "",
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    			Controladora.getInstance().getMisProductos().add(kit);
+    			Controladora.getInstance().getMisProductosKit().add(kit);
+    		}
+    	}
+    	
+    	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
+    		
+    	}
+    	
+    	else if(tipoProducto.equalsIgnoreCase("Matriz")) {
+    		String existenciaActual = exAct.getText();
+    		String existenciaMinima = exMin.getText();
+    		String existenciaMaxima = exMax.getText();
+    		float costo = 0;
+    		boolean fabricado = false;
+    		if(checkbox_generalProducible.isSelected()) {
+    			costo = Float.parseFloat(textfield_preciosCostos.getText());
+    			fabricado = true;
+    		}
+    		a.setAlertType(AlertType.WARNING);
+    		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
+    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
+    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
+    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+    			a.show();
+    			canRegister = false;
+    		}
+    		Date date = null;
+    		//No se registra nombre, fecha, y muchas otras cosas
+    		if(canRegister) {
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    			for(Combinaciones c : combinacionFinal) {
+    				estandar.getCombinaciones().add(c);
+    			}
+    			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
+    				estandar.getCostosIndirectos().add(c);
+    			}*/
+    			Controladora.getInstance().addProducto(estandar);
+    			Controladora.getInstance().addProductoEstandar(estandar);
+    		}
+    	}
+    	
+    	if(canRegister) {
+    		//Limpiando tab general
+    		exAct.setText(""); exMin.setText(""); exMax.setText("");
+    		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
+    		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
 		
-		/*
-		//Limpiando costos directos
-		textfield_costosDirectosNombre.setText("");
-		textfield_costosDirectosValor.setText("");
-		textarea_costosDirectosDescripcion.setText("");
-		int tableview_costosDirectosSize = tableview_costosDirectos.getItems().size();
-		tableview_costosDirectos.getItems().remove(0, tableview_costosDirectosSize-1);
+    		//Limpiando tab partida
+    		for(String item : listview_partidaSelect.getItems()) {
+    			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
+    			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
+    			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
+    			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
+    					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
+    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - Float.parseFloat(itemCantidad));
+    				}
+    			}
+    		}
+    		for(int i = 0; i < listview_partida.getItems().size(); i++) {
+    			listview_partida.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listview_partidaSelect.getItems().size(); i++) {
+    			listview_partidaSelect.getItems().remove(i);
+    		}
 		
-		//Limpiando costos indirectos
-		textfield_costosIndirectosNombre.setText("");
-		textfield_costosIndirectosValor.setText("");
-		textarea_costosIndirectosDescripcion.setText("");
-		int tableview_costosIndirectosSize = tableview_costosIndirectos.getItems().size();
-		tableview_costosIndirectos.getItems().remove(0, tableview_costosIndirectosSize);
-		*/
 		
-		//Limpiando combinaciones
-		textfield_busquedaFamilia1.setText("");
-		textfield_busquedaFamilia2.setText("");
-		textfield_busquedaFamilia3.setText("");
-		int listView_atributos1Size = listView_atributos1.getItems().size();
-		listView_atributos1.getItems().remove(0, listView_atributos1Size);
-		int listView_atributos2Size = listView_atributos2.getItems().size();
-		listView_atributos2.getItems().remove(0, listView_atributos2Size);
-		int listView_atributos3Size = listView_atributos3.getItems().size();
-		listView_atributos3.getItems().remove(0, listView_atributos3Size);
-		int listView_combinacionesSize = listView_combinaciones.getItems().size();
-		listView_combinaciones.getItems().remove(0, listView_combinacionesSize);
+    		/*
+			//Limpiando costos directos
+			textfield_costosDirectosNombre.setText("");
+			textfield_costosDirectosValor.setText("");
+			textarea_costosDirectosDescripcion.setText("");
+			int tableview_costosDirectosSize = tableview_costosDirectos.getItems().size();
+			tableview_costosDirectos.getItems().remove(0, tableview_costosDirectosSize-1);
+		
+			//Limpiando costos indirectos
+			textfield_costosIndirectosNombre.setText("");
+			textfield_costosIndirectosValor.setText("");
+			textarea_costosIndirectosDescripcion.setText("");
+			int tableview_costosIndirectosSize = tableview_costosIndirectos.getItems().size();
+			tableview_costosIndirectos.getItems().remove(0, tableview_costosIndirectosSize);
+    		 */
+		
+    		//Limpiando combinaciones
+    		textfield_busquedaFamilia1.setText("");
+    		textfield_busquedaFamilia2.setText("");
+    		textfield_busquedaFamilia3.setText("");
+    		for(int i = 0; i < listView_atributos1.getItems().size(); i++) {
+    			listView_atributos1.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
+    			listView_atributos2.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
+    			listView_atributos2.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listView_combinaciones.getItems().size(); i++) {
+    			listView_combinaciones.getItems().remove(i);
+    		}
+    		tabpane_everything.getSelectionModel().select(tab_general);
+    		fillPartida();
+    		fillPreciosTab();
+    		fillGeneralTab();
+    	}
+		
     	
     }
     
     /**FUNCIONES CREACION DE PRODUCTO**/  
     
     public void tipoProducto(ActionEvent event) {
-    	
     	checkbox_generalProducible.setSelected(false);
     	
     	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
@@ -568,6 +690,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		//System.out.println(atributo1 + " " + atributo2 + " " + atributo3);
     		Combinaciones comb = new Combinaciones(num, cant, b);
+    		combinacionFinal.add(comb);
     		String atri1 =  b.get(0).getGrupo() + ": " + b.get(0).getNombre();
     		String atri2 = ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre();
     		String pcomb;
@@ -586,6 +709,103 @@ public class ControllerNuevoProducto implements Initializable {
     		listView_combinaciones.getItems().add(pcomb);
     	}
     }
+    
+    public void selected_familiaAtributoList(MouseEvent event) {
+    	listView_grupoAtributos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String familia = listView_grupoAtributos.getSelectionModel().getSelectedItem();
+    	ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
+    	String info; 
+    	int cont = 0;
+    	ArrayList<Atributos> filtrados = new ArrayList<>();
+    	int i;
+    	
+    	if(familia.equalsIgnoreCase("Todos"))
+    	{
+    		fillAtributesList(null);
+    		cont = a.size();
+    	}
+    	else
+    	{
+    		for(i=0; i<a.size(); i++)
+        	{
+        		if(a.get(i).getGrupo().equalsIgnoreCase(familia))
+        		{
+        			filtrados.add(a.get(i));
+        			cont++;
+        		}
+        	}
+    		fillAtributesList(filtrados);
+    	}
+    	
+    	info = "Familia: " + familia + ", Cantidad de Atributos: " + cont;
+    	textfield_infoFamilia.setText(info);
+    }
+    
+    public void eliminarAtributo(ActionEvent event) {
+    	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
+    	tableView_Atributos.getItems().remove(index);
+    }
+    
+    public void activar_nuevoAtributo(KeyEvent event) {
+    	if(!textfield_register_familia.getText().isEmpty() && !textfield_registrar_atributo.getText().isEmpty()) {
+    		button_agregar_atributo.setDisable(false);
+    	}
+    	else {
+    		button_agregar_atributo.setDisable(true);
+    	}
+    }
+    
+    public void pressed_nuevoAtributo(ActionEvent event) {
+    	ObservableList<Atributos> data = FXCollections.observableArrayList();
+    	ObservableList<GrupoAtributo> data2 = FXCollections.observableArrayList();
+    	String nombreAtributo = textfield_registrar_atributo.getText();
+    	String nombreFamilia = textfield_register_familia.getText();
+    	GrupoAtributo g = new GrupoAtributo(nombreFamilia);
+    	if(!Controladora.getInstance().verificarFamiliaAtributo(nombreFamilia))
+    	{
+    		data2.add(g);
+    		if(listView_grupoAtributos.getItems().isEmpty())
+    		{
+    			listView_grupoAtributos.getItems().add("Todos");
+    		}
+    		listView_grupoAtributos.getItems().add(g.getNombre());
+    		Controladora.getInstance().addGrupoAtributo(g);
+    	}
+    	Atributos a = new Atributos(nombreAtributo, g);
+    	data.add(a);
+    	Controladora.getInstance().addAtributo(a);
+    	tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
+    	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tableView_atributos.getItems().add(a);
+    	tableView_atributos.refresh();
+    	textfield_registrar_atributo.setText("");
+    	textfield_register_familia.setText("");
+    	//pane_rubroCreate.setDisable(true);
+    	button_agregar_atributo.setDisable(true);
+    }
+    
+    public void cerrarBusquedaAtributo(ActionEvent event) {
+    	titledpane_productoBuscarAtributo.setVisible(false);
+    }
+    
+    public void abrirBusquedaAtributo(ActionEvent event) {
+    	titledpane_productoBuscarAtributo.setVisible(true);
+    }
+    
+    
+    //COSTOS
+	public void costosRadioButton(ActionEvent event) {
+		if(radiobutton_costosDirectos.isSelected()) {
+			pane_costosDirectos.setVisible(true);
+			pane_costosIndirectos.setVisible(false);
+		}
+		else if(radiobutton_costosIndirectos.isSelected()) {
+			pane_costosDirectos.setVisible(false);
+			pane_costosIndirectos.setVisible(true);
+		}
+	}
+    
+    
     
     //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
@@ -938,22 +1158,11 @@ public class ControllerNuevoProducto implements Initializable {
 		//Seteando tableview de la partida
 		fillPartida();
 		
-		//Seteando combobox de general
-		ObservableList<String> dataType = FXCollections.observableArrayList();
-		dataType.addAll("Estandar", "Kit", "Servicio", "Matriz");
-		combobox_generalTipoProducto.setItems(dataType);
-		combobox_generalTipoProducto.getSelectionModel().select("Estandar");
-		tipoProducto(null);
+		//Seteando general
+		fillGeneralTab();
 		
-		//Seteando busqueda de proveedores
-		ObservableList<String> dataProveedor = FXCollections.observableArrayList();
-		dataProveedor.addAll("Codigo", "Nombre", "Rubro");
-		combobox_productoBusquedaProveedor.setItems(dataProveedor);
-		combobox_productoBusquedaProveedor.getSelectionModel().select("Codigo");
-		
-		//Seteando busqueda de rubros
-		ObservableList<String> dataRubro = FXCollections.observableArrayList();
-		dataRubro.addAll("Codigo", "Nombre");		
+		//Seteando tab de precios
+		fillPreciosTab();
 	}
 	
 	public void fillProveedorList(ArrayList<Proveedores> p) {
@@ -1015,98 +1224,34 @@ public class ControllerNuevoProducto implements Initializable {
     	tableView_atributos.refresh();
     }
     
-    public void selected_familiaAtributoList(MouseEvent event) {
-    	listView_grupoAtributos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    	String familia = listView_grupoAtributos.getSelectionModel().getSelectedItem();
-    	ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
-    	String info; 
-    	int cont = 0;
-    	ArrayList<Atributos> filtrados = new ArrayList<>();
-    	int i;
-    	
-    	if(familia.equalsIgnoreCase("Todos"))
-    	{
-    		fillAtributesList(null);
-    		cont = a.size();
-    	}
-    	else
-    	{
-    		for(i=0; i<a.size(); i++)
-        	{
-        		if(a.get(i).getGrupo().equalsIgnoreCase(familia))
-        		{
-        			filtrados.add(a.get(i));
-        			cont++;
-        		}
-        	}
-    		fillAtributesList(filtrados);
-    	}
-    	
-    	info = "Familia: " + familia + ", Cantidad de Atributos: " + cont;
-    	textfield_infoFamilia.setText(info);
+    public void fillGeneralTab() {
+    	//Seteando combobox de general
+   		ObservableList<String> dataType = FXCollections.observableArrayList();
+  		dataType.addAll("Estandar", "Kit", "Servicio", "Matriz");
+    	combobox_generalTipoProducto.setItems(dataType);
+   		combobox_generalTipoProducto.getSelectionModel().select("Estandar");
+    	tipoProducto(null);
+    			
+    	//Seteando busqueda de proveedores
+   		ObservableList<String> dataProveedor = FXCollections.observableArrayList();
+    	dataProveedor.addAll("Codigo", "Nombre", "Rubro");
+    	combobox_productoBusquedaProveedor.setItems(dataProveedor);
+    	combobox_productoBusquedaProveedor.getSelectionModel().select("Codigo");
+  		
+    	//Seteando busqueda de rubros
+   		ObservableList<String> dataRubro = FXCollections.observableArrayList();
+    	dataRubro.addAll("Codigo", "Nombre");
+    	combobox_productoBusquedaRubro.setItems(dataRubro);
+    	combobox_productoBusquedaRubro.getSelectionModel().select("Codigo");
     }
     
-    public void eliminarAtributo(ActionEvent event) {
-    	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
-    	tableView_Atributos.getItems().remove(index);
+    public void fillPreciosTab() {
+    	textfield_preciosPrecio.setText("0.0");
+		textfield_preciosPorcientoGanancia.setText("0");
+		textfield_preciosCostos.setText("0.0");
+		textfield_preciosImpuestos.setText("18");
     }
     
-    public void activar_nuevoAtributo(KeyEvent event) {
-    	if(!textfield_register_familia.getText().isEmpty() && !textfield_registrar_atributo.getText().isEmpty()) {
-    		button_agregar_atributo.setDisable(false);
-    	}
-    	else {
-    		button_agregar_atributo.setDisable(true);
-    	}
-    }
-    
-    public void pressed_nuevoAtributo(ActionEvent event) {
-    	ObservableList<Atributos> data = FXCollections.observableArrayList();
-    	ObservableList<GrupoAtributo> data2 = FXCollections.observableArrayList();
-    	String nombreAtributo = textfield_registrar_atributo.getText();
-    	String nombreFamilia = textfield_register_familia.getText();
-    	GrupoAtributo g = new GrupoAtributo(nombreFamilia);
-    	if(!Controladora.getInstance().verificarFamiliaAtributo(nombreFamilia))
-    	{
-    		data2.add(g);
-    		if(listView_grupoAtributos.getItems().isEmpty())
-    		{
-    			listView_grupoAtributos.getItems().add("Todos");
-    		}
-    		listView_grupoAtributos.getItems().add(g.getNombre());
-    		Controladora.getInstance().addGrupoAtributo(g);
-    	}
-    	Atributos a = new Atributos(nombreAtributo, g);
-    	data.add(a);
-    	Controladora.getInstance().addAtributo(a);
-    	tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
-    	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tableView_atributos.getItems().add(a);
-    	tableView_atributos.refresh();
-    	textfield_registrar_atributo.setText("");
-    	textfield_register_familia.setText("");
-    	//pane_rubroCreate.setDisable(true);
-    	button_agregar_atributo.setDisable(true);
-    }
-    
-    public void cerrarBusquedaAtributo(ActionEvent event) {
-    	titledpane_productoBuscarAtributo.setVisible(false);
-    }
-    
-    public void abrirBusquedaAtributo(ActionEvent event) {
-    	titledpane_productoBuscarAtributo.setVisible(true);
-    }
-    
-	public void costosRadioButton(ActionEvent event) {
-		if(radiobutton_costosDirectos.isSelected()) {
-			pane_costosDirectos.setVisible(true);
-			pane_costosIndirectos.setVisible(false);
-		}
-		else if(radiobutton_costosIndirectos.isSelected()) {
-			pane_costosDirectos.setVisible(false);
-			pane_costosIndirectos.setVisible(true);
-		}
-	}
 
 
 }

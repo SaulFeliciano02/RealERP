@@ -79,6 +79,12 @@ public class Estandar extends Producto{
 		return combinaciones;
 	}
 
+	public void setCombinaciones(ArrayList<Combinaciones> combinaciones) {
+		this.combinaciones = combinaciones;
+	}
+
+
+
 	public boolean isFabricado() {
 		return fabricado;
 	}
