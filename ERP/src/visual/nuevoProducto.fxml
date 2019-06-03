@@ -26,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -176,17 +176,17 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tab_costos" text="Costos">
+                  <Tab fx:id="tab_costos" onSelectionChanged="#rellenarCostosGenerales" text="Costos">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Pane fx:id="pane_costosDirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
                                  <children>
-                                    <ListView layoutX="14.0" layoutY="107.0" prefHeight="299.0" prefWidth="198.0" />
+                                    <ListView fx:id="listview_CostosGenerales" layoutX="14.0" layoutY="107.0" prefHeight="299.0" prefWidth="198.0" />
                                     <TextField layoutX="14.0" layoutY="80.0" prefHeight="26.0" prefWidth="197.0" promptText="Búsqueda" />
-                                    <Button layoutX="232.0" layoutY="176.0" mnemonicParsing="false" text="-&gt;" />
-                                    <Button layoutX="232.0" layoutY="278.0" mnemonicParsing="false" text="&lt;-" />
-                                    <ListView layoutX="286.0" layoutY="111.0" prefHeight="249.0" prefWidth="200.0" />
+                                    <Button fx:id="button_derCosto" layoutX="232.0" layoutY="176.0" mnemonicParsing="false" onAction="#pasarDerCosto" text="-&gt;" />
+                                    <Button fx:id="button_izqCosto" layoutX="232.0" layoutY="278.0" mnemonicParsing="false" onAction="#pasarIzqCosto" text="&lt;-" />
+                                    <ListView fx:id="listview_CostosSelect" layoutX="286.0" layoutY="111.0" prefHeight="249.0" prefWidth="200.0" />
                                     <Text layoutX="14.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos generales" />
                                     <Text layoutX="286.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionados" />
                                     <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos directos">
@@ -194,7 +194,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="427.0" layoutY="371.0" mnemonicParsing="false" text="Guardar" />
+                                    <Button fx:id="button_GuardarCostos" layoutX="427.0" layoutY="371.0" mnemonicParsing="false" text="Guardar" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -229,12 +229,12 @@
                               <Text layoutX="36.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio estimado del producto" />
                               <TextField fx:id="textfield_costosValor" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="38.0" prefHeight="26.0" prefWidth="158.0" promptText="0.0" />
                               <Text layoutX="194.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                              <TextArea layoutX="553.0" layoutY="65.0" prefHeight="469.0" prefWidth="370.0" />
                               <Text layoutX="553.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resumen">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Text>
+                              <ListView fx:id="listview_CostosResumen" layoutX="553.0" layoutY="65.0" prefHeight="469.0" prefWidth="370.0" />
                            </children>
                         </AnchorPane>
                     </content>

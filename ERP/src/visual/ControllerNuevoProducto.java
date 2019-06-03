@@ -41,6 +41,7 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
 import logico.Estandar;
+import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
 import logico.Precio;
@@ -104,6 +105,12 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private RadioButton radiobutton_costosIndirectos;
 	@FXML private Pane pane_costosDirectos;
 	@FXML private Pane pane_costosIndirectos;
+	@FXML private ListView<String> listview_CostosGenerales;
+	@FXML private ListView<String> listview_CostosSelect;
+	@FXML private Button button_derCosto;
+	@FXML private Button button_izqCosto;
+	@FXML private Button button_GuardarCostos;
+	@FXML private ListView<String> listview_CostosResumen;
 	
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -805,7 +812,48 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 	}
     
+    public void rellenarCostosGenerales()
+    {
+    	ArrayList<String> nombreYprecio = new ArrayList<>();
+    	ArrayList<GastoGeneral> gasto = Controladora.getInstance().getMisGastosGenerales();
+    	int i;
+    	for(i = 0; i<gasto.size(); i++)
+    	{
+    		nombreYprecio.add(gasto.get(i).getNombre() + " " + gasto.get(i).getPrecioUnitario() + "$RD");
+    	}
+    	listview_CostosGenerales.getItems().addAll(nombreYprecio);
+    }
     
+    public void pasarDerCosto(ActionEvent event)
+    {
+    	String costo = listview_CostosGenerales.getSelectionModel().getSelectedItem();
+    	listview_CostosSelect.getItems().add(costo);
+    	listview_CostosGenerales.getItems().remove(costo);
+    }
+    
+    public void pasarIzqCosto(ActionEvent event)
+    {
+    	String costo = listview_CostosSelect.getSelectionModel().getSelectedItem();
+    	listview_CostosGenerales.getItems().add(costo);
+    	listview_CostosSelect.getItems().remove(costo);
+    }
+    
+    public void agregarNuevosCostos(ActionEvent event)
+    {
+    	if(!textfield_costosValor.getText().isEmpty())
+    	{
+    		if(radiobutton_costosDirectos.isSelected())
+        	{
+        		ArrayList<CostoDirecto> gastos = new ArrayList<>();
+        		int i;
+        		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
+        		{
+        			//Hacer un método en la clase controladora logica para que calcule el costo
+        		}
+        	}
+    	}
+    	
+    }
     
     //FUNCIONES CREACION DE LA PARTIDA
     public void listview_PartidaClicked(MouseEvent event) {
