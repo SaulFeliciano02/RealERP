@@ -26,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -48,14 +48,14 @@
                            <children>
                               <Text fx:id="text_generalCodigo" layoutX="42.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
                               <TextField fx:id="textfield_generalCodigo" layoutX="42.0" layoutY="94.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
-                              <Text fx:id="text_generalDescripcion" layoutX="42.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
-                              <TextArea fx:id="textarea_generalDescripcion" layoutX="42.0" layoutY="172.0" prefHeight="94.0" prefWidth="863.0" />
-                              <Text fx:id="text_generalRubro" layoutX="42.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
-                              <TextField fx:id="textfield_generalRubro" editable="false" layoutX="42.0" layoutY="325.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
-                              <Text fx:id="text_generalProveedor" layoutX="536.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
-                              <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="536.0" layoutY="325.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
-                              <Button fx:id="button_productoBuscarRubro" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarRubro" text="Buscar" />
-                              <Button fx:id="button_productoBuscarProveedor" layoutX="843.0" layoutY="325.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
+                              <Text fx:id="text_generalDescripcion" layoutX="43.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
+                              <TextArea fx:id="textarea_generalDescripcion" layoutX="43.0" layoutY="234.0" prefHeight="94.0" prefWidth="863.0" />
+                              <Text fx:id="text_generalRubro" layoutX="40.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
+                              <TextField fx:id="textfield_generalRubro" editable="false" layoutX="40.0" layoutY="370.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
+                              <Text fx:id="text_generalProveedor" layoutX="534.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedor" />
+                              <TextField fx:id="textfield_generalProveedor" editable="false" layoutX="534.0" layoutY="370.0" onAction="#activarProductoGuardar" prefHeight="30.0" prefWidth="300.0" />
+                              <Button fx:id="button_productoBuscarRubro" layoutX="348.0" layoutY="370.0" mnemonicParsing="false" onAction="#buscarRubro" text="Buscar" />
+                              <Button fx:id="button_productoBuscarProveedor" layoutX="841.0" layoutY="370.0" mnemonicParsing="false" onAction="#buscarProveedor" text="Buscar" />
                               <Text fx:id="text_generalExistencia" layoutX="42.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia (Cantidad Actual)" />
                               <TextField fx:id="exAct" layoutX="42.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
                               <Text fx:id="text_generalMinimo" layoutX="376.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mínimo" />
@@ -149,6 +149,8 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
+                              <Text layoutX="45.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del producto" />
+                              <TextField layoutX="42.0" layoutY="155.0" prefHeight="26.0" prefWidth="283.0" />
                            </children>
                         </AnchorPane>
                   </content>
