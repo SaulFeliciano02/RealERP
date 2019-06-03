@@ -1,9 +1,9 @@
 package logico;
 
 public class CostoDirecto {
-	public String nombre;
-	public double valor;
-	public String descripcion;
+	private String nombre;
+	private double valor;
+	private String descripcion;
 	
 	public CostoDirecto(String nombre, double valor, String descripcion) {
 		super();

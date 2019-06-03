@@ -812,7 +812,7 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 	}
     
-    public void rellenarCostosGenerales()
+    public void rellenarCostosGenerales() //Ver porqué no funciona
     {
     	ArrayList<String> nombreYprecio = new ArrayList<>();
     	ArrayList<GastoGeneral> gasto = Controladora.getInstance().getMisGastosGenerales();
@@ -846,9 +846,42 @@ public class ControllerNuevoProducto implements Initializable {
         	{
         		ArrayList<CostoDirecto> gastos = new ArrayList<>();
         		int i;
+        		
         		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
         		{
-        			//Hacer un método en la clase controladora logica para que calcule el costo
+        			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelect.getItems().get(i));
+        			
+        			float atribucion = Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()));
+        			
+        			CostoDirecto nuevo = new CostoDirecto(enlistado.getNombre(), atribucion, null);
+        			
+        			gastos.add(nuevo);
+        			
+        			String m = nuevo.getNombre() + " " + nuevo.getValor();
+        			
+        			listview_CostosResumen.getItems().add(m);
+        			
+        		}
+        	}
+    		
+    		if(radiobutton_costosIndirectos.isSelected())
+        	{
+        		ArrayList<CostoIndirectoProducto> gastos = new ArrayList<>();
+        		int i;
+        		
+        		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
+        		{
+        			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelect.getItems().get(i));
+        			
+        			float atribucion = Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()));
+        			
+        			CostoIndirectoProducto nuevo = new CostoIndirectoProducto(enlistado.getNombre(), atribucion, null);
+        			
+        			gastos.add(nuevo);
+        			
+        			String m = nuevo.getNombre() + " " + nuevo.getValor();
+        			
+        			listview_CostosResumen.getItems().add(m);
         		}
         	}
     	}
