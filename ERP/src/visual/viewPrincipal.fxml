@@ -30,7 +30,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<Pane id="MainPane" fx:id="mainPane" prefHeight="1000.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <BorderPane prefHeight="1000.0" prefWidth="1920.0">
          <center>
@@ -327,7 +327,30 @@
                   </Pane>
                   <Pane fx:id="pane_Ventas" disable="true" layoutY="121.0" prefHeight="959.0" prefWidth="1657.0" visible="false">
                      <children>
-                        <Text layoutX="210.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Ventas" wrappingWidth="112.6708984375" />
+                        <TabPane prefHeight="880.0" prefWidth="1658.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="General">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Pane layoutX="14.0" layoutY="14.0" prefHeight="280.0" prefWidth="1628.0" style="-fx-border-color: GRAY;">
+                                             <children>
+                                                <Text layoutX="23.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Promedio de ganancia anual" />
+                                                <TextField alignment="CENTER_RIGHT" layoutX="24.0" layoutY="46.0" prefHeight="25.0" prefWidth="152.0" promptText="0.0" />
+                                                <Text layoutX="176.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Untitled Tab 2">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
                      </children>
                   </Pane>
                   <Pane fx:id="pane_Historial" disable="true" layoutY="121.0" prefHeight="959.0" prefWidth="1657.0" visible="false">
@@ -443,6 +466,21 @@
                      <children>
                         <TabPane prefHeight="959.0" prefWidth="1657.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
+                              <Tab text="Información general">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Pane layoutX="378.0" layoutY="166.0" prefHeight="928.8" prefWidth="1657.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Text layoutX="37.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de la empresa" />
+                                                <TextField layoutX="37.0" layoutY="86.0" prefHeight="25.0" prefWidth="363.0" />
+                                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="306.0" prefWidth="1621.0" style="-fx-border-color: GRAY;" />
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
                             <Tab text="Monedas">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
