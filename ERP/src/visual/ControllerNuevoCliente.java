@@ -43,21 +43,24 @@ public class ControllerNuevoCliente implements Initializable {
 /**FUNCIONES AGREGAR CLIENTE**/
 	
 	public void reload(Stage stage) {
-    	Window owner = stage.getOwner();
-		owner.hide();
+    	
    		try {
         	Stage primaryStage = new Stage();
         	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 		 
 		    Parent root = f.load();
+		    Controller c = f.getController();
+		    c.rh_pressed(null);
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
 		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 		    primaryStage.setMaximized(true);
-		    
+		    Window owner = stage.getOwner();
+		   
 		    primaryStage.show();
+		    owner.hide();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
