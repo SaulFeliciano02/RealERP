@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoEmpleado">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -34,35 +34,35 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="969.0">
                            <children>
                               <Text layoutX="42.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Empleado*" />
-                              <TextField layoutX="42.0" layoutY="54.0" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
+                              <TextField fx:id="textfield_empleadoCodigo" layoutX="42.0" layoutY="54.0" onKeyTyped="#empleadoActivarGuardar" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
                               <Text layoutX="433.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre*" />
-                              <TextField layoutX="433.0" layoutY="55.0" prefHeight="31.0" prefWidth="294.0" />
-                              <TextField layoutX="42.0" layoutY="136.0" prefHeight="31.0" prefWidth="285.0" />
+                              <TextField fx:id="textfield_empleadoNombre" layoutX="433.0" layoutY="55.0" onKeyTyped="#empleadoActivarGuardar" prefHeight="31.0" prefWidth="294.0" />
+                              <TextField fx:id="textfield_empleadoTelefono" layoutX="42.0" layoutY="136.0" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="42.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono*" />
                               <Text layoutX="438.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
-                              <TextField layoutX="438.0" layoutY="136.0" prefHeight="31.0" prefWidth="285.0" />
+                              <TextField fx:id="textfield_empleadoTelefonoAdicional" layoutX="438.0" layoutY="136.0" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="40.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominicilio" />
-                              <TextArea layoutX="40.0" layoutY="216.0" prefHeight="74.0" prefWidth="679.0" />
+                              <TextArea fx:id="textarea_empleadoDomicilio" layoutX="40.0" layoutY="216.0" prefHeight="74.0" prefWidth="679.0" />
                               <Text layoutX="42.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sueldo*" />
-                              <TextField alignment="CENTER_RIGHT" layoutX="42.0" layoutY="350.0" prefHeight="31.0" prefWidth="260.0" text="0.00" />
+                              <TextField fx:id="textfield_empleadoSueldo" alignment="CENTER_RIGHT" layoutX="42.0" layoutY="350.0" onKeyTyped="#floatFieldPressed" prefHeight="31.0" prefWidth="260.0" promptText="0.00" />
                               <Text layoutX="42.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electrónico" />
-                              <TextField layoutX="42.0" layoutY="451.0" prefHeight="31.0" prefWidth="344.0" />
-                              <Text layoutX="438.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC" />
-                              <TextField layoutX="438.0" layoutY="350.0" prefHeight="31.0" prefWidth="344.0" />
-                              <RadioButton layoutX="40.0" layoutY="388.0" mnemonicParsing="false" selected="true" text="Por hora">
+                              <TextField fx:id="textfield_empleadoCorreo" layoutX="42.0" layoutY="451.0" prefHeight="31.0" prefWidth="344.0" />
+                              <Text layoutX="438.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC*" />
+                              <TextField fx:id="textfield_empleadoRNC" layoutX="438.0" layoutY="350.0" onKeyTyped="#empleadoActivarGuardar" prefHeight="31.0" prefWidth="344.0" />
+                              <RadioButton fx:id="radiobutton_empleadoHora" layoutX="40.0" layoutY="388.0" mnemonicParsing="false" selected="true" text="Por hora">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="sueldo_tipo" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton layoutX="151.0" layoutY="388.0" mnemonicParsing="false" text="Por día" toggleGroup="$sueldo_tipo" />
+                              <RadioButton fx:id="radiobutton_empleadoDia" layoutX="151.0" layoutY="388.0" mnemonicParsing="false" text="Por día" toggleGroup="$sueldo_tipo" />
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="984.0" layoutY="670.0" mnemonicParsing="false" text="Guardar" />
-            <Button layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="button_empleadoGuardar" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" onAction="#guardarEmpleado" text="Guardar" />
+            <Button fx:id="button_empleadoCancelar" layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>
