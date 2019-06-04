@@ -1,5 +1,6 @@
 package visual;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.text.DecimalFormat;
@@ -11,7 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -30,16 +34,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import logico.Atributos;
+import logico.CantProductosUtilizados;
 import logico.Combinaciones;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
+import logico.Empleado;
 import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
@@ -48,6 +56,7 @@ import logico.Precio;
 import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
+import logico.Servicio;
 
 public class ControllerNuevoProducto implements Initializable {
 	
@@ -91,6 +100,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private RadioButton radiobutton_generalFecha;
 	@FXML private Button button_productCancel;
 	@FXML private Button button_productGuardar;
+	@FXML private TextField textfield_generalNombre; 
 	
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
@@ -220,17 +230,59 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     //Cierra la venta de nuevoProducto
+    public void reload(Stage stage) {
+    	
+   		try {
+        	Stage primaryStage = new Stage();
+        	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+		    Parent root = f.load();
+		    Controller c = f.getController();
+		    c.productos_pressed(null);
+		    Scene sc = new Scene(root);
+		    primaryStage.setScene(sc);
+		    primaryStage.sizeToScene();
+		    primaryStage.setTitle("Centro Pymes");
+		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+		    primaryStage.setMaximized(true);
+		    Window owner = stage.getOwner();
+		    primaryStage.show();
+		    owner.hide();
+
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+   		
+	}
+    
     public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
-        stage.close();
+	   	reload(stage);
     }
     
     public void activarProductoGuardar(KeyEvent event) {
-    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
+    	if(tipoProducto.equalsIgnoreCase("Servicio")) {
+    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0) {
+    			System.out.println("false");
+    			button_productGuardar.setDisable(false);
+    		}
+    		else {
+    			System.out.println("true");
+    			button_productGuardar.setDisable(true);
+    		}
+    	}
+    	else if(!tipoProducto.equalsIgnoreCase("Servicio")) {
     		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
     			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0) {
+    			System.out.println("false");
     			button_productGuardar.setDisable(false);
+    		}
+    		else {
+    			System.out.println("true");
+    			button_productGuardar.setDisable(true);
     		}
     	}	
     }
@@ -265,8 +317,10 @@ public class ControllerNuevoProducto implements Initializable {
     //Guardar Producto (En Progreso)
     public void guardarProducto(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
+    	a.setAlertType(AlertType.ERROR);
     	boolean canRegister = true;
     	String codigo = textfield_generalCodigo.getText();
+    	String nombre = textfield_generalNombre.getText();
     	Rubro rubro = null;
     	Proveedores proveedor = null;
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
@@ -326,7 +380,7 @@ public class ControllerNuevoProducto implements Initializable {
     		Date date = null;
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
@@ -370,16 +424,16 @@ public class ControllerNuevoProducto implements Initializable {
     		Date date = null;
     		ArrayList<Producto> productsForKit = new ArrayList<>();
     		for(String item : listview_partidaSelect.getItems()) {
-    			String nombre = Controladora.getInstance().findPartidaNombre(item);
+    			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
     			for(Producto p : Controladora.getInstance().getMisProductosEstandar()) {
-    				if(nombre.equals(p.getNombre())) {
+    				if(nombreItem.equals(p.getNombre())) {
     					productsForKit.add(p);
     				}
     			}
     		}
     		//Visitar esto nuevamente
     		if(canRegister) {
-    			Kit kit = new Kit(productsForKit, Integer.parseInt(existenciaActual), Integer.parseInt(existenciaMinima), Integer.parseInt(existenciaMaxima), date, codigo, "",
+    			Kit kit = new Kit(productsForKit, Integer.parseInt(existenciaActual), Integer.parseInt(existenciaMinima), Integer.parseInt(existenciaMaxima), date, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
     			Controladora.getInstance().getMisProductos().add(kit);
     			Controladora.getInstance().getMisProductosKit().add(kit);
@@ -387,7 +441,36 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     	
     	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
-    		
+    		float costo = 0;
+    		ArrayList<CantProductosUtilizados> productsForServicio = new ArrayList<>();
+    		for(String item : listview_partidaSelect.getItems()) {
+    			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
+    			String cantidadItem = Controladora.getInstance().findPartidaCantidad(item);
+    			for(Producto p : Controladora.getInstance().getMisProductosEstandar()) {
+    				if(nombreItem.equals(p.getNombre())) {
+    					CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidadItem));
+    					productsForServicio.add(c);
+    				}
+    			}
+    		}
+    		if(productsForServicio.size() == 0) {
+    			a.setContentText("Eliga los componentes del kit");
+    			a.show();
+    			canRegister = false;
+    		}
+    		if(canRegister) {
+    			costo = Float.parseFloat(textfield_preciosCostos.getText());
+    			ArrayList<Empleado> empleado = new ArrayList<>();
+    			for(Empleado e : Controladora.getInstance().getMisEmpleados()) {
+    				if(e.getTipo().equalsIgnoreCase("Prestador de servicios")) {
+    					empleado.add(e);
+    				}
+    			}
+    			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", null, precio, "", codigoBarra,
+    					descripcion, empleado, productsForServicio);
+    			Controladora.getInstance().addProductoServicio(servicio);
+    			Controladora.getInstance().addProducto(servicio);
+    		}
     	}
     	
     	else if(tipoProducto.equalsIgnoreCase("Matriz")) {
@@ -424,7 +507,7 @@ public class ControllerNuevoProducto implements Initializable {
     		Date date = null;
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, "",
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
     			for(Combinaciones c : combinacionFinal) {
     				estandar.getCombinaciones().add(c);
@@ -442,6 +525,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
     		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
     		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
+    		checkbox_generalProducible.setSelected(false);
 		
     		//Limpiando tab partida
     		for(String item : listview_partidaSelect.getItems()) {
@@ -1197,6 +1281,7 @@ public class ControllerNuevoProducto implements Initializable {
     	textfield_generalProveedor.setText(tableview_proveedorBuscar.getSelectionModel().getSelectedItem().getCodigo());
     	button_aceptarBusquedaProveedor.setDisable(true);
     	titledpane_productoBuscarProveedor.setVisible(false);
+    	activarProductoGuardar(null);
     }
     
     //FUNCIONES BUSQUEDA DE RUBRO
@@ -1238,6 +1323,7 @@ public class ControllerNuevoProducto implements Initializable {
     	textfield_generalRubro.setText(tableview_rubroBuscar.getSelectionModel().getSelectedItem().getNombreRubro());
     	button_aceptarBusquedaRubro.setDisable(true);
     	titledpane_productoBuscarRubro.setVisible(false);
+    	activarProductoGuardar(null);
     }
 	
 	@Override
