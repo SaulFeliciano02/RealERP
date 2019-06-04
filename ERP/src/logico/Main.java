@@ -38,13 +38,13 @@ public class Main {
 		ArrayList<Proveedores> provsec = new ArrayList<>();
 		Moneda dola = new Moneda(50, "dolar");
 		Precio pre = new Precio(1500f, "caro", true);
-		UnidadMedida lb = new UnidadMedida("Libra", "Lb");
+		//UnidadMedida lb = new UnidadMedida("Libra", "Lb");
 		provsec.add(prov2);
 		provsec.add(prov3);
 		
-		Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
+		/*Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
 		Controladora.getInstance().addProducto(pro);
-		Controladora.getInstance().addProductoEstandar(pro);
+		Controladora.getInstance().addProductoEstandar(pro);*/
 		
 		//System.out.println(Controladora.getInstance().searchProducts("pitola", "Nombre").getNombre());
 	}

@@ -30,7 +30,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER">
         <menus>
@@ -686,9 +686,9 @@
                                                                         <Pane prefHeight="152.0" prefWidth="630.0" style="-fx-border-color: GRAY;">
                                                                            <children>
                                                                               <Text layoutX="23.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Promedio de ganancia anual" />
-                                                                              <TextField alignment="CENTER_RIGHT" layoutX="24.0" layoutY="46.0" prefHeight="25.0" prefWidth="152.0" promptText="0.0" />
+                                                                              <TextField fx:id="textfield_PromedioVenta" alignment="CENTER_RIGHT" layoutX="24.0" layoutY="46.0" prefHeight="25.0" prefWidth="152.0" promptText="0.0" />
                                                                               <Text layoutX="176.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                                                                              <Button layoutX="198.0" layoutY="93.0" mnemonicParsing="false" text="Guardar" />
+                                                                              <Button fx:id="button_GuardarPromedioVenta" layoutX="198.0" layoutY="93.0" mnemonicParsing="false" onAction="#pressed_GuardarPromedioVenta" text="Guardar" />
                                                                            </children>
                                                                         </Pane>
                                                                      </children>

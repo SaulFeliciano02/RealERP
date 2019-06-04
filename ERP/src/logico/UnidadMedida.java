@@ -1,6 +1,6 @@
 package logico;
 
-public class UnidadMedida {
+public abstract class UnidadMedida {
 	private String nombre;
 	private String abreviatura;
 	
@@ -21,5 +21,10 @@ public class UnidadMedida {
 	}
 	public void setAbreviatura(String abreviatura) {
 		this.abreviatura = abreviatura;
+	}
+	public float Conversion(String comparador, float valorTransformar)
+	{
+		float valorConvertido = 0;
+		return valorConvertido;
 	}
 }
