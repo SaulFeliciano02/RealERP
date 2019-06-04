@@ -53,11 +53,11 @@
       </MenuBar>
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="694.0" prefWidth="284.0" style="-fx-background-image: url(file:/C:/Users/Yorma/OneDrive/Escritorio/Images/background/Menu.png); -fx-background-size: stretch;">
+            <VBox alignment="TOP_CENTER" prefHeight="694.0" prefWidth="284.0" style="-fx-background-image: url('file:src/visual/images/background/Menu.png'); -fx-background-size: stretch;">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="222.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../../git/RealERP/ERP/src/visual/images/Logo.png" />
+                        <Image url="@images/Logo.png" />
                      </image>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -73,7 +73,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_principal" mnemonicParsing="false" onAction="#principal_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/selected_button_principal.png); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_principal" mnemonicParsing="false" onAction="#principal_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/selected_button_principal.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -92,7 +92,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_inventario" mnemonicParsing="false" onAction="#inventario_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_inventario.png); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_inventario" mnemonicParsing="false" onAction="#inventario_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_inventario.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -111,7 +111,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_productos.png); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -130,7 +130,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_ventas" mnemonicParsing="false" onAction="#ventas_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_ventas.png); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_ventas" mnemonicParsing="false" onAction="#ventas_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_ventas.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -149,7 +149,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_historial.png); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_historial.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -168,7 +168,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_rh" mnemonicParsing="false" onAction="#rh_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_rh.png); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_rh" mnemonicParsing="false" onAction="#rh_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_rh.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -187,7 +187,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_admin" mnemonicParsing="false" onAction="#admin_pressed" prefHeight="31.0" prefWidth="201.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_admin.png); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_admin" mnemonicParsing="false" onAction="#admin_pressed" prefHeight="31.0" prefWidth="201.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_admin.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -206,7 +206,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_help" mnemonicParsing="false" onAction="#help_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/button_help.png); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_help" mnemonicParsing="false" onAction="#help_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_help.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -214,7 +214,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="606.0" prefWidth="642.0" style="-fx-background-image: url(file:/C:/Users/Yorma/OneDrive/Escritorio/Images/background/BodyInterface.png); -fx-background-size: stretch;" HBox.hgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" prefHeight="606.0" prefWidth="642.0" style="-fx-background-image: url('file:src/visual/images/background/BodyInterface.png'); -fx-background-size: stretch;" HBox.hgrow="ALWAYS">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="138.0" prefWidth="629.0">
                      <children>
@@ -232,7 +232,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane prefHeight="65.0" prefWidth="629.0" style="-fx-background-image: url(file:/C:/Users/Yorma/OneDrive/Escritorio/Images/background/BodyDivid.png); -fx-background-size: stretch;" />
+                        <Pane prefHeight="65.0" prefWidth="629.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
@@ -267,7 +267,7 @@
                                                                <effect>
                                                                   <ImageInput>
                                                                      <source>
-                                                                        <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                        <Image url="@images/icons/icon_search.png" />
                                                                      </source>
                                                                   </ImageInput>
                                                                </effect>
@@ -396,7 +396,7 @@
                                                                      <effect>
                                                                         <ImageInput>
                                                                            <source>
-                                                                              <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                              <Image url="@images/icons/icon_search.png" />
                                                                            </source>
                                                                         </ImageInput>
                                                                      </effect>
@@ -441,7 +441,7 @@
                                                                                              <effect>
                                                                                                 <ImageInput>
                                                                                                    <source>
-                                                                                                      <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                                      <Image url="@images/icons/icon_search.png" />
                                                                                                    </source>
                                                                                                 </ImageInput>
                                                                                              </effect>
@@ -477,15 +477,15 @@
                                                                                  <children>
                                                                                     <HBox prefHeight="200.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
-                                                                                          <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/producto_nuevo.png); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                          <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
                                                                                           <Separator prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                                                                          <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/producto_modificar.png); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                          <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_modificar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                              <padding>
                                                                                                 <Insets right="50.0" />
                                                                                              </padding>
                                                                                           </Button>
                                                                                           <Separator prefWidth="200.0" />
-                                                                                          <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url(file:/C:/Users/Yorma/git/RealERP/ERP/src/visual/images/buttons/producto_eliminar.png); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                          <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
                                                                                        </children>
                                                                                     </HBox>
                                                                                  </children>
@@ -515,7 +515,7 @@
                                                                                              <effect>
                                                                                                 <ImageInput>
                                                                                                    <source>
-                                                                                                      <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                                      <Image url="@images/icons/icon_search.png" />
                                                                                                    </source>
                                                                                                 </ImageInput>
                                                                                              </effect>
@@ -735,7 +735,7 @@
                                                                                  <effect>
                                                                                     <ImageInput>
                                                                                        <source>
-                                                                                          <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                          <Image url="@images/icons/icon_search.png" />
                                                                                        </source>
                                                                                     </ImageInput>
                                                                                  </effect>
@@ -785,7 +785,7 @@
                                                                                  <effect>
                                                                                     <ImageInput>
                                                                                        <source>
-                                                                                          <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                          <Image url="@images/icons/icon_search.png" />
                                                                                        </source>
                                                                                     </ImageInput>
                                                                                  </effect>
@@ -841,7 +841,7 @@
                                                                                  <effect>
                                                                                     <ImageInput>
                                                                                        <source>
-                                                                                          <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                          <Image url="@images/icons/icon_search.png" />
                                                                                        </source>
                                                                                     </ImageInput>
                                                                                  </effect>
@@ -903,7 +903,7 @@
                                                                            <effect>
                                                                               <ImageInput>
                                                                                  <source>
-                                                                                    <Image url="@../../git/RealERP/ERP/src/visual/images/icons/icon_search.png" />
+                                                                                    <Image url="@images/icons/icon_search.png" />
                                                                                  </source>
                                                                               </ImageInput>
                                                                            </effect>
@@ -934,7 +934,6 @@
                                                    <content>
                                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                          <children>
-                                                            <Pane prefHeight="657.0" prefWidth="1595.0" style="-fx-border-color: GRAY;" />
                                                             <HBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <children>
                                                                   <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
