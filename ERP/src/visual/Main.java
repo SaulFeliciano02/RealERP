@@ -44,7 +44,6 @@ public class Main extends Application{
 		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    primaryStage.setMaximized(true);
 		    
 		  //  menu_bckgrnd.fitWidthProperty().bind(primaryStage.widthProperty()); 
 		    
