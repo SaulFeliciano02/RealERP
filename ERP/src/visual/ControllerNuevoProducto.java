@@ -101,6 +101,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_productCancel;
 	@FXML private Button button_productGuardar;
 	@FXML private TextField textfield_generalNombre; 
+	@FXML private TitledPane titledpane_productoBuscarUnidadMedida;
 	
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
@@ -243,7 +244,6 @@ public class ControllerNuevoProducto implements Initializable {
 		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    primaryStage.setMaximized(true);
 		    Window owner = stage.getOwner();
 		    primaryStage.show();
 		    owner.hide();
@@ -1441,6 +1441,16 @@ public class ControllerNuevoProducto implements Initializable {
 		listview_GastosGeneralesIndirectos.refresh();
 		listview_CostosGenerales.getItems().addAll(ob);
 		listview_CostosGenerales.refresh();
+    }
+    
+    public void buscarUnidadMedida(ActionEvent event) {
+    	titledpane_productoBuscarUnidadMedida.setVisible(true);
+    	titledpane_productoBuscarUnidadMedida.setDisable(false);
+    }
+    
+    public void cerrarbuscarUnidadMedida(ActionEvent event) {
+    	titledpane_productoBuscarUnidadMedida.setVisible(false);
+    	titledpane_productoBuscarUnidadMedida.setDisable(true);
     }
 
 }

@@ -26,21 +26,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1190.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
-      <AnchorPane prefHeight="750.0" prefWidth="1150.0">
+      <AnchorPane prefHeight="700.0" prefWidth="1190.0">
          <children>
-            <ImageView fitHeight="790.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/background/Popup_background.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="69.0" fitWidth="190.0" layoutX="9.0" layoutY="32.0" pickOnBounds="true">
                <image>
                   <Image url="@images/Logo.png" />
                </image>
             </ImageView>
-            <TabPane fx:id="tabpane_everything" layoutX="218.0" layoutY="67.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabpane_everything" layoutX="218.0" layoutY="43.0" prefHeight="585.0" prefWidth="934.0" style="-fx-border-color: BLACK;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="tab_general" text="General">
                   <content>
@@ -67,7 +62,7 @@
                               <RadioButton fx:id="radiobutton_generalNumeroSerie" layoutX="47.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
                               <RadioButton fx:id="radiobutton_generalFecha" layoutX="529.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
                               <Text fx:id="text_generalBarra" layoutX="475.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
-                              <TextField fx:id="textfield_generalBarra" layoutX="475.0" layoutY="94.0" promptText="000000001" />
+                              <TextField fx:id="textfield_generalBarra" layoutX="475.0" layoutY="94.0" prefHeight="26.0" prefWidth="190.0" promptText="000000001" />
                               <MenuButton fx:id="menubutton_generalBarra" layoutX="671.0" layoutY="94.0" mnemonicParsing="false" text="UPC-B">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -78,6 +73,9 @@
                               <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" onAction="#tipoProducto" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                               <CheckBox fx:id="checkbox_generalProducible" layoutX="474.0" layoutY="30.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
+                              <Text layoutX="475.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
+                              <TextField layoutX="475.0" layoutY="156.0" prefHeight="26.0" prefWidth="190.0" />
+                              <Button fx:id="button_BuscarUnidadMedida" layoutX="668.0" layoutY="156.0" mnemonicParsing="false" onAction="#buscarUnidadMedida" text="Buscar" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -150,6 +148,27 @@
                                        </children>
                                     </AnchorPane>
                                  </content>
+                              </TitledPane>
+                              <TitledPane fx:id="titledpane_productoBuscarUnidadMedida" collapsible="false" disable="true" layoutX="1.0" layoutY="6.0" prefHeight="553.6" prefWidth="932.8" text="Listado de unidades de medida" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="14.0" layoutY="18.0" prefHeight="378.0" prefWidth="519.0">
+                                            <columns>
+                                              <TableColumn prefWidth="351.199969291687" text="Nombre" />
+                                              <TableColumn minWidth="0.0" prefWidth="167.99996948242188" text="Abreviatura" />
+                                            </columns>
+                                          </TableView>
+                                          <Text layoutX="568.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
+                                          <TextField layoutX="568.0" layoutY="149.0" prefHeight="26.0" prefWidth="190.0" />
+                                          <Button layoutX="676.0" layoutY="181.0" mnemonicParsing="false" text="Seleccionar" />
+                                          <Button fx:id="button_CerrarUnidadMedida" layoutX="759.0" layoutY="371.0" mnemonicParsing="false" onAction="#cerrarbuscarUnidadMedida" text="Cerrar" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                                 <padding>
+                                    <Insets bottom="35.0" left="50.0" right="50.0" top="65.0" />
+                                 </padding>
                               </TitledPane>
                            </children>
                         </AnchorPane>
@@ -434,8 +453,8 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="670.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
-            <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
+            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="646.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
+            <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="646.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>
