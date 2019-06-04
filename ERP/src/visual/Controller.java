@@ -160,6 +160,10 @@ public class Controller implements Initializable{
     @FXML private Button button_modificarGastoG;
     @FXML private Button button_eliminarGastoG;
     
+    //VENTAS	
+    @FXML private Button button_GuardarPromedioVenta;
+    @FXML private TextField textfield_PromedioVenta;
+    
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
@@ -1196,5 +1200,14 @@ public void eliminarProveedor(ActionEvent event) {
     public TableView<Cliente> getTableview_clientesList(){
     	//tableview_clientesList.setId("tableview_clientesList");
     	return this.tableview_clientesList;
+    }
+    
+    //Ventas
+    public void pressed_GuardarPromedioVenta(ActionEvent event)
+    {
+    	if(!textfield_PromedioVenta.getText().isEmpty())
+    	{
+    		Controladora.getInstance().setVentaPromedioMensual(Float.parseFloat(textfield_PromedioVenta.getText()));
+    	}
     }
 }

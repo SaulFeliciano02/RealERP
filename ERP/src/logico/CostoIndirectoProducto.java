@@ -3,12 +3,12 @@ package logico;
 public class CostoIndirectoProducto {
 	
 	private String nombre;
-	private double valor;
+	private float valor;
 	private String descripcion;
 	
 	
 	
-	public CostoIndirectoProducto(String nombre, double valor, String descripcion) {
+	public CostoIndirectoProducto(String nombre, float valor, String descripcion) {
 		super();
 		this.nombre = nombre;
 		this.valor = valor;
@@ -24,7 +24,7 @@ public class CostoIndirectoProducto {
 	public double getValor() {
 		return valor;
 	}
-	public void setPrecioCosto(double valor) {
+	public void setPrecioCosto(float valor) {
 		this.valor = valor;
 	}
 	public String getDescripcion() {

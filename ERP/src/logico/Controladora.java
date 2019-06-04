@@ -25,8 +25,8 @@ public class Controladora implements Serializable{
 	ArrayList<Proveedores> provsec = new ArrayList<>();
 	Moneda dola = new Moneda(50, "dolar");
 	Precio pre = new Precio(1500f, "caro", true);
-	UnidadMedida lb = new UnidadMedida("Libra", "Lb");
-	Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
+	//UnidadMedida lb = new UnidadMedida("Libra", "Lb");
+	//Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
 	
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Empleado> misEmpleados;
@@ -70,8 +70,8 @@ public class Controladora implements Serializable{
 		misProveedores.add(proveedor3);
 		misProveedores.add(proveedor4);
 		misProveedores.add(proveedor5);
-		misProductos.add(pro);
-		misProductosEstandar.add(pro);
+		//misProductos.add(pro);
+		//misProductosEstandar.add(pro);
 		this.misAtributos = new ArrayList<>();
 		this.misGrupoAtributo = new ArrayList<>();
 		this.misGastosGenerales = new ArrayList<>();
