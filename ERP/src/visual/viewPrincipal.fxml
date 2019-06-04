@@ -216,23 +216,26 @@
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="606.0" prefWidth="642.0" style="-fx-background-image: url('file:src/visual/images/background/BodyInterface.png'); -fx-background-size: stretch;" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="138.0" prefWidth="629.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="75.0" prefWidth="630.0">
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
+                        <AnchorPane prefHeight="74.0" prefWidth="630.0">
                            <children>
-                              <Label fx:id="text_menuName" layoutX="6.0" layoutY="112.0" text="Principal" textFill="#6b6868">
+                              <Label fx:id="text_menuName" layoutY="50.0" text="Principal" textFill="#6b6868">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="text_negocioName" layoutX="62.0" layoutY="23.0" text="N o m b r e   N e g o c i o" textFill="#6b6868">
+                              <Label fx:id="text_negocioName" layoutX="90.0" layoutY="14.0" text="N o m b r e   N e g o c i o" textFill="#6b6868">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
-                        </Pane>
-                        <Pane prefHeight="65.0" prefWidth="629.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;" />
+                        </AnchorPane>
+                        <Pane prefHeight="1.0" prefWidth="630.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Pane>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
@@ -260,7 +263,7 @@
                                              <children>
                                                 <BorderPane prefHeight="553.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <top>
-                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="80.0" prefWidth="630.0" BorderPane.alignment="BOTTOM_CENTER">
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" BorderPane.alignment="BOTTOM_CENTER">
                                                          <children>
                                                             <TextField prefHeight="30.0" prefWidth="247.0" promptText="Búsqueda" />
                                                             <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
@@ -433,7 +436,7 @@
                                                                            <center>
                                                                               <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                                                                  <children>
-                                                                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="79.0" prefWidth="630.0" VBox.vgrow="NEVER">
+                                                                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                                        <children>
                                                                                           <ComboBox prefWidth="150.0" promptText="Buscar por:" />
                                                                                           <TextField prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
@@ -465,6 +468,26 @@
                                                                                                       <Insets left="10.0" right="10.0" top="5.0" />
                                                                                                    </VBox.margin>
                                                                                                 </AnchorPane>
+                                                                                                <AnchorPane prefHeight="114.0" prefWidth="610.0">
+                                                                                                   <children>
+                                                                                                      <HBox prefHeight="200.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                         <children>
+                                                                                                            <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                                            <Separator prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                                                                                            <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_modificar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                               <padding>
+                                                                                                                  <Insets right="50.0" />
+                                                                                                               </padding>
+                                                                                                            </Button>
+                                                                                                            <Separator prefWidth="200.0" />
+                                                                                                            <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                                         </children>
+                                                                                                      </HBox>
+                                                                                                   </children>
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets bottom="70.0" left="10.0" right="10.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </AnchorPane>
                                                                                              </children>
                                                                                           </VBox>
                                                                                        </children>
@@ -472,28 +495,6 @@
                                                                                  </children>
                                                                               </VBox>
                                                                            </center>
-                                                                           <bottom>
-                                                                              <AnchorPane prefHeight="116.0" prefWidth="610.0" BorderPane.alignment="CENTER">
-                                                                                 <children>
-                                                                                    <HBox prefHeight="200.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                                       <children>
-                                                                                          <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
-                                                                                          <Separator prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                                                                          <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_modificar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
-                                                                                             <padding>
-                                                                                                <Insets right="50.0" />
-                                                                                             </padding>
-                                                                                          </Button>
-                                                                                          <Separator prefWidth="200.0" />
-                                                                                          <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
-                                                                                       </children>
-                                                                                    </HBox>
-                                                                                 </children>
-                                                                                 <BorderPane.margin>
-                                                                                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                                                                                 </BorderPane.margin>
-                                                                              </AnchorPane>
-                                                                           </bottom>
                                                                         </BorderPane>
                                                                      </children>
                                                                   </AnchorPane>
@@ -505,7 +506,7 @@
                                                                      <children>
                                                                         <VBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <AnchorPane prefHeight="75.0" prefWidth="630.0" VBox.vgrow="NEVER">
+                                                                              <AnchorPane prefHeight="42.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                                  <children>
                                                                                     <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
@@ -526,7 +527,7 @@
                                                                               </AnchorPane>
                                                                               <BorderPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                  <center>
-                                                                                    <TableView fx:id="tableview_rubro" editable="true" onMouseClicked="#rubroTableViewClicked" prefHeight="342.0" prefWidth="1596.0" BorderPane.alignment="CENTER">
+                                                                                    <TableView fx:id="tableview_rubro" editable="true" onMouseClicked="#rubroTableViewClicked" prefHeight="294.0" prefWidth="610.0" BorderPane.alignment="CENTER">
                                                                                        <columns>
                                                                                           <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="218.0" text="Código" />
                                                                                           <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="627.0" text="Nombre" />
@@ -545,9 +546,12 @@
                                                                                           <HBox prefHeight="9.0" prefWidth="610.0">
                                                                                              <children>
                                                                                                 <Button fx:id="button_rubroNuevo" mnemonicParsing="false" onAction="#activarRegistro" text="Nuevo Rubro" />
-                                                                                                <Separator prefWidth="200.0" style="-fx-background-color: TRANSPARENT;" />
+                                                                                                <Separator opacity="0.0" prefWidth="200.0" style="-fx-background-color: TRANSPARENT;" />
                                                                                                 <Button fx:id="button_rubroEliminar" disable="true" mnemonicParsing="false" onAction="#eliminarRubro" text="Eliminar Rubro" />
                                                                                              </children>
+                                                                                             <VBox.margin>
+                                                                                                <Insets top="5.0" />
+                                                                                             </VBox.margin>
                                                                                           </HBox>
                                                                                        </children>
                                                                                        <BorderPane.margin>
@@ -570,7 +574,7 @@
                                                                                     </Text>
                                                                                  </children>
                                                                                  <VBox.margin>
-                                                                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                                    <Insets bottom="80.0" left="10.0" right="10.0" top="10.0" />
                                                                                  </VBox.margin>
                                                                               </Pane>
                                                                            </children>
@@ -624,22 +628,27 @@
                                                                                           </VBox>
                                                                                           <Pane prefHeight="333.0" prefWidth="275.0">
                                                                                              <children>
-                                                                                                <Pane layoutX="3.0" layoutY="6.0" prefHeight="200.0" prefWidth="262.0" style="-fx-border-color: GRAY;" />
+                                                                                                <Pane layoutX="3.0" layoutY="6.0" prefHeight="200.0" prefWidth="262.0" style="-fx-border-color: GRAY;">
+                                                                                                   <children>
+                                                                                                      <Button fx:id="button_agregar_atributo" disable="true" layoutX="169.0" layoutY="154.0" mnemonicParsing="false" onAction="#pressed_nuevoAtributo" text="Agregar" />
+                                                                                                   </children></Pane>
                                                                                                 <TextField fx:id="textfield_register_familia" layoutX="14.0" layoutY="68.0" onKeyTyped="#activar_nuevoAtributo" />
                                                                                                 <Text layoutX="14.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Familia" />
                                                                                                 <TextField fx:id="textfield_registrar_atributo" layoutX="14.0" layoutY="123.0" onKeyTyped="#activar_nuevoAtributo" prefHeight="25.0" prefWidth="193.0" />
                                                                                                 <Text layoutX="14.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atributo" />
-                                                                                                <Button fx:id="button_agregar_atributo" disable="true" layoutX="197.0" layoutY="160.0" mnemonicParsing="false" onAction="#pressed_nuevoAtributo" text="Agregar" />
                                                                                                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar nuevos elementos">
                                                                                                    <font>
                                                                                                       <Font size="15.0" />
                                                                                                    </font>
                                                                                                 </Text>
                                                                                              </children>
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="10.0" />
+                                                                                             </HBox.margin>
                                                                                           </Pane>
                                                                                        </children>
                                                                                        <BorderPane.margin>
-                                                                                          <Insets bottom="40.0" left="30.0" top="50.0" />
+                                                                                          <Insets bottom="40.0" left="30.0" top="15.0" />
                                                                                        </BorderPane.margin>
                                                                                     </HBox>
                                                                                  </center>
@@ -727,7 +736,7 @@
                                                                <children>
                                                                   <VBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                      <children>
-                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="79.0" prefWidth="630.0" VBox.vgrow="NEVER">
+                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="36.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                            <children>
                                                                               <ComboBox prefWidth="150.0" promptText="Buscar por:" />
                                                                               <TextField fx:id="textfield_clienteBusqueda" onKeyTyped="#buscarClientes" prefHeight="31.0" prefWidth="257.0" promptText="Búsqueda" />
@@ -755,14 +764,14 @@
                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                                                                            </VBox.margin>
                                                                         </TableView>
-                                                                        <HBox prefHeight="78.0" prefWidth="630.0">
+                                                                        <HBox prefHeight="83.0" prefWidth="610.0">
                                                                            <children>
                                                                               <Button fx:id="button_nuevoCliente" mnemonicParsing="false" onAction="#pressed_nuevoCliente" text="Nuevo Cliente" />
                                                                               <Separator opacity="0.0" prefWidth="200.0" />
                                                                               <Button fx:id="button_eliminarCliente" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente" />
                                                                            </children>
                                                                            <VBox.margin>
-                                                                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                              <Insets bottom="90.0" left="10.0" right="10.0" />
                                                                            </VBox.margin>
                                                                         </HBox>
                                                                      </children>
@@ -777,9 +786,9 @@
                                                                <children>
                                                                   <VBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                      <children>
-                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="79.0" prefWidth="630.0" VBox.vgrow="NEVER">
+                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="41.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                            <children>
-                                                                              <ComboBox prefHeight="26.0" prefWidth="103.0" promptText="Buscar por:" />
+                                                                              <ComboBox prefHeight="26.0" prefWidth="150.0" promptText="Buscar por:" />
                                                                               <TextField fx:id="textfield_proveedorBusqueda" onKeyTyped="#buscarProveedores" prefHeight="31.0" prefWidth="250.0" promptText="Búsqueda" />
                                                                               <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                  <effect>
@@ -819,7 +828,7 @@
                                                                               <Button fx:id="button_eliminarProveedor" mnemonicParsing="false" onAction="#eliminarProveedor" text="Eliminar Proveedor" />
                                                                            </children>
                                                                            <VBox.margin>
-                                                                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                              <Insets bottom="90.0" left="10.0" right="10.0" />
                                                                            </VBox.margin>
                                                                         </HBox>
                                                                      </children>
@@ -834,7 +843,7 @@
                                                                <children>
                                                                   <VBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                      <children>
-                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="78.0" prefWidth="630.0">
+                                                                        <HBox alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="630.0">
                                                                            <children>
                                                                               <TextField prefHeight="31.0" prefWidth="229.0" promptText="Búsqueda" />
                                                                               <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
@@ -867,7 +876,7 @@
                                                                               <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" text="Eliminar Vendedor" />
                                                                            </children>
                                                                            <VBox.margin>
-                                                                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                              <Insets bottom="90.0" left="10.0" right="10.0" />
                                                                            </VBox.margin>
                                                                         </HBox>
                                                                      </children>
@@ -896,7 +905,7 @@
                                                          <children>
                                                             <VBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <children>
-                                                                  <HBox alignment="BOTTOM_RIGHT" prefHeight="78.0" prefWidth="630.0" VBox.vgrow="NEVER">
+                                                                  <HBox alignment="BOTTOM_RIGHT" prefHeight="56.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                      <children>
                                                                         <TextField prefHeight="31.0" prefWidth="221.0" promptText="Búsqueda" />
                                                                         <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
@@ -910,7 +919,7 @@
                                                                         </Button>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TableView prefHeight="316.0" prefWidth="630.0" VBox.vgrow="ALWAYS">
+                                                                  <TableView prefHeight="424.0" prefWidth="610.0" VBox.vgrow="ALWAYS">
                                                                      <columns>
                                                                         <TableColumn prefWidth="128.0" text="Código" />
                                                                         <TableColumn prefWidth="256.0" text="Nombre" />
@@ -921,7 +930,7 @@
                                                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                      </columnResizePolicy>
                                                                      <VBox.margin>
-                                                                        <Insets bottom="70.0" left="10.0" right="10.0" top="5.0" />
+                                                                        <Insets bottom="140.0" left="10.0" right="10.0" top="5.0" />
                                                                      </VBox.margin>
                                                                   </TableView>
                                                                </children>
