@@ -1031,14 +1031,14 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
     			}
     		}**/
-    		item_moved += ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", Usando: " + 
+    		item_moved += ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", Usando: " + 
     				(Float.parseFloat(textfield_partidaCantidad.getText()));
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
     		float cantidadRestante = (Float.parseFloat(cantidad) - Float.parseFloat(textfield_partidaCantidad.getText()));
     		DecimalFormat formato1 = new DecimalFormat("0.00");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
-    			listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
     					formato1.format(cantidadRestante));
     		
     			listview_partida.refresh();
@@ -1048,7 +1048,7 @@ public class ControllerNuevoProducto implements Initializable {
     			if(nameSelect.equalsIgnoreCase(nameOriginal)) {
     				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
     				listview_partidaSelect.getItems().remove(s);
-    				item_moved = nameSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", Usando: " + 
+    				item_moved = nameSelect + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", Usando: " + 
     						(Float.parseFloat(textfield_partidaCantidad.getText()) + Float.parseFloat(cantidadSelect));
     				listview_partidaSelect.getItems().add(item_moved);
     				isAlreadySelected = true;
@@ -1070,11 +1070,11 @@ public class ControllerNuevoProducto implements Initializable {
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect, "Nombre");
     	
-    	String original = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+    	String original = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
 				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad));
     	listview_partida.getItems().remove(original);
     	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
-    	listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecio().getPrecio() + ", disponibles: " + 
+    	listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
 				(estandar.get(0).getExistenciaActual()));
     	listview_partida.refresh();
     	button_partidaSendBack.setDisable(true);
@@ -1380,7 +1380,7 @@ public class ControllerNuevoProducto implements Initializable {
 	public void fillPartida() {
 		ObservableList<String> dataPartida = FXCollections.observableArrayList();
 		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
-			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecio().getPrecio() + ", disponibles: " + e.getExistenciaActual());
+			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecioClass().getPrecio() + ", disponibles: " + e.getExistenciaActual());
 			
 		}
 		listview_partida.setItems(dataPartida);

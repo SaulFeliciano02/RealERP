@@ -229,9 +229,9 @@ public class Controladora implements Serializable{
 					}
 					break;
 				case "Proveedor":
-					for(int k = 0; k < misProductos.get(i).getProveedorPrin().getCodigo().length(); k++) {
+					for(int k = 0; k < misProductos.get(i).getProveedorPrinClass().getCodigo().length(); k++) {
 						if(j < buscador.length()) {
-							if(misProductos.get(i).getProveedorPrin().getCodigo().charAt(k) == buscador.charAt(j)) {
+							if(misProductos.get(i).getProveedorPrinClass().getCodigo().charAt(k) == buscador.charAt(j)) {
 								boolCount++;
 							}
 						}
@@ -239,9 +239,9 @@ public class Controladora implements Serializable{
 					}
 					break;
 				case "Rubro":
-					for(int k = 0; k < misProductos.get(i).getRubroProducto().getNombreRubro().length(); k++) {
+					for(int k = 0; k < misProductos.get(i).getRubroProductoClass().getNombreRubro().length(); k++) {
 						if(j < buscador.length()) {
-							if(misProductos.get(i).getRubroProducto().getNombreRubro().charAt(k) == buscador.charAt(j)) {
+							if(misProductos.get(i).getRubroProductoClass().getNombreRubro().charAt(k) == buscador.charAt(j)) {
 								boolCount++;
 							}
 						}
@@ -295,9 +295,9 @@ public class Controladora implements Serializable{
 					}
 					break;
 				case "Proveedor":
-					for(int k = 0; k < misProductosEstandar.get(i).getProveedorPrin().getCodigo().length(); k++) {
+					for(int k = 0; k < misProductosEstandar.get(i).getProveedorPrinClass().getCodigo().length(); k++) {
 						if(j < buscador.length()) {
-							if(misProductosEstandar.get(i).getProveedorPrin().getCodigo().charAt(k) == buscador.charAt(j)) {
+							if(misProductosEstandar.get(i).getProveedorPrinClass().getCodigo().charAt(k) == buscador.charAt(j)) {
 								boolCount++;
 							}
 						}
@@ -305,9 +305,9 @@ public class Controladora implements Serializable{
 					}
 					break;
 				case "Rubro":
-					for(int k = 0; k < misProductosEstandar.get(i).getRubroProducto().getNombreRubro().length(); k++) {
+					for(int k = 0; k < misProductosEstandar.get(i).getRubroProductoClass().getNombreRubro().length(); k++) {
 						if(j < buscador.length()) {
-							if(misProductosEstandar.get(i).getRubroProducto().getNombreRubro().charAt(k) == buscador.charAt(j)) {
+							if(misProductosEstandar.get(i).getRubroProductoClass().getNombreRubro().charAt(k) == buscador.charAt(j)) {
 								boolCount++;
 							}
 						}
