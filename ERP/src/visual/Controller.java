@@ -792,7 +792,6 @@ public class Controller implements Initializable{
         	if(indice <= -1)
         	{
         		Controladora.getInstance().getMisGastosGenerales().add(g);
-            	
             	listview_gastosG.getItems().add(g.getNombre());
             	
         	}
