@@ -575,7 +575,7 @@ public class Controladora implements Serializable{
 		GastoGeneral encontrado = null;
 		int i = 0;
 		
-		while(i < misGastosGenerales.size() || encontrado != null)
+		while(i < misGastosGenerales.size() || encontrado == null)
 		{
 			if(getMisGastosGenerales().get(i).getNombre().equals(g))
 			{

@@ -111,6 +111,11 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_izqCosto;
 	@FXML private Button button_GuardarCostos;
 	@FXML private ListView<String> listview_CostosResumen;
+	@FXML private ListView<String> listview_GastosGeneralesIndirectos;
+	@FXML private Button button_DerCostoIndirecto;
+	@FXML private Button button_IzqCostoIndirecto;
+	@FXML private ListView<String> listview_CostosSelecIndirectos;
+	@FXML private Button button_GuardarCostoIndirecto;
 	
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -812,18 +817,6 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 	}
     
-    public void rellenarCostosGenerales() //Ver porqué no funciona
-    {
-    	ArrayList<String> nombreYprecio = new ArrayList<>();
-    	ArrayList<GastoGeneral> gasto = Controladora.getInstance().getMisGastosGenerales();
-    	int i;
-    	for(i = 0; i<gasto.size(); i++)
-    	{
-    		nombreYprecio.add(gasto.get(i).getNombre() + " " + gasto.get(i).getPrecioUnitario() + "$RD");
-    	}
-    	listview_CostosGenerales.getItems().addAll(nombreYprecio);
-    }
-    
     public void pasarDerCosto(ActionEvent event)
     {
     	String costo = listview_CostosGenerales.getSelectionModel().getSelectedItem();
@@ -836,6 +829,20 @@ public class ControllerNuevoProducto implements Initializable {
     	String costo = listview_CostosSelect.getSelectionModel().getSelectedItem();
     	listview_CostosGenerales.getItems().add(costo);
     	listview_CostosSelect.getItems().remove(costo);
+    }
+    
+    public void pasarDerCostoIndirecto(ActionEvent event)
+    {
+    	String costo = listview_GastosGeneralesIndirectos.getSelectionModel().getSelectedItem();
+    	listview_CostosSelecIndirectos.getItems().add(costo);
+    	listview_GastosGeneralesIndirectos.getItems().remove(costo);
+    }
+    
+    public void pasarIzqCostoIndirecto(ActionEvent event)
+    {
+    	String costo = listview_CostosSelecIndirectos.getSelectionModel().getSelectedItem();
+    	listview_GastosGeneralesIndirectos.getItems().add(costo);
+    	listview_CostosSelecIndirectos.getItems().remove(costo);
     }
     
     public void agregarNuevosCostos(ActionEvent event)
@@ -857,7 +864,7 @@ public class ControllerNuevoProducto implements Initializable {
         			
         			gastos.add(nuevo);
         			
-        			String m = nuevo.getNombre() + " " + nuevo.getValor();
+        			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
         			listview_CostosResumen.getItems().add(m);
         			
@@ -869,9 +876,9 @@ public class ControllerNuevoProducto implements Initializable {
         		ArrayList<CostoIndirectoProducto> gastos = new ArrayList<>();
         		int i;
         		
-        		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
+        		for(i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
         		{
-        			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelect.getItems().get(i));
+        			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelecIndirectos.getItems().get(i));
         			
         			float atribucion = Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()));
         			
@@ -879,7 +886,7 @@ public class ControllerNuevoProducto implements Initializable {
         			
         			gastos.add(nuevo);
         			
-        			String m = nuevo.getNombre() + " " + nuevo.getValor();
+        			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
         			listview_CostosResumen.getItems().add(m);
         		}
@@ -1244,6 +1251,9 @@ public class ControllerNuevoProducto implements Initializable {
 		
 		//Seteando tab de precios
 		fillPreciosTab();
+		
+		//Seteando listview gastosgenerales
+		rellenarCostosGenerales();
 	}
 	
 	public void fillProveedorList(ArrayList<Proveedores> p) {
@@ -1333,6 +1343,18 @@ public class ControllerNuevoProducto implements Initializable {
 		textfield_preciosImpuestos.setText("18");
     }
     
-
+    public void rellenarCostosGenerales() //Ver porqué no funciona
+    {
+    	ObservableList<String> ob = FXCollections.observableArrayList();
+    	
+		for(GastoGeneral e : Controladora.getInstance().getMisGastosGenerales()) {
+			ob.add(e.getNombre());
+			
+		}
+		listview_GastosGeneralesIndirectos.getItems().addAll(ob);
+		listview_GastosGeneralesIndirectos.refresh();
+		listview_CostosGenerales.getItems().addAll(ob);
+		listview_CostosGenerales.refresh();
+    }
 
 }
