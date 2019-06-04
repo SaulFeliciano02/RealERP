@@ -177,7 +177,7 @@ public class Controller implements Initializable{
 
     @FXML private ToggleGroup toggleMenu;
     
-    @FXML private Text text_menuName;
+    @FXML private Label text_menuName;
 
     Image pressed_principal = new Image(getClass().getResourceAsStream("images/buttons/selected_button_principal.png"));
 	Image pressed_inventario = new Image(getClass().getResourceAsStream("images/buttons/selected_button_inventario.png"));
@@ -246,7 +246,7 @@ public class Controller implements Initializable{
     	nonpressed_historial1.setSource(nonpressed_historial); 
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
-    	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_help1.setSource(nonpressed_help);
     	
     	selected_Principal.setVisible(true);
     	selected_Inventario.setVisible(false);
