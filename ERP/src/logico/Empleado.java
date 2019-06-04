@@ -5,14 +5,16 @@ public class Empleado extends Persona {
 	public String domicilio;
 	public String correo;
 	public String rnc;
+	public String tipo;
 	public float sueldo;
 	
-	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, float sueldo) {
+	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, String tipo, float sueldo) {
 		super(codigo, nombre, telefono);
 		this.domicilio = domicilio;
 		this.correo = correo;
 		this.sueldo = sueldo;
 		this.rnc = rnc;
+		this.tipo = tipo;
 	}
 
 	public String getDomicilio() {
@@ -46,6 +48,16 @@ public class Empleado extends Persona {
 	public void setRnc(String rnc) {
 		this.rnc = rnc;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	
 	
 	
 	

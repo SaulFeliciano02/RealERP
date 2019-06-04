@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -39,6 +42,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 	@FXML private RadioButton radiobutton_empleadoHora;
 	@FXML private Button button_empleadoGuardar;
 	@FXML private Button button_empleadoCancelar;
+	@FXML private ComboBox<String> combobox_empleadoTipo;
 	
 	public void reload(Stage stage) {
     	
@@ -122,6 +126,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		String telefono = textfield_empleadoTelefono.getText();
 		String rnc = textfield_empleadoRNC.getText();
 		float saldo = Float.parseFloat(textfield_empleadoSueldo.getText());
+		String tipo = combobox_empleadoTipo.getSelectionModel().getSelectedItem();
 		String direccion = "";
 		String correo = "";
 		try {
@@ -147,13 +152,14 @@ public class ControllerNuevoEmpleado implements Initializable{
 			a.show();
 		}
 		if(validRegister) {
-			Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo,  rnc, saldo);
+			Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, tipo, saldo);
 			Controladora.getInstance().addEmpleado(empleado);
 			textfield_empleadoCodigo.setText("");
 			textfield_empleadoNombre.setText("");
 			textfield_empleadoTelefono.setText("");
 			textfield_empleadoSueldo.setText("");
 			textfield_empleadoRNC.setText("");
+			combobox_empleadoTipo.getSelectionModel().select("Administrativo");
 			if(!isEmpty) {
 				textarea_empleadoDomicilio.setText("");
 				textfield_empleadoCorreo.setText("");
@@ -166,8 +172,10 @@ public class ControllerNuevoEmpleado implements Initializable{
 	  
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
+		ObservableList<String> combobox_data = FXCollections.observableArrayList();
+		combobox_data.addAll("Administrativo", "Vendedor", "Prestador de servicios");
+		combobox_empleadoTipo.setItems(combobox_data);
+		combobox_empleadoTipo.getSelectionModel().select("Administrativo");
 	}
 
 }
