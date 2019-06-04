@@ -46,8 +46,10 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
+import logico.Empleado;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
+import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
 import javafx.scene.Node;
@@ -83,7 +85,24 @@ public class Controller implements Initializable{
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
     
+    //VARIABLES DE RECURSOS HUMANOS
+    
+    @FXML private TabPane tabpane_recursosHumanos;
+    @FXML private Tab tab_proveedores;
+    @FXML private Tab tab_clientes;
+    @FXML private Tab tab_empleados;
+    
     //DESPLIEGUE DE PRODUCTOS
+    @FXML private TableColumn<Producto, String> tablecolumn_productCodigo;
+    @FXML private TableColumn<Producto, String> tablecolumn_productNombre;
+    @FXML private TableColumn<Producto, String> tablecolumn_productTipo;
+    @FXML private TableColumn<Producto, Rubro> tablecolumn_productRubro;
+    @FXML private TableColumn<Producto, Proveedores> tablecolumn_productProveedor;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productPrecio;
+    @FXML private TableColumn<Producto, String> tablecolumn_productDescripcion;
+    @FXML private TableView<Producto> tableview_productList;
+    
+    //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
     @FXML private TextField textfield_registrar_atributo;
     @FXML private Button button_agregar_atributo;
@@ -111,11 +130,6 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProveedor;
     @FXML private Button button_modificarProveedor;
     @FXML private Button button_eliminarProveedor;
-    
-    //DESPLIEGUE DE VENDEDOR
-    @FXML private Button button_nuevoEmpleado;
-    @FXML private Button button_modificarVendedor;
-    @FXML private Button button_eliminarVendedor;
     @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorCodigo;
     @FXML private TableColumn<Proveedores, String> tablecolumn_proveedorNombre;
     @FXML private TableColumn<Proveedores, Rubro> tablecolumn_proveedorRubro;
@@ -127,6 +141,21 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Proveedores, Float> tablecolumn_proveedorSaldo;
     @FXML private TableView<Proveedores> tableview_proveedoresList;
     @FXML private TextField textfield_proveedorBusqueda;
+    
+    //DESPLIEGUE DE VENDEDOR
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoCodigo;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoNombre;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoTelefono;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoDireccion;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoCorreo;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoRNC;
+    @FXML private TableColumn<Empleado, String> tablecolumn_empleadoTipo;
+    @FXML private TableColumn<Empleado, Float> tablecolumn_empleadoSueldo;
+    @FXML private TableView<Empleado> tableview_empleadoList;
+    @FXML private Button button_nuevoEmpleado;
+    @FXML private Button button_modificarVendedor;
+    @FXML private Button button_eliminarVendedor;
+    
     
     
     //DESPLIEGUE DE RUBROS
@@ -870,14 +899,40 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			Window owner = button_nuevoProducto.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Producto");
 			stage.setScene(new Scene(root1)); 
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoProducto.getScene().getWindow());
+			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+
+			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.productos_pressed(null);
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.sizeToScene();
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+
+			  		    primaryStage.show();
+			  		    owner.hide();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  });
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -929,12 +984,15 @@ public class Controller implements Initializable{
 			//SI CIERRO LA VENTANA DE REGISTROS DE CLIENTES CIERRO LA PRINCIPAL Y LA VUELVO A ABRIR
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
-			          owner.hide();
+			          
 			          try {
 			          	Stage primaryStage = new Stage();
 			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 			  		 
 			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.rh_pressed(null);
+			  		    c.selectTabCliente();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
 			  		    primaryStage.sizeToScene();
@@ -943,6 +1001,7 @@ public class Controller implements Initializable{
 			  		    primaryStage.setMaximized(true);
 			  		    
 			  		    primaryStage.show();
+			  		    owner.hide();
 			  		} catch (IOException e) {
 			  			// TODO Auto-generated catch block
 			  			e.printStackTrace();
@@ -973,12 +1032,15 @@ public class Controller implements Initializable{
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
-			          owner.hide();
+			          
 			          try {
 			          	Stage primaryStage = new Stage();
 			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 
 			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.rh_pressed(null);
+			  		    c.selectTabProveedor();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
 			  		    primaryStage.sizeToScene();
@@ -987,6 +1049,7 @@ public class Controller implements Initializable{
 			  		    primaryStage.setMaximized(true);
 
 			  		    primaryStage.show();
+			  		    owner.hide();
 			  		} catch (IOException e) {
 			  			// TODO Auto-generated catch block
 			  			e.printStackTrace();
@@ -1006,14 +1069,41 @@ public class Controller implements Initializable{
 			Parent root1;
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			Window owner = button_nuevoEmpleado.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Vendedor");
 			stage.setScene(new Scene(root1));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initOwner(button_nuevoEmpleado.getScene().getWindow());
+			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+
+			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.rh_pressed(null);
+			  		    c.selectTabEmpleado();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.sizeToScene();
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+
+			  		    primaryStage.show();
+			  		    owner.hide();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  });
 			stage.showAndWait();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -1142,6 +1232,27 @@ public void eliminarProveedor(ActionEvent event) {
     public void initialize(URL location, ResourceBundle resources) {
     	fillClientList(null);
     	fillProveedorList(null);
+    	fillEmpleadoList(null);
+    	//fillProductList(null);
+    }
+    
+    public void fillProductList(ArrayList<Producto> p) {
+    	ObservableList<Producto> data = FXCollections.observableArrayList();
+    	if(p == null) {
+    		data.addAll(Controladora.getInstance().getMisProductos());
+    	}
+    	else {
+    		data.addAll(p);
+    	}
+    	tablecolumn_productCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_productNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_productTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
+    	tablecolumn_productRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
+    	tablecolumn_productProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));
+    	tablecolumn_productPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    	tablecolumn_productDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
+    	tableview_productList.setItems(data);
+    	tableview_productList.refresh();
     }
     
     public void fillAtributesList(ArrayList<Atributos> a) {
@@ -1197,6 +1308,26 @@ public void eliminarProveedor(ActionEvent event) {
     	tableview_proveedoresList.refresh();
     }
     
+    public void fillEmpleadoList(ArrayList<Empleado> e) {
+    	ObservableList<Empleado> data = FXCollections.observableArrayList();
+    	if(e == null) {
+    		data.addAll(Controladora.getInstance().getMisEmpleados());
+    	}
+    	else {
+    		data.addAll(e);
+    	}
+    	tablecolumn_empleadoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_empleadoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_empleadoTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    	tablecolumn_empleadoDireccion.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    	tablecolumn_empleadoCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    	tablecolumn_empleadoRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_empleadoTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    	tablecolumn_empleadoSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    	tableview_empleadoList.setItems(data);
+    	tableview_empleadoList.refresh();
+    }
+    
     public TableView<Cliente> getTableview_clientesList(){
     	//tableview_clientesList.setId("tableview_clientesList");
     	return this.tableview_clientesList;
@@ -1210,4 +1341,18 @@ public void eliminarProveedor(ActionEvent event) {
     		Controladora.getInstance().setVentaPromedioMensual(Float.parseFloat(textfield_PromedioVenta.getText()));
     	}
     }
+    
+    public void selectTabCliente() {
+    	tabpane_recursosHumanos.getSelectionModel().select(tab_clientes);
+    }
+    
+    public void selectTabProveedor() {
+    	tabpane_recursosHumanos.getSelectionModel().select(tab_proveedores);;
+    }
+    
+    public void selectTabEmpleado() {
+    	tabpane_recursosHumanos.getSelectionModel().select(tab_empleados);;
+    }
+    
+    
 }

@@ -48,8 +48,12 @@ abstract public class Producto {
 	}
 	
 	
-	public Precio getPrecio() {
+	public Precio getPrecioClass() {
 		return precio;
+	}
+	
+	public float getPrecio() {
+		return precio.getPrecio();
 	}
 
 	public void setPrecio(Precio precio) {
@@ -81,14 +85,21 @@ abstract public class Producto {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public Rubro getRubroProducto() {
+	public Rubro getRubroProductoClass() {
 		return rubroProducto;
+	}
+	public String getRubroProducto() {
+		System.out.println(rubroProducto.getCodigo());
+		return rubroProducto.getCodigo();
 	}
 	public void setRubroProducto(Rubro rubroProducto) {
 		this.rubroProducto = rubroProducto;
 	}
-	public Proveedores getProveedorPrin() {
+	public Proveedores getProveedorPrinClass() {
 		return ProveedorPrin;
+	}
+	public String getProveedorPrin() {
+		return ProveedorPrin.getCodigo();
 	}
 	public void setProveedorPrin(Proveedores proveedorPrin) {
 		ProveedorPrin = proveedorPrin;

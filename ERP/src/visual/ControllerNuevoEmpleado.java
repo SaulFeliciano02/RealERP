@@ -52,6 +52,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		    Parent root = f.load();
 		    Controller c = f.getController();
 		    c.rh_pressed(null);
+		    c.selectTabEmpleado();
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
 		    primaryStage.sizeToScene();
