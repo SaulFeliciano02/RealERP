@@ -74,7 +74,7 @@
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                               <CheckBox fx:id="checkbox_generalProducible" layoutX="474.0" layoutY="30.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
                               <Text layoutX="475.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
-                              <TextField layoutX="475.0" layoutY="156.0" prefHeight="26.0" prefWidth="190.0" />
+                              <TextField fx:id="textfield_generalUnidad" layoutX="475.0" layoutY="156.0" prefHeight="26.0" prefWidth="190.0" />
                               <Button fx:id="button_BuscarUnidadMedida" layoutX="668.0" layoutY="156.0" mnemonicParsing="false" onAction="#buscarUnidadMedida" text="Buscar" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
@@ -149,20 +149,20 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane fx:id="titledpane_productoBuscarUnidadMedida" collapsible="false" layoutX="1.0" layoutY="6.0" prefHeight="553.6" prefWidth="932.8" text="Listado de unidades de medida" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TitledPane fx:id="titledpane_productoBuscarUnidadMedida" collapsible="false" layoutX="1.0" layoutY="6.0" prefHeight="553.6" prefWidth="932.8" text="Listado de unidades de medida" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tableview_unidadList" layoutX="14.0" layoutY="18.0" prefHeight="378.0" prefWidth="594.0">
+                                          <TableView fx:id="tableview_unidadList" layoutX="14.0" layoutY="18.0" onMouseClicked="#unidadTableViewClicked" prefHeight="378.0" prefWidth="594.0">
                                             <columns>
                                                 <TableColumn fx:id="tablecolumn_unidadCategoria" prefWidth="156.00000286102295" text="Categoría" />
-                                              <TableColumn fx:id="tableview_unidadNombre" prefWidth="270.3999786376953" text="Nombre" />
+                                              <TableColumn fx:id="tablecolumn_unidadNombre" prefWidth="270.3999786376953" text="Nombre" />
                                               <TableColumn fx:id="tablecolumn_unidadAbreviatura" minWidth="0.0" prefWidth="167.99996948242188" text="Abreviatura" />
                                             </columns>
                                           </TableView>
                                           <Text layoutX="632.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
                                           <TextField layoutX="632.0" layoutY="204.0" prefHeight="26.0" prefWidth="190.0" />
-                                          <Button layoutX="740.0" layoutY="236.0" mnemonicParsing="false" text="Seleccionar" />
+                                          <Button fx:id="button_aceptarUnidad" layoutX="740.0" layoutY="236.0" mnemonicParsing="false" onAction="#returnUnidadSearch" text="Seleccionar" />
                                           <Button fx:id="button_CerrarUnidadMedida" layoutX="759.0" layoutY="371.0" mnemonicParsing="false" onAction="#cerrarbuscarUnidadMedida" text="Cerrar" />
                                           <Text layoutX="632.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrar por categoría" />
                                           <ComboBox layoutX="632.0" layoutY="35.0" prefWidth="150.0" promptText="Buscar por:" />
