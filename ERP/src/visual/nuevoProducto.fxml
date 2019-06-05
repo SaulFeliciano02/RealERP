@@ -153,11 +153,11 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView layoutX="14.0" layoutY="18.0" prefHeight="378.0" prefWidth="594.0">
+                                          <TableView fx:id="tableview_unidadList" layoutX="14.0" layoutY="18.0" prefHeight="378.0" prefWidth="594.0">
                                             <columns>
-                                                <TableColumn prefWidth="156.00000286102295" text="Categoría" />
-                                              <TableColumn prefWidth="270.3999786376953" text="Nombre" />
-                                              <TableColumn minWidth="0.0" prefWidth="167.99996948242188" text="Abreviatura" />
+                                                <TableColumn fx:id="tablecolumn_unidadCategoria" prefWidth="156.00000286102295" text="Categoría" />
+                                              <TableColumn fx:id="tableview_unidadNombre" prefWidth="270.3999786376953" text="Nombre" />
+                                              <TableColumn fx:id="tablecolumn_unidadAbreviatura" minWidth="0.0" prefWidth="167.99996948242188" text="Abreviatura" />
                                             </columns>
                                           </TableView>
                                           <Text layoutX="632.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />

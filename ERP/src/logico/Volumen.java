@@ -2,8 +2,8 @@ package logico;
 
 public class Volumen extends UnidadMedida {
 
-	public Volumen(String nombre, String abreviatura) {
-		super(nombre, abreviatura);
+	public Volumen(String categoria, String nombre, String abreviatura) {
+		super(categoria, nombre, abreviatura);
 		// TODO Auto-generated constructor stub
 	}
 	

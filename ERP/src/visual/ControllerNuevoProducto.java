@@ -57,6 +57,7 @@ import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
+import logico.UnidadMedida;
 
 public class ControllerNuevoProducto implements Initializable {
 	
@@ -102,6 +103,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_productGuardar;
 	@FXML private TextField textfield_generalNombre; 
 	@FXML private TitledPane titledpane_productoBuscarUnidadMedida;
+	@FXML private TextField textfield_generalUnidad;
 	
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
@@ -193,6 +195,14 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private Button button_atributosEliminar;
     @FXML private Button button_cerrarBusquedaAtributo;
     @FXML private TitledPane titledpane_productoBuscarAtributo;
+    
+    //VARIABLES PARA LA BUSQUEDA DE UNIDAD DE MEDIDAS
+    
+    @FXML TableColumn<UnidadMedida, String> tablecolumn_unidadCategoria;
+    @FXML TableColumn<UnidadMedida, String> tablecolumn_unidadNombre;
+    @FXML TableColumn<UnidadMedida, String> tablecolumn_unidadAbreviatura;
+    @FXML TableView<UnidadMedida> tableview_unidadList;
+    @FXML Button button_aceptarUnidad;
    
     /**FUNCIONES GENERALES**/
     
@@ -327,6 +337,10 @@ public class ControllerNuevoProducto implements Initializable {
     	String descripcion = "";
     	String codigoBarra = "";
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
+    	UnidadMedida unidad = null;
+    	if(textfield_generalUnidad.getLength() != 0) {
+    		unidad = tableview_unidadList.getSelectionModel().getSelectedItem();
+    	}
     	try {
     		descripcion = textarea_generalDescripcion.getText();
     		codigoBarra = textfield_generalBarra.getText();
@@ -381,7 +395,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
     			}*/
@@ -434,7 +448,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//Visitar esto nuevamente
     		if(canRegister) {
     			Kit kit = new Kit(productsForKit, Integer.parseInt(existenciaActual), Integer.parseInt(existenciaMinima), Integer.parseInt(existenciaMaxima), date, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
     			Controladora.getInstance().getMisProductos().add(kit);
     			Controladora.getInstance().getMisProductosKit().add(kit);
     		}
@@ -466,7 +480,7 @@ public class ControllerNuevoProducto implements Initializable {
     					empleado.add(e);
     				}
     			}
-    			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", null, precio, "", codigoBarra,
+    			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
     					descripcion, empleado, productsForServicio);
     			Controladora.getInstance().addProductoServicio(servicio);
     			Controladora.getInstance().addProducto(servicio);
@@ -508,7 +522,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", null, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
     			for(Combinaciones c : combinacionFinal) {
     				estandar.getCombinaciones().add(c);
     			}
@@ -1325,6 +1339,31 @@ public class ControllerNuevoProducto implements Initializable {
     	titledpane_productoBuscarRubro.setVisible(false);
     	activarProductoGuardar(null);
     }
+    
+    //UNIDAD DE MEDIDAS
+    public void buscarUnidadMedida(ActionEvent event) {
+    	titledpane_productoBuscarUnidadMedida.setVisible(true);
+    	titledpane_productoBuscarUnidadMedida.setDisable(false);
+    	fillUnidadMedida(null);
+    }
+    
+    public void cerrarbuscarUnidadMedida(ActionEvent event) {
+    	titledpane_productoBuscarUnidadMedida.setVisible(false);
+    	titledpane_productoBuscarUnidadMedida.setDisable(true);
+    }
+    
+    public void unidadTableViewClicked(MouseEvent event) {
+    	if(!tableview_unidadList.getSelectionModel().isEmpty()) {
+    		button_aceptarUnidad.setDisable(false);
+    	}
+    }
+    
+    public void returnUnidadSearch(ActionEvent event) {
+    	textfield_generalUnidad.setText(tableview_unidadList.getSelectionModel().getSelectedItem().getNombre());
+    	button_aceptarUnidad.setDisable(true);
+    	titledpane_productoBuscarUnidadMedida.setVisible(false);
+    }
+    
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -1338,8 +1377,24 @@ public class ControllerNuevoProducto implements Initializable {
 		//Seteando tab de precios
 		fillPreciosTab();
 		
+		
 		//Seteando listview gastosgenerales
 		rellenarCostosGenerales();
+	}
+	
+	public void fillUnidadMedida(ArrayList<UnidadMedida> u) {
+		ObservableList<UnidadMedida> data = FXCollections.observableArrayList();
+		if(u == null) {
+			data.addAll(Controladora.getInstance().getMisUnidadMedida());
+		}
+		else {
+    		data.addAll(u);
+    	}
+		tablecolumn_unidadCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+    	tablecolumn_unidadNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_unidadAbreviatura.setCellValueFactory(new PropertyValueFactory<>("abreviatura"));
+    	tableview_unidadList.setItems(data);
+    	tableview_unidadList.refresh();
 	}
 	
 	public void fillProveedorList(ArrayList<Proveedores> p) {
@@ -1443,14 +1498,6 @@ public class ControllerNuevoProducto implements Initializable {
 		listview_CostosGenerales.refresh();
     }
     
-    public void buscarUnidadMedida(ActionEvent event) {
-    	titledpane_productoBuscarUnidadMedida.setVisible(true);
-    	titledpane_productoBuscarUnidadMedida.setDisable(false);
-    }
-    
-    public void cerrarbuscarUnidadMedida(ActionEvent event) {
-    	titledpane_productoBuscarUnidadMedida.setVisible(false);
-    	titledpane_productoBuscarUnidadMedida.setDisable(true);
-    }
+ 
 
 }

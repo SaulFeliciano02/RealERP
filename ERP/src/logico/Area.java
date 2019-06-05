@@ -2,8 +2,8 @@ package logico;
 
 public class Area extends UnidadMedida {
 
-	public Area(String nombre, String abreviatura) {
-		super(nombre, abreviatura);
+	public Area(String categoria, String nombre, String abreviatura) {
+		super(categoria, nombre, abreviatura);
 		// TODO Auto-generated constructor stub
 	}
 
