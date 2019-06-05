@@ -111,6 +111,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_partidaSendTo;
 	@FXML private Button button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
+	@FXML private ComboBox<String> combobox_ConversorUnidad;
 	
 	//COSTOS
 	@FXML private TextField textfield_costosValor;
@@ -129,7 +130,9 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_IzqCostoIndirecto;
 	@FXML private ListView<String> listview_CostosSelecIndirectos;
 	@FXML private Button button_GuardarCostoIndirecto;
-	
+	private ArrayList<CostoDirecto> gastosDirectos = new ArrayList<>();
+	private ArrayList<CostoIndirectoProducto> gastosIndirectos = new ArrayList<>();
+
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
 	@FXML private TextField textfield_preciosPorcientoGanancia;
@@ -597,6 +600,8 @@ public class ControllerNuevoProducto implements Initializable {
     		fillPartida();
     		fillPreciosTab();
     		fillGeneralTab();
+    		getGastosDirectos().clear();
+    		getGastosIndirectos().clear();
     	}
 		
     	
@@ -948,19 +953,20 @@ public class ControllerNuevoProducto implements Initializable {
     	if(!textfield_costosValor.getText().isEmpty())
     	{
     		if(radiobutton_costosDirectos.isSelected())
-        	{
-        		ArrayList<CostoDirecto> gastos = new ArrayList<>();
+        	{        		
         		int i;
         		
         		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
         		{
         			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelect.getItems().get(i));
         			
-        			float atribucion = Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()));
+        			DecimalFormat df = new DecimalFormat("#.00");
+        			
+        			float atribucion = Float.parseFloat(df.format(Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()))));
         			
         			CostoDirecto nuevo = new CostoDirecto(enlistado.getNombre(), atribucion, null);
         			
-        			gastos.add(nuevo);
+        			gastosDirectos.add(nuevo);
         			
         			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
@@ -971,18 +977,19 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		if(radiobutton_costosIndirectos.isSelected())
         	{
-        		ArrayList<CostoIndirectoProducto> gastos = new ArrayList<>();
         		int i;
         		
         		for(i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
         		{
         			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelecIndirectos.getItems().get(i));
         			
-        			float atribucion = Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()));
+        			DecimalFormat df = new DecimalFormat("#.00");
+        			
+        			float atribucion = Float.parseFloat(df.format(Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()))));
         			
         			CostoIndirectoProducto nuevo = new CostoIndirectoProducto(enlistado.getNombre(), atribucion, null);
         			
-        			gastos.add(nuevo);
+        			gastosIndirectos.add(nuevo);
         			
         			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
@@ -998,6 +1005,41 @@ public class ControllerNuevoProducto implements Initializable {
     	if(!listview_partida.getSelectionModel().isEmpty()) {
     		button_partidaSendTo.setDisable(false);
     		textfield_partidaCantidad.setDisable(false);
+    		
+    		String selection = null;
+        	int posicion;
+        	Estandar p = null;
+        	
+        	if(listview_partida.getSelectionModel().getSelectedIndex() > -1)
+        	{
+        		posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
+        		selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
+        		p = Controladora.getInstance().buscarProducto(selection);
+        		
+        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Area"))
+        		{
+        			combobox_ConversorUnidad.getItems().clear();
+        			combobox_ConversorUnidad.getItems().addAll("Sq Pulgadas", "Sq Pies", "Sq Yardas", "Sq Milimetros", "Sq Centimetros", "Sq Metros");
+        		}
+        		
+        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Longitud"))
+        		{
+        			combobox_ConversorUnidad.getItems().clear();
+        			combobox_ConversorUnidad.getItems().addAll("Pulgadas", "Pies", "Yardas", "Milimetros", "Centimetros", "Metros");
+        		}
+        		
+        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Masa"))
+        		{
+        			combobox_ConversorUnidad.getItems().clear();
+        			combobox_ConversorUnidad.getItems().addAll("Grano", "Onza", "Libra", "Miligramo", "Gramo", "Kilogramo");
+        		}
+        		
+        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Volumen"))
+        		{
+        			combobox_ConversorUnidad.getItems().clear();
+        			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
+        		}
+        	}
     	}
     	else if (listview_partida.getSelectionModel().isEmpty() || textfield_partidaCantidad.getLength() == 0) {
     		button_partidaSendTo.setDisable(true);
@@ -1012,6 +1054,11 @@ public class ControllerNuevoProducto implements Initializable {
     	else {   		
     		button_partidaSendBack.setDisable(true);
     	}
+    }
+    
+    public void filtrarUnidadMedida(MouseEvent event)
+    {
+    	
     }
     
     public void movePartida(ActionEvent event) {
@@ -1179,6 +1226,14 @@ public class ControllerNuevoProducto implements Initializable {
 	}
 	*/
     
+    public ArrayList<CostoDirecto> getGastosDirectos() {
+		return gastosDirectos;
+	}
+
+	public ArrayList<CostoIndirectoProducto> getGastosIndirectos() {
+		return gastosIndirectos;
+	}
+    
    //FUNCIONES PRECIO
 	public void setCostoYPrecioTotal(Event event) {
 		double valorDirecto = 0;
@@ -1195,6 +1250,17 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 		
 		*/
+		
+		for(CostoDirecto costo : getGastosDirectos())
+		{
+			valorDirecto += costo.getValor();
+		}
+		
+		for(CostoIndirectoProducto costo : getGastosIndirectos())
+		{
+			valorIndirecto += costo.getValor();
+		}
+		
 		for(String valor : listview_partidaSelect.getItems()) {
 			 String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
@@ -1435,7 +1501,7 @@ public class ControllerNuevoProducto implements Initializable {
 	public void fillPartida() {
 		ObservableList<String> dataPartida = FXCollections.observableArrayList();
 		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
-			dataPartida.add(e.getNombre() + ": " + "cuesta " + e.getPrecioClass().getPrecio() + ", disponibles: " + e.getExistenciaActual());
+			dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]");
 			
 		}
 		listview_partida.setItems(dataPartida);

@@ -26,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1190.0">
          <children>
@@ -195,7 +195,7 @@
                               <TextField layoutX="138.0" layoutY="25.0" prefHeight="31.0" prefWidth="176.0" promptText="Búsqueda" />
                               <Button layoutX="322.0" layoutY="25.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="41.0" text="B" />
                               <Text layoutX="391.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversión unidad-medida" />
-                              <ComboBox layoutX="388.0" layoutY="294.0" prefWidth="150.0" />
+                              <ComboBox fx:id="combobox_ConversorUnidad" layoutX="388.0" layoutY="294.0" prefWidth="150.0" />
                            </children>
                         </AnchorPane>
                     </content>
