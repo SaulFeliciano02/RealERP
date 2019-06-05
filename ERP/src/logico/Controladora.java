@@ -662,6 +662,24 @@ public class Controladora implements Serializable{
 		return encontrado;
 	}
 	
+	public Estandar buscarProducto(String p)
+	{
+		Estandar encontrado = null;
+		int i = 0;
+		
+		while(i < getMisProductosEstandar().size() || encontrado == null)
+		{
+			if(p.equalsIgnoreCase(getMisProductosEstandar().get(i).getNombre()))
+			{
+				encontrado = getMisProductosEstandar().get(i);
+			}
+			
+			i++;
+		}
+		
+		return encontrado;
+	}
+	
 	public ArrayList<GastoGeneral> getMisGastosGenerales() {
 		return misGastosGenerales;
 	}
