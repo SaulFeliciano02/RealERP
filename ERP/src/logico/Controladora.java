@@ -44,6 +44,7 @@ public class Controladora implements Serializable{
 	private ArrayList<GrupoAtributo> misGrupoAtributo;
 	private ArrayList<Atributos> misAtributos;
 	private ArrayList<GastoGeneral> misGastosGenerales;
+	private ArrayList<UnidadMedida> misUnidadMedida;
 	private float ventaPromedioMensual;
 	
 	private static Controladora controladora;
@@ -60,6 +61,7 @@ public class Controladora implements Serializable{
 		this.misProductosEstandar = new ArrayList<>();
 		this.misProductosKit = new ArrayList<>();
 		this.misProductosServicio = new ArrayList<>();
+		this.misUnidadMedida = new ArrayList<>();
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
 		misClientes.add(cliente3);
@@ -121,6 +123,9 @@ public class Controladora implements Serializable{
 	public void addAtributo(Atributos a) {
 		misAtributos.add(a);
 	}
+	public void addUnidad(UnidadMedida u) {
+		misUnidadMedida.add(u);
+	}
 
 	public ArrayList<Cliente> getMisClientes() {
 		return misClientes;
@@ -168,6 +173,9 @@ public class Controladora implements Serializable{
 
 	public ArrayList<Servicio> getMisProductosServicio() {
 		return misProductosServicio;
+	}
+	public ArrayList<UnidadMedida> getMisUnidadMedida() {
+		return misUnidadMedida;
 	}
 
 	/**FUNCION PARA VERIFICAR UNA FAMILIA DE ATRIBUTO**/

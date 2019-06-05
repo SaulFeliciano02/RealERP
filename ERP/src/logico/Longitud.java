@@ -2,8 +2,8 @@ package logico;
 
 public class Longitud extends UnidadMedida {
 
-	public Longitud(String nombre, String abreviatura) {
-		super(nombre, abreviatura);
+	public Longitud(String categoria, String nombre, String abreviatura) {
+		super(categoria, nombre, abreviatura);
 		// TODO Auto-generated constructor stub
 	}
 

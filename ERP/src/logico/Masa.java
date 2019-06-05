@@ -2,8 +2,8 @@ package logico;
 
 public class Masa extends UnidadMedida {
 
-	public Masa(String nombre, String abreviatura) {
-		super(nombre, abreviatura);
+	public Masa(String categoria, String nombre, String abreviatura) {
+		super(categoria, nombre, abreviatura);
 		// TODO Auto-generated constructor stub
 	}
 	
