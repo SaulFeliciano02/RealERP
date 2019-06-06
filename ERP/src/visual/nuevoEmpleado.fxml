@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoEmpleado">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoEmpleado">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -48,9 +47,10 @@
                               <TextField fx:id="textfield_empleadoCorreo" layoutX="438.0" layoutY="444.0" prefHeight="31.0" prefWidth="344.0" />
                               <Text layoutX="438.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RNC*" />
                               <TextField fx:id="textfield_empleadoRNC" layoutX="438.0" layoutY="350.0" onKeyTyped="#empleadoActivarGuardar" prefHeight="31.0" prefWidth="344.0" />
-                              <ComboBox fx:id="combobox_empleadoTipo" layoutX="42.0" layoutY="348.0" prefHeight="26.0" prefWidth="181.0" />
                               <Text layoutX="45.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoría" />
                               <Text layoutX="279.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                              <TextField fx:id="textfield_RegEmpCategoria" layoutX="45.0" layoutY="350.0" />
+                              <Button fx:id="button_BuscarCategoriaEmp" layoutX="236.0" layoutY="350.0" mnemonicParsing="false" text="Buscar" />
                            </children>
                         </AnchorPane>
                   </content>

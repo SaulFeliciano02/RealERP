@@ -42,7 +42,8 @@ public class ControllerNuevoEmpleado implements Initializable{
 	@FXML private RadioButton radiobutton_empleadoHora;
 	@FXML private Button button_empleadoGuardar;
 	@FXML private Button button_empleadoCancelar;
-	@FXML private ComboBox<String> combobox_empleadoTipo;
+	@FXML private TextField textfield_RegEmpCategoria;
+	@FXML private Button button_BuscarCategoriaEmp;
 	
 	public void reload(Stage stage) {
     	
@@ -127,7 +128,6 @@ public class ControllerNuevoEmpleado implements Initializable{
 		String telefono = textfield_empleadoTelefono.getText();
 		String rnc = textfield_empleadoRNC.getText();
 		float saldo = Float.parseFloat(textfield_empleadoSueldo.getText());
-		String tipo = combobox_empleadoTipo.getSelectionModel().getSelectedItem();
 		String direccion = "";
 		String correo = "";
 		try {
@@ -153,14 +153,13 @@ public class ControllerNuevoEmpleado implements Initializable{
 			a.show();
 		}
 		if(validRegister) {
-			Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, tipo, saldo);
-			Controladora.getInstance().addEmpleado(empleado);
+			/*Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, tipo, saldo);
+			Controladora.getInstance().addEmpleado(empleado);*/
 			textfield_empleadoCodigo.setText("");
 			textfield_empleadoNombre.setText("");
 			textfield_empleadoTelefono.setText("");
 			textfield_empleadoSueldo.setText("");
 			textfield_empleadoRNC.setText("");
-			combobox_empleadoTipo.getSelectionModel().select("Administrativo");
 			if(!isEmpty) {
 				textarea_empleadoDomicilio.setText("");
 				textfield_empleadoCorreo.setText("");
@@ -173,10 +172,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 	  
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ObservableList<String> combobox_data = FXCollections.observableArrayList();
-		combobox_data.addAll("Administrativo", "Vendedor", "Prestador de servicios");
-		combobox_empleadoTipo.setItems(combobox_data);
-		combobox_empleadoTipo.getSelectionModel().select("Administrativo");
+		
 	}
 
 }

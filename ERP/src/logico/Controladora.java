@@ -78,6 +78,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Atributos> misAtributos;
 	private ArrayList<GastoGeneral> misGastosGenerales;
 	private ArrayList<UnidadMedida> misUnidadMedida;
+	private ArrayList<CategoriaEmpleado> misCategoriasEmpleado;
 	private float ventaPromedioMensual;
 	
 	private static Controladora controladora;
@@ -144,8 +145,13 @@ public class Controladora implements Serializable{
 		this.misAtributos = new ArrayList<>();
 		this.misGrupoAtributo = new ArrayList<>();
 		this.misGastosGenerales = new ArrayList<>();
+		this.misCategoriasEmpleado = new ArrayList<>();
 	}
 	
+	public ArrayList<CategoriaEmpleado> getMisCategoriasEmpleado() {
+		return misCategoriasEmpleado;
+	}
+
 	public static Controladora getInstance() {
 		if (controladora == null) {
 			controladora = new Controladora();
