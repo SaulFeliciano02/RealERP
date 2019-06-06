@@ -41,6 +41,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Atributos;
+import logico.CategoriaEmpleado;
 import logico.Cliente;
 import logico.Controladora;
 import logico.CostoDirecto;
@@ -91,6 +92,14 @@ public class Controller implements Initializable{
     @FXML private Tab tab_proveedores;
     @FXML private Tab tab_clientes;
     @FXML private Tab tab_empleados;
+    @FXML private TextField textfield_nombreCategoriaEmp;
+    @FXML private TextField textfield_salarioCategoriaEmp;
+    @FXML private Button button_guardarCategoriaEmp;
+    @FXML private TableView<CategoriaEmpleado> tableview_CategoriaEmp;
+    @FXML private TableColumn<CategoriaEmpleado, String> tablecolumn_NombreCategoria;
+    @FXML private TableColumn<CategoriaEmpleado, Float> tablecolumn_SueldoCategoria;
+    @FXML private RadioButton radiobutton_PorHora;
+    @FXML private RadioButton radiobutton_PorDia;
     
     //DESPLIEGUE DE PRODUCTOS
     @FXML private TableColumn<Producto, String> tablecolumn_productCodigo;
@@ -155,8 +164,6 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoEmpleado;
     @FXML private Button button_modificarVendedor;
     @FXML private Button button_eliminarVendedor;
-    
-    
     
     //DESPLIEGUE DE RUBROS
     @FXML private Button button_rubroNuevo;
@@ -1224,7 +1231,33 @@ public void eliminarProveedor(ActionEvent event) {
 	tableview_proveedoresList.getItems().remove(index);
 }
 
-	
+public void pressed_guardarCategoriaEmp(ActionEvent event)
+{
+	if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
+	{
+		String nombre = textfield_nombreCategoriaEmp.getText();
+		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+		
+		if(radiobutton_PorDia.isSelected())
+		{
+			salario = salario/8;
+		}
+		
+		CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+		
+		Controladora.getInstance().getMisCategoriasEmpleado().add(cat);
+		
+		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+		
+		textfield_nombreCategoriaEmp.setText("");
+		textfield_salarioCategoriaEmp.setText("");
+		ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
+		data.add(cat);
+		tableview_CategoriaEmp.getItems().add(cat);
+		tableview_CategoriaEmp.refresh();	
+	}
+}
 
 	
 

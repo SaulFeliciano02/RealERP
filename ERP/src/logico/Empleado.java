@@ -7,14 +7,24 @@ public class Empleado extends Persona {
 	public String rnc;
 	public String tipo;
 	public float sueldo;
+	public CategoriaEmpleado categoria;
 	
-	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, String tipo, float sueldo) {
+	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, String tipo, float sueldo, CategoriaEmpleado categoria) {
 		super(codigo, nombre, telefono);
 		this.domicilio = domicilio;
 		this.correo = correo;
 		this.sueldo = sueldo;
 		this.rnc = rnc;
 		this.tipo = tipo;
+		this.categoria = categoria;
+	}
+
+	public CategoriaEmpleado getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaEmpleado categoria) {
+		this.categoria = categoria;
 	}
 
 	public String getDomicilio() {
