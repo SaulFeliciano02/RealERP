@@ -798,6 +798,7 @@ public class Volumen extends UnidadMedida {
 			{
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.016387064f;
+					System.out.println(transformado);
 					break;
 				case "Pies  Cb":
 					transformado = valorTransformar * 28.31684659f;

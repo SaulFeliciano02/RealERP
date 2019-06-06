@@ -548,6 +548,7 @@ public class ControllerNuevoProducto implements Initializable {
     		for(String item : listview_partidaSelect.getItems()) {
     			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
     			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
+    			System.out.println(itemNombre + itemCantidad);
     			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
     			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
     				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
@@ -1064,10 +1065,125 @@ public class ControllerNuevoProducto implements Initializable {
     public void movePartida(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	boolean isAlreadySelected = false;
+    	String selection = null;
+    	int posicion;
+    	posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
+		selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
     	String select_items = listview_partida.getSelectionModel().getSelectedItem();
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
     	String item_moved = "";
+    	String tipoConversion = combobox_ConversorUnidad.getSelectionModel().getSelectedItem();
+    	float costo = 0;
+    	float cantidadConvertida = 0;
+    	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nameOriginal.toLowerCase(), "Nombre");
+    	System.out.println("Esta es la unidad de medida del producto: " + estandar.get(0).getUnidadMedida().getNombre());
+    	System.out.println("El tipo de conversion elegida fue: " + tipoConversion);
+    	switch(tipoConversion){
+    		case "Pulgadas":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pulgadas", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Pies":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pies", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Yardas":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Yardas", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Milimetros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Milimetros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Centimetros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Centimetros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Metros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Metros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		
+    		case "Pulgadas cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pulgadas cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Pies cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pies cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Cuchara de té":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuchara de té", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Onza fluida":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Onza fluida", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Taza":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Taza", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Medio litro":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Medio litro", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Cuarto de galón":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuarto de galón", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Galón":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Galón", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Barril":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Barril", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Milímetros cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Milímetros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Centímetros cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Centímetros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Metros cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Metros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Mililitros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Mililitros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Litros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Litros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Cuchara de madera":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuchara de madera", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    			
+    		case "Grano":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Grano", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Onza":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Onza", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Libra":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Libra", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Miligramo":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Miligramo", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Gramo":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Gramo", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Kilogramo":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Kilogramo", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+
+    		case "Sq Pulgadas":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Pulgadas", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Sq Pies":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Pies", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Sq Yardas":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Yardas", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Sq Milimetros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Milimetros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Sq Centimetros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Centimetros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		case "Sq Metros":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Metros", Float.parseFloat(textfield_partidaCantidad.getText()));
+    			break;
+    		
+    	};
     	if(textfield_partidaCantidad.getLength() == 0) {
     		a.setAlertType(AlertType.ERROR);
     		a.setContentText("Eliga la cantida que utilizara");
@@ -1084,7 +1200,6 @@ public class ControllerNuevoProducto implements Initializable {
     			item_moved += select_items.charAt(i);
     			i++;
     		}
-    		ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(item_moved, "Nombre");
     		//Guardar este codigo para cuando guardemos un producto
     		/**for(int j = 0; j < Controladora.getInstance().getMisProductosEstandar().size(); j++) {
     			if(Controladora.getInstance().getMisProductosEstandar().get(j).equals(estandar.get(0))) {
@@ -1092,25 +1207,27 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
     			}
     		}**/
-    		item_moved += ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", Usando: " + 
-    				(Float.parseFloat(textfield_partidaCantidad.getText()));
+    		item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]";
+    		//e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]"
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
-    		float cantidadRestante = (Float.parseFloat(cantidad) - Float.parseFloat(textfield_partidaCantidad.getText()));
+    		float cantidadRestante = (Float.parseFloat(cantidad) - cantidadConvertida);
     		DecimalFormat formato1 = new DecimalFormat("0.00");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
-    			listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
-    					formato1.format(cantidadRestante));
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    					cantidadRestante + "]");
     		
     			listview_partida.refresh();
     		}
     		for(String s : listview_partidaSelect.getItems()) {
     			String nameSelect = Controladora.getInstance().findPartidaNombre(s);
+    			String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    			System.out.println(cantidadSelect);
     			if(nameSelect.equalsIgnoreCase(nameOriginal)) {
-    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    				
     				listview_partidaSelect.getItems().remove(s);
-    				item_moved = nameSelect + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", Usando: " + 
-    						(Float.parseFloat(textfield_partidaCantidad.getText()) + Float.parseFloat(cantidadSelect));
+    				item_moved = nameSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", Usando: " + 
+    						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]";
     				listview_partidaSelect.getItems().add(item_moved);
     				isAlreadySelected = true;
     			}
@@ -1129,14 +1246,15 @@ public class ControllerNuevoProducto implements Initializable {
     	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
     	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
-    	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect, "Nombre");
-    	
-    	String original = nombreSelect + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
-				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad));
+    	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
+    	DecimalFormat formato1 = new DecimalFormat("0.00");
+    	String original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+				(formato1.format(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]");
+    	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
     	listview_partida.getItems().remove(original);
-    	listview_partidaSelect.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex()+1);
-    	listview_partida.getItems().add(estandar.get(0).getNombre() + ": " + "cuesta " + estandar.get(0).getPrecioClass().getPrecio() + ", disponibles: " + 
-				(estandar.get(0).getExistenciaActual()));
+    	
+    	listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+				(estandar.get(0).getExistenciaActual()) + "]");
     	listview_partida.refresh();
     	button_partidaSendBack.setDisable(true);
     }
@@ -1262,9 +1380,13 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 		
 		for(String valor : listview_partidaSelect.getItems()) {
-			 String partida = Controladora.getInstance().findPartidaCosto(valor);
+			 int posicion = valor.indexOf("[");
+    		 String selection = valor.substring(0, posicion);
+    		 Estandar p = Controladora.getInstance().buscarProducto(selection);
+    		 
+			 //String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
-			 valorPartida += Float.parseFloat(partida) * Float.parseFloat(cantidad);
+			 valorPartida += p.getPrecio() * Float.parseFloat(cantidad);
 		}
 		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida));
 		if(checkbox_preciosHabilitar.isSelected()) {
