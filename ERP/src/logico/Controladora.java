@@ -32,7 +32,7 @@ public class Controladora implements Serializable{
 	Volumen pies_cb = new Volumen("Volumen", "Pies cb", "cft");
 	Volumen cucharaTe = new Volumen("Volumen", "Cuchara de té", "tsp");
 	Volumen cucharaMadera = new Volumen("Volumen", "Cuchara de madera", "tbsp");
-	Volumen onzafluida = new Volumen("Volumen", "Onza", "foz");
+	Volumen onzafluida = new Volumen("Volumen", "Onza fluida", "foz");
 	Volumen taza = new Volumen("Volumen", "Taza", "cp");
 	Volumen medioLitro = new Volumen("Volumen", "Medio litro", "L/2");
 	Volumen cuartogalon = new Volumen("Volumen", "Cuarto de galón", "gl/4");
@@ -138,6 +138,7 @@ public class Controladora implements Serializable{
 		misUnidadMedida.add(sq_milimetros);
 		misUnidadMedida.add(sq_centimetros);
 		misUnidadMedida.add(sq_metros);
+		misRubros.add(armas);
 		//misProductos.add(pro);
 		//misProductosEstandar.add(pro);
 		this.misAtributos = new ArrayList<>();
@@ -601,7 +602,7 @@ public class Controladora implements Serializable{
 	public String findPartidaNombre(String string) {
 		String nombre = "";
 		int i = 0;
-		while(string.charAt(i) != ':') {
+		while(string.charAt(i) != '[') {
     		nombre += string.charAt(i);
     		i++;
     	} 
@@ -616,11 +617,12 @@ public class Controladora implements Serializable{
     		if(string.charAt(i) == ':') {
     			check++;
     		}
-    		if(check == 2 && string.charAt(i) != ' ' && string.charAt(i) != ':') {
+    		if(check == 2 && string.charAt(i) != ' ' && string.charAt(i) != ':' && string.charAt(i) != ']') {
     			cantidad += string.charAt(i);
     		}
     		i++;
     	}
+		System.out.println(cantidad);
 		return cantidad;
 	}
 	

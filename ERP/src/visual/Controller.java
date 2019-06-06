@@ -1233,7 +1233,22 @@ public void eliminarProveedor(ActionEvent event) {
     	fillClientList(null);
     	fillProveedorList(null);
     	fillEmpleadoList(null);
+    	fillRubroList(null);
     	//fillProductList(null);
+    }
+    
+    public void fillRubroList(ArrayList<Rubro> r) {
+    	ObservableList<Rubro> data = FXCollections.observableArrayList();
+    	if(r == null) {
+    		data.addAll(Controladora.getInstance().getMisRubros());
+		}
+    	else {
+    		data.addAll(r);
+    	}
+    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    	tableview_rubro.setItems(data);
+    	tableview_rubro.refresh();
     }
     
     public void fillProductList(ArrayList<Producto> p) {

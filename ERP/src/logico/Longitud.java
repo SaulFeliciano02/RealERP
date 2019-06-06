@@ -11,7 +11,8 @@ public class Longitud extends UnidadMedida {
 	public float Conversion(String comparador, float valorTransformar) {
 		
 		float transformado = 0;
-		
+		System.out.println(valorTransformar);
+		System.out.println(comparador);
 		if(this.getNombre().equalsIgnoreCase("Pulgadas"))
 		{
 			switch(comparador)
