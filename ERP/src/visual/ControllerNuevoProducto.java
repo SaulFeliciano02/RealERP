@@ -104,6 +104,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_generalNombre; 
 	@FXML private TitledPane titledpane_productoBuscarUnidadMedida;
 	@FXML private TextField textfield_generalUnidad;
+	@FXML private TextField precioCompraProducto;
 	
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
@@ -311,6 +312,7 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		radiobutton_costosIndirectos.setSelected(false);
     		pane_costosIndirectos.setVisible(false);
+    		precioCompraProducto.setDisable(true);
 
     	}
     	else {
@@ -323,6 +325,7 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setDisable(false);
     		radiobutton_costosIndirectos.setSelected(true);
     		pane_costosIndirectos.setVisible(true);
+    		precioCompraProducto.setDisable(false);
     	}
     }
     
@@ -1685,7 +1688,5 @@ public class ControllerNuevoProducto implements Initializable {
 		listview_CostosGenerales.getItems().addAll(ob);
 		listview_CostosGenerales.refresh();
     }
-    
- 
 
 }
