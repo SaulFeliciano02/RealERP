@@ -356,7 +356,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     	
     	for(Rubro r : Controladora.getInstance().getMisRubros()) {
-    		if(r.getCodigo().equalsIgnoreCase(textfield_generalRubro.getText())) {
+    		if(r.getNombreRubro().equalsIgnoreCase(textfield_generalRubro.getText())) {
     			rubro = r;
     		}
     	}
@@ -453,7 +453,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		//Visitar esto nuevamente
     		if(canRegister) {
-    			Kit kit = new Kit(productsForKit, Integer.parseInt(existenciaActual), Integer.parseInt(existenciaMinima), Integer.parseInt(existenciaMaxima), date, codigo, nombre,
+    			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
     			Controladora.getInstance().getMisProductos().add(kit);
     			Controladora.getInstance().getMisProductosKit().add(kit);
@@ -474,7 +474,7 @@ public class ControllerNuevoProducto implements Initializable {
     			}
     		}
     		if(productsForServicio.size() == 0) {
-    			a.setContentText("Eliga los componentes del kit");
+    			a.setContentText("Eliga los componentes del servicio");
     			a.show();
     			canRegister = false;
     		}
@@ -545,6 +545,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
     		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
     		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
+    		textfield_generalNombre.setText(""); textfield_generalUnidad.setText("");
     		checkbox_generalProducible.setSelected(false);
 		
     		//Limpiando tab partida
@@ -553,6 +554,7 @@ public class ControllerNuevoProducto implements Initializable {
     			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
     			System.out.println(itemNombre + itemCantidad);
     			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
+    			System.out.println(listview_estandar.size());
     			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
     				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
     					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
@@ -601,6 +603,7 @@ public class ControllerNuevoProducto implements Initializable {
     			listView_combinaciones.getItems().remove(i);
     		}
     		tabpane_everything.getSelectionModel().select(tab_general);
+    		button_productGuardar.setDisable(true);
     		fillPartida();
     		fillPreciosTab();
     		fillGeneralTab();
@@ -636,7 +639,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		
-    		tab_partida.setDisable(true);
+    		tab_partida.setDisable(false);
     		
     		radiobutton_costosDirectos.setDisable(true);
     		radiobutton_costosDirectos.setSelected(false);
@@ -1080,8 +1083,6 @@ public class ControllerNuevoProducto implements Initializable {
     	float costo = 0;
     	float cantidadConvertida = 0;
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nameOriginal.toLowerCase(), "Nombre");
-    	System.out.println("Esta es la unidad de medida del producto: " + estandar.get(0).getUnidadMedida().getNombre());
-    	System.out.println("El tipo de conversion elegida fue: " + tipoConversion);
     	switch(tipoConversion){
     		case "Pulgadas":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pulgadas", Float.parseFloat(textfield_partidaCantidad.getText()));
@@ -1252,7 +1253,7 @@ public class ControllerNuevoProducto implements Initializable {
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
     	DecimalFormat formato1 = new DecimalFormat("0.00");
     	String original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-				(formato1.format(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]");
+				((estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]");
     	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
     	listview_partida.getItems().remove(original);
     	

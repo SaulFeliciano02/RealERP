@@ -102,8 +102,12 @@ public class Controller implements Initializable{
     @FXML private RadioButton radiobutton_PorDia;
     
     //DESPLIEGUE DE PRODUCTOS
-    @FXML private TableColumn<Producto, String> tablecolumn_productCodigo;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productCodigo;
     @FXML private TableColumn<Producto, String> tablecolumn_productNombre;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productExistenciaInicial;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productExistenciaActual;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productExistenciaMinima;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productExistenciaMaxima;
     @FXML private TableColumn<Producto, String> tablecolumn_productTipo;
     @FXML private TableColumn<Producto, Rubro> tablecolumn_productRubro;
     @FXML private TableColumn<Producto, Proveedores> tablecolumn_productProveedor;
@@ -1267,7 +1271,7 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	fillProveedorList(null);
     	fillEmpleadoList(null);
     	fillRubroList(null);
-    	//fillProductList(null);
+    	fillProductList(null);
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
@@ -1294,6 +1298,10 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	}
     	tablecolumn_productCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_productNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_productExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    	tablecolumn_productExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    	tablecolumn_productExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
+    	tablecolumn_productExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
     	tablecolumn_productTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
     	tablecolumn_productRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
     	tablecolumn_productProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));

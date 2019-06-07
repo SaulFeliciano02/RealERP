@@ -7,6 +7,7 @@ abstract public class Producto {
 	private String nombre;
 	private String descripcion;
 	private Rubro rubroProducto;
+	private String tipoProducto;
 	private Proveedores ProveedorPrin;
 	private ArrayList<Proveedores> ProveedoresSec;
 	private Impuestos impuesto;
@@ -22,6 +23,7 @@ abstract public class Producto {
 	private String descripcionFija;
 	private ArrayList<CostoDirecto> costosDirectos;
 	
+	
 
 	public Producto(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, 
@@ -33,6 +35,7 @@ abstract public class Producto {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.rubroProducto = rubroProducto;
+		this.tipoProducto = tipoProducto;
 		ProveedorPrin = proveedorPrin;
 		ProveedoresSec = proveedoresSec;
 		this.observaciones = observaciones;
@@ -89,7 +92,6 @@ abstract public class Producto {
 		return rubroProducto;
 	}
 	public String getRubroProducto() {
-		System.out.println(rubroProducto.getCodigo());
 		return rubroProducto.getCodigo();
 	}
 	public void setRubroProducto(Rubro rubroProducto) {
@@ -174,4 +176,15 @@ abstract public class Producto {
 	public void setCostosDirectos(ArrayList<CostoDirecto> costosDirectos) {
 		this.costosDirectos = costosDirectos;
 	}
+
+
+	public String getTipoProducto() {
+		return tipoProducto;
+	}
+
+
+	public void setTipoProducto(String tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+	
 }
