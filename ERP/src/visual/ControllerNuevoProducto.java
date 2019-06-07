@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.Atributos;
 import logico.CantProductosUtilizados;
+import logico.CategoriaEmpleado;
 import logico.Combinaciones;
 import logico.Controladora;
 import logico.CostoDirecto;
@@ -133,6 +134,9 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_GuardarCostoIndirecto;
 	private ArrayList<CostoDirecto> gastosDirectos = new ArrayList<>();
 	private ArrayList<CostoIndirectoProducto> gastosIndirectos = new ArrayList<>();
+	@FXML private TextField textfield_costosTiempoFabricacion;
+	@FXML private ComboBox<String> combobox_costosTiempoFabricacion;
+	@FXML private ComboBox<String> combobox_costosEncargadosFabricacion;
 
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -344,6 +348,8 @@ public class ControllerNuevoProducto implements Initializable {
     	String codigoBarra = "";
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
     	UnidadMedida unidad = null;
+    	setCostoYPrecioTotal(null);
+    	float costoTotal = Float.parseFloat(textfield_preciosCostos.getText());
     	if(textfield_generalUnidad.getLength() != 0) {
     		unidad = tableview_unidadList.getSelectionModel().getSelectedItem();
     	}
@@ -401,7 +407,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
     			}*/
@@ -454,7 +460,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//Visitar esto nuevamente
     		if(canRegister) {
     			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			Controladora.getInstance().getMisProductos().add(kit);
     			Controladora.getInstance().getMisProductosKit().add(kit);
     		}
@@ -487,7 +493,7 @@ public class ControllerNuevoProducto implements Initializable {
     				}
     			}
     			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-    					descripcion, empleado, productsForServicio);
+    					descripcion, empleado, productsForServicio, costoTotal);
     			Controladora.getInstance().addProductoServicio(servicio);
     			Controladora.getInstance().addProducto(servicio);
     		}
@@ -528,7 +534,7 @@ public class ControllerNuevoProducto implements Initializable {
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "");
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			for(Combinaciones c : combinacionFinal) {
     				estandar.getCombinaciones().add(c);
     			}
@@ -1188,12 +1194,12 @@ public class ControllerNuevoProducto implements Initializable {
     			break;
     		
     	};
-    	if(textfield_partidaCantidad.getLength() == 0) {
+    	if(cantidadConvertida == 0) {
     		a.setAlertType(AlertType.ERROR);
     		a.setContentText("Eliga la cantida que utilizara");
     		a.show();
     	}
-    	else if(Float.parseFloat(textfield_partidaCantidad.getText()) > Float.parseFloat(cantidad)) {
+    	else if(cantidadConvertida > Float.parseFloat(cantidad)) {
     		a.setAlertType(AlertType.ERROR);
 			a.setContentText("No puede tomar mas productos de lo que tiene.");
 			a.show();
@@ -1361,7 +1367,7 @@ public class ControllerNuevoProducto implements Initializable {
 		double valorDirecto = 0;
 		double valorIndirecto = 0;
 		double valorPartida = 0;
-		listview_partidaSelect.getItems();
+		double valorFabricacion = 0;
 		
 		/*
 		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
@@ -1392,7 +1398,26 @@ public class ControllerNuevoProducto implements Initializable {
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
 			 valorPartida += p.getPrecio() * Float.parseFloat(cantidad);
 		}
-		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida));
+		if(checkbox_generalProducible.isSelected() && textfield_costosTiempoFabricacion.getLength() > 0) {
+			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+			String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+			float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+			for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+				if(c.getNombre().equals(nombreCategoria)) {
+					if(tiempoMedida.equalsIgnoreCase("Minutos")) {
+						tiempoCantidad = tiempoCantidad / 60;
+					}
+					else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
+						tiempoCantidad = tiempoCantidad / 3600; 
+					}
+					valorFabricacion = c.getSueldo() * tiempoCantidad;
+				}
+			}
+			System.out.println(valorFabricacion);
+		}
+		
+		
+		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida + valorFabricacion));
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
 		}
@@ -1684,10 +1709,20 @@ public class ControllerNuevoProducto implements Initializable {
 			ob.add(e.getNombre());
 			
 		}
-		listview_GastosGeneralesIndirectos.getItems().addAll(ob);
+		listview_GastosGeneralesIndirectos.setItems(ob);;
 		listview_GastosGeneralesIndirectos.refresh();
-		listview_CostosGenerales.getItems().addAll(ob);
+		listview_CostosGenerales.setItems(ob);
 		listview_CostosGenerales.refresh();
+
+		ObservableList<String> fabricacionData = FXCollections.observableArrayList();
+		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+			fabricacionData.add(c.getNombre() + ": " + c.getSueldo() + "$");
+		}
+		combobox_costosEncargadosFabricacion.setItems(fabricacionData);
+		
+		ObservableList<String> tiempoData = FXCollections.observableArrayList();
+		tiempoData.addAll("Segundos", "Minutos", "Horas");
+		combobox_costosTiempoFabricacion.setItems(tiempoData);
     }
 
 }

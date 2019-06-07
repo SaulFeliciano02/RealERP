@@ -220,10 +220,10 @@
                                     </Text>
                                     <Button fx:id="button_GuardarCostos" layoutX="427.0" layoutY="371.0" mnemonicParsing="false" onAction="#agregarNuevosCostos" text="Guardar" />
                                     <Text layoutX="286.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo de fabricación" />
-                                    <TextField layoutX="287.0" layoutY="36.0" prefHeight="25.0" prefWidth="87.0" />
-                                    <ComboBox layoutX="374.0" layoutY="36.0" prefHeight="25.0" prefWidth="82.0" />
+                                    <TextField fx:id="textfield_costosTiempoFabricacion" layoutX="287.0" layoutY="36.0" prefHeight="25.0" prefWidth="87.0" />
+                                    <ComboBox fx:id="combobox_costosTiempoFabricacion" layoutX="374.0" layoutY="36.0" prefHeight="25.0" prefWidth="82.0" />
                                     <Text layoutX="286.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encargados de fabricación" />
-                                    <ComboBox layoutX="286.0" layoutY="94.0" prefHeight="25.0" prefWidth="166.0" />
+                                    <ComboBox fx:id="combobox_costosEncargadosFabricacion" layoutX="286.0" layoutY="94.0" prefHeight="25.0" prefWidth="166.0" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

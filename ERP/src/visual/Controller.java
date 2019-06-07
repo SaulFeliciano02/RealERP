@@ -112,6 +112,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Producto, Rubro> tablecolumn_productRubro;
     @FXML private TableColumn<Producto, Proveedores> tablecolumn_productProveedor;
     @FXML private TableColumn<Producto, Float> tablecolumn_productPrecio;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productCosto;
     @FXML private TableColumn<Producto, String> tablecolumn_productDescripcion;
     @FXML private TableView<Producto> tableview_productList;
     
@@ -1306,6 +1307,7 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	tablecolumn_productRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
     	tablecolumn_productProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));
     	tablecolumn_productPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    	tablecolumn_productCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
     	tablecolumn_productDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
     	tableview_productList.setItems(data);
     	tableview_productList.refresh();

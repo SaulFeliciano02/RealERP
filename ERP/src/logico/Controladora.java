@@ -590,7 +590,7 @@ public class Controladora implements Serializable{
         			}	
         		}
         	}
-        	if(count == 0) {
+        	if(count == 0 && character.equalsIgnoreCase(".")) {
         		numeric = true;
         	}
         	    
@@ -650,6 +650,16 @@ public class Controladora implements Serializable{
 			 i++;
 		}
 		return partida;
+	}
+	
+	public String findEncargadoNombre(String string) {
+		String nombre = "";
+		int i = 0;
+		while(string.charAt(i) != ':') {
+			nombre += string.charAt(i);
+			i++;
+		}
+		return nombre;
 	}
 	
 	public GastoGeneral buscarGasto(String g)
@@ -722,7 +732,7 @@ public class Controladora implements Serializable{
 	public float calcularCostos(GastoGeneral g, float precioEstimadoProducto)
 	{
 		float atribucion = 0;
-		
+		System.out.println(ventaPromedioMensual);
 		if(precioEstimadoProducto > 0 && getVentaPromedioMensual()> 0)
 		{
 			float factor = precioEstimadoProducto/getVentaPromedioMensual();
