@@ -469,6 +469,7 @@
                                                                                                             <TableColumn fx:id="tablecolumn_productRubro" prefWidth="75.0" text="Rubro" />
                                                                                                             <TableColumn fx:id="tablecolumn_productProveedor" prefWidth="75.0" text="Proveedor" />
                                                                                                             <TableColumn fx:id="tablecolumn_productPrecio" prefWidth="75.0" text="Precio" />
+                                                                                                            <TableColumn fx:id="tablecolumn_productCosto" prefWidth="75.0" text="Costo Total" />
                                                                                                             <TableColumn fx:id="tablecolumn_productDescripcion" prefWidth="75.0" text="Descripcion" />
                                                                                                          </columns>
                                                                                                       </TableView>
