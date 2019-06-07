@@ -461,6 +461,10 @@
                                                                                                          <columns>
                                                                                                             <TableColumn fx:id="tablecolumn_productCodigo" prefWidth="75.0" text="Codigo" />
                                                                                                             <TableColumn fx:id="tablecolumn_productNombre" prefWidth="75.0" text="Nombre" />
+                                                                                                             <TableColumn fx:id="tablecolumn_productExistenciaInicial" prefWidth="75.0" text="Existencia Inicial" />
+                                                                                                            <TableColumn fx:id="tablecolumn_productExistenciaActual" prefWidth="75.0" text="Existencia Actual" />
+                                                                                                            <TableColumn fx:id="tablecolumn_productExistenciaMinima" prefWidth="75.0" text="Existencia Minima" />
+                                                                                                            <TableColumn fx:id="tablecolumn_productExistenciaMaxima" prefWidth="75.0" text="Existencia Maxima" />
                                                                                                             <TableColumn fx:id="tablecolumn_productTipo" prefWidth="75.0" text="Tipo" />
                                                                                                             <TableColumn fx:id="tablecolumn_productRubro" prefWidth="75.0" text="Rubro" />
                                                                                                             <TableColumn fx:id="tablecolumn_productProveedor" prefWidth="75.0" text="Proveedor" />
