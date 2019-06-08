@@ -85,6 +85,7 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoProducto;
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
+    @FXML private AnchorPane pane_InfoAdicionalProducto;
     
     //VARIABLES DE RECURSOS HUMANOS
     
@@ -156,7 +157,7 @@ public class Controller implements Initializable{
     @FXML private TableView<Proveedores> tableview_proveedoresList;
     @FXML private TextField textfield_proveedorBusqueda;
     
-    //DESPLIEGUE DE VENDEDOR
+    //DESPLIEGUE DE Empleado
     @FXML private TableColumn<Empleado, String> tablecolumn_empleadoCodigo;
     @FXML private TableColumn<Empleado, String> tablecolumn_empleadoNombre;
     @FXML private TableColumn<Empleado, String> tablecolumn_empleadoTelefono;
@@ -596,6 +597,8 @@ public class Controller implements Initializable{
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
     	
+    	datepicker_fechaGastoG.setValue(LocalDate.now());
+    	
     }
     
     public void admin_pressed(ActionEvent event){
@@ -728,7 +731,7 @@ public class Controller implements Initializable{
     		textfield_nombreGastoG.setText("");
         	textfield_montoGastoG.setText("");
         	textarea_descricionGastoG.setText("");
-        	datepicker_fechaGastoG.setValue(LocalDate.now());
+        	datepicker_fechaGastoG.setValue(null);
         	button_modificarGastoG.setDisable(true);
         	button_eliminarGastoG.setDisable(true);
     		
@@ -1410,6 +1413,14 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     
     public void selectTabEmpleado() {
     	tabpane_recursosHumanos.getSelectionModel().select(tab_empleados);;
+    }
+    
+    public void abrirInfoAdicionalProducto(ActionEvent event) {
+    	pane_InfoAdicionalProducto.setVisible(true);
+    }
+    
+    public void cerrarInfoAdicionalProducto(ActionEvent event) {
+    	pane_InfoAdicionalProducto.setVisible(false);
     }
     
     
