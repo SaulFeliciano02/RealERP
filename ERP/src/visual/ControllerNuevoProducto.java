@@ -548,6 +548,13 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	if(canRegister) {
     		//Limpiando tab general
+    		float existencia = 1;
+    		try {
+    			existencia = Float.parseFloat(exAct.getText());
+    		}
+    		catch(NullPointerException e) {
+    			
+    		}
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
     		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
     		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
@@ -564,7 +571,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
     				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
     					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
-    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - Float.parseFloat(itemCantidad));
+    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
     				}
     			}
     		}
@@ -1194,14 +1201,25 @@ public class ControllerNuevoProducto implements Initializable {
     			break;
     		
     	};
+    	float existencia = 0;
+    	try {
+    		existencia = Float.parseFloat(exAct.getText());
+    	}
+    	catch(NullPointerException e) {
+    		
+    	}
     	if(cantidadConvertida == 0) {
     		a.setAlertType(AlertType.ERROR);
-    		a.setContentText("Eliga la cantida que utilizara");
+    		a.setContentText("Eliga la cantida que utilizara.");
     		a.show();
     	}
-    	else if(cantidadConvertida > Float.parseFloat(cantidad)) {
+    	else if(existencia == 0){
     		a.setAlertType(AlertType.ERROR);
-			a.setContentText("No puede tomar mas productos de lo que tiene.");
+    		a.setContentText("Eliga la existencia actual del producto.");
+    	}
+    	else if(cantidadConvertida*existencia > Float.parseFloat(cantidad)) {
+    		a.setAlertType(AlertType.ERROR);
+			a.setContentText("La cantidad de materiales ha utilizar no son suficientes con la existencia actual.");
 			a.show();
     	}
     	else {
@@ -1217,11 +1235,11 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
     			}
     		}**/
-    		item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]";
+    		item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
     		//e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]"
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
-    		float cantidadRestante = (Float.parseFloat(cantidad) - cantidadConvertida);
+    		float cantidadRestante = (Float.parseFloat(cantidad) - (cantidadConvertida*existencia));
     		DecimalFormat formato1 = new DecimalFormat("0.00");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
     			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
@@ -1237,7 +1255,7 @@ public class ControllerNuevoProducto implements Initializable {
     				
     				listview_partidaSelect.getItems().remove(s);
     				item_moved = nameSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", Usando: " + 
-    						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]";
+    						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]" + " (" + ((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia) + ")";
     				listview_partidaSelect.getItems().add(item_moved);
     				isAlreadySelected = true;
     			}
@@ -1256,10 +1274,12 @@ public class ControllerNuevoProducto implements Initializable {
     	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
     	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
+    	float existencia = Float.parseFloat(exAct.getText());
+    	System.out.println(nombreSelect);
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
     	DecimalFormat formato1 = new DecimalFormat("0.00");
     	String original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-				((estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]");
+				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]";
     	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
     	listview_partida.getItems().remove(original);
     	
