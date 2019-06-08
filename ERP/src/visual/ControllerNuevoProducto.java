@@ -560,6 +560,8 @@ public class ControllerNuevoProducto implements Initializable {
     		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
     		textfield_generalNombre.setText(""); textfield_generalUnidad.setText("");
     		checkbox_generalProducible.setSelected(false);
+    		tableview_proveedorBuscar.getSelectionModel().clearSelection();
+    		tableview_rubroBuscar.getSelectionModel().clearSelection();
 		
     		//Limpiando tab partida
     		for(String item : listview_partidaSelect.getItems()) {
@@ -1202,12 +1204,17 @@ public class ControllerNuevoProducto implements Initializable {
     		
     	};
     	float existencia = 0;
-    	try {
-    		existencia = Float.parseFloat(exAct.getText());
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
+    		existencia = 1;
     	}
-    	catch(NullPointerException e) {
-    		
+    	else {
+    		try {
+        		existencia = Float.parseFloat(exAct.getText());
+        	}
+        	catch(NullPointerException e) {
+        	}
     	}
+    	
     	if(cantidadConvertida == 0) {
     		a.setAlertType(AlertType.ERROR);
     		a.setContentText("Eliga la cantida que utilizara.");
@@ -1279,7 +1286,7 @@ public class ControllerNuevoProducto implements Initializable {
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
     	DecimalFormat formato1 = new DecimalFormat("0.00");
     	String original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-				(estandar.get(0).getExistenciaActual() - Float.parseFloat(cantidad)) + "]";
+    			(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)*existencia)) + "]";
     	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
     	listview_partida.getItems().remove(original);
     	
