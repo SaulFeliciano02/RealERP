@@ -1,19 +1,25 @@
 package logico;
 
+import java.time.LocalDate;
+
 public class Precio {
 	private float precio;
 	private String descripcion;
 	private boolean precioActivo;
-	
-	
+	private LocalDate fecha;
 	
 	public Precio(float precio, String descripcion, boolean precioActivo) {
 		super();
 		this.precio = precio;
 		this.descripcion = descripcion;
 		this.precioActivo = precioActivo;
+		this.fecha = LocalDate.now();
 	}
 	
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
 	public float getPrecio() {
 		return precio;
 	}

@@ -2,6 +2,7 @@ package logico;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -302,6 +303,60 @@ public class Controladora implements Serializable{
 		guardarCategoriaEmpleadoSQL(c);
 	}
 	
+	public void addGastoGeneral(GastoGeneral g)
+	{
+		misGastosGenerales.add(g);
+		
+		guardarGastoGeneralSQL(g);
+	}
+	
+	public void guardarGastoGeneralSQL(GastoGeneral g) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO gastosgenerales (nombre, descripcion, modificado) VALUES (?, ?, ?)");
+			p.setString(1, g.getNombre());
+			p.setString(2, g.getDescripcion());
+			p.setDate(3, (java.sql.Date.valueOf(g.getRemodelado())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+		
+	}
+
 	public void guardarCategoriaEmpleadoSQL(CategoriaEmpleado categoria) {
 		Conexion con = new Conexion();
 		Connection c = null;
