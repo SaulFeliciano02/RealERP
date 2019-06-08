@@ -21,7 +21,7 @@ public class CostoIndirectoProducto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public double getValor() {
+	public float getValor() {
 		return valor;
 	}
 	public void setPrecioCosto(float valor) {

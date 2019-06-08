@@ -1229,6 +1229,9 @@ public class Controladora implements Serializable{
     		if(string.charAt(i) == ':') {
     			check++;
     		}
+    		if(string.charAt(i) == '(') {
+    			check++;
+    		}
     		if(check == 2 && string.charAt(i) != ' ' && string.charAt(i) != ':' && string.charAt(i) != ']') {
     			cantidad += string.charAt(i);
     		}
