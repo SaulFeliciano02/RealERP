@@ -1,8 +1,15 @@
 package logico;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
+
+import basededatos.Conexion;
 
 public class Controladora implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -167,6 +174,8 @@ public class Controladora implements Serializable{
 	}
 	public void addProveedor(Proveedores p) {
 		misProveedores.add(p);
+		
+		guardarProveedor(p);
 	}
 	public void addDescuento(DescuentosAutomaticos d) {
 		misDescuentos.add(d);
@@ -176,7 +185,109 @@ public class Controladora implements Serializable{
 	}
 	public void addRubro(Rubro r) {
 		misRubros.add(r);
+		
+		guardarRubroSQL(r);
 	}
+	
+	public void guardarRubroSQL(Rubro rubro) {
+		
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO rubros (codigo, nombre) VALUES (?, ?)");
+			p.setString(1, rubro.getCodigo());
+			p.setString(2, rubro.getNombreRubro());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+
+	public void guardarProveedor(Proveedores proveedor)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO proveedores (saldo, domicilio, correo, rnc, rubro, sitioweb, nombre, telefono, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			p.setFloat(1, proveedor.getSaldo());
+			p.setString(2, proveedor.getDomicilio());
+			p.setString(3, proveedor.getCorreo());
+			p.setString(4, proveedor.getRnc());
+			p.setInt(5, Controladora.getInstance().getMisRubros().indexOf(proveedor.getRubro())+1);
+			p.setString(6, proveedor.getSitioWeb());
+			p.setString(7, proveedor.getNombre());
+			p.setString(8, proveedor.getTelefono());
+			p.setString(9, proveedor.getCodigo());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
 	public void addProducto(Producto p) {
 		misProductos.add(p);
 	}
@@ -750,6 +861,8 @@ public class Controladora implements Serializable{
 	public void setVentaPromedioMensual(float ventaPromedioAnual) {
 		this.ventaPromedioMensual = ventaPromedioAnual;
 	}
+	
+	
 }
 
 
