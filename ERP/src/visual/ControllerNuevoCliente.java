@@ -2,6 +2,7 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -108,7 +109,7 @@ public class ControllerNuevoCliente implements Initializable {
 	/**AQUI ESTA EL ASUNTO DE LAS TABLEVIEW**/
 	public void guardarCliente(ActionEvent event) {
 		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
-				 datepicker_cumpleCliente.getValue(), textfield_rncCliente.getText());
+				(java.sql.Date.valueOf(datepicker_cumpleCliente.getValue())), textfield_rncCliente.getText());
 		textfield_codigoCliente.setText("");
 		textfield_nombreCliente.setText("");
 		textfield_telefonoCliente.setText("");

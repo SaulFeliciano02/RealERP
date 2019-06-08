@@ -6,10 +6,10 @@ import java.time.LocalDate;
 public class Cliente extends Persona{
 
 	public String tipoCliente;
-	public LocalDate cumpleanos;
+	public Date cumpleanos;
 	public String rnc;
 
-	public Cliente(String codigo, String nombre, String telefono, String tipoCliente, LocalDate cumpleanos, String rnc) {
+	public Cliente(String codigo, String nombre, String telefono, String tipoCliente, Date cumpleanos, String rnc) {
 		super(codigo, nombre, telefono);
 		this.tipoCliente = tipoCliente;
 		this.cumpleanos = cumpleanos;
@@ -24,11 +24,11 @@ public class Cliente extends Persona{
 		this.tipoCliente = tipoCliente;
 	}
 
-	public LocalDate getCumpleanos() {
+	public Date getCumpleanos() {
 		return cumpleanos;
 	}
 
-	public void setCumpleanos(LocalDate cumpleanos) {
+	public void setCumpleanos(Date cumpleanos) {
 		this.cumpleanos = cumpleanos;
 	}
 
