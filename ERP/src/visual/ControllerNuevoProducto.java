@@ -488,9 +488,9 @@ public class ControllerNuevoProducto implements Initializable {
     			costo = Float.parseFloat(textfield_preciosCostos.getText());
     			ArrayList<Empleado> empleado = new ArrayList<>();
     			for(Empleado e : Controladora.getInstance().getMisEmpleados()) {
-    				if(e.getTipo().equalsIgnoreCase("Prestador de servicios")) {
+    				/*if(e.getTipo().equalsIgnoreCase("Prestador de servicios")) {
     					empleado.add(e);
-    				}
+    				}*/
     			}
     			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
     					descripcion, empleado, productsForServicio, costoTotal);
