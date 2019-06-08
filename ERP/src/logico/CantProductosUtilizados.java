@@ -2,8 +2,8 @@ package logico;
 
 public class CantProductosUtilizados {
 	
-	public Producto producto;
-	public float cantidad;
+	private Producto producto;
+	private float cantidad;
 	
 	public CantProductosUtilizados(Producto producto, float cantidad) {
 		super();
