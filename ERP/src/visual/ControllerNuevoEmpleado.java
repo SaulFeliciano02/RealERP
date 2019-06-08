@@ -16,13 +16,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import logico.CategoriaEmpleado;
 import logico.Controladora;
 import logico.Empleado;
 import logico.Proveedores;
@@ -44,6 +51,16 @@ public class ControllerNuevoEmpleado implements Initializable{
 	@FXML private Button button_empleadoCancelar;
 	@FXML private TextField textfield_RegEmpCategoria;
 	@FXML private Button button_BuscarCategoriaEmp;
+	@FXML private TitledPane buscarCategoriaEmpleados;
+	
+    @FXML private TextField textfield_nombreCategoriaEmp;
+    @FXML private TextField textfield_salarioCategoriaEmp;
+    @FXML private Button button_guardarCategoriaEmp;
+    @FXML private TableView<CategoriaEmpleado> tableview_CategoriaEmp;
+    @FXML private TableColumn<CategoriaEmpleado, String> tablecolumn_NombreCategoria;
+    @FXML private TableColumn<CategoriaEmpleado, Float> tablecolumn_SueldoCategoria;
+    @FXML private RadioButton radiobutton_PorHora;
+    @FXML private RadioButton radiobutton_PorDia;
 	
 	public void reload(Stage stage) {
     	
@@ -130,6 +147,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		float saldo = Float.parseFloat(textfield_empleadoSueldo.getText());
 		String direccion = "";
 		String correo = "";
+		CategoriaEmpleado categoria= null;
 		try {
 			direccion = textarea_empleadoDomicilio.getText();
 			correo = textfield_empleadoCorreo.getText();
@@ -153,13 +171,14 @@ public class ControllerNuevoEmpleado implements Initializable{
 			a.show();
 		}
 		if(validRegister) {
-			/*Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, tipo, saldo);
-			Controladora.getInstance().addEmpleado(empleado);*/
+			Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, saldo, categoria);
+			Controladora.getInstance().addEmpleado(empleado);
 			textfield_empleadoCodigo.setText("");
 			textfield_empleadoNombre.setText("");
 			textfield_empleadoTelefono.setText("");
 			textfield_empleadoSueldo.setText("");
 			textfield_empleadoRNC.setText("");
+			textfield_RegEmpCategoria.setText("");
 			if(!isEmpty) {
 				textarea_empleadoDomicilio.setText("");
 				textfield_empleadoCorreo.setText("");
@@ -168,6 +187,62 @@ public class ControllerNuevoEmpleado implements Initializable{
 			button_empleadoGuardar.setDisable(true);
 		}
 	}
+	
+	public void abrirBuscadorCategorias(ActionEvent event) {
+		buscarCategoriaEmpleados.setVisible(true);
+	}
+	
+	public void cerrarBuscadorCategorias(ActionEvent event) {
+		buscarCategoriaEmpleados.setVisible(false);
+	}
+	
+	public void pressed_guardarCategoriaEmp(ActionEvent event)
+	{
+		if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
+		{
+			String nombre = textfield_nombreCategoriaEmp.getText();
+			float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+			
+			if(radiobutton_PorDia.isSelected())
+			{
+				salario = salario/8;
+			}
+			
+			CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+			
+			Controladora.getInstance().getMisCategoriasEmpleado().add(cat);
+			
+			tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+			tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+			
+			textfield_nombreCategoriaEmp.setText("");
+			textfield_salarioCategoriaEmp.setText("");
+			ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
+			data.add(cat);
+			tableview_CategoriaEmp.getItems().add(cat);
+			tableview_CategoriaEmp.refresh();	
+		}
+	}
+	
+    public void retornaSeleccionado(ActionEvent event) {
+    	textfield_RegEmpCategoria.setText(tableview_CategoriaEmp.getSelectionModel().getSelectedItem().getNombre());
+    	textfield_empleadoSueldo.setText(String.valueOf(tableview_CategoriaEmp.getSelectionModel().getSelectedItem().getSueldo()));
+    	textfield_empleadoSueldo.setDisable(false);
+    	button_guardarCategoriaEmp.setDisable(true);
+    	buscarCategoriaEmpleados.setVisible(false);
+    }
+    
+    public void tooltipMessage(MouseEvent event) {
+    	final Tooltip tooltip = new Tooltip();
+    	tooltip.setText(
+    		    "El valor fijo del salario de una categoría\n" +
+    		    " de empleados es la que se utiliza para la\n" +
+    		    " mano de obra de los productos y servicios\n" +
+    		    " pernitentes, si modificas este valor, no se\n" +
+    		    " tomará en cuenta para esos calculos.\n"
+    		);
+    	textfield_empleadoSueldo.setTooltip(tooltip);
+    }
 	  
 	  
 	@Override
