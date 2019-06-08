@@ -274,7 +274,7 @@ public class Controladora implements Serializable{
 					}
 		}
 	}
-
+	
 	public void addProveedor(Proveedores p) {
 		misProveedores.add(p);
 		
@@ -310,6 +310,54 @@ public class Controladora implements Serializable{
 		guardarGastoGeneralSQL(g);
 	}
 	
+	public void guardarProductoEstandarSQL(Estandar e) {
+		
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		/*try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO gastosgenerales (nombre, descripcion, modificado) VALUES (?, ?, ?)");
+			p.setString(1, g.getNombre());
+			p.setString(2, g.getDescripcion());
+			p.setDate(3, (java.sql.Date.valueOf(g.getRemodelado())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		*/
+		
+	}
+
 	public void guardarGastoGeneralSQL(GastoGeneral g) {
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -781,6 +829,8 @@ public class Controladora implements Serializable{
 	}
 	public void addProductoEstandar(Estandar e) {
 		misProductosEstandar.add(e);
+		
+		guardarProductoEstandarSQL(e);
 	}
 	public void addProductoKit(Kit k) {
 		misProductosKit.add(k);
@@ -1227,6 +1277,9 @@ public class Controladora implements Serializable{
 		String cantidad = "";
 		while(i < string.length()) {
     		if(string.charAt(i) == ':') {
+    			check++;
+    		}
+    		if(string.charAt(i) == '(') {
     			check++;
     		}
     		if(check == 2 && string.charAt(i) != ' ' && string.charAt(i) != ':' && string.charAt(i) != ']') {
