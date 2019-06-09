@@ -115,6 +115,11 @@ public class Controladora implements Serializable{
 		this.misProductosKit = new ArrayList<>();
 		this.misProductosServicio = new ArrayList<>();
 		this.misUnidadMedida = new ArrayList<>();
+		this.misAreas = new ArrayList<>();
+		this.misLongitudes = new ArrayList<>();
+		this.misMasas = new ArrayList<>();
+		this.misVolumenes = new ArrayList<>();
+		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
 		misClientes.add(cliente3);
@@ -372,25 +377,53 @@ public class Controladora implements Serializable{
 		guardarGastoGeneralSQL(g);
 	}
 	
-	public void guardarProductoEstandarSQL(Estandar e) {
+	public void guardarProductoEstandarSQL(Estandar estandar) {
 		
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
+		PreparedStatement p2 = null;
 		
-		/*try {
+		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO gastosgenerales (nombre, descripcion, modificado) VALUES (?, ?, ?)");
-			p.setString(1, g.getNombre());
-			p.setString(2, g.getDescripcion());
-			p.setDate(3, (java.sql.Date.valueOf(g.getRemodelado())));
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO productos (codigo, nombre, descripcion, tipoproducto, observaciones, unidadmedida, costo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p.setString(1, estandar.getCodigo());
+			p.setString(2, estandar.getNombre());
+			p.setString(3, estandar.getDescripcion());
+			p.setString(4, estandar.getTipoProducto());
+			p.setString(5, estandar.getObservaciones());
+			p.setString(6, estandar.getUnidadMedida().getNombre());
+			p.setFloat(7, estandar.getCosto());
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
 			System.out.println("Datos guardados!");
+			
+			String codigoprod = estandar.getCodigo();
+			
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT idproductos FROM productos WHERE codigo = '"+codigoprod+"'");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				
+				p2 = (PreparedStatement) c.prepareStatement("INSERT INTO estandar (producto, existmin, existmax, fechavencimiento, costocompra, fabricado, existactual, existinicial) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+				p2.setInt(1, id);
+				p2.setFloat(2, estandar.getExistenciaMinima());
+				p2.setFloat(3, estandar.getExistenciaMaxima());
+				p2.setDate(4, (java.sql.Date) estandar.getFechaVencimiento());
+				p2.setFloat(5, estandar.getCostoDeCompra());
+				p2.setBoolean(6, estandar.isFabricado());
+				p2.setFloat(7, estandar.getExistenciaActual());
+				p2.setFloat(8, estandar.getExistenciaActual());
+				
+			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -416,7 +449,6 @@ public class Controladora implements Serializable{
 						e2.printStackTrace();
 					}
 		}
-		*/
 		
 	}
 
@@ -2756,6 +2788,7 @@ public void loadProveedores()
 			
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 			s = (Statement) c.createStatement();
+			s2 = (Statement) c.createStatement();
 			r = s.executeQuery("SELECT * FROM proveedores");
 			
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
@@ -2810,7 +2843,7 @@ public void loadProveedores()
 				}
 				
 				if(q!=null) {
-					r.close();
+					q.close();
 				}
 				
 				if(s2!=null) {
