@@ -2,6 +2,7 @@ package logico;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,6 +88,16 @@ public class Controladora implements Serializable{
 	private ArrayList<GastoGeneral> misGastosGenerales;
 	private ArrayList<UnidadMedida> misUnidadMedida;
 	private ArrayList<CategoriaEmpleado> misCategoriasEmpleado;
+	private ArrayList<CantProductosUtilizados> misCantProductosUtilizados;
+	private ArrayList<Precio> misPrecios;
+	private ArrayList<Partida> misPartidas;
+	private ArrayList<Combinaciones> misCombinaciones;
+	
+	private ArrayList<Area> misAreas;
+	private ArrayList<Longitud> misLongitudes;
+	private ArrayList<Masa> misMasas;
+	private ArrayList<Volumen> misVolumenes;
+	
 	private float ventaPromedioMensual;
 	
 	private static Controladora controladora;
@@ -156,6 +167,56 @@ public class Controladora implements Serializable{
 		this.misCategoriasEmpleado = new ArrayList<>();
 	}
 	
+	
+	
+	
+	public ArrayList<Combinaciones> getMisCombinaciones() {
+		return misCombinaciones;
+	}
+
+
+
+
+	public ArrayList<Partida> getMisPartidas() {
+		return misPartidas;
+	}
+
+
+
+
+	public ArrayList<Precio> getMisPrecios() {
+		return misPrecios;
+	}
+
+
+
+
+	public ArrayList<CantProductosUtilizados> getMisCantProductosUtilizados() {
+		return misCantProductosUtilizados;
+	}
+
+
+
+	public ArrayList<Area> getMisAreas() {
+		return misAreas;
+	}
+
+
+	public ArrayList<Longitud> getMisLongitudes() {
+		return misLongitudes;
+	}
+
+
+	public ArrayList<Masa> getMisMasas() {
+		return misMasas;
+	}
+
+
+	public ArrayList<Volumen> getMisVolumenes() {
+		return misVolumenes;
+	}
+
+
 	public ArrayList<CategoriaEmpleado> getMisCategoriasEmpleado() {
 		return misCategoriasEmpleado;
 	}
@@ -236,7 +297,7 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO empleados (nombre, telefono, domicilio, correo, rnc, sueldo, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO empleados (nombre, telefono, domicilio, correo, rnc, sueldo, categoria, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			p.setString(1, e.getNombre());
 			p.setString(2, e.getTelefono());
 			p.setString(3, e.getDomicilio());
@@ -244,6 +305,7 @@ public class Controladora implements Serializable{
 			p.setString(5, e.getRnc());
 			p.setFloat(6, e.getSueldo());
 			p.setInt(7, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(e.getCategoria())+1);
+			p.setString(8, e.getCodigo());
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -823,6 +885,1008 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
+	
+	public void guardarUnidadMedidaAreaSQL(Producto producto, Area area) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO unidadmedidaarea (unidad, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisAreas().indexOf(area)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarUnidadMedidaLongitudSQL(Producto producto, Longitud longitud) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO unidadmedidaarea (unidad, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisLongitudes().indexOf(longitud)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarUnidadMedidaMasaSQL(Producto producto, Masa masa) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO unidadmedidaarea (unidad, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisMasas().indexOf(masa)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarUnidadMedidaVolumenSQL(Producto producto, Volumen volumen) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO unidadmedidaarea (unidad, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisVolumenes().indexOf(volumen)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarServiciosSQL(Producto producto) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO servicios (producto) VALUES (?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarServiciosMaterialesSQL(Servicio servicio, CantProductosUtilizados cantproductosutilizados) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO unidadmedidaarea (servicio, cantproducto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosServicio().indexOf(servicio)+1);
+			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados));
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarRubroProductoSQL(Producto producto, Rubro rubro) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO rubroproducto (rubro, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisRubros().indexOf(rubro)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarProveedorPrincipalProductoSQL(Producto producto, Proveedores proveedor) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO proveedorprincipalproducto (proveedor, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProveedores().indexOf(proveedor)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarProveedoresSecProductoSQL(Producto producto, Proveedores proveedor) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO proveedoressecproducto (proveedor, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProveedores().indexOf(proveedor)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarPromoProductoSQL(Producto producto, Promocion promocion) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO promoproducto (producto, promocion) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.setInt(2, Controladora.getInstance().getMisPromociones().indexOf(promocion)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarProductosSQL(Producto producto) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO producto (codigo, nombre, descripcion, tipoproducto, observaciones, unidadmedida, costo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p.setString(1, producto.getCodigo());
+			p.setString(2, producto.getNombre());
+			p.setString(3, producto.getDescripcion());
+			p.setString(4, producto.getTipoProducto());
+			p.setString(5, producto.getObservaciones());
+			p.setString(6, producto.getUnidadMedida().getNombre());
+			p.setFloat(7, producto.getCosto());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarPartidaSQL() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO partida () VALUES ()");
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarPrecioProductoSQL(Producto producto, Precio precio) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO precioproducto (precio, producto, activo) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisPrecios().indexOf(precio)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.setBoolean(3, precio.isPrecioActivo());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarPartidaProdutilSQL(Partida partida, CantProductosUtilizados cantproductosutilizados) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO partidaprodutil (partida, cantproductoutilizado) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisPartidas().indexOf(partida)+1);
+			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarMatrizSQL(Estandar estandar, Combinaciones combinacion) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO matriz (prodestandar, combinacion) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1);
+			p.setInt(2, Controladora.getInstance().getMisCombinaciones().indexOf(combinacion)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarKitProductosSQL(Kit kit, CantProductosUtilizados cantproductosutilizados) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO kitproductos (kit, cantidadproducto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(kit)+1);
+			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarKitSQL(Producto producto) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO kit (producto) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarGrupoAtributoSQL(GrupoAtributo grupoatributo) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO grupoatributo (nombre) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p.setString(1, grupoatributo.getNombre());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarEstandarSQL(Estandar estandar) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO estandar (producto, existmin, existmax, fechavencimiento, costocompra, fabricado, existactual, existinicial) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(estandar)+1);
+			p.setInt(2, Math.round(estandar.getExistenciaMinima()));
+			p.setInt(3, Math.round(estandar.getExistenciaMaxima()));
+			p.setDate(4, (java.sql.Date) estandar.getFechaVencimiento());
+			p.setFloat(5, estandar.costoDeCompra);
+			p.setBoolean(6, estandar.isFabricado());
+			p.setInt(7, Math.round(estandar.getExistenciaActual()));
+			p.setInt(8, Math.round(estandar.getExistenciaActual()));
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarDescProductoSQL(Producto producto, DescuentosAutomaticos descuentoautomatico) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO descproducto (descuento, producto) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisDescuentos().indexOf(descuentoautomatico)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarCostoIndirectoSQL(Producto producto, GastoGeneral gastogeneral) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO producto (gastogeneral, producto, costo) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisGastosGenerales().indexOf(gastogeneral));
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto));
+			p.setFloat(3, producto.getCosto());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	/**public void guardarCostoDirectoSQL(Producto producto, Float partida, Float manoDeObra) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO costodirecto (producto, manodeobra, partida) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			p.setString(1, Controladora.getInstance().getMisProductos());
+			p.setString(2, producto.getNombre());
+			p.setString(3, producto.getDescripcion());
+			p.setString(4, producto.getTipoProducto());
+			p.setString(5, producto.getObservaciones());
+			p.setString(6, producto.getUnidadMedida().getNombre());
+			p.setFloat(7, producto.getCosto());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}**/
+	
+	public void guardarCombinacionesAtributosSQL(Atributos atributo, Combinaciones combinaciones) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO combinacionesatributos (atributo, combinacion) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisAtributos().indexOf(atributo)+1);
+			p.setInt(2, Controladora.getInstance().getMisCombinaciones().indexOf(combinaciones)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarCombinacionesSQL() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO combinaciones () VALUES ()");
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarCantProductosUtilizadosSQL(Estandar estandar, CantProductosUtilizados cantproductosutilizados) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO cantproductosutilizados (estandar, cantidad) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosEstandar().indexOf(estandar));
+			p.setFloat(2, cantproductosutilizados.getCantidad());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarAtributoSQL(Atributos atributo) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO producto (nombre, grupoatributo) VALUES (?, ?)");
+			p.setString(1, atributo.getNombre());
+			p.setInt(2, Controladora.getInstance().getMisGrupoAtributo().indexOf(atributo.getGrupoAtributo())+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
 
 	public void addProducto(Producto p) {
 		misProductos.add(p);
@@ -1408,6 +2472,355 @@ public class Controladora implements Serializable{
 
 	public void setVentaPromedioMensual(float ventaPromedioAnual) {
 		this.ventaPromedioMensual = ventaPromedioAnual;
+	}
+	
+	public void loadCliente()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM clientes");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String codigo = r.getString(2);
+				String telefono = r.getString(3);
+				Date cumpleanos = r.getDate(4);
+				String rnc = r.getString(5);
+				String nombre = r.getString(6);
+				
+				Cliente cli = new Cliente(codigo, nombre, telefono, null, (java.sql.Date) cumpleanos, rnc);
+				
+				Controladora.getInstance().getMisClientes().add(cli);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+
+
+public void loadUnidadesMedida()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM area");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String categoria = r.getString(2);
+				String nombre = r.getString(3);
+				String abreviatura = r.getString(4);
+				
+				Area cli = new Area(categoria, nombre, abreviatura);
+				
+				Controladora.getInstance().getMisUnidadMedida().add(cli);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM masa");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String categoria = r.getString(2);
+				String nombre = r.getString(3);
+				String abreviatura = r.getString(4);
+				
+				Masa cli = new Masa(categoria, nombre, abreviatura);
+				
+				Controladora.getInstance().getMisUnidadMedida().add(cli);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM longitud");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String categoria = r.getString(2);
+				String nombre = r.getString(3);
+				String abreviatura = r.getString(4);
+				
+				Longitud cli = new Longitud(categoria, nombre, abreviatura);
+				
+				Controladora.getInstance().getMisUnidadMedida().add(cli);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM volumen");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String categoria = r.getString(2);
+				String nombre = r.getString(3);
+				String abreviatura = r.getString(4);
+				
+				Volumen cli = new Volumen(categoria, nombre, abreviatura);
+				
+				Controladora.getInstance().getMisUnidadMedida().add(cli);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+
+
+public void loadProveedores()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet q = null;
+		PreparedStatement p = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM proveedores");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				Float saldo = r.getFloat(2);
+				String domicilio = r.getString(3);
+				String correo = r.getString(4);
+				String rnc = r.getString(5);
+				int rubroid = r.getInt(6);
+				String sitioWeb = r.getString(7);
+				String nombre = r.getString(8);
+				String telefono = r.getString(9);
+				String codigo = r.getString(10);
+				
+				q = s2.executeQuery("SELECT * FROM rubros WHERE id = '"+rubroid+"'");
+				while(q.next())
+				{
+					int idr = q.getInt(1);
+					String codrubro = q.getString(2);
+					String nombrerubro = q.getString(3);
+					
+					Rubro rubroproveedor = new Rubro(codrubro, nombrerubro);
+					
+					Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, rubroproveedor, sitioWeb);
+					
+					Controladora.getInstance().getMisProveedores().add(cli);
+				}
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+				if(q!=null) {
+					r.close();
+				}
+				
+				if(s2!=null) {
+					s2.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 	
 	

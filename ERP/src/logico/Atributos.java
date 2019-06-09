@@ -22,6 +22,10 @@ public class Atributos {
 	public String getGrupo() {
 		return grupo.getNombre();
 	}
+	
+	public GrupoAtributo getGrupoAtributo() {
+		return grupo;
+	}
 
 	public void setGrupo(GrupoAtributo grupo) {
 		this.grupo = grupo;

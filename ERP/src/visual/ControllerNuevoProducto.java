@@ -53,6 +53,7 @@ import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
+import logico.Partida;
 import logico.Precio;
 import logico.Producto;
 import logico.Proveedores;
@@ -404,9 +405,20 @@ public class ControllerNuevoProducto implements Initializable {
     			canRegister = false;
     		}
     		Date date = null;
+    		Partida partida = new Partida();
+    		if(checkbox_generalProducible.isSelected()) {
+    			for(String s : listview_partidaSelect.getItems()) {
+    				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    				Producto productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
+    				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+    				partida.agregarProductoUtilizado(c);
+    			}
+    		}
+    		
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
@@ -531,9 +543,19 @@ public class ControllerNuevoProducto implements Initializable {
     			canRegister = false;
     		}
     		Date date = null;
+    		Partida partida = new Partida();
+    		if(checkbox_generalProducible.isSelected()) {
+    			for(String s : listview_partidaSelect.getItems()) {
+    				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    				Producto productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
+    				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+    				partida.agregarProductoUtilizado(c);
+    			}
+    		}
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, codigo, nombre,
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			for(Combinaciones c : combinacionFinal) {
     				estandar.getCombinaciones().add(c);
