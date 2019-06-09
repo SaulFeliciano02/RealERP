@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -462,10 +463,11 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO gastosgenerales (nombre, descripcion, modificado) VALUES (?, ?, ?)");
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO gastosgenerales (nombre, descripcion, modificado, gasto) VALUES (?, ?, ?, ?)");
 			p.setString(1, g.getNombre());
 			p.setString(2, g.getDescripcion());
 			p.setDate(3, (java.sql.Date.valueOf(g.getRemodelado())));
+			p.setFloat(4, g.getPrecioUnitario());
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -848,10 +850,9 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO promocion (precioPromocion, fechaInicio, fechaFinal) VALUES (?, ?, ?)");
-			p.setFloat(1, promocion.getPrecioPromocion());
-			p.setDate(2, (java.sql.Date) promocion.getFechaInicio());
-			p.setDate(3, (java.sql.Date) promocion.getFechaFinal());
+					c.prepareStatement("INSERT INTO promocion (fechaInicio, fechaFinal) VALUES (?, ?)");
+			p.setDate(1, (java.sql.Date) promocion.getFechaInicio());
+			p.setDate(2, (java.sql.Date) promocion.getFechaFinal());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1269,9 +1270,10 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO promoproducto (producto, promocion) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO promoproducto (producto, promocion, precioproducto) VALUES (?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.setInt(2, Controladora.getInstance().getMisPromociones().indexOf(promocion)+1);
+			p.setFloat(3, producto.getPrecio());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1463,9 +1465,10 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO matriz (prodestandar, combinacion) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO matriz (prodestandar, combinacion, existactual) VALUES (?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1);
 			p.setInt(2, Controladora.getInstance().getMisCombinaciones().indexOf(combinacion)+1);
+			p.setFloat(3, combinacion.getExistenciaActual());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -2855,6 +2858,395 @@ public void loadProveedores()
 			}
 		}
 	}
+
+public void recuperarRubros()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar rubros
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		if(Controladora.getInstance().getMisRubros().isEmpty())
+		{
+			System.out.println("Mis rubros está vacío");
+		}
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM rubros");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String codigo = r.getString(2);
+			String nombreRubro = r.getString(3);				
+			
+			
+			Rubro pre = new Rubro(codigo, nombreRubro);
+			
+			Controladora.getInstance().getMisRubros().add(pre);
+			
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+
+
+public void loadEmpleados()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	Statement s2 = null;
+	ResultSet r = null;
+	ResultSet q = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM empleados");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String codigo = r.getString(2);
+			String nombre = r.getString(3);
+			String telefono = r.getString(4);	
+			String domicilio = r.getString(5);
+			String correo = r.getString(6);
+			String rnc = r.getString(7);
+			float sueldo = r.getFloat(8);
+			int categoriaid = r.getInt(9);
+			
+			q = s2.executeQuery("SELECT * FROM categoriaempleado WHERE idcategoriaempleado = '"+categoriaid+"'");
+			while(q.next())
+			{
+				int idr = q.getInt(1);
+				String nombrecategoria = q.getString(2);
+				float sueldocategoria = q.getFloat(3);
+				
+				CategoriaEmpleado categoriaEmp = new CategoriaEmpleado(nombrecategoria, sueldocategoria);
+				
+				Empleado emp = new Empleado(codigo, nombrecategoria, telefono, domicilio, correo, rnc, sueldocategoria, categoriaEmp);
+				
+				Controladora.getInstance().getMisEmpleados().add(emp);
+			}
+			
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(q!=null) {
+				q.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+public void loadCategoriaEmpleado()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar rubros
+		c = con.conectar();
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM categoriaempleado");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String nombre = r.getString(2);
+			Float sueldo = r.getFloat(3);				
+			
+			CategoriaEmpleado pre = new CategoriaEmpleado(nombre, sueldo);
+			
+			Controladora.getInstance().getMisCategoriasEmpleado().add(pre);
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+	public void loadAtributos()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	Statement s2 = null;
+	ResultSet r = null;
+	ResultSet q = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM atributos");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String nombre = r.getString(2);
+			int idgrupoatributo = r.getInt(3);
+
+			q = s2.executeQuery("SELECT * FROM grupoatributo WHERE idgrupoatributo = '"+idgrupoatributo+"'");
+			while(q.next())
+			{
+				int idr = q.getInt(1);
+				String nombrecategoria = q.getString(2);
+				
+				GrupoAtributo pre = new GrupoAtributo(nombrecategoria);
+				
+				Atributos atr = new Atributos(nombrecategoria, pre);
+				
+				Controladora.getInstance().getMisAtributos().add(atr);
+			}
+			
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(q!=null) {
+				q.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+public void loadGrupoAtributo()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar rubros
+		c = con.conectar();
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM grupoatributo");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String nombre = r.getString(2);
+			
+			GrupoAtributo pre = new GrupoAtributo(nombre);
+			
+			Controladora.getInstance().getMisGrupoAtributo().add(pre);
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+public void loadGastosGenerales()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		
+		//Recuperar rubros
+		c = con.conectar();
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM gastosgenerales");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			int id = r.getInt(1);
+			String nombre = r.getString(2);
+			float precioUnitario = r.getFloat(3);
+			String descripcion = r.getString(4);
+			Date remodelado = r.getDate(5);
+			
+			GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, remodelado.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			
+			Controladora.getInstance().getMisGastosGenerales().add(pre);
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+
+
+
 	
 	
 }
