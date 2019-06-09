@@ -144,10 +144,14 @@ public class ControllerNuevoEmpleado implements Initializable{
 		String nombre = textfield_empleadoNombre.getText();
 		String telefono = textfield_empleadoTelefono.getText();
 		String rnc = textfield_empleadoRNC.getText();
-		float saldo = Float.parseFloat(textfield_empleadoSueldo.getText());
+		float saldo = 0;
+		if(!textfield_empleadoSueldo.isDisabled())
+		{
+			saldo = Float.parseFloat(textfield_empleadoSueldo.getText());
+		}
 		String direccion = "";
 		String correo = "";
-		CategoriaEmpleado categoria= null;
+		CategoriaEmpleado categoria= Controladora.getInstance().buscarCategoria(textfield_RegEmpCategoria.getText());
 		try {
 			direccion = textarea_empleadoDomicilio.getText();
 			correo = textfield_empleadoCorreo.getText();
@@ -166,7 +170,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 				validRegister = false;
 			}
 		}
-		if(saldo == 0) {
+		if(saldo == 0 && !textfield_empleadoSueldo.isDisabled()) {
 			a.setContentText("Asignele un sueldo al empleado.");
 			a.show();
 		}

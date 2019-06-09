@@ -304,14 +304,21 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO empleados (nombre, telefono, domicilio, correo, rnc, sueldo, categoria, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-			p.setString(1, e.getNombre());
-			p.setString(2, e.getTelefono());
-			p.setString(3, e.getDomicilio());
-			p.setString(4, e.getCorreo());
-			p.setString(5, e.getRnc());
-			p.setFloat(6, e.getSueldo());
-			p.setInt(7, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(e.getCategoria())+1);
-			p.setString(8, e.getCodigo());
+			s = (Statement) c.createStatement();	
+			r = s.executeQuery("SELECT idcategoriaempleado FROM categoriaempleado WHERE nombre = '"+e.getCategoria().getNombre()+"'");
+			
+			while(r.next())
+			{
+				p.setString(1, e.getNombre());
+				p.setString(2, e.getTelefono());
+				p.setString(3, e.getDomicilio());
+				p.setString(4, e.getCorreo());
+				p.setString(5, e.getRnc());
+				p.setFloat(6, e.getSueldo());
+				int categoriaid = r.getInt(1);
+				p.setInt(7, categoriaid);
+				p.setString(8, e.getCodigo());
+			}
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -378,7 +385,7 @@ public class Controladora implements Serializable{
 		guardarGastoGeneralSQL(g);
 	}
 	
-	public void guardarProductoEstandarSQL(Estandar estandar) {
+	/*public void guardarProductoEstandarSQL(Estandar estandar) {
 		
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -451,7 +458,7 @@ public class Controladora implements Serializable{
 					}
 		}
 		
-	}
+	}*/
 
 	public void guardarGastoGeneralSQL(GastoGeneral g) {
 		Conexion con = new Conexion();
@@ -608,7 +615,21 @@ public class Controladora implements Serializable{
 			p.setString(2, proveedor.getDomicilio());
 			p.setString(3, proveedor.getCorreo());
 			p.setString(4, proveedor.getRnc());
-			p.setInt(5, Controladora.getInstance().getMisRubros().indexOf(proveedor.getRubro())+1);
+			if(proveedor.getRubro() != null)
+			{
+				s = (Statement) c.createStatement();
+				r = s.executeQuery("SELECT idrubros FROM rubros WHERE nombre '"+proveedor.getRubro().getNombreRubro()+"'");
+				while(r.next())
+				{
+					int rubroid = r.getInt(1);
+					p.setInt(5, rubroid);
+				}
+				
+			}
+			else
+			{
+				p.setNull(5, java.sql.Types.BIGINT);
+			}
 			p.setString(6, proveedor.getSitioWeb());
 			p.setString(7, proveedor.getNombre());
 			p.setString(8, proveedor.getTelefono());
@@ -1929,7 +1950,7 @@ public class Controladora implements Serializable{
 	public void addProductoEstandar(Estandar e) {
 		misProductosEstandar.add(e);
 		
-		guardarProductoEstandarSQL(e);
+		guardarEstandarSQL(e);
 	}
 	public void addProductoKit(Kit k) {
 		misProductosKit.add(k);
@@ -2090,6 +2111,23 @@ public class Controladora implements Serializable{
 			}
 		}
 		return searchProducto;
+	}
+	
+	public CategoriaEmpleado buscarCategoria(String cat)
+	{
+		CategoriaEmpleado c = null;
+		int i;
+		
+		for(i = 0; i < getMisCategoriasEmpleado().size(); i++)
+		{
+			if(getMisCategoriasEmpleado().get(i).getNombre().equalsIgnoreCase(cat))
+			{
+				c = getMisCategoriasEmpleado().get(i);
+				break;
+			}
+		}
+		
+		return c;
 	}
 	
 	public ArrayList<Estandar> searchProductsEstandar(String buscador, String tipoBusqueda){
@@ -2278,6 +2316,26 @@ public class Controladora implements Serializable{
 			}
 		}
 		return searchEmpleado;
+	}
+	
+	public Rubro buscarRubro(String nombre)
+	{
+		Rubro r = null;
+		int i = 0;
+		boolean encontrado = false;
+		
+		while(i<getMisRubros().size() && !encontrado)
+		{
+			if(getMisRubros().get(i).getNombreRubro().equalsIgnoreCase(nombre))
+			{
+				r = getMisRubros().get(i);
+				encontrado = true;
+			}
+			
+			i++;
+		}
+		
+		return r;
 	}
 	
 	/**FUNCION PARA BUSCAR RUBROS**/

@@ -35,6 +35,7 @@ public class ControllerNuevoProveedor implements Initializable{
 	@FXML private TextField textfield_rncProveedor;
 	@FXML private TextField textfield_correoElectronicoProveedor;
 	@FXML private TextField textfield_sitioWebProveedor;
+	@FXML private TextField textfield_rubroProveedor;
 	
 	/**FUNCIONES AGREGAR PROVEEDOR**/
 	
@@ -94,6 +95,7 @@ public class ControllerNuevoProveedor implements Initializable{
 		boolean isEmpty = false;
 		boolean validRegister = true;
 		Alert a = new Alert(AlertType.NONE); 
+		String nombrerubro = textfield_rubroProveedor.getText();
 		Rubro rubro = null;
 		String codigo = textfield_codigoProveedor.getText();
 		String nombre = textfield_nombreProveedor.getText();

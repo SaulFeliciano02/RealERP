@@ -1253,7 +1253,7 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
 		
 		CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
 		
-		Controladora.getInstance().getMisCategoriasEmpleado().add(cat);
+		Controladora.getInstance().addCategoriaEmpleado(cat);
 		
 		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
