@@ -346,6 +346,11 @@ public class ControllerNuevoProducto implements Initializable {
     	Rubro rubro = null;
     	Proveedores proveedor = null;
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
+    	
+    	//Guardando precio en la base de datos
+    	Controladora.getInstance().getMisPrecios().add(precio);
+    	Controladora.getInstance().guardarPrecioSQL(precio);
+    	
     	String descripcion = "";
     	String codigoBarra = "";
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
@@ -451,13 +456,16 @@ public class ControllerNuevoProducto implements Initializable {
     			}*/
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
-    			/**Controladora.getInstance().guardarProductosSQL(estandar);
+    			Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
-    			Controladora.getInstance().guardarPartidaSQL();
-    			for(CantProductosUtilizados c : partida.getListaMateriales()) {
-    				Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
-    			}
-    			Controladora.getInstance().guardarProductoPartida(estandar, partida);**/
+    			if(checkbox_generalProducible.isSelected()) {
+    				Controladora.getInstance().guardarPartidaSQL();
+    				for(CantProductosUtilizados c : partida.getListaMateriales()) {
+    					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+    				}
+    				Controladora.getInstance().guardarProductoPartida(estandar, partida);
+    			}	
+    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);
     		
     		}
     	}
