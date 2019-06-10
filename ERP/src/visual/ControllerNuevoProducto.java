@@ -138,6 +138,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_costosTiempoFabricacion;
 	@FXML private ComboBox<String> combobox_costosTiempoFabricacion;
 	@FXML private ComboBox<String> combobox_costosEncargadosFabricacion;
+	@FXML private TextField textfield_costoPrecioCompraProducto;
 
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -377,11 +378,28 @@ public class ControllerNuevoProducto implements Initializable {
     		String existenciaActual = exAct.getText();
     		String existenciaMinima = exMin.getText();
     		String existenciaMaxima = exMax.getText();
-    		float costo = 0;
+    		float costoDeCompra = 0;
+    		float costoManoObra = 0;
     		boolean fabricado = false;
     		if(checkbox_generalProducible.isSelected()) {
-    			costo = Float.parseFloat(textfield_preciosCostos.getText());
+    			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+    			String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+    			float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+    			for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+    				if(c.getNombre().equals(nombreCategoria)) {
+    					if(tiempoMedida.equalsIgnoreCase("Minutos")) {
+    						tiempoCantidad = tiempoCantidad / 60;
+    					}
+    					else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
+    						tiempoCantidad = tiempoCantidad / 3600; 
+    					}
+    					costoManoObra = c.getSueldo() * tiempoCantidad;
+    				}
+    			}
     			fabricado = true;
+    		}
+    		else {
+    			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
     		}
     		a.setAlertType(AlertType.WARNING);
     		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
@@ -418,8 +436,8 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, partida, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costoDeCompra, fabricado, partida, codigo, nombre,
+    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
     			}*/
@@ -1417,6 +1435,7 @@ public class ControllerNuevoProducto implements Initializable {
 		double valorIndirecto = 0;
 		double valorPartida = 0;
 		double valorFabricacion = 0;
+		double valorCompraProducto = 0;
 		
 		/*
 		for(CostoDirecto valor : tableview_costosDirectos.getItems()) {
@@ -1464,9 +1483,12 @@ public class ControllerNuevoProducto implements Initializable {
 			}
 			System.out.println(valorFabricacion);
 		}
+		else if(!checkbox_generalProducible.isSelected() && textfield_costoPrecioCompraProducto.getLength() > 0) {
+			valorCompraProducto += Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
+		}
 		
 		
-		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida + valorFabricacion));
+		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida + valorFabricacion + valorCompraProducto));
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
 		}
