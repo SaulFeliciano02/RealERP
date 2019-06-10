@@ -3,6 +3,7 @@ package logico;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -3344,11 +3345,11 @@ public void loadGastosGenerales()
 		{
 			int id = r.getInt(1);
 			String nombre = r.getString(2);
-			float precioUnitario = r.getFloat(3);
-			String descripcion = r.getString(4);
-			Date remodelado = r.getDate(5);
+			float precioUnitario = r.getFloat(5);
+			String descripcion = r.getString(3);
+			Date remodelado = r.getDate(4);
 			
-			GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, remodelado.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(remodelado)));
 			
 			Controladora.getInstance().getMisGastosGenerales().add(pre);
 		}

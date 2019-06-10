@@ -35,6 +35,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage){
 		try {
 			//Controladora.getInstance().sendUnidadesIntoDatabase();
+			Controladora.getInstance().loadGastosGenerales();
 			Controladora.getInstance().recuperarRubros();
 			Controladora.getInstance().loadProveedores();
 			Controladora.getInstance().loadCategoriaEmpleado();
