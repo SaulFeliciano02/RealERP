@@ -4,14 +4,31 @@ public class CantProductosUtilizados {
 	
 	private Producto producto;
 	private float cantidad;
+	private String unidad;
 	
 	public CantProductosUtilizados(Producto producto, float cantidad) {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
+		this.unidad = producto.getUnidadMedida().getNombre();
 	}
 
-	public Producto getProducto() {
+	
+	public String getUnidad() {
+		return unidad;
+	}
+
+
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
+
+
+	public String getProducto() {
+		return producto.getNombre();
+	}
+	
+	public Producto getProductoClass() {
 		return producto;
 	}
 

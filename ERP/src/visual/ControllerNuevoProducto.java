@@ -348,8 +348,8 @@ public class ControllerNuevoProducto implements Initializable {
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
     	
     	//Guardando precio en la base de datos
-    	Controladora.getInstance().getMisPrecios().add(precio);
-    	Controladora.getInstance().guardarPrecioSQL(precio);
+    	/**Controladora.getInstance().getMisPrecios().add(precio);
+    	Controladora.getInstance().guardarPrecioSQL(precio);**/
     	
     	String descripcion = "";
     	String codigoBarra = "";
@@ -441,8 +441,8 @@ public class ControllerNuevoProducto implements Initializable {
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
     				
     				/**Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
-    				partida.agregarProductoUtilizado(c);**/
+    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);**/
+    				partida.agregarProductoUtilizado(c);
     			}
     		}
     		Controladora.getInstance().getMisPartidas().add(partida);
@@ -456,7 +456,7 @@ public class ControllerNuevoProducto implements Initializable {
     			}*/
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
-    			Controladora.getInstance().guardarProductosSQL(estandar);
+    			/**Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
     			if(checkbox_generalProducible.isSelected()) {
     				Controladora.getInstance().guardarPartidaSQL();
@@ -465,7 +465,7 @@ public class ControllerNuevoProducto implements Initializable {
     				}
     				Controladora.getInstance().guardarProductoPartida(estandar, partida);
     			}	
-    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);
+    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);**/
     		
     		}
     	}

@@ -41,6 +41,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Atributos;
+import logico.CantProductosUtilizados;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
 import logico.Controladora;
@@ -48,11 +49,13 @@ import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
 import logico.Empleado;
+import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
+import logico.UnidadMedida;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -117,6 +120,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Producto, String> tablecolumn_productDescripcion;
     @FXML private TableView<Producto> tableview_productList;
     @FXML private Button button_abrirInfoAdicional;
+    
+    @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUtilizado;
+    @FXML private TableColumn<CantProductosUtilizados, Float> tablecolumn_productoPartidaCantidad;
+    @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUnidad;
+    @FXML private TableView<CantProductosUtilizados> tableview_productoPartidaList;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -1429,6 +1437,21 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
+    	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
+    	System.out.println("El nombre de este producto es: " + p.getNombre());
+    	if(p.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    		Estandar e = (Estandar) p;
+    		ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
+    		for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
+    			data.add(c);
+    		}
+    		tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        	tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        	tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+        	tableview_productoPartidaList.setItems(data);
+        	tableview_productoPartidaList.refresh();
+    	}
+    	
     }
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
@@ -1439,6 +1462,11 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	if(!tableview_productList.getSelectionModel().isEmpty()) {
     		button_abrirInfoAdicional.setDisable(false);
     	}
+    }
+    
+    public void fillProductoPartida() {
+    	
+    	
     }
     
     
