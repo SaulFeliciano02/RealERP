@@ -32,6 +32,10 @@ public class Precio {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
 	public boolean isPrecioActivo() {
 		return precioActivo;
 	}
