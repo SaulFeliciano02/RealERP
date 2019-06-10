@@ -839,9 +839,8 @@ public class Controller implements Initializable{
         	
         	if(indice <= -1)
         	{
-        		Controladora.getInstance().getMisGastosGenerales().add(g);
+        		Controladora.getInstance().addGastoGeneral(g);
             	listview_gastosG.getItems().add(g.getNombre());
-            	
         	}
         	else
         	{
@@ -1276,6 +1275,7 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	fillEmpleadoList(null);
     	fillRubroList(null);
     	fillProductList(null);
+    	fillGastosGenerales(null);
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
@@ -1290,6 +1290,16 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
     	tableview_rubro.setItems(data);
     	tableview_rubro.refresh();
+    }
+    
+    public void fillGastosGenerales(ArrayList<GastoGeneral> g)
+    {
+    	int i;
+    	
+    	for(i = 0; i < Controladora.getInstance().getMisGastosGenerales().size(); i++)
+    	{
+    		listview_gastosG.getItems().add(Controladora.getInstance().getMisGastosGenerales().get(i).getNombre());
+    	}
     }
     
     public void fillProductList(ArrayList<Producto> p) {
