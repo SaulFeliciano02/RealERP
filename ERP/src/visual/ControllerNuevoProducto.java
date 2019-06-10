@@ -435,9 +435,9 @@ public class ControllerNuevoProducto implements Initializable {
     				Estandar productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
     				
-    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    				/**Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
-    				partida.agregarProductoUtilizado(c);
+    				partida.agregarProductoUtilizado(c);**/
     			}
     		}
     		Controladora.getInstance().getMisPartidas().add(partida);
@@ -451,13 +451,13 @@ public class ControllerNuevoProducto implements Initializable {
     			}*/
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
-    			Controladora.getInstance().guardarProductosSQL(estandar);
+    			/**Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
     			Controladora.getInstance().guardarPartidaSQL();
     			for(CantProductosUtilizados c : partida.getListaMateriales()) {
     				Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
     			}
-    			Controladora.getInstance().guardarProductoPartida(estandar, partida);
+    			Controladora.getInstance().guardarProductoPartida(estandar, partida);**/
     		
     		}
     	}
@@ -1475,11 +1475,12 @@ public class ControllerNuevoProducto implements Initializable {
 		for(String valor : listview_partidaSelect.getItems()) {
 			 int posicion = valor.indexOf("[");
     		 String selection = valor.substring(0, posicion);
-    		 Estandar p = Controladora.getInstance().buscarProducto(selection);
+    		 String nombre = Controladora.getInstance().findPartidaNombre(valor);
+    		 Estandar p = Controladora.getInstance().buscarProducto(nombre);
     		 
 			 //String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
-			 valorPartida += p.getPrecio() * Float.parseFloat(cantidad);
+			 valorPartida += p.getCosto() * Float.parseFloat(cantidad);
 		}
 		if(checkbox_generalProducible.isSelected() && textfield_costosTiempoFabricacion.getLength() > 0) {
 			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
