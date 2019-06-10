@@ -380,7 +380,7 @@
                                                                                                             </Button>
                                                                                                             <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
                                                                                                             <Separator prefWidth="100.0" HBox.hgrow="ALWAYS" />
-                                                                                                            <Button fx:id="button_abrirInfoAdicional" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#abrirInfoAdicionalProducto" text="Información adicional del producto">
+                                                                                                            <Button fx:id="button_abrirInfoAdicional" alignment="TOP_LEFT" disable="true" mnemonicParsing="false" onAction="#abrirInfoAdicionalProducto" text="Información adicional del producto">
                                                                                                                <HBox.margin>
                                                                                                                   <Insets left="30.0" top="10.0" />
                                                                                                                </HBox.margin>
@@ -402,7 +402,7 @@
                                                                         </BorderPane>
                                                                         <AnchorPane fx:id="pane_InfoAdicionalProducto" prefHeight="589.6" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <TitledPane prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <TitledPane fx:id="titledpane_productoInformacionAdicional" collapsible="false" prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <content>
                                                                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                        <children>

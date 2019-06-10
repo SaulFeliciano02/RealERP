@@ -116,6 +116,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Producto, Float> tablecolumn_productCosto;
     @FXML private TableColumn<Producto, String> tablecolumn_productDescripcion;
     @FXML private TableView<Producto> tableview_productList;
+    @FXML private Button button_abrirInfoAdicional;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -283,6 +284,7 @@ public class Controller implements Initializable{
 /**FUNCIONES MENU PRINCIPAL**/
 	
     public void principal_pressed(ActionEvent event){
+    	
     	pressed_principal1.setSource(pressed_principal); 
     	
     	nonpressed_principal1.setSource(nonpressed_principal); 
@@ -1431,6 +1433,12 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(false);
+    }
+    
+    public void activarInfoAdicionalProducto(MouseEvent event) {
+    	if(!tableview_productList.getSelectionModel().isEmpty()) {
+    		button_abrirInfoAdicional.setDisable(false);
+    	}
     }
     
     
