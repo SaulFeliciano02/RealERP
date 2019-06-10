@@ -13,7 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import logico.Controladora;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
@@ -34,7 +34,11 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage){
 		try {
-			
+			//Controladora.getInstance().sendUnidadesIntoDatabase();
+			Controladora.getInstance().recuperarRubros();
+			Controladora.getInstance().loadProveedores();
+			Controladora.getInstance().loadCategoriaEmpleado();
+			Controladora.getInstance().loadEmpleados();
 			FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 			//FXMLLoader f = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 		 

@@ -2374,7 +2374,73 @@ public class Controladora implements Serializable{
 		return searchRubro;
 	}
 	
+	public void sendUnidadesIntoDatabase() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			for(UnidadMedida a : Controladora.getInstance().getMisUnidadMedida()) {
+				if(a.getCategoria().equalsIgnoreCase("area")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO area (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+				if(a.getCategoria().equalsIgnoreCase("masa")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO masa (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+				if(a.getCategoria().equalsIgnoreCase("volumen")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO volumen (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+				if(a.getCategoria().equalsIgnoreCase("longitud")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO longitud (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+			
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 	
 	/**FUNCION PARA VERIFICAR SI UN STRING DADO ES UN NUMERO**/
 	
@@ -2866,16 +2932,26 @@ public void loadProveedores()
 				String telefono = r.getString(9);
 				String codigo = r.getString(10);
 				
-				q = s2.executeQuery("SELECT * FROM rubros WHERE id = '"+rubroid+"'");
-				while(q.next())
+				if(rubroid > 0)
 				{
-					int idr = q.getInt(1);
-					String codrubro = q.getString(2);
-					String nombrerubro = q.getString(3);
+					q = s2.executeQuery("SELECT * FROM rubros WHERE id = '"+rubroid+"'");
+					while(q.next())
+					{
+						int idr = q.getInt(1);
+						String codrubro = q.getString(2);
+						String nombrerubro = q.getString(3);
+						
+						Rubro rubroproveedor = new Rubro(codrubro, nombrerubro);
+						
+						Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, rubroproveedor, sitioWeb);
+						
+						Controladora.getInstance().getMisProveedores().add(cli);
+					}
 					
-					Rubro rubroproveedor = new Rubro(codrubro, nombrerubro);
-					
-					Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, rubroproveedor, sitioWeb);
+				}
+				else
+				{
+					Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, null, sitioWeb);
 					
 					Controladora.getInstance().getMisProveedores().add(cli);
 				}
@@ -2998,20 +3074,21 @@ public void loadEmpleados()
 		
 		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 		s = (Statement) c.createStatement();
+		s2 = (Statement) c.createStatement();
 		r = s.executeQuery("SELECT * FROM empleados");
 		
 		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 		while(r.next())
 		{
 			int id = r.getInt(1);
-			String codigo = r.getString(2);
-			String nombre = r.getString(3);
-			String telefono = r.getString(4);	
-			String domicilio = r.getString(5);
-			String correo = r.getString(6);
-			String rnc = r.getString(7);
-			float sueldo = r.getFloat(8);
-			int categoriaid = r.getInt(9);
+			String codigo = r.getString(9);
+			String nombre = r.getString(2);
+			String telefono = r.getString(3);	
+			String domicilio = r.getString(4);
+			String correo = r.getString(5);
+			String rnc = r.getString(6);
+			float sueldo = r.getFloat(7);
+			int categoriaid = r.getInt(8);
 			
 			q = s2.executeQuery("SELECT * FROM categoriaempleado WHERE idcategoriaempleado = '"+categoriaid+"'");
 			while(q.next())
