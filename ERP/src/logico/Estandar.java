@@ -13,6 +13,7 @@ public class Estandar extends Producto{
 	public ArrayList<Combinaciones> combinaciones;
 	public boolean fabricado;
 	public Partida partida;
+	public float manodeobra;
 	
 	public Estandar(float existenciaActual, float existenciaMinima, float existenciaMaxima, Date fechaVencimiento, float costoDeCompra, boolean fabricado, 
 			Partida partida, String codigo, String nombre, 
@@ -30,6 +31,7 @@ public class Estandar extends Producto{
 		this.combinaciones = new ArrayList<>();
 		this.fabricado = fabricado;
 		this.partida = partida;
+		this.manodeobra = costoManoDeObra;
 		// TODO Auto-generated constructor stub
 	}
 	
