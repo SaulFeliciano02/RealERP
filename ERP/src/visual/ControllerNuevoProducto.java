@@ -382,23 +382,27 @@ public class ControllerNuevoProducto implements Initializable {
     		float costoManoObra = 0;
     		boolean fabricado = false;
     		if(checkbox_generalProducible.isSelected()) {
-    			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
-    			String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
-    			float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
-    			for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
-    				if(c.getNombre().equals(nombreCategoria)) {
-    					if(tiempoMedida.equalsIgnoreCase("Minutos")) {
-    						tiempoCantidad = tiempoCantidad / 60;
+    			try {
+    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+    				for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+    					if(c.getNombre().equals(nombreCategoria)) {
+    						if(tiempoMedida.equalsIgnoreCase("Minutos")) {
+    							tiempoCantidad = tiempoCantidad / 60;
+    						}
+    						else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
+    							tiempoCantidad = tiempoCantidad / 3600; 
+    						}
+    						costoManoObra = c.getSueldo() * tiempoCantidad;
     					}
-    					else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
-    						tiempoCantidad = tiempoCantidad / 3600; 
-    					}
-    					costoManoObra = c.getSueldo() * tiempoCantidad;
     				}
+    			}catch(NullPointerException e) {
+    				
     			}
     			fabricado = true;
     		}
-    		else {
+    		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
     			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
     		}
     		a.setAlertType(AlertType.WARNING);
@@ -428,11 +432,15 @@ public class ControllerNuevoProducto implements Initializable {
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
     				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    				Producto productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
+    				Estandar productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+    				
+    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
     				partida.agregarProductoUtilizado(c);
     			}
     		}
+    		Controladora.getInstance().getMisPartidas().add(partida);
     		
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
@@ -441,8 +449,16 @@ public class ControllerNuevoProducto implements Initializable {
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
     			}*/
-    			Controladora.getInstance().addProducto(estandar);
-    			Controladora.getInstance().addProductoEstandar(estandar);
+    			Controladora.getInstance().getMisProductosEstandar().add(estandar);
+    			Controladora.getInstance().getMisProductos().add(estandar);
+    			Controladora.getInstance().guardarProductosSQL(estandar);
+    			Controladora.getInstance().guardarEstandarSQL(estandar);
+    			Controladora.getInstance().guardarPartidaSQL();
+    			for(CantProductosUtilizados c : partida.getListaMateriales()) {
+    				Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+    			}
+    			Controladora.getInstance().guardarProductoPartida(estandar, partida);
+    		
     		}
     	}
     	
@@ -608,10 +624,9 @@ public class ControllerNuevoProducto implements Initializable {
     			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
     			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
     			System.out.println(itemNombre + itemCantidad);
-    			ArrayList<Estandar> listview_estandar = Controladora.getInstance().searchProductsEstandar(itemNombre, "Nombre");
-    			System.out.println(listview_estandar.size());
+    			Estandar listview_estandar = Controladora.getInstance().buscarProducto(itemNombre);
     			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
-    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar.get(0))) {
+    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
     					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
     							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
     				}
@@ -1255,7 +1270,7 @@ public class ControllerNuevoProducto implements Initializable {
         	}
     	}
     	
-    	if(cantidadConvertida == 0) {
+    	if(textfield_partidaCantidad.getLength() == 0) {
     		a.setAlertType(AlertType.ERROR);
     		a.setContentText("Eliga la cantida que utilizara.");
     		a.show();
