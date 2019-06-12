@@ -120,6 +120,8 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Producto, String> tablecolumn_productDescripcion;
     @FXML private TableView<Producto> tableview_productList;
     @FXML private Button button_abrirInfoAdicional;
+    @FXML private ComboBox<String> combobox_productBuscar;
+    @FXML private TextField textfield_productBuscar;
     
     @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUtilizado;
     @FXML private TableColumn<CantProductosUtilizados, Float> tablecolumn_productoPartidaCantidad;
@@ -1169,6 +1171,22 @@ public class Controller implements Initializable{
     	}
     }
     
+    public void buscarProductos(KeyEvent event) {
+    	ArrayList<Producto> productos = new ArrayList<>();
+    	if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase() + event.getCharacter(), combobox_productBuscar.getSelectionModel().getSelectedItem());
+    	}
+    	else {
+    		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getSelectionModel().getSelectedItem());
+    	}
+    	if(productos.size() == 0) {
+    		fillProductList(null);
+    	}
+    	else {
+    		fillProductList(productos);
+    	}
+    }
+    
     //Busqueda de proveedores
     public void buscarProveedores(KeyEvent event) {
     	ArrayList<Proveedores> proveedores = new ArrayList<>();
@@ -1233,58 +1251,76 @@ public class Controller implements Initializable{
     	tableview_rubro.getItems().remove(index);
     }
     
-public void eliminarAtributo(ActionEvent event) {
-	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
-	tableView_Atributos.getItems().remove(index);
-}
+    public void eliminarAtributo(ActionEvent event) {
+    	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
+    	tableView_Atributos.getItems().remove(index);
+    }
 
-public void eliminarCliente(ActionEvent event) {
-	int index = tableview_clientesList.getSelectionModel().getSelectedIndex();
-	tableview_clientesList.getItems().remove(index);
-}
+    
+    public void eliminarCliente(ActionEvent event) {
+    	int index = tableview_clientesList.getSelectionModel().getSelectedIndex();
+    	tableview_clientesList.getItems().remove(index);
+    }
 
-public void eliminarProveedor(ActionEvent event) {
-	int index = tableview_proveedoresList.getSelectionModel().getSelectedIndex();
-	tableview_proveedoresList.getItems().remove(index);
-}
+    
+    public void eliminarProveedor(ActionEvent event) {
+    	int index = tableview_proveedoresList.getSelectionModel().getSelectedIndex();
+    	tableview_proveedoresList.getItems().remove(index);
+    }
+    
 
-public void pressed_guardarCategoriaEmp(ActionEvent event)
-{
-	if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
-	{
-		String nombre = textfield_nombreCategoriaEmp.getText();
-		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+    public void pressed_guardarCategoriaEmp(ActionEvent event)
+    {
+    	if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
+    	{
+    		String nombre = textfield_nombreCategoriaEmp.getText();
+    		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
 		
-		if(radiobutton_PorDia.isSelected())
-		{
-			salario = salario/8;
-		}
+    		if(radiobutton_PorDia.isSelected())
+    		{
+    			salario = salario/8;
+    		}
 		
-		CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+    		CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
 		
-		Controladora.getInstance().addCategoriaEmpleado(cat);
+    		Controladora.getInstance().addCategoriaEmpleado(cat);
 		
-		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
 		
-		textfield_nombreCategoriaEmp.setText("");
-		textfield_salarioCategoriaEmp.setText("");
-		ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
-		data.add(cat);
-		tableview_CategoriaEmp.getItems().add(cat);
-		tableview_CategoriaEmp.refresh();	
-	}
-}
+    		textfield_nombreCategoriaEmp.setText("");
+    		textfield_salarioCategoriaEmp.setText("");
+    		ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
+    		data.add(cat);
+    		tableview_CategoriaEmp.getItems().add(cat);
+    		tableview_CategoriaEmp.refresh();	
+    	}
+    }
 
 	
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	
+    	//Seteando los clientes
     	fillClientList(null);
+    	
+    	//Seteando los proveedores
     	fillProveedorList(null);
+    	
+    	//Seteando los empleados
     	fillEmpleadoList(null);
+    	
+    	//Seteando los rubros
     	fillRubroList(null);
+    	
+    	//Seteando el combobox de productos
+    	ObservableList<String> combobox_data = FXCollections.observableArrayList();
+    	combobox_data.addAll("Codigo", "Nombre", "Proveedor", "Rubro");
+    	combobox_productBuscar.setItems(combobox_data);
     	fillProductList(null);
+    	
+    	//Seteando los gastos generales
     	fillGastosGenerales(null);
     }
     
@@ -1322,7 +1358,7 @@ public void pressed_guardarCategoriaEmp(ActionEvent event)
     	}
     	tablecolumn_productCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_productNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tablecolumn_productExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    	tablecolumn_productExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
     	tablecolumn_productExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
     	tablecolumn_productExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
     	tablecolumn_productExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));

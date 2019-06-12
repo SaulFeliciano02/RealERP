@@ -449,7 +449,7 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costoDeCompra, fabricado, partida, codigo, nombre,
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
     			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
     				estandar.getCostosIndirectos().add(c);
@@ -513,7 +513,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		//Visitar esto nuevamente
     		if(canRegister) {
-    			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, codigo, nombre,
+    			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			Controladora.getInstance().getMisProductos().add(kit);
     			Controladora.getInstance().getMisProductosKit().add(kit);
@@ -597,7 +597,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), date, costo, fabricado, partida, codigo, nombre,
+    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costo, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
     			for(Combinaciones c : combinacionFinal) {
     				estandar.getCombinaciones().add(c);

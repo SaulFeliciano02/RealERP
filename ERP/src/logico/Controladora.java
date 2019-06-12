@@ -2135,11 +2135,12 @@ public class Controladora implements Serializable{
 						}
 						j++;
 					}
+					
 					break;
 				case "Rubro":
 					for(int k = 0; k < misProductos.get(i).getRubroProductoClass().getNombreRubro().length(); k++) {
 						if(j < buscador.length()) {
-							if(misProductos.get(i).getRubroProductoClass().getNombreRubro().charAt(k) == buscador.charAt(j)) {
+							if(misProductos.get(i).getRubroProductoClass().getCodigo().charAt(k) == buscador.charAt(j)) {
 								boolCount++;
 							}
 						}

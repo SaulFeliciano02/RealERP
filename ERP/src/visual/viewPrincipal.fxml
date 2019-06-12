@@ -325,8 +325,8 @@
                                                                                  <children>
                                                                                     <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                                        <children>
-                                                                                          <ComboBox prefWidth="150.0" promptText="Buscar por:" />
-                                                                                          <TextField prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
+                                                                                          <ComboBox fx:id="combobox_productBuscar" prefWidth="150.0" promptText="Buscar por:" />
+                                                                                          <TextField fx:id="textfield_productBuscar" onKeyTyped="#buscarProductos" prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
                                                                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                              <effect>
                                                                                                 <ImageInput>
