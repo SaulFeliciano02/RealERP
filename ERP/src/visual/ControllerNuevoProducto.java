@@ -348,8 +348,8 @@ public class ControllerNuevoProducto implements Initializable {
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
     	
     	//Guardando precio en la base de datos
-    	/**Controladora.getInstance().getMisPrecios().add(precio);
-    	Controladora.getInstance().guardarPrecioSQL(precio);**/
+    	Controladora.getInstance().getMisPrecios().add(precio);
+    	Controladora.getInstance().guardarPrecioSQL(precio);
     	
     	String descripcion = "";
     	String codigoBarra = "";
@@ -432,16 +432,17 @@ public class ControllerNuevoProducto implements Initializable {
     			canRegister = false;
     		}
     		Date date = null;
-    		Partida partida = new Partida();
+    		Partida partida = null;	
     		if(checkbox_generalProducible.isSelected()) {
+    			partida = new Partida();
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
     				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
     				Estandar productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
     				
-    				/**Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);**/
+    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
     				partida.agregarProductoUtilizado(c);
     			}
     		}
@@ -451,12 +452,14 @@ public class ControllerNuevoProducto implements Initializable {
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
-    			/*for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
-    				estandar.getCostosIndirectos().add(c);
-    			}*/
+    			//for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
+    				//estandar.getCostosIndirectos().add(c);
+    			//}
+    			
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
-    			/**Controladora.getInstance().guardarProductosSQL(estandar);
+    			
+    			Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
     			if(checkbox_generalProducible.isSelected()) {
     				Controladora.getInstance().guardarPartidaSQL();
@@ -465,7 +468,13 @@ public class ControllerNuevoProducto implements Initializable {
     				}
     				Controladora.getInstance().guardarProductoPartida(estandar, partida);
     			}	
-    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);**/
+    			
+    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);
+    			
+    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(estandar, proveedor);
+    			
+    			Controladora.getInstance().guardarRubroProductoSQL(estandar, rubro);
+    		
     		
     		}
     	}

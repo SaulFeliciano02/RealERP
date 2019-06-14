@@ -1226,7 +1226,8 @@ public class Controller implements Initializable{
     	String nombre = textfield_rubroNombre.getText();
     	Rubro rubro = new Rubro(codigo, nombre);
     	data.add(rubro);
-    	Controladora.getInstance().addRubro(rubro);
+    	Controladora.getInstance().getMisRubros().add(rubro);
+    	Controladora.getInstance().guardarRubroSQL(rubro);
     	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
     	tableview_rubro.getItems().add(rubro);
