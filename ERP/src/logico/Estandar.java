@@ -85,6 +85,10 @@ public class Estandar extends Producto{
 	public Partida getPartida() {
 		return partida;
 	}
+	public void setPartida(Partida p)
+	{
+		this.partida = p;
+	}
 	public float getExistenciaInicial() {
 		return existenciaInicial;
 	}

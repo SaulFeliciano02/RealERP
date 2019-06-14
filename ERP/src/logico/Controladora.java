@@ -1343,7 +1343,7 @@ public class Controladora implements Serializable{
 			p.setString(3, producto.getDescripcion());
 			p.setString(4, producto.getTipoProducto());
 			p.setString(5, producto.getObservaciones());
-			p.setString(6, producto.getUnidadMedida().getNombre());
+			p.setString(6, producto.getUnidadMedida().getNombre()); //En realidad unidadmedida es la columna 7
 			p.setFloat(7, producto.getCosto());
 			p.executeUpdate();
 		}
@@ -3185,7 +3185,7 @@ public void loadProductos()
 		c = con.conectar();
 		
 		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT * FROM estardar WHERE producto = '"+id+"'");
+		r = s.executeQuery("SELECT * FROM estardan WHERE producto = '"+id+"'");
 		while(r.next())
 		{
 			idestandar = r.getInt(1);
@@ -3507,6 +3507,133 @@ public void loadProductos()
 	Proveedores pro = buscarProveedor(nombreproveedor);
 	Precio pre = new Precio(montoprecio, descripcionprecio, activo);
 	Estandar estandar = new Estandar(exitact, exitmin, exitmax, exitinit, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcionprecio, ru, tipoproducto, pro, null, null, observaciones, unidad1, pre, null, null, manodeobra, descripcion, null, costo);
+	
+	Controladora.getInstance().getMisProductos().add(estandar);
+	Controladora.getInstance().getMisProductosEstandar().add(estandar);
+}
+
+public void loadPartida()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	ResultSet r2 = null;
+	ResultSet r3 = null;
+	ResultSet r4 = null;
+	ResultSet r5 = null;
+	PreparedStatement p = null;
+	int i;
+	int idProducto = 0;
+	int idprodpart = 0;
+	int productoid = 0;
+	int partidaid = 0;
+	int idpartidaprodutil = 0;
+	int partidaid2 = 0;
+	int cantproductoutilizadoid = 0;
+	int cantproductoutilizadoid2 = 0;
+	int idestandarrelacionado = 0;
+	float cantidad = 0;
+	String nombre = null;
+	Estandar est = null;
+	ArrayList<Producto> productosPartida = new ArrayList<>();
+	Partida partidaRecuperada = new Partida();
+	
+	for (i = 0; i < getMisProductosEstandar().size(); i++)
+	{
+		try {	
+			//Recuperar rubros
+			c = con.conectar();
+			s = (Statement) c.createStatement();
+		
+				if(getMisProductosEstandar().get(i).isFabricado())
+				{
+					r = s.executeQuery("SELECT id FROM producto WHERE codigo = '"+getMisProductosEstandar().get(i).getCodigo()+"'");
+					while(r.next())
+					{
+						idProducto = r.getInt(1); 
+					}
+					
+					r4 = s.executeQuery("SELECT * FROM productopartida WHERE producto = '"+idProducto+"'");
+					while(r4.next())
+					{
+						idprodpart = r4.getInt(1);
+						productoid = r4.getInt(2);
+						partidaid = r4.getInt(3); 
+					}
+					
+					r5 = s.executeQuery("SELECT * FROM partidaprodutil WHERE partida = '"+partidaid+"'");
+					while(r5.next())
+					{
+						idpartidaprodutil = r5.getInt(1);
+						partidaid2 = r5.getInt(2);
+						cantproductoutilizadoid = r5.getInt(3);
+						
+						r2 = s.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+cantproductoutilizadoid+"'");
+						while(r2.next())
+						{
+							cantproductoutilizadoid2 = r2.getInt(1);
+							idestandarrelacionado = r2.getInt(2);
+							cantidad = r2.getFloat(3);
+							
+							r3 = s.executeQuery("SELECT nombre FROM producto WHERE idproductos = '"+idestandarrelacionado+"'");
+							while(r3.next())
+							{
+								nombre = r3.getString(3);
+								est = buscarProducto(nombre);
+								productosPartida.add(est);
+							}
+							
+							CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
+							partidaRecuperada.agregarProductoUtilizado(cpu);
+						}
+						
+					}	
+					
+					getMisProductosEstandar().get(i).setPartida(partidaRecuperada);
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+				if(r2!=null) {
+					r2.close();
+				}
+				
+				if(r3!=null) {
+					r3.close();
+				}
+				
+				if(r4!=null) {
+					r4.close();
+				}
+				
+				if(r5!=null) {
+					r5.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 }
 
 public Proveedores buscarProveedor(String nombre)
