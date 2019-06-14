@@ -41,6 +41,8 @@ public class Main extends Application{
 			Controladora.getInstance().loadProveedores();
 			Controladora.getInstance().loadCategoriaEmpleado();
 			Controladora.getInstance().loadEmpleados();
+			//Controladora.getInstance().loadProductos();
+			//Controladora.getInstance().loadPartida();
 			FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 			//FXMLLoader f = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 		 
