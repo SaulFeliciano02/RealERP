@@ -3110,207 +3110,38 @@ public void loadProductos()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	ResultSet r2 = null;
-	ResultSet r3 = null;
-	ResultSet r4 = null;
-	ResultSet r5 = null;
-	ResultSet r6 = null;
-	ResultSet r7 = null;
-	ResultSet r8 = null;
-	ResultSet r9 = null;
-	ResultSet r10 = null;
-	ResultSet r11 = null;
 	PreparedStatement p = null;
-	ArrayList<CantProductosUtilizados> cantpartida1 = new ArrayList<>();
-	ArrayList<CantProductosUtilizados> cantpartida2;
-	Precio pre1 = null;
+	
+	//RECUPERACION PRODUCTO
+	int id = 0;
+	String codigo = null;
+	String nombre=null;				
+	String descripcion = null;
+	String tipoproducto = null;
+	String observaciones = null;
+	String unidadmedida = null;
+	Float costo = null;
 	UnidadMedida unidad1 = null;
-	Partida partida1 = new Partida();
 	
 	try {
 		
-		//Recuperar rubros
 		c = con.conectar();
 		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 		s = (Statement) c.createStatement();
 		r = s.executeQuery("SELECT * FROM productos");
 		
 		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 		while(r.next())
 		{
-			int id = r.getInt(1);
-			String codigo = r.getString(2);
-			String nombre = r.getString(3);				
-			String descripcion = r.getString(4);
-			String tipoproducto = r.getString(5);
-			String observaciones = r.getString(6);
-			String unidadmedida = r.getString(7);
-			Float costo = r.getFloat(8);
-			
-			r2 = s.executeQuery("SELECT * FROM estardar WHERE producto = '"+id+"'");
-			while(r2.next())
-			{
-				int idestandar = r2.getInt(1);
-				int producto = r2.getInt(2);
-				Float exitmin = r2.getFloat(3);
-				Float exitmax = r2.getFloat(4);
-				Date fechavencimiento = r2.getDate(5);
-				Float costocompra = r2.getFloat(6);
-				boolean fabricado = r2.getBoolean(7);
-				Float exitact = r2.getFloat(8);
-				Float exitinit = r2.getFloat(9);
-				
-				if(fabricado)
-				{
-					r3 = s.executeQuery("SELECT * FROM productopartida WHERE producto = '"+id+"'");
-					while(r3.next())
-					{
-						int idprodpart = r3.getInt(1);
-						int productoid = r3.getInt(2);
-						int partidaid = r3.getInt(3); 
-						
-						r4 = s.executeQuery("SELECT * FROM partidaprodutil WHERE partida = '"+partidaid+"'");
-						while(r4.next())
-						{
-							int idpartidaprodutil = r4.getInt(1);
-							int partidaid2 = r4.getInt(2);
-							int cantproductoutilizadoid = r4.getInt(3);	
-							
-							r5 = s.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+cantproductoutilizadoid+"'");
-							while(r5.next())
-							{
-								int cantproductoutilizadoid2 = r5.getInt(1);
-								int idestandarrelacionado = r5.getInt(2);
-								float cantidad = r5.getFloat(3);
-								
-								
-								r6 = s.executeQuery("SELECT * FROM estandar	WHERE idestandar = '"+idestandarrelacionado+"'");
-								while(r6.next())
-								{
-									int idestandar3 = r6.getInt(1);
-									int producto3 = r6.getInt(2);
-									Float exitmin3 = r6.getFloat(3);
-									Float exitmax3 = r6.getFloat(4);
-									Date fechavencimiento3 = r6.getDate(5);
-									Float costocompra3 = r6.getFloat(6);
-									boolean fabricado3 = r6.getBoolean(7);
-									Float exitact3 = r6.getFloat(8);
-									Float exitinit3 = r6.getFloat(9);
-									
-									r7 = s.executeQuery("SELECT * FROM productos WHERE idproductos = '"+producto3+"'");
-									while(r7.next())
-									{
-										int id7 = r7.getInt(1);
-										String codigo7 = r7.getString(2);
-										String nombre7 = r7.getString(3);				
-										String descripcion7 = r7.getString(4);
-										String tipoproducto7 = r7.getString(5);
-										String observaciones7 = r7.getString(6);
-										String unidadmedida7 = r7.getString(7);
-										Float costo7 = r7.getFloat(8);
-										
-										unidad1 = null;
-										if(isArea(unidadmedida) != null)
-										{
-											unidad1 = isArea(unidadmedida);
-										}
-										else if(isLongitud(unidadmedida) != null)
-										{
-											unidad1 = isLongitud(unidadmedida);
-										}
-										else if(isMasa(unidadmedida) != null)
-										{
-											unidad1 = isMasa(unidadmedida);
-										}
-										else if(isVolumen(unidadmedida) != null)
-										{
-											unidad1 = isVolumen(unidadmedida);
-										}
-										
-										UnidadMedida unidad2= null;
-										if(isArea(unidadmedida7) != null)
-										{
-											unidad2 = isArea(unidadmedida7);
-										}
-										else if(isLongitud(unidadmedida7) != null)
-										{
-											unidad2 = isLongitud(unidadmedida7);
-										}
-										else if(isMasa(unidadmedida7) != null)
-										{
-											unidad2 = isMasa(unidadmedida7);
-										}
-										else if(isVolumen(unidadmedida7) != null)
-										{
-											unidad2 = isVolumen(unidadmedida7);
-										}
-										
-										r8 = s.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+id+"'");
-										while(r8.next())
-										{
-											int idprecioprod = r8.getInt(1);
-											int precioidp = r8.getInt(2);
-											int productoidp = r8.getInt(3);
-											boolean activo = r8.getBoolean(4);
-											
-											r9 = s.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
-											while(r9.next())
-											{
-												int idprecio = r9.getInt(1);
-												float montoprecio = r9.getFloat(2);
-												String descripcionprecio = r9.getString(3);
-												Date fechaprecio = r9.getDate(4);
-												
-												r10 = s.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+id7+"'");
-												while(r10.next())
-												{
-													int idprecioprod10 = r10.getInt(1);
-													int precioidp10 = r10.getInt(2);
-													int productoidp10 = r10.getInt(3);
-													boolean activo10 = r10.getBoolean(4);
-													
-													r11 = s.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp10+"'");
-													while(r11.next())
-													{
-														int idprecio11 = r11.getInt(1);
-														float montoprecio11 = r11.getFloat(2);
-														String descripcionprecio11 = r11.getString(3);
-														Date fechaprecio11 = r11.getDate(4);
-														
-														Precio pre2 = new Precio(montoprecio11, descripcionprecio11, activo10);
-														pre2.setFecha(LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(fechaprecio11)));
-														pre1 = new Precio(montoprecio, descripcionprecio, activo);
-														pre1.setFecha(LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(fechaprecio)));
-														Estandar e2 = new Estandar(exitact3, exitmin3, exitmax3, fechavencimiento3, costocompra3, fabricado3, null, codigo7, nombre7, descripcion7, null, tipoproducto7, null, null, null, observaciones7, unidad2, pre2, null, null, (Float) null, descripcion7, "", costo7);
-														Controladora.getInstance().getMisProductosEstandar().add(e2);
-														CantProductosUtilizados cantprodutil1 = new CantProductosUtilizados(e2, cantidad);
-														partida1.agregarProductoUtilizado(cantprodutil1);
-														
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-					Estandar e1 = new Estandar(exitact, exitmin, exitmax, fechavencimiento, 0, fabricado, partida1, codigo, nombre, descripcion, null, tipoproducto, null, null, null, observaciones, unidad1, pre1, null, null, (Float) null, descripcion, "", costo);//RECORDAR CAMBIAR EL NULL DE LA MANO DE OBRA
-					Controladora.getInstance().getMisProductosEstandar().add(e1);
-				}
-				else
-				{
-					Estandar e1 = new Estandar(exitact, exitmin, exitmax, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcion, null, tipoproducto, null, null, null, observaciones, unidad1, pre1, null, null, (Float) null, descripcion, "", costo);
-					Controladora.getInstance().getMisProductosEstandar().add(e1);
-				}
-				//Estandar pro = new Estandar(exitact, exitmin, exitmax, fechavencimiento, costocompra, fabricado, partida, codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, moneda, observaciones, unidadMedida, precio, comision, codigoBarra, costoManoDeObra, descripcionFija, descripcionVariable, costo)
-			}
-			
-			//Controladora.getInstance().getMisRubros().add(pre);
-			
+			id = r.getInt(1);
+			codigo = r.getString(2);
+			nombre = r.getString(3);				
+			descripcion = r.getString(4);
+			tipoproducto = r.getString(5);
+			observaciones = r.getString(6);
+			unidadmedida = r.getString(7);
+			costo = r.getFloat(8);
 		}
-		
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
@@ -3330,22 +3161,372 @@ public void loadProductos()
 			
 			if(r!=null) {
 				r.close();
-				r2.close();
-				r3.close();
-				r4.close();
-				r5.close();
-				r6.close();
-				r7.close();
-				r8.close();
-				r9.close();
-				r10.close();
-				r11.close();
 			}
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 	}
+	
+	//RECUPERACION PRODUCTO ESTANDAR
+	int idestandar;
+	int producto;
+	Float exitmin = null;
+	Float exitmax = null;				
+	Date fechavencimiento = null;
+	Float costocompra = null;
+	boolean fabricado = false;
+	Float exitact = null;
+	Float exitinit = null;
+	Float manodeobra = null;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM estardar WHERE producto = '"+id+"'");
+		while(r.next())
+		{
+			idestandar = r.getInt(1);
+			producto = r.getInt(2);
+			exitmin = r.getFloat(3);
+			exitmax = r.getFloat(4);
+			fechavencimiento = r.getDate(5);
+			costocompra = r.getFloat(6);
+			fabricado = r.getBoolean(7);
+			exitact = r.getFloat(8);
+			exitinit = r.getFloat(9);
+			manodeobra = r.getFloat(10);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//RECUPERAR PRECIO
+	int idprecioprod;
+	int precioidp = 0;
+	int productoidp;
+	boolean activo = false;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+id+"'");
+		while(r.next())
+		{
+			idprecioprod = r.getInt(1);
+			precioidp = r.getInt(2);
+			productoidp = r.getInt(3);
+			activo = r.getBoolean(4);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//SEGUNDA PARTE DEL PRECIO
+	int idprecio;
+	float montoprecio = 0;
+	String descripcionprecio = null;
+	Date fechaprecio;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
+		while(r.next())
+		{
+			idprecio = r.getInt(1);
+			montoprecio = r.getFloat(2);
+			descripcionprecio = r.getString(3);
+			fechaprecio = r.getDate(4);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//RECUPERAR UNIDAD DE MEDIDA
+	
+	if(isArea(unidadmedida) != null)
+	{
+		unidad1 = isArea(unidadmedida);
+	}
+	else if(isLongitud(unidadmedida) != null)
+	{
+		unidad1 = isLongitud(unidadmedida);
+	}
+	else if(isMasa(unidadmedida) != null)
+	{
+		unidad1 = isMasa(unidadmedida);
+	}
+	else if(isVolumen(unidadmedida) != null)
+	{
+		unidad1 = isVolumen(unidadmedida);
+	}
+	
+	//RECUPERAR RUBRO
+	int idrubroproducto = 0;
+	int rubroid = 0;
+	int productorubroid = 0;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM rubroproducto WHERE producto = '"+id+"'");
+		while(r.next())
+		{
+			idrubroproducto = r.getInt(1);
+			rubroid = r.getInt(2);
+			productorubroid = r.getInt(3);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//CONTINUACION DE RECUPERAR RUBRO
+	int idrubros = 0;
+	String codigorubro = null;
+	String nombrerubro = null;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM rubros WHERE idrubros = '"+rubroid+"'");
+		while(r.next())
+		{
+			idrubros = r.getInt(1);
+			codigorubro = r.getString(2);
+			nombrerubro = r.getString(3);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//RECUPERAR PROVEEDOR
+	int idproveedorprincipal = 0;
+	int idproveedor = 0;
+	int idprodproveedor = 0;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM proveedorprincipaproducto WHERE producto = '"+id+"'");
+		while(r.next())
+		{
+			idproveedorprincipal = r.getInt(1);
+			idproveedor = r.getInt(2);
+			idprodproveedor = r.getInt(3);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//CONTINUACION DE RECUPERAR PROVEEDOR
+	String nombreproveedor = null;
+	
+	try {
+		
+		c = con.conectar();
+		
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT nombre FROM proveedores WHERE idproveedores = '"+idproveedor+"'");
+		while(r.next())
+		{
+			nombreproveedor = r.getString(1);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	//CREAR EL ESTANDAR
+	Rubro ru = buscarRubro(nombrerubro);
+	Proveedores pro = buscarProveedor(nombreproveedor);
+	Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+	Estandar estandar = new Estandar(exitact, exitmin, exitmax, exitinit, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcionprecio, ru, tipoproducto, pro, null, null, observaciones, unidad1, pre, null, null, manodeobra, descripcion, null, costo);
+}
+
+public Proveedores buscarProveedor(String nombre)
+{
+	Proveedores p = null;
+	int i = 0;
+	boolean encontrado = false;
+	
+	while(i<getMisProveedores().size() && !encontrado)
+	{
+		if(getMisProveedores().get(i).getNombre().equalsIgnoreCase(nombre))
+		{
+			p = getMisProveedores().get(i);
+			encontrado = true;
+		}
+		
+		i++;
+	}
+	
+	return p;
 }
 
 public Area isArea(String u)
