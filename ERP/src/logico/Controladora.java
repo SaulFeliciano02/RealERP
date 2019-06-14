@@ -123,17 +123,20 @@ public class Controladora implements Serializable{
 		this.misVolumenes = new ArrayList<>();
 		this.misPartidas = new ArrayList<>();
 		this.misCantProductosUtilizados = new ArrayList<>();
+		this.misPrecios = new ArrayList<>();
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
 		misClientes.add(cliente3);
 		misClientes.add(cliente4);
 		misClientes.add(cliente5);
-		misProveedores.add(proveedor1);
+		
+		/**misProveedores.add(proveedor1);
 		misProveedores.add(proveedor2);
 		misProveedores.add(proveedor3);
 		misProveedores.add(proveedor4);
-		misProveedores.add(proveedor5);
+		misProveedores.add(proveedor5);**/
+		
 		misUnidadMedida.add(pulgada);
 		misUnidadMedida.add(pies);
 		misUnidadMedida.add(yardas);
@@ -167,7 +170,8 @@ public class Controladora implements Serializable{
 		misUnidadMedida.add(sq_milimetros);
 		misUnidadMedida.add(sq_centimetros);
 		misUnidadMedida.add(sq_metros);
-		misRubros.add(armas);
+		
+		//misRubros.add(armas);
 		//misProductos.add(pro);
 		//misProductosEstandar.add(pro);
 		this.misAtributos = new ArrayList<>();
@@ -679,10 +683,10 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO precio (precio, descripcion, precioActivo) VALUES (?, ?, ?)");
+					c.prepareStatement("INSERT INTO precio (precio, descripcion, fecha) VALUES (?, ?, ?)");
 			p.setFloat(1, precio.getPrecio());
 			p.setString(2, precio.getDescripcion());
-			p.setBoolean(3, precio.isPrecioActivo());
+			p.setDate(3, (java.sql.Date.valueOf(precio.getFecha())));
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1218,7 +1222,7 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO proveedorprincipalproducto (proveedor, producto) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO proveedorprincipaproducto (proveedor, producto) VALUES (?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProveedores().indexOf(proveedor)+1);
 			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.executeUpdate();
@@ -1640,7 +1644,7 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO estandar (producto, existmin, existmax, fechavencimiento, costocompra, fabricado, existactual, existinicial) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO estandar (producto, existmin, existmax, fechavencimiento, costocompra, fabricado, existactual, existinicial, manodeobra) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(estandar)+1);
 			p.setInt(2, Math.round(estandar.getExistenciaMinima()));
 			p.setInt(3, Math.round(estandar.getExistenciaMaxima()));
@@ -1648,7 +1652,8 @@ public class Controladora implements Serializable{
 			p.setFloat(5, estandar.getCostoDeCompra());
 			p.setBoolean(6, estandar.isFabricado());
 			p.setInt(7, Math.round(estandar.getExistenciaActual()));
-			p.setInt(8, Math.round(estandar.getExistenciaActual()));
+			p.setInt(8, Math.round(estandar.getExistenciaInicial()));
+			p.setFloat(9, estandar.getManodeobra());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
