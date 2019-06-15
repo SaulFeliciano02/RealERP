@@ -1477,10 +1477,9 @@ public class Controller implements Initializable{
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar")) {
-    		Estandar e = (Estandar) p;
+    		Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
     		ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     		for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
-    			System.out.println(c.getProducto());
     			data.add(c);
     		}
     		tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
