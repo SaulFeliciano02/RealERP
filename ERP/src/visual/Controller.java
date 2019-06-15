@@ -1480,6 +1480,7 @@ public class Controller implements Initializable{
     		Estandar e = (Estandar) p;
     		ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     		for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
+    			System.out.println(c.getProducto());
     			data.add(c);
     		}
     		tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
@@ -1493,6 +1494,7 @@ public class Controller implements Initializable{
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(false);
+    	tableview_productoPartidaList.getItems().clear();
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {
