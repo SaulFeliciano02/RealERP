@@ -3,10 +3,17 @@ package visual;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
+
+import basededatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -444,6 +451,40 @@ public class ControllerNuevoProducto implements Initializable {
     				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
     				partida.agregarProductoUtilizado(c);
+    				float cantidadRestar = productoPart.getExistenciaActual() - Float.parseFloat(cantidadSelect);
+    				
+    				Conexion con = new Conexion();
+        			Connection cSQL = null;
+        			Statement sSQL = null;
+        			ResultSet r = null;
+        			PreparedStatement p = null;
+        			try {
+        				cSQL = con.conectar();
+        				sSQL = (Statement) cSQL.createStatement();
+        				p = (PreparedStatement)
+        						cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadRestar+"' WHERE idestandar = '"+Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1+"'");
+        				p.executeUpdate();
+        			}catch(SQLException e) {
+        				e.printStackTrace();
+        			}
+        			finally {
+        				try {
+        					if(c!=null) {
+        						cSQL.close();
+        					}
+        					
+        					if(s!=null) {
+        						sSQL.close();
+        					}
+        					
+        					if(r!=null) {
+        						r.close();
+        					}
+        				}
+        				catch(Exception e2) {
+        					e2.printStackTrace();
+        				}
+        			}
     			}
     		}
     		
