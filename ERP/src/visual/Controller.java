@@ -1477,7 +1477,7 @@ public class Controller implements Initializable{
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar")) {
-    		Estandar e = (Estandar) p;
+    		Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
     		ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     		for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
     			data.add(c);
@@ -1493,6 +1493,7 @@ public class Controller implements Initializable{
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(false);
+    	tableview_productoPartidaList.getItems().clear();
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {

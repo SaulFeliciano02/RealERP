@@ -446,7 +446,7 @@ public class ControllerNuevoProducto implements Initializable {
     				partida.agregarProductoUtilizado(c);
     			}
     		}
-    		Controladora.getInstance().getMisPartidas().add(partida);
+    		
     		
     		//No se registra nombre, fecha, y muchas otras cosas
     		if(canRegister) {
@@ -462,6 +462,7 @@ public class ControllerNuevoProducto implements Initializable {
     			Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
     			if(checkbox_generalProducible.isSelected()) {
+    				Controladora.getInstance().getMisPartidas().add(partida);
     				Controladora.getInstance().guardarPartidaSQL();
     				for(CantProductosUtilizados c : partida.getListaMateriales()) {
     					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);

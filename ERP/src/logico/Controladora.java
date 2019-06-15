@@ -3536,15 +3536,16 @@ public void loadPartida()
 	ArrayList<Producto> productosPartida = new ArrayList<>();
 	Partida partidaRecuperada = new Partida();
 	
-	for (i = 0; i < getMisProductosEstandar().size(); i++)
+	for (i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++)
 	{
 		try {	
 			//Recuperar rubros
 			c = con.conectar();
 			s = (Statement) c.createStatement();
 		
-				if(getMisProductosEstandar().get(i).isFabricado())
+				if(Controladora.getInstance().getMisProductosEstandar().get(i).isFabricado())
 				{
+					partidaRecuperada = new Partida();
 					System.out.println(getMisProductosEstandar().get(i).isFabricado());
 					r = s.executeQuery("SELECT idproductos FROM productos WHERE codigo = '"+getMisProductosEstandar().get(i).getCodigo()+"'");
 					while(r.next())
@@ -3591,12 +3592,19 @@ public void loadPartida()
 							}
 							
 							CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
+							Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
 							partidaRecuperada.agregarProductoUtilizado(cpu);
+							System.out.println("La clase de cantproductosutilizados: " + cpu.getProducto() + " " + cpu.getCantidad());
+							
 						}
-						
-					}	
 					
-					getMisProductosEstandar().get(i).setPartida(partidaRecuperada);
+						
+					}
+					Controladora.getInstance().getMisPartidas().add(partidaRecuperada);	
+					Controladora.getInstance().getMisProductosEstandar().get(i).setPartida(partidaRecuperada);
+					System.out.println(Controladora.getInstance().getMisProductosEstandar().get(i).getPartida().getListaMateriales().size());
+					partidaRecuperada = null;
+					
 				}
 			
 		} catch (SQLException e) {
