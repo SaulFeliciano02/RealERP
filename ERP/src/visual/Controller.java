@@ -934,7 +934,6 @@ public class Controller implements Initializable{
 			  		    c.productos_pressed(null);
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
-			  		    primaryStage.sizeToScene();
 			  		    primaryStage.setTitle("Centro Pymes");
 			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 			  		    primaryStage.setMaximized(true);
@@ -1036,7 +1035,6 @@ public class Controller implements Initializable{
 			  		    c.selectTabProveedor();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
-			  		    primaryStage.sizeToScene();
 			  		    primaryStage.setTitle("Centro Pymes");
 			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 			  		    primaryStage.setMaximized(true);
@@ -1084,7 +1082,6 @@ public class Controller implements Initializable{
 			  		    c.selectTabEmpleado();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
-			  		    primaryStage.sizeToScene();
 			  		    primaryStage.setTitle("Centro Pymes");
 			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 			  		    primaryStage.setMaximized(true);

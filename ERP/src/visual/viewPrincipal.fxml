@@ -294,7 +294,7 @@
                                                                                              <children>
                                                                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                                    <children>
-                                                                                                      <TableView fx:id="tableview_productList" prefHeight="345.6" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                      <TableView fx:id="tableview_productList" onMousePressed="#activarInfoAdicionalProducto" prefHeight="345.6" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                          <columns>
                                                                                                             <TableColumn fx:id="tablecolumn_productCodigo" prefWidth="75.0" text="Codigo" />
                                                                                                             <TableColumn fx:id="tablecolumn_productNombre" prefWidth="75.0" text="Nombre" />
