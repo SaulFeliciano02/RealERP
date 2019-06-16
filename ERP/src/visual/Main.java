@@ -29,7 +29,6 @@ import javafx.scene.text.Text;
 
 public class Main extends Application{
 	
-	//ImageView menu_bckgrnd = new ImageView("../images/background/Menu.png");
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -45,27 +44,16 @@ public class Main extends Application{
 			Controladora.getInstance().loadProductos();
 			Controladora.getInstance().loadPartida();
 			FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
-			//FXMLLoader f = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
 		 
 		    Parent root = f.load();
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
-		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 		    
-		  //  menu_bckgrnd.fitWidthProperty().bind(primaryStage.widthProperty()); 
 		    
 		    primaryStage.show();
 
-		    
-		 /*   sc.heightProperty().addListener(new ChangeListener() {
-		    		@Override
-		    		public void changed (ObservableValue arg0, Object arg1, Object arg2) {
-		    			double height = (double) arg2;
-		    			//button.setPreHeight(height/2);
-		    		}
-		    }); */
 		    			
 		} catch(Exception e) {
 			e.printStackTrace();
