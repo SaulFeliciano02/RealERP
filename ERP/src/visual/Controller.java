@@ -127,6 +127,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUnidad;
     @FXML private TableView<CantProductosUtilizados> tableview_productoPartidaList;
     
+    @FXML private TableColumn<Producto, Float> tablecolumn_productoCostoPartida;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productoCostoManoObra;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productoCostoCompra;
+    @FXML private TableView<Producto> tableview_productoCostosList;
+    
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
     @FXML private TextField textfield_registrar_atributo;
@@ -1441,23 +1446,38 @@ public class Controller implements Initializable{
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar")) {
-    		Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
-    		ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
-    		for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
-    			data.add(c);
+    		try {
+    			Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
+    			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
+    				data.add(c);
+    			}
+    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    			tableview_productoPartidaList.setItems(data);
+    			tableview_productoPartidaList.refresh();
     		}
-    		tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
-        	tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        	tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
-        	tableview_productoPartidaList.setItems(data);
-        	tableview_productoPartidaList.refresh();
+    		catch(NullPointerException e) {
+    			
+    		}
+    		
     	}
+    	
+    	ObservableList<Producto> dataProducto = FXCollections.observableArrayList();
+    	dataProducto.add(p);
+    	tablecolumn_productoCostoPartida.setCellValueFactory(new PropertyValueFactory<>("costoPartida"));
+    	tablecolumn_productoCostoManoObra.setCellValueFactory(new PropertyValueFactory<>("manodeobra"));
+    	tablecolumn_productoCostoCompra.setCellValueFactory(new PropertyValueFactory<>("costoDeCompra"));
+    	tableview_productoCostosList.setItems(dataProducto);
+    	tableview_productoCostosList.refresh();
     	
     }
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(false);
     	tableview_productoPartidaList.getItems().clear();
+    	tableview_productoCostosList.getItems().clear();
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {

@@ -327,6 +327,8 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setSelected(false);
     		pane_costosIndirectos.setVisible(false);
     		precioCompraProducto.setDisable(true);
+    		textfield_costoPrecioCompraProducto.setText("0");
+    		textfield_costoPrecioCompraProducto.setDisable(true);
 
     	}
     	else {
@@ -340,6 +342,9 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setSelected(true);
     		pane_costosIndirectos.setVisible(true);
     		precioCompraProducto.setDisable(false);
+    		
+    		textfield_costoPrecioCompraProducto.setText("");
+    		textfield_costoPrecioCompraProducto.setDisable(false);
     	}
     }
     
@@ -734,9 +739,25 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		tabpane_everything.getSelectionModel().select(tab_general);
     		button_productGuardar.setDisable(true);
+    		
+    		//Limpiando costos
+    		textfield_costoPrecioCompraProducto.setText("");
+    		textfield_costosValor.setText("");
+    		textfield_costosTiempoFabricacion.setText("");
+    		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
+    			listview_CostosResumen.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++) {
+    			listview_CostosSelecIndirectos.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listview_CostosSelect.getItems().size(); i++) {
+    			listview_CostosSelect.getItems().remove(i);
+    		}
+    		
     		fillPartida();
     		fillPreciosTab();
     		fillGeneralTab();
+    		rellenarCostosGenerales();
     		getGastosDirectos().clear();
     		getGastosIndirectos().clear();
     	}
@@ -1882,6 +1903,7 @@ public class ControllerNuevoProducto implements Initializable {
 		ObservableList<String> tiempoData = FXCollections.observableArrayList();
 		tiempoData.addAll("Segundos", "Minutos", "Horas");
 		combobox_costosTiempoFabricacion.setItems(tiempoData);
+		combobox_costosTiempoFabricacion.getSelectionModel().select("Horas");
     }
 
 }
