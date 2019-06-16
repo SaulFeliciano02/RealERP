@@ -50,7 +50,7 @@ public class Main extends Application{
 		    primaryStage.setScene(sc);
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    
+		    primaryStage.setMaximized(true);
 		    
 		    primaryStage.show();
 
