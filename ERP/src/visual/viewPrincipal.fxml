@@ -79,26 +79,7 @@
                         <Insets top="40.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Button fx:id="selected_Inventario" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
-                           <graphic>
-                              <ImageView pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <padding>
-                              <Insets right="3.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="button_inventario" mnemonicParsing="false" onAction="#inventario_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_inventario.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
-                     </children>
-                     <padding>
-                        <Insets top="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox fx:id="box_productos" alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="selected_productos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
                            <graphic>
@@ -117,7 +98,7 @@
                         <Insets top="40.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox fx:id="box_ventas" alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="selected_ventas" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
                            <graphic>
@@ -136,26 +117,7 @@
                         <Insets top="40.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Button fx:id="selected_historial" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
-                           <graphic>
-                              <ImageView pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <padding>
-                              <Insets right="3.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_historial.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
-                     </children>
-                     <padding>
-                        <Insets top="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox fx:id="box_rh" alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="selected_rh" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
                            <graphic>
@@ -174,7 +136,7 @@
                         <Insets top="40.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox fx:id="box_admin" alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="selected_admin" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
                            <graphic>
@@ -193,7 +155,45 @@
                         <Insets top="40.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox fx:id="box_gastos" alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_Gastos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_gastos" mnemonicParsing="false" onAction="#gastos_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_gastos.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                     </children>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="box_historial" alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="selected_historial" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <padding>
+                              <Insets right="3.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_historial.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                     </children>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="box_help" alignment="CENTER_LEFT">
                      <children>
                         <Button fx:id="selected_help" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
                            <graphic>
@@ -255,56 +255,6 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox fx:id="pane_Inventario" disable="true" prefHeight="555.2" prefWidth="630.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <BorderPane prefHeight="553.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <top>
-                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" BorderPane.alignment="BOTTOM_CENTER">
-                                                         <children>
-                                                            <TextField prefHeight="30.0" prefWidth="247.0" promptText="Búsqueda" />
-                                                            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
-                                                               <effect>
-                                                                  <ImageInput>
-                                                                     <source>
-                                                                        <Image url="@images/icons/icon_search.png" />
-                                                                     </source>
-                                                                  </ImageInput>
-                                                               </effect>
-                                                            </Button>
-                                                         </children>
-                                                      </HBox>
-                                                   </top>
-                                                   <center>
-                                                      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                                                         <children>
-                                                            <TableView prefHeight="288.0" prefWidth="574.0">
-                                                               <columns>
-                                                                  <TableColumn prefWidth="75.0" text="Campo 1" />
-                                                                  <TableColumn prefWidth="75.0" text="Campo 2" />
-                                                                  <TableColumn prefWidth="75.0" text="Campo 3" />
-                                                                  <TableColumn prefWidth="75.0" text="Campo 4" />
-                                                               </columns>
-                                                               <columnResizePolicy>
-                                                                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                               </columnResizePolicy>
-                                                            </TableView>
-                                                         </children>
-                                                         <BorderPane.margin>
-                                                            <Insets left="10.0" right="10.0" top="5.0" />
-                                                         </BorderPane.margin>
-                                                      </VBox>
-                                                   </center>
-                                                </BorderPane>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
                               <VBox fx:id="pane_Productos" disable="true" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -326,7 +276,7 @@
                                                                                     <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                                        <children>
                                                                                           <ComboBox fx:id="combobox_productBuscar" prefWidth="150.0" promptText="Buscar por:" />
-                                                                                          <TextField fx:id="textfield_productBuscar" onKeyTyped="#buscarProductos" prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
+                                                                                          <TextField fx:id="textfield_productBuscar" prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
                                                                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                              <effect>
                                                                                                 <ImageInput>
@@ -344,7 +294,7 @@
                                                                                              <children>
                                                                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                                    <children>
-                                                                                                      <TableView fx:id="tableview_productList" onMouseClicked="#activarInfoAdicionalProducto" prefHeight="345.6" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                      <TableView fx:id="tableview_productList" prefHeight="345.6" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                          <columns>
                                                                                                             <TableColumn fx:id="tablecolumn_productCodigo" prefWidth="75.0" text="Codigo" />
                                                                                                             <TableColumn fx:id="tablecolumn_productNombre" prefWidth="75.0" text="Nombre" />
@@ -433,11 +383,11 @@
                                                                                                                      <children>
                                                                                                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                                                            <children>
-                                                                                                                              <TableView fx:id="tableview_productoPartidaList" layoutX="124.0" layoutY="7.0" prefHeight="207.2" prefWidth="586.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                                              <TableView layoutX="124.0" layoutY="7.0" prefHeight="207.2" prefWidth="586.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                                                 <columns>
-                                                                                                                                  <TableColumn fx:id="tablecolumn_productoPartidaUtilizado" prefWidth="277.59998166561127" text="Producto utilizado" />
-                                                                                                                                  <TableColumn fx:id="tablecolumn_productoPartidaCantidad" prefWidth="108.79998779296875" text="Cantidad" />
-                                                                                                                                    <TableColumn fx:id="tablecolumn_productoPartidaUnidad" prefWidth="177.60000610351562" text="Unidad de medida" />
+                                                                                                                                  <TableColumn prefWidth="277.59998166561127" text="Producto utilizado" />
+                                                                                                                                  <TableColumn prefWidth="108.79998779296875" text="Cantidad" />
+                                                                                                                                    <TableColumn prefWidth="177.60000610351562" text="Unidad de medida" />
                                                                                                                                 </columns>
                                                                                                                                  <columnResizePolicy>
                                                                                                                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -926,15 +876,6 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox fx:id="pane_Historial" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
                               <VBox fx:id="pane_rh" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -1090,9 +1031,9 @@
                                                                         </TableView>
                                                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
-                                                                              <Button fx:id="button_nuevoEmpleado" mnemonicParsing="false" onAction="#pressed_nuevoEmpleado" text="Nuevo Vendedor" />
+                                                                              <Button fx:id="button_nuevoEmpleado" mnemonicParsing="false" onAction="#pressed_nuevoEmpleado" text="Nuevo Empleado" />
                                                                               <Separator opacity="0.0" prefWidth="200.0" />
-                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" text="Eliminar Vendedor" />
+                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" text="Eliminar Empleado" />
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1228,112 +1169,141 @@
                                                       </AnchorPane>
                                                    </content>
                                                 </Tab>
-                                                <Tab text="Gastos generales">
-                                                   <content>
-                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                         <children>
-                                                            <HBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                               <children>
-                                                                  <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                                                     <left>
-                                                                        <VBox prefHeight="526.0" prefWidth="226.0" BorderPane.alignment="CENTER">
-                                                                           <children>
-                                                                              <TextField fx:id="textfield_busquedaGastoG" prefHeight="25.0" prefWidth="258.0" promptText="Búsqueda">
-                                                                                 <VBox.margin>
-                                                                                    <Insets bottom="5.0" />
-                                                                                 </VBox.margin>
-                                                                              </TextField>
-                                                                              <ListView fx:id="listview_gastosG" onMouseClicked="#selected_gastoGeneral" prefHeight="570.0" prefWidth="264.0" />
-                                                                           </children>
-                                                                           <BorderPane.margin>
-                                                                              <Insets bottom="75.0" left="15.0" top="15.0" />
-                                                                           </BorderPane.margin>
-                                                                        </VBox>
-                                                                     </left>
-                                                                     <center>
-                                                                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                                                           <children>
-                                                                              <VBox prefHeight="435.0" prefWidth="195.0" HBox.hgrow="ALWAYS">
-                                                                                 <children>
-                                                                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
-                                                                                       <VBox.margin>
-                                                                                          <Insets top="20.0" />
-                                                                                       </VBox.margin>
-                                                                                    </Text>
-                                                                                    <TextField fx:id="textfield_nombreGastoG" prefHeight="26.0" prefWidth="342.0">
-                                                                                       <VBox.margin>
-                                                                                          <Insets right="25.0" />
-                                                                                       </VBox.margin>
-                                                                                    </TextField>
-                                                                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción">
-                                                                                       <VBox.margin>
-                                                                                          <Insets top="30.0" />
-                                                                                       </VBox.margin>
-                                                                                    </Text>
-                                                                                    <TextArea fx:id="textarea_descricionGastoG" prefHeight="150.0" prefWidth="419.0">
-                                                                                       <VBox.margin>
-                                                                                          <Insets right="25.0" />
-                                                                                       </VBox.margin>
-                                                                                    </TextArea>
-                                                                                 </children>
-                                                                              </VBox>
-                                                                              <VBox prefHeight="526.0" prefWidth="166.0" HBox.hgrow="ALWAYS">
-                                                                                 <children>
-                                                                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Monto">
-                                                                                       <VBox.margin>
-                                                                                          <Insets top="20.0" />
-                                                                                       </VBox.margin>
-                                                                                    </Text>
-                                                                                    <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="166.0" VBox.vgrow="NEVER">
-                                                                                       <children>
-                                                                                          <TextField fx:id="textfield_montoGastoG" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="170.0" promptText="0.0" />
-                                                                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                                                                                       </children>
-                                                                                    </HBox>
-                                                                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha ">
-                                                                                       <VBox.margin>
-                                                                                          <Insets top="30.0" />
-                                                                                       </VBox.margin>
-                                                                                    </Text>
-                                                                                    <DatePicker fx:id="datepicker_fechaGastoG" prefHeight="25.0" prefWidth="195.0" />
-                                                                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                                                                       <children>
-                                                                                          <Button fx:id="button_eliminarGastoG" disable="true" mnemonicParsing="false" text="Eliminar">
-                                                                                             <HBox.margin>
-                                                                                                <Insets bottom="30.0" />
-                                                                                             </HBox.margin>
-                                                                                          </Button>
-                                                                                          <Separator opacity="0.0" prefWidth="20.0" />
-                                                                                          <Button fx:id="button_modificarGastoG" disable="true" mnemonicParsing="false" onAction="#pressed_modificarGastoGeneral" text="Modificar">
-                                                                                             <HBox.margin>
-                                                                                                <Insets bottom="30.0" />
-                                                                                             </HBox.margin>
-                                                                                          </Button>
-                                                                                          <Separator opacity="0.0" prefWidth="20.0" />
-                                                                                          <Button fx:id="button_guardarGastoG" mnemonicParsing="false" onAction="#pressed_nuevoGastoGeneral" text="Guardar">
-                                                                                             <HBox.margin>
-                                                                                                <Insets bottom="30.0" />
-                                                                                             </HBox.margin>
-                                                                                          </Button>
-                                                                                       </children>
-                                                                                    </HBox>
-                                                                                 </children>
-                                                                              </VBox>
-                                                                           </children>
-                                                                           <BorderPane.margin>
-                                                                              <Insets bottom="75.0" left="15.0" top="15.0" />
-                                                                           </BorderPane.margin>
-                                                                        </HBox>
-                                                                     </center>
-                                                                  </BorderPane>
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                      </AnchorPane>
-                                                   </content>
-                                                </Tab>
                                              </tabs>
                                           </TabPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="pane_Gastos" disable="true" prefHeight="555.2" prefWidth="630.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <BorderPane prefHeight="553.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TabPane prefHeight="959.0" prefWidth="1657.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                                         <tabs>
+                                                            <Tab text="Gastos generales">
+                                                               <content>
+                                                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <HBox prefHeight="525.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <children>
+                                                                              <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                                                                 <left>
+                                                                                    <VBox prefHeight="526.0" prefWidth="226.0" BorderPane.alignment="CENTER">
+                                                                                       <children>
+                                                                                          <TextField fx:id="textfield_busquedaGastoG" prefHeight="25.0" prefWidth="258.0" promptText="Búsqueda">
+                                                                                             <VBox.margin>
+                                                                                                <Insets bottom="5.0" />
+                                                                                             </VBox.margin>
+                                                                                          </TextField>
+                                                                                          <ListView fx:id="listview_gastosG" onMouseClicked="#selected_gastoGeneral" prefHeight="570.0" prefWidth="264.0" />
+                                                                                       </children>
+                                                                                       <BorderPane.margin>
+                                                                                          <Insets bottom="75.0" left="15.0" top="15.0" />
+                                                                                       </BorderPane.margin>
+                                                                                    </VBox>
+                                                                                 </left>
+                                                                                 <center>
+                                                                                    <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                                                       <children>
+                                                                                          <VBox prefHeight="435.0" prefWidth="195.0" HBox.hgrow="ALWAYS">
+                                                                                             <children>
+                                                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets top="20.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </Text>
+                                                                                                <TextField fx:id="textfield_nombreGastoG" prefHeight="26.0" prefWidth="342.0">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets right="25.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </TextField>
+                                                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets top="30.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </Text>
+                                                                                                <TextArea fx:id="textarea_descricionGastoG" prefHeight="150.0" prefWidth="419.0">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets right="25.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </TextArea>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <VBox prefHeight="526.0" prefWidth="166.0" HBox.hgrow="ALWAYS">
+                                                                                             <children>
+                                                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Monto">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets top="20.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </Text>
+                                                                                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="166.0" VBox.vgrow="NEVER">
+                                                                                                   <children>
+                                                                                                      <TextField fx:id="textfield_montoGastoG" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="170.0" promptText="0.0" />
+                                                                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha ">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets top="30.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </Text>
+                                                                                                <DatePicker fx:id="datepicker_fechaGastoG" prefHeight="25.0" prefWidth="195.0" />
+                                                                                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                                                   <children>
+                                                                                                      <Button fx:id="button_eliminarGastoG" disable="true" mnemonicParsing="false" text="Eliminar">
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets bottom="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </Button>
+                                                                                                      <Separator opacity="0.0" prefWidth="20.0" />
+                                                                                                      <Button fx:id="button_modificarGastoG" disable="true" mnemonicParsing="false" onAction="#pressed_modificarGastoGeneral" text="Modificar">
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets bottom="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </Button>
+                                                                                                      <Separator opacity="0.0" prefWidth="20.0" />
+                                                                                                      <Button fx:id="button_guardarGastoG" mnemonicParsing="false" onAction="#pressed_nuevoGastoGeneral" text="Guardar">
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets bottom="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </Button>
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                       </children>
+                                                                                       <BorderPane.margin>
+                                                                                          <Insets bottom="75.0" left="15.0" top="15.0" />
+                                                                                       </BorderPane.margin>
+                                                                                    </HBox>
+                                                                                 </center>
+                                                                              </BorderPane>
+                                                                           </children>
+                                                                        </HBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </content>
+                                                            </Tab>
+                                                         </tabs>
+                                                      </TabPane>
+                                                   </center>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="pane_Historial" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                  </children>
