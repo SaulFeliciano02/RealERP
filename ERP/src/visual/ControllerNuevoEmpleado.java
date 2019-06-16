@@ -73,6 +73,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		    c.selectTabEmpleado();
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
+		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 		    primaryStage.setMaximized(true);

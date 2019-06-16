@@ -153,7 +153,6 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_preciosImpuestos;
 	@FXML private TextField textfield_preciosPrecio;
 	@FXML private CheckBox checkbox_preciosHabilitar;
-	@FXML private CheckBox checkbox_Impuestos;
 	
 	//VARIABLES PARA BUSQUEDA DE PROVEEDOR
 	@FXML private TitledPane titledpane_productoBuscarProveedor;
@@ -269,9 +268,9 @@ public class ControllerNuevoProducto implements Initializable {
 		    c.productos_pressed(null);
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
+		    primaryStage.sizeToScene();
 		    primaryStage.setTitle("Centro Pymes");
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-		    primaryStage.setMaximized(true);
 		    Window owner = stage.getOwner();
 		    primaryStage.show();
 		    owner.hide();
@@ -1599,18 +1598,6 @@ public class ControllerNuevoProducto implements Initializable {
 		
 	}
 	
-	public void habilitarImpuestos(ActionEvent event) {
-		if(checkbox_Impuestos.isSelected()) {
-			textfield_preciosImpuestos.setDisable(false);
-			textfield_preciosImpuestos.setText("18");
-		}
-		else {
-			textfield_preciosImpuestos.setDisable(true);
-			textfield_preciosImpuestos.setText("0");
-		}
-
-	}
-	
 	public void calcularPrecio(KeyEvent event) {
 		//Tengo que sumarle el caracter del evento.
 		String textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
@@ -1857,7 +1844,7 @@ public class ControllerNuevoProducto implements Initializable {
     	textfield_preciosPrecio.setText("0.0");
 		textfield_preciosPorcientoGanancia.setText("0");
 		textfield_preciosCostos.setText("0.0");
-		textfield_preciosImpuestos.setText("0");
+		textfield_preciosImpuestos.setText("18");
     }
     
     public void rellenarCostosGenerales() //Ver porqué no funciona
