@@ -275,20 +275,37 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="208.0" prefWidth="543.0" style="-fx-border-color: GRAY;">
+                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="486.0" prefWidth="903.0" style="-fx-border-color: GRAY; -fx-background-image: url('file:src/visual/images/misc/precios_bckground.png'); -fx-background-size: stretch;">
                                  <children>
-                                    <Text layoutX="21.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costo" />
-                                    <TextField fx:id="textfield_preciosCostos" alignment="CENTER_RIGHT" editable="false" layoutX="21.0" layoutY="44.0" />
-                                    <Text layoutX="306.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porciento de ganancia" />
-                                    <TextField fx:id="textfield_preciosPorcientoGanancia" alignment="CENTER_RIGHT" layoutX="306.0" layoutY="44.0" onKeyTyped="#numericFieldPressed" prefHeight="8.0" prefWidth="102.0" promptText="0" />
-                                    <CheckBox fx:id="checkbox_preciosHabilitar" layoutX="304.0" layoutY="77.0" mnemonicParsing="false" onAction="#habilitarPorcientoGanancia" prefHeight="26.0" prefWidth="86.0" text="Habilitar" />
-                                    <Text layoutX="411.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
-                                    <Text layoutX="21.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio" />
-                                    <TextField fx:id="textfield_preciosPrecio" alignment="CENTER_RIGHT" layoutX="21.0" layoutY="128.0" onKeyTyped="#numericFieldPressed" />
-                                    <TextField fx:id="textfield_preciosImpuestos" alignment="CENTER_RIGHT" disable="true" layoutX="306.0" layoutY="128.0" onKeyTyped="#numericFieldPressed" prefHeight="0.0" prefWidth="103.0" promptText="0" />
-                                    <Text layoutX="304.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impuestos" />
-                                    <CheckBox fx:id="checkbox_Impuestos" layoutX="308.0" layoutY="160.0" mnemonicParsing="false" onAction="#habilitarImpuestos" prefHeight="26.0" prefWidth="98.0" text="Habilitar" />
-                                    <Text layoutX="411.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                                    <AnchorPane layoutX="47.0" layoutY="85.0" prefHeight="251.0" prefWidth="242.0" style="-fx-background-image: url('file:src/visual/images/misc/flecha_izq.png'); -fx-background-size: stretch;" />
+                                    <AnchorPane layoutX="307.0" layoutY="114.0" prefHeight="200.0" prefWidth="214.0" style="-fx-background-image: url('file:src/visual/images/misc/flecha_abajo.png'); -fx-background-size: stretch;" />
+                                    <AnchorPane layoutX="525.0" layoutY="72.0" prefHeight="264.0" prefWidth="286.0" style="-fx-background-image: url('file:src/visual/images/misc/flecha_der.png'); -fx-background-size: stretch;" />
+                                    <Text layoutX="90.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
+                                    <TextField fx:id="textfield_preciosCostos" alignment="CENTER_RIGHT" editable="false" layoutX="90.0" layoutY="61.0" prefHeight="26.0" prefWidth="146.0" />
+                                    <Text layoutX="340.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porciento de ganancia">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
+                                    <TextField fx:id="textfield_preciosPorcientoGanancia" alignment="CENTER_RIGHT" layoutX="340.0" layoutY="55.0" onKeyTyped="#numericFieldPressed" prefHeight="8.0" prefWidth="102.0" promptText="0" />
+                                    <CheckBox fx:id="checkbox_preciosHabilitar" layoutX="338.0" layoutY="88.0" mnemonicParsing="false" onAction="#habilitarPorcientoGanancia" prefHeight="26.0" prefWidth="86.0" text="Habilitar" />
+                                    <Text layoutX="445.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                                    <Text layoutX="317.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
+                                    <TextField fx:id="textfield_preciosPrecio" alignment="CENTER_RIGHT" layoutX="317.0" layoutY="332.0" onKeyTyped="#numericFieldPressed" prefHeight="26.0" prefWidth="162.0" />
+                                    <TextField fx:id="textfield_preciosImpuestos" alignment="CENTER_RIGHT" disable="true" layoutX="600.0" layoutY="56.0" onKeyTyped="#numericFieldPressed" prefHeight="0.0" prefWidth="103.0" promptText="0" />
+                                    <Text layoutX="598.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impuestos">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
+                                    <CheckBox fx:id="checkbox_Impuestos" layoutX="602.0" layoutY="88.0" mnemonicParsing="false" onAction="#habilitarImpuestos" prefHeight="26.0" prefWidth="98.0" text="Habilitar" />
+                                    <Text layoutX="705.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                                    <Text layoutX="239.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                    <Text layoutX="479.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
                                  </children>
                               </AnchorPane>
                            </children>
