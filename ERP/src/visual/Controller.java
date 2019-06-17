@@ -1292,6 +1292,19 @@ public class Controller implements Initializable{
     	
     	//Seteando los gastos generales
     	fillGastosGenerales(null);
+    	
+    	//Seteando la categoria de empleados
+    	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
+    	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
+    		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+    			dataC.add(c);
+    		}
+    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    		tableview_CategoriaEmp.setItems(dataC);
+    		tableview_CategoriaEmp.refresh();
+    	}
+    	
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
