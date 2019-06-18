@@ -1939,8 +1939,6 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 		listview_GastosGeneralesIndirectos.setItems(ob);;
 		listview_GastosGeneralesIndirectos.refresh();
-		listview_CostosGenerales.setItems(ob);
-		listview_CostosGenerales.refresh();
 
 		ObservableList<String> fabricacionData = FXCollections.observableArrayList();
 		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
