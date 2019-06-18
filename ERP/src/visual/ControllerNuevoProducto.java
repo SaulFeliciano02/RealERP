@@ -326,7 +326,6 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		radiobutton_costosIndirectos.setSelected(false);
     		pane_costosIndirectos.setVisible(false);
-    		precioCompraProducto.setDisable(true);
     		textfield_costoPrecioCompraProducto.setText("0");
     		textfield_costoPrecioCompraProducto.setDisable(true);
 
@@ -341,7 +340,6 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setDisable(false);
     		radiobutton_costosIndirectos.setSelected(true);
     		pane_costosIndirectos.setVisible(true);
-    		precioCompraProducto.setDisable(false);
     		
     		textfield_costoPrecioCompraProducto.setText("");
     		textfield_costoPrecioCompraProducto.setDisable(false);
@@ -457,7 +455,7 @@ public class ControllerNuevoProducto implements Initializable {
     				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
     				partida.agregarProductoUtilizado(c);
-    				float cantidadRestar = productoPart.getExistenciaActual() - Float.parseFloat(cantidadSelect);
+    				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
     				
     				Conexion con = new Conexion();
         			Connection cSQL = null;
@@ -753,6 +751,16 @@ public class ControllerNuevoProducto implements Initializable {
     		for(int i = 0; i < listview_CostosSelect.getItems().size(); i++) {
     			listview_CostosSelect.getItems().remove(i);
     		}
+    		for(int i = 0; i < listview_CostosGenerales.getItems().size(); i++) {
+    			listview_CostosGenerales.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listview_GastosGeneralesIndirectos.getItems().size(); i++) {
+    			listview_GastosGeneralesIndirectos.getItems().remove(i);
+    		}
+    		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
+    			listview_CostosResumen.getItems().remove(i);
+    		}
+    		//listview_
     		
     		fillPartida();
     		fillPreciosTab();
@@ -1584,8 +1592,8 @@ public class ControllerNuevoProducto implements Initializable {
 			valorCompraProducto += Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
 		}
 		
-		
-		textfield_preciosCostos.setText(Double.toString(valorDirecto + valorIndirecto + valorPartida + valorFabricacion + valorCompraProducto));
+		DecimalFormat formato1 = new DecimalFormat("0.00");
+		textfield_preciosCostos.setText(formato1.format((valorDirecto + valorIndirecto + valorPartida + valorFabricacion + valorCompraProducto)));
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
 		}
@@ -1597,7 +1605,7 @@ public class ControllerNuevoProducto implements Initializable {
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					Double.parseDouble(textfield_preciosPorcientoGanancia.getText()) ,
 					Double.parseDouble(textfield_preciosImpuestos.getText()));	
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+			textfield_preciosPrecio.setText(formato1.format((precioTotal)));
 		}
 		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
 		catch (NumberFormatException e) {
@@ -1605,7 +1613,7 @@ public class ControllerNuevoProducto implements Initializable {
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					0 ,
 					Double.parseDouble(textfield_preciosImpuestos.getText()));			
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+			textfield_preciosPrecio.setText(formato1.format((precioTotal)));
 		}		
 	}
 		
@@ -1634,13 +1642,14 @@ public class ControllerNuevoProducto implements Initializable {
 	
 	public void calcularPrecio(KeyEvent event) {
 		//Tengo que sumarle el caracter del evento.
+		DecimalFormat formato1 = new DecimalFormat("0.00");
 		String textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
 		try {
 			double precioTotal = Controladora.getInstance().calcularPrecio
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					Double.parseDouble(textfield) ,
 					Double.parseDouble(textfield_preciosImpuestos.getText()));	
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+			textfield_preciosPrecio.setText(formato1.format(Double.toString(precioTotal)));
 		}
 		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
 		catch (NumberFormatException e) {
@@ -1648,7 +1657,7 @@ public class ControllerNuevoProducto implements Initializable {
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					0 ,
 					Double.parseDouble(textfield_preciosImpuestos.getText()));			
-			textfield_preciosPrecio.setText(Double.toString(precioTotal));
+			textfield_preciosPrecio.setText(formato1.format(Double.toString(precioTotal)));
 		}		
 	}
 	
