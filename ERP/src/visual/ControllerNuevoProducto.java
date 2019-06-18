@@ -1100,18 +1100,57 @@ public class ControllerNuevoProducto implements Initializable {
     	listview_CostosSelect.getItems().remove(costo);
     }
     
+    public void activarPasarDerCostoIndirecto(MouseEvent event)
+    {
+    	listview_GastosGeneralesIndirectos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String gastogeneral = listview_GastosGeneralesIndirectos.getSelectionModel().getSelectedItem();
+    	
+    	if(gastogeneral != null)
+    	{
+    		button_DerCostoIndirecto.setDisable(false);
+    		button_IzqCostoIndirecto.setDisable(true);
+    	}
+    }
+    
+    public void activarPasarIzqCostoIndirecto(MouseEvent event)
+    {
+    	listview_CostosSelecIndirectos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	String gastogeneral = listview_CostosSelecIndirectos.getSelectionModel().getSelectedItem();
+    	
+    	if(gastogeneral != null)
+    	{
+    		button_IzqCostoIndirecto.setDisable(false);
+    		button_DerCostoIndirecto.setDisable(true);
+    	}
+    }
+    
     public void pasarDerCostoIndirecto(ActionEvent event)
     {
     	String costo = listview_GastosGeneralesIndirectos.getSelectionModel().getSelectedItem();
-    	listview_CostosSelecIndirectos.getItems().add(costo);
-    	listview_GastosGeneralesIndirectos.getItems().remove(costo);
+    	if(costo != null)
+    	{
+    		listview_CostosSelecIndirectos.getItems().add(costo);
+        	listview_GastosGeneralesIndirectos.getItems().remove(costo);
+    	}
+    	if(listview_GastosGeneralesIndirectos.getSelectionModel().isEmpty())
+    	{
+    		button_DerCostoIndirecto.setDisable(true);
+    	}
+    	
     }
     
     public void pasarIzqCostoIndirecto(ActionEvent event)
     {
     	String costo = listview_CostosSelecIndirectos.getSelectionModel().getSelectedItem();
-    	listview_GastosGeneralesIndirectos.getItems().add(costo);
-    	listview_CostosSelecIndirectos.getItems().remove(costo);
+    	if(costo != null)
+    	{
+    		listview_GastosGeneralesIndirectos.getItems().add(costo);
+        	listview_CostosSelecIndirectos.getItems().remove(costo);
+    	}
+    	if(listview_CostosSelecIndirectos.getSelectionModel().isEmpty())
+    	{
+    		button_IzqCostoIndirecto.setDisable(true);
+    	}
     }
     
     public void agregarNuevosCostos(ActionEvent event)
