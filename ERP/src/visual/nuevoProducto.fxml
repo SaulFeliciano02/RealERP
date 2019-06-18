@@ -206,24 +206,17 @@
                            <children>
                               <Pane fx:id="pane_costosDirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
                                  <children>
-                                    <ListView fx:id="listview_CostosGenerales" layoutX="14.0" layoutY="107.0" prefHeight="299.0" prefWidth="198.0" />
-                                    <TextField layoutX="14.0" layoutY="80.0" prefHeight="26.0" prefWidth="197.0" promptText="Búsqueda" />
-                                    <Button fx:id="button_derCosto" disable="true" layoutX="232.0" layoutY="201.0" mnemonicParsing="false" onAction="#pasarDerCosto" text="-&gt;" />
-                                    <Button fx:id="button_izqCosto" disable="true" layoutX="232.0" layoutY="282.0" mnemonicParsing="false" onAction="#pasarIzqCosto" text="&lt;-" />
-                                    <ListView fx:id="listview_CostosSelect" layoutX="286.0" layoutY="173.0" prefHeight="177.0" prefWidth="200.0" />
-                                    <Text layoutX="14.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos generales" />
-                                    <Text layoutX="287.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionados" />
                                     <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos directos">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Text>
                                     <Button fx:id="button_GuardarCostos" layoutX="427.0" layoutY="371.0" mnemonicParsing="false" onAction="#agregarNuevosCostos" text="Guardar" />
-                                    <Text layoutX="286.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo de fabricación" />
-                                    <TextField fx:id="textfield_costosTiempoFabricacion" layoutX="287.0" layoutY="36.0" prefHeight="25.0" prefWidth="87.0" />
-                                    <ComboBox fx:id="combobox_costosTiempoFabricacion" layoutX="374.0" layoutY="36.0" prefHeight="25.0" prefWidth="82.0" />
-                                    <Text layoutX="286.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encargados de fabricación" />
-                                    <ComboBox fx:id="combobox_costosEncargadosFabricacion" layoutX="286.0" layoutY="94.0" prefHeight="25.0" prefWidth="166.0" />
+                                    <Text layoutX="82.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiempo de fabricación" />
+                                    <TextField fx:id="textfield_costosTiempoFabricacion" layoutX="83.0" layoutY="102.0" prefHeight="31.0" prefWidth="131.0" />
+                                    <ComboBox fx:id="combobox_costosTiempoFabricacion" layoutX="221.0" layoutY="102.0" prefHeight="31.0" prefWidth="124.0" />
+                                    <Text layoutX="82.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encargados de fabricación" />
+                                    <ComboBox fx:id="combobox_costosEncargadosFabricacion" layoutX="82.0" layoutY="239.0" prefHeight="31.0" prefWidth="244.0" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
