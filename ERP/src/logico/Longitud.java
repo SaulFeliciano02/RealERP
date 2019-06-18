@@ -17,6 +17,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Pulgadas":
+					transformado = valorTransformar;
+					break;
 				case "Pies":
 					transformado = valorTransformar * 0.001f;
 					break;
@@ -39,6 +42,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Pies":
+					transformado = valorTransformar;
+					break;
 				case "Pulgadas":
 					transformado = valorTransformar * 0.0833f;
 					break;
@@ -61,6 +67,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Yardas":
+					transformado = valorTransformar;
+					break;
 				case "Pulgadas":
 					transformado = valorTransformar * 0.028f;
 					break;
@@ -83,6 +92,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Milimetros":
+					transformado = valorTransformar;
+					break;
 				case "Pulgadas":
 					transformado = valorTransformar * 25.4f;
 					break;
@@ -105,6 +117,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Centimetros":
+					transformado = valorTransformar;
+					break;
 				case "Pulgadas":
 					transformado = valorTransformar * 2.54f;
 					break;
@@ -127,6 +142,9 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Metros":
+					transformado = valorTransformar;
+					break;
 				case "Pulgadas":
 					transformado = valorTransformar * 0.0254f;
 					break;

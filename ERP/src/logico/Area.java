@@ -16,6 +16,9 @@ public class Area extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Sq Pulgadas":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pies":
 					transformado = valorTransformar * 144f;
 					break;
@@ -37,7 +40,10 @@ public class Area extends UnidadMedida {
 		if(this.getNombre().equalsIgnoreCase("Sq Pies"))
 		{
 			switch(comparador)
-			{
+			{	
+				case "Sq Pies":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pulgadas":
 					transformado = valorTransformar * 0.0069f;
 					break;
@@ -60,6 +66,9 @@ public class Area extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Sq Yardas":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pulgadas":
 					transformado = valorTransformar * 0.00077f;
 					break;
@@ -82,6 +91,9 @@ public class Area extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Sq Milimetros":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pulgadas":
 					transformado = valorTransformar * 645.16f;
 					break;
@@ -104,6 +116,9 @@ public class Area extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Sq Centimetros":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pulgadas":
 					transformado = valorTransformar * 6.4516f;
 					break;
@@ -126,6 +141,9 @@ public class Area extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Sq Metros":
+					transformado = valorTransformar;
+					break;
 				case "Sq Pulgadas":
 					transformado = valorTransformar * 0.00064516f;
 					break;
