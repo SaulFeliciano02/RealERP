@@ -43,6 +43,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -229,7 +230,7 @@ public class ControllerNuevoProducto implements Initializable {
     
     //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
-    	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
+    	if(!Controladora.getInstance().isNumber(event.getCharacter()) && !event.getCode().equals(KeyCode.BACK_SPACE)) {
     		event.consume();
     	}
     	//Especifico sobre que variable el evento surgio
@@ -238,6 +239,9 @@ public class ControllerNuevoProducto implements Initializable {
     	}*/
 
     	else if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
+    		calcularPrecio(event);
+    	}
+    	else if(event.getSource().equals(textfield_preciosImpuestos)) {
     		calcularPrecio(event);
     	}
     	else if(event.getSource().equals(exAct) || event.getSource().equals(exMax) || event.getSource().equals(exMin)) {
@@ -1690,9 +1694,12 @@ public class ControllerNuevoProducto implements Initializable {
 	public void habilitarPorcientoGanancia(ActionEvent event) {
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
+			textfield_preciosPorcientoGanancia.setText("");
 		}
 		else {
 			textfield_preciosPorcientoGanancia.setDisable(true);
+			textfield_preciosPorcientoGanancia.setText("0");
+			calcularPrecio(null);
 		}
 		
 	}
@@ -1701,32 +1708,52 @@ public class ControllerNuevoProducto implements Initializable {
 		if(checkbox_Impuestos.isSelected()) {
 			textfield_preciosImpuestos.setDisable(false);
 			textfield_preciosImpuestos.setText("18");
+			calcularPrecio(null);
 		}
 		else {
 			textfield_preciosImpuestos.setDisable(true);
 			textfield_preciosImpuestos.setText("0");
+			calcularPrecio(null);
 		}
 
 	}
 	
 	public void calcularPrecio(KeyEvent event) {
 		//Tengo que sumarle el caracter del evento.
+		String textfield = "";
+		String textfieldImpuesto = "";
 		DecimalFormat formato1 = new DecimalFormat("0.00");
-		String textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
+		try {
+			textfield = textfield_preciosPorcientoGanancia.getText();
+			textfieldImpuesto = textfield_preciosImpuestos.getText();
+		}catch(NullPointerException e){
+			
+		}
+		try {
+			if(event.getSource().equals(textfield_preciosPorcientoGanancia)) {
+				textfield = textfield_preciosPorcientoGanancia.getText() + event.getCharacter();
+			}
+			else if(event.getSource().equals(textfield_preciosImpuestos)) {
+				textfieldImpuesto = textfield_preciosImpuestos.getText() + event.getCharacter();
+			}
+		}catch(NullPointerException e) {
+			
+		}
+		
 		try {
 			double precioTotal = Controladora.getInstance().calcularPrecio
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					Double.parseDouble(textfield) ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));	
-			textfield_preciosPrecio.setText(formato1.format(Double.toString(precioTotal)));
+					Double.parseDouble(textfieldImpuesto));	
+			textfield_preciosPrecio.setText(formato1.format((precioTotal)));
 		}
 		//Si el porciento de ganancia esta vacio, hago el calculo solo con el impuesto.
 		catch (NumberFormatException e) {
 			double precioTotal = Controladora.getInstance().calcularPrecio
 					(Double.parseDouble(textfield_preciosCostos.getText()),
 					0 ,
-					Double.parseDouble(textfield_preciosImpuestos.getText()));			
-			textfield_preciosPrecio.setText(formato1.format(Double.toString(precioTotal)));
+					Double.parseDouble(textfieldImpuesto));			
+			textfield_preciosPrecio.setText(formato1.format((precioTotal)));
 		}		
 	}
 	
