@@ -16,6 +16,7 @@ public class Estandar extends Producto{
 	private Partida partida;
 	private float manodeobra;
 	private float costoPartida;
+	private ManoDeObra infoManoDeObra;
 	
 	public Estandar(float existenciaActual, float existenciaMinima, float existenciaMaxima, float existenciaInicial, Date fechaVencimiento, float costoDeCompra, boolean fabricado, 
 			Partida partida, String codigo, String nombre, 
@@ -36,6 +37,7 @@ public class Estandar extends Producto{
 		this.partida = partida;
 		this.manodeobra = costoManoDeObra;
 		this.costoPartida = 0;
+		infoManoDeObra = null;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -113,5 +115,14 @@ public class Estandar extends Producto{
 		}catch(NullPointerException e) {}
 		return costoPartida;
 	}
+
+	public ManoDeObra getInfoManoDeObra() {
+		return infoManoDeObra;
+	}
+
+	public void setInfoManoDeObra(ManoDeObra infoManoDeObra) {
+		this.infoManoDeObra = infoManoDeObra;
+	}
+	
 	
 }

@@ -94,6 +94,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Precio> misPrecios;
 	private ArrayList<Partida> misPartidas;
 	private ArrayList<Combinaciones> misCombinaciones;
+	private ArrayList<ManoDeObra> misManosDeObras;
 	
 	private ArrayList<Area> misAreas;
 	private ArrayList<Longitud> misLongitudes;
@@ -178,10 +179,13 @@ public class Controladora implements Serializable{
 		this.misGrupoAtributo = new ArrayList<>();
 		this.misGastosGenerales = new ArrayList<>();
 		this.misCategoriasEmpleado = new ArrayList<>();
+		this.misManosDeObras = new ArrayList<>();
 	}
 	
 	
-	
+	public ArrayList<ManoDeObra> getMisManosDeObras(){
+		return misManosDeObras;
+	}
 	
 	public ArrayList<Combinaciones> getMisCombinaciones() {
 		return misCombinaciones;
@@ -1986,6 +1990,86 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
+	
+	public void guardarManoDeObraSQL(ManoDeObra manodeobra) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO manodeobra (costo, cantidadhoras, fecha) VALUES (?, ?, ?)");
+			p.setFloat(1, manodeobra.getCosto());
+			p.setFloat(2, manodeobra.getCantidadHoras());
+			p.setDate(3, manodeobra.getDate());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarManoDeObraProductoSQL(Estandar estandar, ManoDeObra manodeobra, CategoriaEmpleado categoriaempleado) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO manodeobraproducto (manodeobra, estandar, categoriaempleado) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisManosDeObras().indexOf(manodeobra)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1);
+			p.setInt(3, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoriaempleado)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	
 	
 	
 	
