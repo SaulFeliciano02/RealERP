@@ -43,6 +43,7 @@ public class Main extends Application{
 			Controladora.getInstance().loadPrecio();
 			Controladora.getInstance().loadProductos();
 			Controladora.getInstance().loadPartida();
+			Controladora.getInstance().loadManoDeObra();
 			FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 		 
 		    Parent root = f.load();

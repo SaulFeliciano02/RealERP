@@ -1207,6 +1207,8 @@ public class ControllerNuevoProducto implements Initializable {
     			}
 			}
 			
+    	}
+    	
     	if(!textfield_costosValor.getText().isEmpty())
     	{	
     		if(radiobutton_costosIndirectos.isSelected())
@@ -1228,10 +1230,9 @@ public class ControllerNuevoProducto implements Initializable {
         			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
         			listview_CostosResumen.getItems().add(m);
-        			}
         		}
         	}
-    	}	
+        }	
     }
     
     //FUNCIONES CREACION DE LA PARTIDA
