@@ -400,6 +400,8 @@ public class ControllerNuevoProducto implements Initializable {
     		float costoDeCompra = 0;
     		float costoManoObra = 0;
     		boolean fabricado = false;
+    		ManoDeObra infoManoDeObra = null;
+    		CategoriaEmpleado categoriaempleado = null;
     		if(checkbox_generalProducible.isSelected()) {
     			try {
     				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
@@ -416,6 +418,9 @@ public class ControllerNuevoProducto implements Initializable {
     						costoManoObra = c.getSueldo() * tiempoCantidad;
     					}
     				}
+    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+    						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
     			}catch(NullPointerException e) {
     				
     			}
@@ -504,12 +509,24 @@ public class ControllerNuevoProducto implements Initializable {
     				//estandar.getCostosIndirectos().add(c);
     			//}
     			
+    			
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
     			
     			Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
+    			
+    			
+    			if(infoManoDeObra != null) {
+    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+    				estandar.setInfoManoDeObra(infoManoDeObra);
+    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+    				Controladora.getInstance().guardarManoDeObraProductoSQL(estandar, infoManoDeObra, categoriaempleado);
+    			}
     			if(checkbox_generalProducible.isSelected()) {
+    				
+    				
+    				
     				Controladora.getInstance().getMisPartidas().add(partida);
     				Controladora.getInstance().guardarPartidaSQL();
     				for(CantProductosUtilizados c : partida.getListaMateriales()) {
@@ -751,12 +768,12 @@ public class ControllerNuevoProducto implements Initializable {
     		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++) {
     			listview_CostosSelecIndirectos.getItems().remove(i);
     		}
-    		for(int i = 0; i < listview_CostosSelect.getItems().size(); i++) {
+    		/**for(int i = 0; i < listview_CostosSelect.getItems().size(); i++) {
     			listview_CostosSelect.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listview_CostosGenerales.getItems().size(); i++) {
+    		}**/
+    		/**for(int i = 0; i < listview_CostosGenerales.getItems().size(); i++) {
     			listview_CostosGenerales.getItems().remove(i);
-    		}
+    		}**/
     		for(int i = 0; i < listview_GastosGeneralesIndirectos.getItems().size(); i++) {
     			listview_GastosGeneralesIndirectos.getItems().remove(i);
     		}
