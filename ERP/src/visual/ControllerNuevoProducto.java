@@ -468,6 +468,7 @@ public class ControllerNuevoProducto implements Initializable {
     				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
     				partida.agregarProductoUtilizado(c);
     				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
+    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
     				
     				Conexion con = new Conexion();
         			Connection cSQL = null;
@@ -478,7 +479,7 @@ public class ControllerNuevoProducto implements Initializable {
         				cSQL = con.conectar();
         				sSQL = (Statement) cSQL.createStatement();
         				p = (PreparedStatement)
-        						cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadRestar+"' WHERE idestandar = '"+Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1+"'");
+        						cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadRestar+"' WHERE idestandar = '"+indiceProducto+"'");
         				p.executeUpdate();
         			}catch(SQLException e) {
         				e.printStackTrace();
