@@ -3273,7 +3273,104 @@ public void recuperarRubros()
 	}
 }
 
-
+public void loadManoDeObra()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Connection c2 = null;
+	Statement s = null;
+	Statement s2 = null;
+	ResultSet r = null;
+	ResultSet r2 = null;
+	PreparedStatement p = null;
+	int id =0;
+	float costo = 0;
+	float cantHoras = 0;
+	Date fecha = null;
+	int id2 = 0;
+	int manoobraID = 0;
+	int estandarID = 0;
+	int categoriaID = 0;
+	
+	try {
+		
+		//Recuperar rubros
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM manodeobra");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			id = r.getInt(1);
+			costo = r.getFloat(2);
+			cantHoras = r.getFloat(3);
+			fecha = r.getDate(4);
+			
+		}
+		
+		c2 = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s2 = (Statement) c2.createStatement();
+		r2 = s2.executeQuery("SELECT * FROM manodeobraproducto WHERE manodeobra = '"+id+"'");
+		
+		while(r2.next())
+		{
+			id2 = r.getInt(1);
+			manoobraID = r.getInt(2);
+			estandarID = r.getInt(3);
+			categoriaID = r.getInt(4);
+		}
+		
+		CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID+1);
+		
+		ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
+		
+		Controladora.getInstance().getMisManosDeObras().add(mano);
+		
+		Controladora.getInstance().getMisProductosEstandar().get(estandarID+1).setInfoManoDeObra(mano);
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(c2!=null) {
+				c2.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(r2!=null) {
+				r2.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
 
 public void loadProductos()
 {
