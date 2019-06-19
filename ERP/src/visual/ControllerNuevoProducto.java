@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -60,6 +61,7 @@ import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
+import logico.ManoDeObra;
 import logico.Partida;
 import logico.Precio;
 import logico.Producto;
@@ -146,6 +148,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private ComboBox<String> combobox_costosTiempoFabricacion;
 	@FXML private ComboBox<String> combobox_costosEncargadosFabricacion;
 	@FXML private TextField textfield_costoPrecioCompraProducto;
+	@FXML private TextField textfield_TotalManoObra;
 
 	//PRECIOS
 	@FXML private TextField textfield_preciosCostos;
@@ -1155,31 +1158,40 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void agregarNuevosCostos(ActionEvent event)
     {
+    	if(radiobutton_costosDirectos.isSelected())
+    	{        		
+			if(checkbox_generalProducible.isSelected()) {
+    			try {
+    				float costoManoObra = 0;
+    				CategoriaEmpleado categoria = null;
+    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+    				for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+    					if(c.getNombre().equals(nombreCategoria)) {
+    						categoria = c;
+    						
+    						if(tiempoMedida.equalsIgnoreCase("Minutos")) {
+    							tiempoCantidad = tiempoCantidad / 60;
+    						}
+    						else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
+    							tiempoCantidad = tiempoCantidad / 3600; 
+    						}
+    						costoManoObra = c.getSueldo() * tiempoCantidad;
+    					}
+    				}
+    				
+    				ManoDeObra mano = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoria);
+    				
+    				textfield_TotalManoObra.setText(Float.toString(mano.getCosto()));
+    				
+    			}catch(NullPointerException e) {
+    				
+    			}
+			}
+			
     	if(!textfield_costosValor.getText().isEmpty())
-    	{
-    		if(radiobutton_costosDirectos.isSelected())
-        	{        		
-        		int i;
-        		
-        		for(i = 0; i < listview_CostosSelect.getItems().size(); i++)
-        		{
-        			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelect.getItems().get(i));
-        			
-        			DecimalFormat df = new DecimalFormat("#.00");
-        			
-        			float atribucion = Float.parseFloat(df.format(Controladora.getInstance().calcularCostos(enlistado, Float.parseFloat(textfield_costosValor.getText()))));
-        			
-        			CostoDirecto nuevo = new CostoDirecto(enlistado.getNombre(), atribucion, null);
-        			
-        			gastosDirectos.add(nuevo);
-        			
-        			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
-        			
-        			listview_CostosResumen.getItems().add(m);
-        			
-        		}
-        	}
-    		
+    	{	
     		if(radiobutton_costosIndirectos.isSelected())
         	{
         		int i;
@@ -1199,10 +1211,10 @@ public class ControllerNuevoProducto implements Initializable {
         			String m = nuevo.getNombre() + " Costo: " + nuevo.getValor();
         			
         			listview_CostosResumen.getItems().add(m);
+        			}
         		}
         	}
-    	}
-    	
+    	}	
     }
     
     //FUNCIONES CREACION DE LA PARTIDA
