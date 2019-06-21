@@ -85,6 +85,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Estandar> misProductosEstandar;
 	private ArrayList<Kit> misProductosKit;
 	private ArrayList<Servicio> misProductosServicio;
+	private ArrayList<Estandar> misProductosMatriz;
 	private ArrayList<GrupoAtributo> misGrupoAtributo;
 	private ArrayList<Atributos> misAtributos;
 	private ArrayList<GastoGeneral> misGastosGenerales;
@@ -117,6 +118,7 @@ public class Controladora implements Serializable{
 		this.misProductosEstandar = new ArrayList<>();
 		this.misProductosKit = new ArrayList<>();
 		this.misProductosServicio = new ArrayList<>();
+		this.misProductosMatriz = new ArrayList<>();
 		this.misUnidadMedida = new ArrayList<>();
 		this.misAreas = new ArrayList<>();
 		this.misLongitudes = new ArrayList<>();
@@ -125,6 +127,7 @@ public class Controladora implements Serializable{
 		this.misPartidas = new ArrayList<>();
 		this.misCantProductosUtilizados = new ArrayList<>();
 		this.misPrecios = new ArrayList<>();
+		this.misCombinaciones = new ArrayList<>();
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -182,6 +185,9 @@ public class Controladora implements Serializable{
 		this.misManosDeObras = new ArrayList<>();
 	}
 	
+	public ArrayList<Estandar> getMisProductosMatriz(){
+		return misProductosMatriz;
+	}
 	
 	public ArrayList<ManoDeObra> getMisManosDeObras(){
 		return misManosDeObras;
@@ -1347,7 +1353,12 @@ public class Controladora implements Serializable{
 			p.setString(3, producto.getDescripcion());
 			p.setString(4, producto.getTipoProducto());
 			p.setString(5, producto.getObservaciones());
-			p.setString(6, producto.getUnidadMedida().getNombre()); 
+			if(producto.getUnidadMedida() == null) {
+				p.setString(6, "");
+			}
+			else {
+				p.setString(6, producto.getUnidadMedida().getNombre()); 
+			}
 			p.setFloat(7, producto.getCosto());
 			p.executeUpdate();
 		}
@@ -1611,7 +1622,7 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO grupoatributo (nombre) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO grupoatributo (nombre) VALUES (?)");
 			p.setString(1, grupoatributo.getNombre());
 			p.executeUpdate();
 		}
@@ -1963,9 +1974,10 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO producto (nombre, grupoatributo) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO atributos (nombre, grupoatributo) VALUES (?, ?)");
 			p.setString(1, atributo.getNombre());
 			p.setInt(2, Controladora.getInstance().getMisGrupoAtributo().indexOf(atributo.getGrupoAtributo())+1);
+			System.out.println("El indice es: " + Controladora.getInstance().getMisGrupoAtributo().indexOf(atributo.getGrupoAtributo()));
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -2173,6 +2185,16 @@ public class Controladora implements Serializable{
 		}
 		
 		return existe;
+	}
+	
+	public GrupoAtributo buscarGrupoAtributo(String nombre) {
+		GrupoAtributo grupoatributo = null;
+		for(GrupoAtributo g : Controladora.getInstance().getMisGrupoAtributo()) {
+			if(g.getNombre().equalsIgnoreCase(nombre)) {
+				grupoatributo = g;
+			}
+		}
+		return grupoatributo;
 	}
 	
 	/**FUNCION PARA BUSCAR UN PRODUCTO**/
@@ -2762,6 +2784,22 @@ public class Controladora implements Serializable{
 
 	public void setVentaPromedioMensual(float ventaPromedioAnual) {
 		this.ventaPromedioMensual = ventaPromedioAnual;
+	}
+	
+	public float calcularManoDeObra(String nombreCategoria, String tiempoMedida, float tiempoCantidad) {
+		float costoManoObra = 0;
+		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+			if(c.getNombre().equals(nombreCategoria)) {
+				if(tiempoMedida.equalsIgnoreCase("Minutos")) {
+					tiempoCantidad = tiempoCantidad / 60;
+				}
+				else if(tiempoMedida.equalsIgnoreCase("Segundos")) {
+					tiempoCantidad = tiempoCantidad / 3600; 
+				}
+				costoManoObra = c.getSueldo() * tiempoCantidad;
+			}
+		}
+		return costoManoObra;
 	}
 	
 	public void loadPrecio()
@@ -4306,6 +4344,41 @@ public void loadGastosGenerales()
 		}
 	}
 }
+
+	public void restarExistenciaActual(float cantidadRestar, int indiceProducto) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadRestar+"' WHERE idestandar = '"+indiceProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 
 
 

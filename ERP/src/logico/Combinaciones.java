@@ -8,12 +8,19 @@ public class Combinaciones {
 	public String numeroSerie;
 	public float existenciaActual;
 	public Partida partida;
+	public Atributos atributo1;
+	public Atributos atributo2;
+	public Atributos atributo3;
+	
 	
 	public Combinaciones(String numeroSerie, float existenciaActual, ArrayList<Atributos> listaAtributos) {
 		super();
 		this.listaAtributos = listaAtributos;
 		this.numeroSerie = numeroSerie;
 		this.existenciaActual = existenciaActual;
+		this.atributo1 = listaAtributos.get(0);
+		this.atributo2 = listaAtributos.get(1);
+		this.atributo3 = listaAtributos.get(2);
 		//this.partida = partida;
 	}
 
@@ -52,5 +59,31 @@ public class Combinaciones {
 	public void agregarAtributo(Atributos atributo) {
 		this.listaAtributos.add(atributo);
 	}
+
+	public String getAtributo1() {
+		return atributo1.getNombre();
+	}
+
+	public void setAtributo1(Atributos atributo1) {
+		this.atributo1 = atributo1;
+	}
+
+	public String getAtributo2() {
+		return atributo2.getNombre();
+	}
+
+	public void setAtributo2(Atributos atributo2) {
+		this.atributo2 = atributo2;
+	}
+
+	public String getAtributo3() {
+		return atributo3.getNombre();
+	}
+
+	public void setAtributo3(Atributos atributo3) {
+		this.atributo3 = atributo3;
+	}
+	
+	
 	
 }
