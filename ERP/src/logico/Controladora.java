@@ -3325,6 +3325,7 @@ public void loadManoDeObra()
 			categoriaID = r.getInt(4);
 		}
 		
+		System.out.println("CategoriaID = " + categoriaID);
 		CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID-1);
 		
 		ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
