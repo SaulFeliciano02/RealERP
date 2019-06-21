@@ -473,11 +473,11 @@
                                                                                                                <children>
                                                                                                                   <VBox prefHeight="422.4" prefWidth="586.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                                      <children>
-                                                                                                                        <TableView prefHeight="303.0" prefWidth="1081.0" VBox.vgrow="ALWAYS">
+                                                                                                                        <TableView fx:id="tableview_atributosList" prefHeight="303.0" prefWidth="1081.0" VBox.vgrow="ALWAYS">
                                                                                                                            <columns>
-                                                                                                                              <TableColumn prefWidth="329.9999694824219" text="Atributo 1" />
-                                                                                                                              <TableColumn minWidth="0.0" prefWidth="425.0" text="Atributo 2" />
-                                                                                                                              <TableColumn prefWidth="325.0" text="Atributo 3" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_atributo1" prefWidth="329.9999694824219" text="Atributo 1" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_atributo2" minWidth="0.0" prefWidth="425.0" text="Atributo 2" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_atributo3" prefWidth="325.0" text="Atributo 3" />
                                                                                                                            </columns>
                                                                                                                            <VBox.margin>
                                                                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

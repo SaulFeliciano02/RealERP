@@ -44,6 +44,7 @@ import logico.Atributos;
 import logico.CantProductosUtilizados;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
+import logico.Combinaciones;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
@@ -131,6 +132,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Producto, Float> tablecolumn_productoCostoManoObra;
     @FXML private TableColumn<Producto, Float> tablecolumn_productoCostoCompra;
     @FXML private TableView<Producto> tableview_productoCostosList;
+    
+    @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo1;
+    @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo2;
+    @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo3;
+    @FXML private TableView<Combinaciones> tableview_atributosList;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -827,10 +833,15 @@ public class Controller implements Initializable{
     		}
     		listView_grupoAtributos.getItems().add(g.getNombre());
     		Controladora.getInstance().addGrupoAtributo(g);
+    		Controladora.getInstance().guardarGrupoAtributoSQL(g);
+    	}
+    	else {
+    		g = Controladora.getInstance().buscarGrupoAtributo(nombreFamilia);
     	}
     	Atributos a = new Atributos(nombreAtributo, g);
     	data.add(a);
     	Controladora.getInstance().addAtributo(a);
+    	Controladora.getInstance().guardarAtributoSQL(a);
     	tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
     	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     	tableView_atributos.getItems().add(a);
@@ -1458,7 +1469,7 @@ public class Controller implements Initializable{
     	pane_InfoAdicionalProducto.setVisible(true);
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
-    	if(p.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {
     		try {
     			Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
     			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
@@ -1472,7 +1483,7 @@ public class Controller implements Initializable{
     			tableview_productoPartidaList.refresh();
     		}
     		catch(NullPointerException e) {
-    			
+    			e.printStackTrace();
     		}
     		
     	}
@@ -1485,12 +1496,34 @@ public class Controller implements Initializable{
     	tableview_productoCostosList.setItems(dataProducto);
     	tableview_productoCostosList.refresh();
     	
+    	if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar m = Controladora.getInstance().buscarProducto(p.getNombre());
+    		try {
+    			ObservableList<Combinaciones> combinacionesData = FXCollections.observableArrayList();
+    			System.out.println("La cantidad de combinaciones: " + m.getCombinaciones().size());
+    			for(Combinaciones c : m.getCombinaciones()) {
+    				combinacionesData.add(c);
+    				System.out.println(c.getAtributo1() + " " + c.getAtributo2() + " " + c.getAtributo3());
+    			}
+    			tablecolumn_atributo1.setCellValueFactory(new PropertyValueFactory<>("atributo1"));
+    			tablecolumn_atributo2.setCellValueFactory(new PropertyValueFactory<>("atributo2"));
+    			tablecolumn_atributo3.setCellValueFactory(new PropertyValueFactory<>("atributo3"));
+    			tableview_atributosList.setItems(combinacionesData);
+    			tableview_atributosList.refresh();
+    		}catch(NullPointerException e) {
+    			
+    		}
+    		
+    	}
+    	
+    	
     }
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(false);
     	tableview_productoPartidaList.getItems().clear();
     	tableview_productoCostosList.getItems().clear();
+    	tableview_atributosList.getItems().clear();
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {
