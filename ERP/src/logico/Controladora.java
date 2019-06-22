@@ -402,80 +402,6 @@ public class Controladora implements Serializable{
 		guardarGastoGeneralSQL(g);
 	}
 	
-	/*public void guardarProductoEstandarSQL(Estandar estandar) {
-		
-		Conexion con = new Conexion();
-		Connection c = null;
-		Statement s = null;
-		ResultSet r = null;
-		PreparedStatement p = null;
-		PreparedStatement p2 = null;
-		
-		try {
-			c = con.conectar();
-			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO productos (codigo, nombre, descripcion, tipoproducto, observaciones, unidadmedida, costo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			p.setString(1, estandar.getCodigo());
-			p.setString(2, estandar.getNombre());
-			p.setString(3, estandar.getDescripcion());
-			p.setString(4, estandar.getTipoProducto());
-			p.setString(5, estandar.getObservaciones());
-			p.setString(6, estandar.getUnidadMedida().getNombre());
-			p.setFloat(7, estandar.getCosto());
-			
-			//ejecutar el preparedStatement
-			p.executeUpdate();
-			System.out.println("Datos guardados!");
-			
-			String codigoprod = estandar.getCodigo();
-			
-			s = (Statement) c.createStatement();
-			r = s.executeQuery("SELECT idproductos FROM productos WHERE codigo = '"+codigoprod+"'");
-			
-			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-			while(r.next())
-			{
-				int id = r.getInt(1);
-				
-				p2 = (PreparedStatement) c.prepareStatement("INSERT INTO estandar (producto, existmin, existmax, fechavencimiento, costocompra, fabricado, existactual, existinicial) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-				p2.setInt(1, id);
-				p2.setFloat(2, estandar.getExistenciaMinima());
-				p2.setFloat(3, estandar.getExistenciaMaxima());
-				p2.setDate(4, (java.sql.Date) estandar.getFechaVencimiento());
-				p2.setFloat(5, estandar.getCostoDeCompra());
-				p2.setBoolean(6, estandar.isFabricado());
-				p2.setFloat(7, estandar.getExistenciaActual());
-				p2.setFloat(8, estandar.getExistenciaActual());
-				
-			}
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-				finally {
-					try {
-						
-						if(c!=null) {
-							c.close();
-						}
-						
-						if(s!=null) {
-							s.close();
-						}
-						
-						if(r!=null) {
-							r.close();
-						}
-						
-					} catch (Exception e2) {
-						e2.printStackTrace();
-					}
-		}
-		
-	}*/
 
 	public void guardarGastoGeneralSQL(GastoGeneral g) {
 		Conexion con = new Conexion();
@@ -1575,7 +1501,7 @@ public class Controladora implements Serializable{
 		}
 	}
 	
-	public void guardarKitSQL(Producto producto) {
+	public void guardarKitSQL(Kit kit) {
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
@@ -1585,8 +1511,12 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO kit (producto) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+					c.prepareStatement("INSERT INTO kit (producto, exisminima, exismaxima, exisactual, exisinicial) VALUES (?, ?, ?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(kit)+1);
+			p.setFloat(2, kit.getExistenciaMinima());
+			p.setFloat(3, kit.getExistenciaMaxima());
+			p.setFloat(4, kit.getExistenciaActual());
+			p.setFloat(5, kit.getExistenciaInicial());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1808,50 +1738,7 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
-	
-	/**public void guardarCostoDirectoSQL(Producto producto, Float partida, Float manoDeObra) {
-		Conexion con = new Conexion();
-		Connection c = null;
-		Statement s = null;
-		ResultSet r = null;
-		PreparedStatement p = null;
-		try {
-			c = con.conectar();
-			
-			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO costodirecto (producto, manodeobra, partida) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			p.setString(1, Controladora.getInstance().getMisProductos());
-			p.setString(2, producto.getNombre());
-			p.setString(3, producto.getDescripcion());
-			p.setString(4, producto.getTipoProducto());
-			p.setString(5, producto.getObservaciones());
-			p.setString(6, producto.getUnidadMedida().getNombre());
-			p.setFloat(7, producto.getCosto());
-			p.executeUpdate();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				if(c!=null) {
-					c.close();
-				}
-				
-				if(s!=null) {
-					s.close();
-				}
-				
-				if(r!=null) {
-					r.close();
-				}
-			}
-			catch(Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}**/
-	
+		
 	public void guardarCombinacionesAtributosSQL(Atributos atributo, Combinaciones combinaciones) {
 		Conexion con = new Conexion();
 		Connection c = null;
