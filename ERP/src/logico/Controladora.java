@@ -1890,7 +1890,7 @@ public class Controladora implements Serializable{
 		}
 	}
 	
-	public void guardarCombinacionesSQL() {
+	public void guardarCombinacionesSQL(Combinaciones comb) {
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
@@ -1900,7 +1900,9 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO combinaciones () VALUES ()");
+					c.prepareStatement("INSERT INTO combinaciones (numserie) VALUES (?)");
+			
+			p.setString(1, comb.getNumeroSerie());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -2800,6 +2802,109 @@ public class Controladora implements Serializable{
 			}
 		}
 		return costoManoObra;
+	}
+	
+	public void loadMatriz()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		PreparedStatement p = null;
+		int id = 0;
+		int idcombinacionAtrib = 0;
+		int idatributo = 0;
+		int idCombinacion = 0;
+		ArrayList<Atributos> listaAtributos = new ArrayList<>();
+		int idMatriz = 0;
+		int idEstandar = 0;
+		int idCombinacion2 = 0;
+		float existencia = 0;
+		String numserie = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM combinaciones");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				id = r.getInt(1);
+				numserie = r.getString(2);
+				
+				c2 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT * FROM combinacionesatributos WHERE combinacion = '"+id+"'");
+				
+				while(r2.next())
+				{
+					idcombinacionAtrib = r2.getInt(1);
+					idatributo = r2.getInt(2);
+					idCombinacion = r2.getInt(3);
+					
+					listaAtributos.add(getMisAtributos().get(idatributo-1));
+				}
+				
+				c3 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM matriz WHERE combinacion = '"+id+"'");
+				
+				while(r3.next())
+				{
+					idMatriz = r3.getInt(1);
+					idEstandar = r3.getInt(2);
+					idCombinacion2 = r3.getInt(3);
+					existencia = r3.getFloat(4);
+				}
+				
+				Combinaciones comb = new Combinaciones(numserie, existencia, listaAtributos);
+				
+				getMisCombinaciones().add(comb);
+				
+				getMisProductosEstandar().get(idEstandar-1).agregarCombinacion(comb);
+				
+				getMisProductosMatriz().add(getMisProductosEstandar().get(idEstandar-1));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 	
 	public void loadPrecio()
@@ -4164,6 +4269,7 @@ public void loadCategoriaEmpleado()
 {
 	Conexion con = new Conexion();
 	Connection c = null;
+	Connection c2 = null;
 	Statement s = null;
 	Statement s2 = null;
 	ResultSet r = null;
@@ -4185,16 +4291,19 @@ public void loadCategoriaEmpleado()
 			int id = r.getInt(1);
 			String nombre = r.getString(2);
 			int idgrupoatributo = r.getInt(3);
-
+			
+			c2 = con.conectar();
+			s2 = (Statement) c2.createStatement();
 			q = s2.executeQuery("SELECT * FROM grupoatributo WHERE idgrupoatributo = '"+idgrupoatributo+"'");
 			while(q.next())
 			{
 				int idr = q.getInt(1);
+				
 				String nombrecategoria = q.getString(2);
 				
-				GrupoAtributo pre = new GrupoAtributo(nombrecategoria);
+				GrupoAtributo pre = buscarGrupoAtributo(nombrecategoria);
 				
-				Atributos atr = new Atributos(nombrecategoria, pre);
+				Atributos atr = new Atributos(nombre, pre);
 				
 				Controladora.getInstance().getMisAtributos().add(atr);
 			}
@@ -4212,6 +4321,10 @@ public void loadCategoriaEmpleado()
 			
 			if(c!=null) {
 				c.close();
+			}
+			
+			if(c2!=null) {
+				c2.close();
 			}
 			
 			if(s!=null) {

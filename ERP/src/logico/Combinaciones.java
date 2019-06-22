@@ -20,7 +20,10 @@ public class Combinaciones {
 		this.existenciaActual = existenciaActual;
 		this.atributo1 = listaAtributos.get(0);
 		this.atributo2 = listaAtributos.get(1);
-		this.atributo3 = listaAtributos.get(2);
+		if(listaAtributos.size()>2)
+		{
+			this.atributo3 = listaAtributos.get(2);
+		}
 		//this.partida = partida;
 	}
 
