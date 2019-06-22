@@ -538,12 +538,16 @@ public class ControllerNuevoProducto implements Initializable {
     			canRegister = false;
     		}
     		Date date = null;
-    		ArrayList<Producto> productsForKit = new ArrayList<>();
+    		ArrayList<CantProductosUtilizados> productsForKit = new ArrayList<>();
     		for(String item : listview_partidaSelect.getItems()) {
     			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
-    			for(Producto p : Controladora.getInstance().getMisProductosEstandar()) {
+    			String cantidad = Controladora.getInstance().findPartidaCantidad(item);
+    			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
     				if(nombreItem.equals(p.getNombre())) {
-    					productsForKit.add(p);
+    					CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidad));
+    					Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+    					productsForKit.add(c);
     				}
     			}
     		}
@@ -551,8 +555,17 @@ public class ControllerNuevoProducto implements Initializable {
     		if(canRegister) {
     			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+    			
     			Controladora.getInstance().getMisProductos().add(kit);
+    			Controladora.getInstance().guardarProductosSQL(kit);
+    			
     			Controladora.getInstance().getMisProductosKit().add(kit);
+    			Controladora.getInstance().guardarKitSQL(kit);
+    			
+    			for(CantProductosUtilizados c : productsForKit) {
+    				Controladora.getInstance().guardarKitProductosSQL(kit, c);
+    			}
+    			
     		}
     	}
     	
@@ -1452,7 +1465,7 @@ public class ControllerNuevoProducto implements Initializable {
     		
     	};
     	float existencia = 0;
-    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio") || combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
     		existencia = 1;
     	}
     	else {

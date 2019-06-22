@@ -6,14 +6,14 @@ import java.util.Date;
 public class Kit extends Producto{
 	
 	
-	private ArrayList<Producto> productosContenidos; //Preguntarle a Alonso despues
+	private ArrayList<CantProductosUtilizados> productosContenidos; //Preguntarle a Alonso despues
 	private float existenciaActual;
 	private float existenciaMinima;
 	private float existenciaMaxima;
 	private float existenciaInicial;
 	private Date fechaVencimiento;
 	
-	public Kit(ArrayList<Producto> productosContenidos, float existenciaActual, float existenciaMinima, float existenciaMaxima, float existenciaInicial, Date fechaVencimiento, String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
+	public Kit(ArrayList<CantProductosUtilizados> productosContenidos, float existenciaActual, float existenciaMinima, float existenciaMaxima, float existenciaInicial, Date fechaVencimiento, String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, float costoManoDeObra,
 			String descripcionFija, String descripcionVariable, float costo) {
@@ -51,7 +51,7 @@ public class Kit extends Producto{
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
-	public ArrayList<Producto> getProductosContenidos() {
+	public ArrayList<CantProductosUtilizados> getProductosContenidos() {
 		return productosContenidos;
 	}
 	public float getExistenciaInicial() {

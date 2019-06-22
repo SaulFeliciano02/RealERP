@@ -53,6 +53,7 @@ import logico.Empleado;
 import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
+import logico.Kit;
 import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
@@ -1500,6 +1501,25 @@ public class Controller implements Initializable{
     			Servicio s = (Servicio) productoSearch.get(0);
     			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     			for(CantProductosUtilizados c : s.getMaterialesUtilizados()) {
+    				data.add(c);
+    			}
+    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    			tableview_productoPartidaList.setItems(data);
+    			tableview_productoPartidaList.refresh();
+    		}
+    		catch(NullPointerException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	if(p.getTipoProducto().equalsIgnoreCase("Kit")) {
+    		try {
+    			ArrayList<Producto> productoSearch = Controladora.getInstance().searchProducts(p.getNombre().toLowerCase(), "Nombre");
+    			Kit k = (Kit) productoSearch.get(0);
+    			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : k.getProductosContenidos()) {
     				data.add(c);
     			}
     			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
