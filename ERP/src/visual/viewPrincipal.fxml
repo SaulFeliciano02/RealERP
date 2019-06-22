@@ -30,7 +30,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER">
         <menus>
@@ -478,6 +478,8 @@
                                                                                                                               <TableColumn fx:id="tablecolumn_atributo1" prefWidth="329.9999694824219" text="Atributo 1" />
                                                                                                                               <TableColumn fx:id="tablecolumn_atributo2" minWidth="0.0" prefWidth="425.0" text="Atributo 2" />
                                                                                                                               <TableColumn fx:id="tablecolumn_atributo3" prefWidth="325.0" text="Atributo 3" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_existenciaActualCombinacion" prefWidth="75.0" text="Existencia actual" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_numSerieCombinacion" prefWidth="75.0" text="Número Serie" />
                                                                                                                            </columns>
                                                                                                                            <VBox.margin>
                                                                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

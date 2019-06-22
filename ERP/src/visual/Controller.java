@@ -136,6 +136,8 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo1;
     @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo2;
     @FXML private TableColumn<Combinaciones, String> tablecolumn_atributo3;
+    @FXML private TableColumn<Combinaciones, Float> tablecolumn_existenciaActualCombinacion;
+    @FXML private TableColumn<Combinaciones, String> tablecolumn_numSerieCombinacion;
     @FXML private TableView<Combinaciones> tableview_atributosList;
     
     //DESPLIEGUE DE ATRIBUTOS
@@ -1303,6 +1305,9 @@ public class Controller implements Initializable{
     	
     	//Seteando los gastos generales
     	fillGastosGenerales(null);
+    	
+    	//Seteando los atributos
+    	fillAtributesList(null);
     	
     	//Seteando la categoria de empleados
     	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();

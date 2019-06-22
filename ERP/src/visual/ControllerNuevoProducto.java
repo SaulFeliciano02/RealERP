@@ -651,7 +651,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(Combinaciones c : combinacionFinal) {
     				matriz.getCombinaciones().add(c);
     				Controladora.getInstance().getMisCombinaciones().add(c);
-    				Controladora.getInstance().guardarCombinacionesSQL();
+    				Controladora.getInstance().guardarCombinacionesSQL(c);
     				for(Atributos atributo : c.getListaAtributos()) {
     					Controladora.getInstance().guardarCombinacionesAtributosSQL(atributo, c);
     				}
