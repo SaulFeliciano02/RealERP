@@ -10,7 +10,13 @@ public class CantProductosUtilizados {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.unidad = producto.getUnidadMedida().getNombre();
+		if(producto.getUnidadMedida() != null) {
+			this.unidad = producto.getUnidadMedida().getNombre();
+		}
+		else {
+			this.unidad = "";
+		}
+		
 	}
 
 	

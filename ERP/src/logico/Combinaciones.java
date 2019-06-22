@@ -24,6 +24,9 @@ public class Combinaciones {
 		{
 			this.atributo3 = listaAtributos.get(2);
 		}
+		else {
+			this.atributo3 = new Atributos("", null);
+		}
 		//this.partida = partida;
 	}
 

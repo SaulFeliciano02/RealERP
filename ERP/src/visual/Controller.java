@@ -56,6 +56,7 @@ import logico.GrupoAtributo;
 import logico.Producto;
 import logico.Proveedores;
 import logico.Rubro;
+import logico.Servicio;
 import logico.UnidadMedida;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -1493,6 +1494,25 @@ public class Controller implements Initializable{
     		
     	}
     	
+    	if(p.getTipoProducto().equalsIgnoreCase("Servicio")) {
+    		try {
+    			ArrayList<Producto> productoSearch = Controladora.getInstance().searchProducts(p.getNombre().toLowerCase(), "Nombre");
+    			Servicio s = (Servicio) productoSearch.get(0);
+    			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : s.getMaterialesUtilizados()) {
+    				data.add(c);
+    			}
+    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    			tableview_productoPartidaList.setItems(data);
+    			tableview_productoPartidaList.refresh();
+    		}
+    		catch(NullPointerException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
     	ObservableList<Producto> dataProducto = FXCollections.observableArrayList();
     	dataProducto.add(p);
     	tablecolumn_productoCostoPartida.setCellValueFactory(new PropertyValueFactory<>("costoPartida"));
@@ -1513,6 +1533,8 @@ public class Controller implements Initializable{
     			tablecolumn_atributo1.setCellValueFactory(new PropertyValueFactory<>("atributo1"));
     			tablecolumn_atributo2.setCellValueFactory(new PropertyValueFactory<>("atributo2"));
     			tablecolumn_atributo3.setCellValueFactory(new PropertyValueFactory<>("atributo3"));
+    			tablecolumn_existenciaActualCombinacion.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    			tablecolumn_numSerieCombinacion.setCellValueFactory(new PropertyValueFactory<>("numeroSerie"));
     			tableview_atributosList.setItems(combinacionesData);
     			tableview_atributosList.refresh();
     		}catch(NullPointerException e) {

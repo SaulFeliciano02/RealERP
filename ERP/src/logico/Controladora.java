@@ -1156,9 +1156,9 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO unidadmedidaarea (servicio, cantproducto) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO serviciomateriales (servicio, cantproducto) VALUES (?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductosServicio().indexOf(servicio)+1);
-			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados));
+			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
 			p.executeUpdate();
 		}
 		catch(Exception e) {

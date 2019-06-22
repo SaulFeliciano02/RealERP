@@ -359,6 +359,7 @@ public class ControllerNuevoProducto implements Initializable {
     	String nombre = textfield_generalNombre.getText();
     	Rubro rubro = null;
     	Proveedores proveedor = null;
+    	setCostoYPrecioTotal(null);
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
     	
     	//Guardando precio en la base de datos
@@ -369,7 +370,7 @@ public class ControllerNuevoProducto implements Initializable {
     	String codigoBarra = "";
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
     	UnidadMedida unidad = null;
-    	setCostoYPrecioTotal(null);
+    	
     	float costoTotal = Float.parseFloat(textfield_preciosCostos.getText());
     	if(textfield_generalUnidad.getLength() != 0) {
     		unidad = tableview_unidadList.getSelectionModel().getSelectedItem();
@@ -561,9 +562,13 @@ public class ControllerNuevoProducto implements Initializable {
     		for(String item : listview_partidaSelect.getItems()) {
     			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
     			String cantidadItem = Controladora.getInstance().findPartidaCantidad(item);
-    			for(Producto p : Controladora.getInstance().getMisProductosEstandar()) {
+    			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
     				if(nombreItem.equals(p.getNombre())) {
     					CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidadItem));
+    				
+    					Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+    					
     					productsForServicio.add(c);
     				}
     			}
@@ -585,6 +590,13 @@ public class ControllerNuevoProducto implements Initializable {
     					descripcion, empleado, productsForServicio, costoTotal);
     			Controladora.getInstance().addProductoServicio(servicio);
     			Controladora.getInstance().addProducto(servicio);
+    			
+    			Controladora.getInstance().guardarProductosSQL(servicio);
+    			Controladora.getInstance().guardarServiciosSQL(servicio);
+    			
+    			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
+    				Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
+    			}
     		}
     	}
     	
@@ -736,23 +748,6 @@ public class ControllerNuevoProducto implements Initializable {
     			listview_partidaSelect.getItems().remove(i);
     		}
 		
-		
-    		/*
-			//Limpiando costos directos
-			textfield_costosDirectosNombre.setText("");
-			textfield_costosDirectosValor.setText("");
-			textarea_costosDirectosDescripcion.setText("");
-			int tableview_costosDirectosSize = tableview_costosDirectos.getItems().size();
-			tableview_costosDirectos.getItems().remove(0, tableview_costosDirectosSize-1);
-		
-			//Limpiando costos indirectos
-			textfield_costosIndirectosNombre.setText("");
-			textfield_costosIndirectosValor.setText("");
-			textarea_costosIndirectosDescripcion.setText("");
-			int tableview_costosIndirectosSize = tableview_costosIndirectos.getItems().size();
-			tableview_costosIndirectos.getItems().remove(0, tableview_costosIndirectosSize);
-    		 */
-		
     		//Limpiando combinaciones
     		textfield_busquedaFamilia1.setText("");
     		textfield_busquedaFamilia2.setText("");
@@ -785,19 +780,12 @@ public class ControllerNuevoProducto implements Initializable {
     		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++) {
     			listview_CostosSelecIndirectos.getItems().remove(i);
     		}
-    		/**for(int i = 0; i < listview_CostosSelect.getItems().size(); i++) {
-    			listview_CostosSelect.getItems().remove(i);
-    		}**/
-    		/**for(int i = 0; i < listview_CostosGenerales.getItems().size(); i++) {
-    			listview_CostosGenerales.getItems().remove(i);
-    		}**/
     		for(int i = 0; i < listview_GastosGeneralesIndirectos.getItems().size(); i++) {
     			listview_GastosGeneralesIndirectos.getItems().remove(i);
     		}
     		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
     			listview_CostosResumen.getItems().remove(i);
     		}
-    		//listview_
     		fillPartida();
     		fillPreciosTab();
     		fillGeneralTab();
@@ -828,6 +816,10 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
+    		
+    		exAct.setText("");
+    		exMin.setText("");
+    		exMax.setText("");
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
     		exAct.setDisable(false);
@@ -844,6 +836,10 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(true);
     		
     		checkbox_generalProducible.setDisable(true);
+    		
+    		exAct.setText("");
+    		exMin.setText("");
+    		exMax.setText("");
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
     		exAct.setDisable(true);
@@ -861,6 +857,10 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(true);
     		
     		checkbox_generalProducible.setDisable(true);
+    		
+    		exAct.setText("0");
+    		exMin.setText("0");
+    		exMax.setText("0");
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
     		tab_combinaciones.setDisable(false);
@@ -877,6 +877,10 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(true);
     		
     		checkbox_generalProducible.setDisable(false);
+    		
+    		exAct.setText("");
+    		exMin.setText("");
+    		exMax.setText("");
     	}
     }
     
@@ -1328,10 +1332,16 @@ public class ControllerNuevoProducto implements Initializable {
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
     	String item_moved = "";
-    	String tipoConversion = combobox_ConversorUnidad.getSelectionModel().getSelectedItem();
+    	String tipoConversion = "";
     	float costo = 0;
     	float cantidadConvertida = 0;
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nameOriginal.toLowerCase(), "Nombre");
+    	if(estandar.get(0).getUnidadMedida() == null) {
+    		tipoConversion = "";
+    	}
+    	else {
+    		tipoConversion = combobox_ConversorUnidad.getSelectionModel().getSelectedItem();
+    	}
     	switch(tipoConversion){
     		case "Pulgadas":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pulgadas", Float.parseFloat(textfield_partidaCantidad.getText()));
@@ -1435,6 +1445,10 @@ public class ControllerNuevoProducto implements Initializable {
     		case "Sq Metros":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Sq Metros", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
+    			
+    		case "":
+    			cantidadConvertida = Float.parseFloat(textfield_partidaCantidad.getText());
+    			break;
     		
     	};
     	float existencia = 0;
@@ -1476,15 +1490,28 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
     			}
     		}**/
-    		item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
+    		if(estandar.get(0).getUnidadMedida() != null) {
+    			item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
+    		}
+    		else {
+    			item_moved = nameOriginal + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
+    		}
+    		
     		//e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]"
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
     		float cantidadRestante = (Float.parseFloat(cantidad) - (cantidadConvertida*existencia));
     		DecimalFormat formato1 = new DecimalFormat("0.00");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
-    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    			if(estandar.get(0).getUnidadMedida() != null) {
+    				listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
     					cantidadRestante + "]");
+    			}
+    			else {
+    				listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+        					cantidadRestante + "]");
+    			}
+    			
     		
     			listview_partida.refresh();
     		}
@@ -1495,8 +1522,15 @@ public class ControllerNuevoProducto implements Initializable {
     			if(nameSelect.equalsIgnoreCase(nameOriginal)) {
     				
     				listview_partidaSelect.getItems().remove(s);
-    				item_moved = nameSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", Usando: " + 
+    				if(estandar.get(0).getUnidadMedida() != null) {
+    					item_moved = nameSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", Usando: " + 
     						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]" + " (" + ((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia) + ")";
+    				}
+    				else {
+    					item_moved = nameSelect + "[" + "Unidad: " + "Unidad nula" + ", Usando: " + 
+        						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]" + " (" + ((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia) + ")";
+    				}
+    				
     				listview_partidaSelect.getItems().add(item_moved);
     				isAlreadySelected = true;
     			}
@@ -1519,13 +1553,35 @@ public class ControllerNuevoProducto implements Initializable {
     	System.out.println(nombreSelect);
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
     	DecimalFormat formato1 = new DecimalFormat("0.00");
-    	String original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    	
+    	String original = "";
+    	if(estandar.get(0).getUnidadMedida() != null) {
+    		original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
     			(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)*existencia)) + "]";
+    	}
+    	else {
+    		original = nombreSelect + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+        			(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad))) + "]";
+    	}
+    	
     	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
     	listview_partida.getItems().remove(original);
+    	for(String s : listview_partida.getItems()) {
+    		System.out.println(s);
+    		System.out.println("Esta es la original: " + original);
+    	}
     	
-    	listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    	
+    	
+    	if(estandar.get(0).getUnidadMedida() != null) {
+    		listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
 				(estandar.get(0).getExistenciaActual()) + "]");
+    	}
+    	else {
+    		listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+    				(estandar.get(0).getExistenciaActual()) + "]");
+    	}
+    	
     	listview_partida.refresh();
     	button_partidaSendBack.setDisable(true);
     }
@@ -1956,6 +2012,9 @@ public class ControllerNuevoProducto implements Initializable {
 		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
 			if(e.getUnidadMedida() != null) {
 				dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]");
+			}
+			else {
+				dataPartida.add(e.getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + e.getExistenciaActual() + "]");
 			}
 		}
 		listview_partida.setItems(dataPartida);
