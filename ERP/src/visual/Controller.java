@@ -536,6 +536,7 @@ public class Controller implements Initializable{
     	pane_Historial.setVisible(false);
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
+    	pane_Ayuda.setVisible(false);
 
     	
     }
