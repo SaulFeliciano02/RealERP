@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
@@ -33,9 +34,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -231,6 +234,9 @@ public class Controller implements Initializable{
     @FXML private Button button_GuardarPromedioVenta;
     @FXML private TextField textfield_PromedioVenta;
     
+    //CONFIGURACION
+    @FXML private AnchorPane pane_nuevoUsuario;
+    
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
@@ -243,12 +249,16 @@ public class Controller implements Initializable{
     @FXML private Pane pane_rh;
     @FXML private Pane pane_Admin;
     @FXML private Pane pane_Ayuda;
+    @FXML private VBox pane_Config;
 
     @FXML private MenuBar menuBar;
 
     @FXML private ToggleGroup toggleMenu;
     
     @FXML private Label text_menuName;
+    @FXML private Label text_menuOptions;
+    
+    @FXML private MenuItem menuItem_Usuarios;
 
     Image pressed_principal = new Image(getClass().getResourceAsStream("images/buttons/selected_button_principal.png"));
 	Image pressed_gastos  = new Image(getClass().getResourceAsStream("images/buttons/selected_button_gastos.png"));
@@ -330,6 +340,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_principal.setEffect(pressed_principal1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Principal");
     	
     	//button_principal.setEffect(nonpressed_principal1);
@@ -358,6 +370,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+
     	
     }
     
@@ -383,6 +396,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_gastos.setEffect(pressed_gastos1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Gastos");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -411,6 +426,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+
     	
     }
     
@@ -436,6 +452,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_productos.setEffect(pressed_productos1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Productos");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -464,6 +482,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+
     }
     
     public void ventas_pressed(ActionEvent event){
@@ -488,6 +507,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_ventas.setEffect(pressed_ventas1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Ventas");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -515,7 +536,7 @@ public class Controller implements Initializable{
     	pane_Historial.setVisible(false);
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
-    	pane_Ayuda.setVisible(false);
+
     	
     }
     
@@ -541,6 +562,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_historial.setEffect(pressed_historial1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Historial");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -569,7 +592,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
-    	
+
     }
     
     public void rh_pressed(ActionEvent event){
@@ -594,6 +617,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_rh.setEffect(pressed_rh1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Recursos Humanos");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -649,6 +674,8 @@ public class Controller implements Initializable{
     	selected_help.setVisible(false);
     	
     	button_admin.setEffect(pressed_admin1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Administración");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -703,6 +730,9 @@ public class Controller implements Initializable{
     	selected_help.setVisible(true);
     	
     	button_help.setEffect(pressed_help1);
+    	
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
     	text_menuName.setText("Ayuda");
     	
     	button_principal.setEffect(nonpressed_principal1);
@@ -731,6 +761,27 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(true);
+
+    	
+    }
+    
+    public void config_pressed(ActionEvent event){
+    	
+    	    	text_menuName.setVisible(false);
+    	    	text_menuOptions.setVisible(true);
+    	    	text_menuOptions.setText("Configuración");
+    	    	
+    	    	pane_Config.setDisable(false);
+    	    	pane_Config.setVisible(true);
+    }
+    
+    public void config_close(ActionEvent event){
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
+    	text_menuOptions.setText("Configuración");
+    	
+    	pane_Config.setDisable(true);
+    	pane_Config.setVisible(false);
     	
     }
     
@@ -934,6 +985,12 @@ public class Controller implements Initializable{
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			Window owner = button_nuevoProducto.getScene().getWindow();
+			
+			/* Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			 if(primaryScreenBounds.getHeight()<750) {
+			 stage.setY(primaryScreenBounds.getMinY());
+			  stage.setHeight(primaryScreenBounds.getHeight());
+			 }*/
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nuevo Producto");
@@ -1584,5 +1641,8 @@ public class Controller implements Initializable{
     	
     }
     
+    public void habilitarNuevoUsuario(ActionEvent event) {
+    	pane_nuevoUsuario.setDisable(false);
+    }
     
 }

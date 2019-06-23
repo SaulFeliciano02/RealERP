@@ -26,30 +26,21 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
+         <menus>
+            <Menu mnemonicParsing="false" text="Configuración">
+              <items>
+                  <MenuItem fx:id="menuItem_Usuarios" mnemonicParsing="false" onAction="#config_pressed" text="Usuarios" />
+              </items>
+            </Menu>
+         </menus>
       </MenuBar>
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
          <children>
@@ -225,11 +216,25 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="text_menuOptions" layoutY="50.0" textFill="#6b6868" visible="false">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
                               <Label fx:id="text_negocioName" layoutX="90.0" layoutY="14.0" text="N o m b r e   N e g o c i o" textFill="#6b6868">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
                               </Label>
+                              <VBox layoutX="483.0" layoutY="-8.0" prefHeight="74.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="483.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <StackPane alignment="BOTTOM_RIGHT" prefHeight="74.0" prefWidth="140.0">
+                                       <children>
+                                          <Label text="Bienvenido, Usuario " />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
                         <Pane prefHeight="1.0" prefWidth="630.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;">
@@ -1314,6 +1319,171 @@
                               <VBox fx:id="pane_Ayuda" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="pane_Config" disable="true" layoutX="188.0" layoutY="110.0" prefHeight="618.4" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                                      <tabs>
+                                        <Tab text="General">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F6F6F6;">
+                                                   <children>
+                                                      <VBox layoutX="185.0" layoutY="159.0" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                               <children>
+                                                                  <Label layoutX="14.0" layoutY="43.0" text="Nombre de la empresa" />
+                                                                  <TextField layoutX="14.0" layoutY="68.0" prefHeight="25.0" prefWidth="222.0" />
+                                                               </children>
+                                                            </Pane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Usuarios">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: F6F6F6;">
+                                                   <children>
+                                                      <VBox layoutX="181.0" layoutY="95.0" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <HBox alignment="BOTTOM_RIGHT" prefHeight="38.0" prefWidth="630.0">
+                                                               <children>
+                                                                  <TextField prefHeight="31.0" prefWidth="221.0" promptText="Búsqueda" />
+                                                                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
+                                                                     <effect>
+                                                                        <ImageInput>
+                                                                           <source>
+                                                                              <Image url="@images/icons/icon_search.png" />
+                                                                           </source>
+                                                                        </ImageInput>
+                                                                     </effect>
+                                                                  </Button>
+                                                               </children>
+                                                            </HBox>
+                                                            <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                              <columns>
+                                                                <TableColumn prefWidth="75.0" text="Usuario" />
+                                                                <TableColumn prefWidth="75.0" text="Nombre" />
+                                                                  <TableColumn prefWidth="75.0" text="Cargo" />
+                                                                  <TableColumn prefWidth="75.0" text="Última vez accedido" />
+                                                              </columns>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                               </VBox.margin>
+                                                               <columnResizePolicy>
+                                                                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                               </columnResizePolicy>
+                                                            </TableView>
+                                                            <HBox prefHeight="28.0" prefWidth="610.0">
+                                                               <VBox.margin>
+                                                                  <Insets left="10.0" right="10.0" />
+                                                               </VBox.margin>
+                                                               <children>
+                                                                  <Button mnemonicParsing="false" onAction="#habilitarNuevoUsuario" text="Nuevo usuario" />
+                                                                  <Separator opacity="0.0" prefWidth="20.0" />
+                                                                  <Button mnemonicParsing="false" text="Eliminar usuario" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="159.0" prefWidth="610.0">
+                                                               <children>
+                                                                  <AnchorPane fx:id="pane_nuevoUsuario" disable="true" prefHeight="159.0" prefWidth="493.0" style="-fx-border-color: LIGHTGRAY;">
+                                                                     <children>
+                                                                        <VBox layoutX="2.0" layoutY="3.0" prefHeight="155.0" prefWidth="456.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                                                                           <children>
+                                                                              <HBox prefHeight="66.0" prefWidth="492.0">
+                                                                                 <children>
+                                                                                    <VBox prefHeight="63.0" prefWidth="210.0">
+                                                                                       <children>
+                                                                                          <Label text="Usuario" />
+                                                                                          <TextField />
+                                                                                       </children>
+                                                                                       <padding>
+                                                                                          <Insets left="10.0" />
+                                                                                       </padding>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="66.0" prefWidth="262.0" HBox.hgrow="ALWAYS">
+                                                                                       <children>
+                                                                                          <Label text="Empleado" />
+                                                                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <TextField />
+                                                                                                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Buscar" />
+                                                                                             </children>
+                                                                                          </HBox>
+                                                                                       </children>
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="40.0" right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </VBox>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                    <VBox prefHeight="64.0" prefWidth="202.0">
+                                                                                       <children>
+                                                                                          <Label text="Cargo" />
+                                                                                          <ComboBox prefHeight="26.0" prefWidth="171.0" promptText="Seleccione" />
+                                                                                       </children>
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                                                       <children>
+                                                                                          <StackPane alignment="BOTTOM_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <Button mnemonicParsing="false" text="Guardar" />
+                                                                                             </children>
+                                                                                          </StackPane>
+                                                                                       </children>
+                                                                                       <padding>
+                                                                                          <Insets bottom="30.0" right="80.0" />
+                                                                                       </padding>
+                                                                                    </VBox>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                           </children>
+                                                                        </VBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                    <VBox prefHeight="98.0" prefWidth="630.0">
+                                       <children>
+                                          <StackPane alignment="BOTTOM_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="button_cerrarConfig" mnemonicParsing="false" onAction="#config_close" text="Cerrar">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </StackPane>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="50.0" />
+                                       </padding>
+                                    </VBox>
                                  </children>
                               </VBox>
                            </children>
