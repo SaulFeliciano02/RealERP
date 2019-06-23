@@ -4,28 +4,32 @@ import java.util.ArrayList;
 
 public class Servicio extends Producto{
 	
-	private ArrayList<Empleado> empleado;
+	private CategoriaEmpleado categoria;
 	private ArrayList<CantProductosUtilizados> materialesUtilizados;
+	private ManoDeObra infoManoDeObra;
 
 	public Servicio(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, String descripcionFija,
-			ArrayList<Empleado> empleado, ArrayList<CantProductosUtilizados> materialesUtilizados, float costo) {
+			CategoriaEmpleado categoria, ArrayList<CantProductosUtilizados> materialesUtilizados, float costo) {
 		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
 				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo);
-		this.empleado = empleado;
+		this.setCategoria(categoria);
 		this.materialesUtilizados = materialesUtilizados;
 	}
-
 	
-	public ArrayList<Empleado> getEmpleado() {
-		return empleado;
+
+
+	public CategoriaEmpleado getCategoria() {
+		return categoria;
 	}
 
 
-	public void setEmpleado(ArrayList<Empleado> empleado) {
-		this.empleado = empleado;
+
+	public void setCategoria(CategoriaEmpleado categoria) {
+		this.categoria = categoria;
 	}
+
 
 
 	public ArrayList<CantProductosUtilizados> getMaterialesUtilizados() {
@@ -36,6 +40,12 @@ public class Servicio extends Producto{
 		materialesUtilizados.add(p);
 	}
 	
-	
+	public ManoDeObra getInfoManoDeObra() {
+		return infoManoDeObra;
+	}
+
+	public void setInfoManoDeObra(ManoDeObra infoManoDeObra) {
+		this.infoManoDeObra = infoManoDeObra;
+	}
 
 }

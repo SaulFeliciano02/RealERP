@@ -116,6 +116,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_generalNombre; 
 	@FXML private TitledPane titledpane_productoBuscarUnidadMedida;
 	@FXML private TextField textfield_generalUnidad;
+	@FXML private Button button_BuscarUnidadMedida;
 	@FXML private TextField precioCompraProducto;
 	
 	//PARTIDA
@@ -299,8 +300,16 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void activarProductoGuardar(KeyEvent event) {
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
-    	if(tipoProducto.equalsIgnoreCase("Servicio")  || tipoProducto.equalsIgnoreCase("Matriz")) {
+    	if(tipoProducto.equalsIgnoreCase("Matriz")) {
     		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0) {
+    			button_productGuardar.setDisable(false);
+    		}
+    		else {
+    			button_productGuardar.setDisable(true);
+    		}
+    	}
+    	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
+    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0) {
     			button_productGuardar.setDisable(false);
     		}
     		else {
@@ -571,6 +580,9 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
     		float costo = 0;
+    		float costoManoObra = 0;
+    		ManoDeObra infoManoDeObra = null;
+    		CategoriaEmpleado categoriaempleado = null;
     		ArrayList<CantProductosUtilizados> productsForServicio = new ArrayList<>();
     		for(String item : listview_partidaSelect.getItems()) {
     			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
@@ -593,22 +605,35 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		if(canRegister) {
     			costo = Float.parseFloat(textfield_preciosCostos.getText());
-    			ArrayList<Empleado> empleado = new ArrayList<>();
-    			for(Empleado e : Controladora.getInstance().getMisEmpleados()) {
-    				/*if(e.getTipo().equalsIgnoreCase("Prestador de servicios")) {
-    					empleado.add(e);
-    				}*/
-    			}
+    			CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+    			
+    			System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+    			
     			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-    					descripcion, empleado, productsForServicio, costoTotal);
+    					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
     			Controladora.getInstance().addProductoServicio(servicio);
     			Controladora.getInstance().addProducto(servicio);
     			
     			Controladora.getInstance().guardarProductosSQL(servicio);
-    			Controladora.getInstance().guardarServiciosSQL(servicio);
+    			Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
     			
     			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
     				Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
+    			}
+    			
+    			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+				
+				if(infoManoDeObra != null) {
+    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+    				servicio.setInfoManoDeObra(infoManoDeObra);
+    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+    				Controladora.getInstance().guardarManoDeObraServicioSQL(servicio, infoManoDeObra, categoriaempleado);
     			}
     		}
     	}
@@ -829,6 +854,11 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
+    		textfield_generalProveedor.setDisable(false);
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalUnidad.setDisable(false);
+    		button_BuscarUnidadMedida.setDisable(false);
+    		textfield_costoPrecioCompraProducto.setDisable(false);
     		
     		exAct.setText("");
     		exMin.setText("");
@@ -847,6 +877,11 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setDisable(false);
     		radiobutton_costosIndirectos.setSelected(true);
     		pane_costosIndirectos.setVisible(true);
+    		textfield_generalProveedor.setDisable(false);
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalUnidad.setDisable(false);
+    		button_BuscarUnidadMedida.setDisable(false);
+    		textfield_costoPrecioCompraProducto.setDisable(false);
     		
     		checkbox_generalProducible.setDisable(true);
     		
@@ -859,15 +894,19 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(true);
     		exMax.setDisable(true);
     		tab_combinaciones.setDisable(true);
-    		
+    		//textfield_generalProveedor.setDisable(true);
+    		//button_productoBuscarProveedor.setDisable(true);
+    		textfield_generalUnidad.setDisable(true);
+    		button_BuscarUnidadMedida.setDisable(true);
     		tab_partida.setDisable(false);
+    		textfield_costoPrecioCompraProducto.setDisable(true);
     		
-    		radiobutton_costosDirectos.setDisable(true);
-    		radiobutton_costosDirectos.setSelected(false);
-    		pane_costosDirectos.setVisible(false);
+    		radiobutton_costosDirectos.setDisable(false);
+    		radiobutton_costosDirectos.setSelected(true);
+    		pane_costosDirectos.setVisible(true);
     		radiobutton_costosIndirectos.setDisable(false);
-    		radiobutton_costosIndirectos.setSelected(true);
-    		pane_costosIndirectos.setVisible(true);
+    		radiobutton_costosIndirectos.setSelected(false);
+    		pane_costosIndirectos.setVisible(false);
     		
     		checkbox_generalProducible.setDisable(true);
     		
@@ -889,6 +928,11 @@ public class ControllerNuevoProducto implements Initializable {
     		radiobutton_costosIndirectos.setSelected(true);
     		pane_costosIndirectos.setVisible(true);
     		
+    		textfield_generalProveedor.setDisable(false);
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalUnidad.setDisable(false);
+    		button_BuscarUnidadMedida.setDisable(false);
+    		textfield_costoPrecioCompraProducto.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
     		
     		exAct.setText("");
@@ -1215,7 +1259,7 @@ public class ControllerNuevoProducto implements Initializable {
     {
     	if(radiobutton_costosDirectos.isSelected())
     	{        		
-			if(checkbox_generalProducible.isSelected()) {
+			if(checkbox_generalProducible.isSelected() || combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equals("Servicio")) {
     			try {
     				float costoManoObra = 0;
     				CategoriaEmpleado categoria = null;
