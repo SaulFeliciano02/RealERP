@@ -6,8 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -26,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1190.0">
          <children>
@@ -43,8 +41,8 @@
                            <children>
                               <Text fx:id="text_generalCodigo" layoutX="42.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código del Producto" />
                               <TextField fx:id="textfield_generalCodigo" layoutX="42.0" layoutY="94.0" onKeyTyped="#activarProductoGuardar" prefHeight="31.0" prefWidth="285.0" promptText="000000001" />
-                              <Text layoutX="45.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del producto" />
-                              <TextField fx:id="textfield_generalNombre" layoutX="42.0" layoutY="155.0" onKeyTyped="#activarProductoGuardar" prefHeight="26.0" prefWidth="283.0" />
+                              <Text layoutX="478.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del producto" />
+                              <TextField fx:id="textfield_generalNombre" layoutX="475.0" layoutY="93.0" onKeyTyped="#activarProductoGuardar" prefHeight="26.0" prefWidth="283.0" />
                               <Text fx:id="text_generalDescripcion" layoutX="43.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción fija" />
                               <TextArea fx:id="textarea_generalDescripcion" layoutX="43.0" layoutY="234.0" prefHeight="94.0" prefWidth="863.0" />
                               <Text fx:id="text_generalRubro" layoutX="40.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro" />
@@ -61,21 +59,12 @@
                               <TextField fx:id="exMax" layoutX="694.0" layoutY="443.0" onKeyTyped="#numericFieldPressed" promptText="0" />
                               <RadioButton fx:id="radiobutton_generalNumeroSerie" layoutX="47.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar número de serie al facturar" />
                               <RadioButton fx:id="radiobutton_generalFecha" layoutX="529.0" layoutY="507.0" mnemonicParsing="false" text="Preguntar fecha de vencimiento al facturar" />
-                              <Text fx:id="text_generalBarra" layoutX="475.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de Barra" />
-                              <TextField fx:id="textfield_generalBarra" layoutX="475.0" layoutY="94.0" prefHeight="26.0" prefWidth="190.0" promptText="000000001" />
-                              <MenuButton fx:id="menubutton_generalBarra" layoutX="671.0" layoutY="94.0" mnemonicParsing="false" text="UPC-B">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                              <Button fx:id="button_generalImprimir" layoutX="765.0" layoutY="94.0" mnemonicParsing="false" text="Imprimir Etiquetas" />
                               <ComboBox fx:id="combobox_generalTipoProducto" layoutX="41.0" layoutY="26.0" onAction="#tipoProducto" prefHeight="26.0" prefWidth="203.0" />
                               <Text fx:id="text_generalTipoProducto" layoutX="42.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de producto" />
                               <CheckBox fx:id="checkbox_generalProducible" layoutX="474.0" layoutY="30.0" mnemonicParsing="false" onAction="#activarPartida" text="Producible" />
-                              <Text layoutX="475.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
-                              <TextField fx:id="textfield_generalUnidad" layoutX="475.0" layoutY="156.0" prefHeight="26.0" prefWidth="190.0" />
-                              <Button fx:id="button_BuscarUnidadMedida" layoutX="668.0" layoutY="156.0" mnemonicParsing="false" onAction="#buscarUnidadMedida" text="Buscar" />
+                              <Text layoutX="42.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
+                              <TextField fx:id="textfield_generalUnidad" layoutX="42.0" layoutY="158.0" prefHeight="26.0" prefWidth="190.0" />
+                              <Button fx:id="button_BuscarUnidadMedida" layoutX="235.0" layoutY="158.0" mnemonicParsing="false" onAction="#buscarUnidadMedida" text="Buscar" />
                               <TitledPane fx:id="titledpane_productoBuscarProveedor" collapsible="false" layoutX="6.0" layoutY="-3.0" prefHeight="550.0" prefWidth="920.0" text="Búsqueda de proveedores" visible="false">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

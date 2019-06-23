@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="365.0" prefWidth="430.0" style="-fx-background-image: url('file:src/visual/images/background/login_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Main">
+   <children>
+      <VBox alignment="CENTER" prefHeight="335.0" prefWidth="428.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="132.0" prefWidth="480.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="91.0" fitWidth="220.0" layoutX="105.0" layoutY="8.0">
+                           <image>
+                              <Image url="@images/Logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="109.0" layoutY="99.0" text="Nombre Aplicación">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="235.0" prefWidth="480.0">
+               <children>
+                  <ImageView layoutX="101.0" layoutY="100.0">
+                     <image>
+                        <Image url="@images/icons/login_password.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView layoutX="101.0" layoutY="34.0">
+                     <image>
+                        <Image url="@images/icons/login_user.png" />
+                     </image>
+                  </ImageView>
+                  <TextField layoutX="134.0" layoutY="35.0" prefHeight="26.0" prefWidth="195.0" promptText="Usuario" />
+                  <PasswordField fx:id="passwordfield_login" layoutX="134.0" layoutY="100.0" prefHeight="26.0" prefWidth="195.0" promptText="Contraseña" />
+                  <Text layoutX="134.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="134.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="button_acceder" layoutX="182.0" layoutY="156.0" mnemonicParsing="false" onAction="#access_clicked" prefHeight="26.0" prefWidth="101.0" style="-fx-background-image: url('file:src/visual/images/misc/access.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                  <Button fx:id="button_salir" layoutX="365.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="50.0" style="-fx-background-image: url('file:src/visual/images/misc/exit.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                  <Label fx:id="message" layoutX="134.0" layoutY="132.0" />
+                  <ProgressBar fx:id="loading_progress" layoutX="134.0" layoutY="179.0" prefHeight="18.0" prefWidth="195.0" progress="0.0" visible="false" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
