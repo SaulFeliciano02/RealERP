@@ -301,7 +301,7 @@ public class ControllerNuevoProducto implements Initializable {
     public void activarProductoGuardar(KeyEvent event) {
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
     	if(tipoProducto.equalsIgnoreCase("Matriz")) {
-    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0) {
+    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
     			button_productGuardar.setDisable(false);
     		}
     		else {
@@ -309,7 +309,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     	}
     	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
-    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0) {
+    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
     			button_productGuardar.setDisable(false);
     		}
     		else {
@@ -318,7 +318,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     	else if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
     		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
-    			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0) {
+    			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
     			button_productGuardar.setDisable(false);
     		}
     		else {
@@ -597,11 +597,6 @@ public class ControllerNuevoProducto implements Initializable {
     					productsForServicio.add(c);
     				}
     			}
-    		}
-    		if(productsForServicio.size() == 0) {
-    			a.setContentText("Eliga los componentes del servicio");
-    			a.show();
-    			canRegister = false;
     		}
     		if(canRegister) {
     			costo = Float.parseFloat(textfield_preciosCostos.getText());

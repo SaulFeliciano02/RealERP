@@ -103,7 +103,13 @@ abstract public class Producto {
 		return ProveedorPrin;
 	}
 	public String getProveedorPrin() {
-		return ProveedorPrin.getCodigo();
+		if(ProveedorPrin == null) {
+			return "No proveedor";
+		}
+		else {
+			return ProveedorPrin.getCodigo();
+		}
+		
 	}
 	public void setProveedorPrin(Proveedores proveedorPrin) {
 		ProveedorPrin = proveedorPrin;
