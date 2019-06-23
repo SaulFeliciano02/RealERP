@@ -1035,7 +1035,7 @@ public class Controladora implements Serializable{
 		}
 	}
 	
-	public void guardarServiciosSQL(Producto producto) {
+	public void guardarServiciosSQL(Producto producto, CategoriaEmpleado cat) {
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
@@ -1045,8 +1045,9 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO servicios (producto) VALUES (?)");
+					c.prepareStatement("INSERT INTO servicios (producto, categoriaempleado) VALUES (?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
+			p.setInt(2, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(cat)+1);
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1971,7 +1972,44 @@ public class Controladora implements Serializable{
 	}
 	
 	
-	
+	public void guardarManoDeObraServicioSQL(Servicio servicio, ManoDeObra manodeobra, CategoriaEmpleado categoriaempleado) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO manodeobraservicio (manodeobra, servicio, categoriaempleado) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisManosDeObras().indexOf(manodeobra)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductosServicio().indexOf(servicio)+1);
+			p.setInt(3, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoriaempleado)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 	
 	
 
@@ -2714,6 +2752,8 @@ public class Controladora implements Serializable{
 		int idCombinacion2 = 0;
 		float existencia = 0;
 		String numserie = null;
+		Combinaciones comb = null;
+		int idEstandarAnterior = 0;
 		
 		try {
 			
@@ -2745,6 +2785,13 @@ public class Controladora implements Serializable{
 					listaAtributos.add(getMisAtributos().get(idatributo-1));
 				}
 				
+				int i;
+				
+				for(i=0; i<listaAtributos.size(); i++)
+				{
+					System.out.println(listaAtributos.get(i).getNombre());
+				}
+				
 				c3 = con.conectar();
 				
 				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
@@ -2759,13 +2806,27 @@ public class Controladora implements Serializable{
 					existencia = r3.getFloat(4);
 				}
 				
-				Combinaciones comb = new Combinaciones(numserie, existencia, listaAtributos);
+				comb = new Combinaciones(numserie, existencia, listaAtributos);
 				
 				getMisCombinaciones().add(comb);
 				
 				getMisProductosEstandar().get(idEstandar-1).agregarCombinacion(comb);
 				
-				getMisProductosMatriz().add(getMisProductosEstandar().get(idEstandar-1));
+				listaAtributos.clear();
+				
+				if(idEstandarAnterior != idEstandar)
+				{
+					getMisProductosMatriz().add(getMisProductosEstandar().get(idEstandar-1));
+				}
+				
+				idEstandarAnterior = idEstandar;
+				
+			}
+			
+			int i;
+			
+			for (Estandar matriz : getMisProductosMatriz()) {
+				System.out.println(matriz.getNombre());
 			}
 			
 		} catch (SQLException e) {
@@ -2940,8 +3001,228 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
-
-
+	
+public void loadServicios()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Connection c2 = null;
+	Connection c3 = null;
+	Connection c4 = null;
+	Connection c5 = null;
+	Connection c6 = null;
+	Connection c7 = null;
+	Connection c8 = null;
+	Connection c9 = null;
+	Statement s = null;
+	Statement s2 = null;
+	Statement s3 = null;
+	Statement s4 = null;
+	Statement s5 = null;
+	Statement s6 = null;
+	Statement s7 = null;
+	Statement s8 = null;
+	Statement s9 = null;
+	ResultSet r = null;
+	ResultSet r2 = null;
+	ResultSet r3 = null;
+	ResultSet r4 = null;
+	ResultSet r5 = null;
+	ResultSet r6 = null;
+	ResultSet r7 = null;
+	ResultSet r8 = null;
+	ResultSet r9 = null;
+	PreparedStatement p = null;
+	int id = 0;
+	int idproducto2 = 0;
+	int idServicioMateriales = 0;
+	int idServicio = 0;
+	int idcantProd = 0;
+	int idcantprodutil = 0;
+	int idestandar = 0;
+	float cantidad = 0;
+	int idproducto = 0;
+	String codigo = null;
+	String nombre = null;
+	String descripcion = null;
+	String tipoProducto = null;
+	String observ = null;
+	float costo = 0;
+	int idprecioprod = 0;
+	int precioidp = 0;
+	int productoidp = 0;
+	boolean activo = true;
+	int idprecio = 0;
+	float montoprecio = 0;
+	String descripcionprecio = null;
+	Date fechaprecio = null;
+	int idrubroproducto = 0;
+	int rubroid = 0;
+	int productorubroid = 0;
+	int idrubros = 0;
+	String codigorubro = null;
+	String nombrerubro = null;
+	int categoriaempleadoid = 0;
+	String nombreCat = null;
+	ArrayList<CantProductosUtilizados> listado = new ArrayList<>();
+	
+	try {
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM productos");
+		
+		while(r.next())
+		{
+			idproducto = r.getInt(1);
+			codigo = r.getString(2);
+			nombre = r.getString(3);
+			descripcion = r.getString(4);
+			tipoProducto = r.getString(5);
+			observ = r.getString(6);
+			costo = r.getFloat(8);
+			
+			//Recuperar precios
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM servicios WHERE producto = '"+idproducto+"'");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r2.next())
+			{
+				id = r2.getInt(1);
+				idproducto2 = r2.getInt(2);
+				categoriaempleadoid = r2.getInt(3);
+				
+				c9 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s9 = (Statement) c9.createStatement();
+				r9 = s9.executeQuery("SELECT * FROM categoriaempleado WHERE idcategoriaempleado = '"+categoriaempleadoid+"'");
+				
+				while(r9.next())
+				{
+					nombreCat = r9.getString(2);
+				}
+				
+				c3 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM serviciomateriales WHERE servicio = '"+id+"'");
+				
+				while(r3.next())
+				{
+					idServicioMateriales = r3.getInt(1);
+					idServicio = r3.getInt(2);
+					idcantProd = r3.getInt(3);
+					
+					c4 = con.conectar();
+					
+					//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+					s4 = (Statement) c4.createStatement();
+					r4 = s4.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+idcantProd+"'");
+					
+					while(r4.next())
+					{
+						idcantprodutil = r4.getInt(1);
+						idestandar = r4.getInt(2);
+						cantidad = r4.getFloat(3);
+						
+					}
+					
+					
+					Estandar prod = getMisProductosEstandar().get(idestandar-1);
+					
+					CantProductosUtilizados cant = new CantProductosUtilizados(prod, cantidad);
+					
+					listado.add(cant);
+				}
+				
+				c5 = con.conectar();
+				s5 = (Statement) c5.createStatement();
+				r5 = s5.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+idproducto+"'");
+				while(r5.next())
+				{
+					idprecioprod = r5.getInt(1);
+					precioidp = r5.getInt(2);
+					productoidp = r5.getInt(3);
+					activo = r5.getBoolean(4);
+				}
+				
+				c6 = con.conectar();
+				s6 = (Statement) c6.createStatement();
+				r6 = s6.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
+				while(r6.next())
+				{
+					idprecio = r6.getInt(1);
+					montoprecio = r6.getFloat(2);
+					descripcionprecio = r6.getString(3);
+					fechaprecio = r6.getDate(4);
+				}
+				
+				c7 = con.conectar();
+				s7 = (Statement) c7.createStatement();
+				r7 = s7.executeQuery("SELECT * FROM rubroproducto WHERE producto = '"+idproducto+"'");
+				while(r7.next())
+				{
+					idrubroproducto = r7.getInt(1);
+					rubroid = r7.getInt(2);
+					productorubroid = r7.getInt(3);
+				}
+				
+				c8 = con.conectar();
+				s8 = (Statement) c8.createStatement();
+				r8 = s8.executeQuery("SELECT * FROM rubros WHERE idrubros = '"+rubroid+"'");
+				while(r8.next())
+				{
+					idrubros = r8.getInt(1);
+					codigorubro = r8.getString(2);
+					nombrerubro = r8.getString(3);
+				}
+			}
+			
+			Rubro ru = buscarRubro(nombrerubro);
+			Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+			CategoriaEmpleado cat = buscarCategoria(nombreCat);
+			
+			Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo);
+		}
+		
+		
+		
+		//Cliente cli = new Cliente(codigo, nombre, telefono, null, (java.sql.Date) cumpleanos, rnc);
+		
+		//Controladora.getInstance().getMisClientes().add(cli);
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
 
 public void loadUnidadesMedida()
 	{
@@ -2971,7 +3252,6 @@ public void loadUnidadesMedida()
 				Area cli = new Area(categoria, nombre, abreviatura);
 				
 				Controladora.getInstance().getMisUnidadMedida().add(cli);
-				
 			}
 			
 		} catch (SQLException e) {
