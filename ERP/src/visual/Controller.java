@@ -233,6 +233,10 @@ public class Controller implements Initializable{
     //VENTAS	
     @FXML private Button button_GuardarPromedioVenta;
     @FXML private TextField textfield_PromedioVenta;
+    @FXML private TitledPane titledpane_nuevaFactura;
+    @FXML private TextField textfield_buscarClienteFactura;
+    @FXML private Button button_buscarClienteFactura;
+    @FXML private CheckBox checkbox_clienteFactura;
     
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
@@ -1644,6 +1648,24 @@ public class Controller implements Initializable{
     
     public void habilitarNuevoUsuario(ActionEvent event) {
     	pane_nuevoUsuario.setDisable(false);
+    }
+    
+    public void abrirNuevaFactura(ActionEvent event) {
+    	titledpane_nuevaFactura.setVisible(true);
+    }
+    
+    public void cerrarNuevaFactura(ActionEvent event) {
+    	titledpane_nuevaFactura.setVisible(false);
+    }
+    
+    public void habilitarClienteFactura(ActionEvent event) {
+    	if(checkbox_clienteFactura.isSelected()) {
+    	textfield_buscarClienteFactura.setDisable(false);
+    	button_buscarClienteFactura.setDisable(false);
+    	}else {
+        	textfield_buscarClienteFactura.setDisable(true);
+        	button_buscarClienteFactura.setDisable(true);
+    	}
     }
     
 }
