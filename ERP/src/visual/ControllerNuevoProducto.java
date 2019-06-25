@@ -75,6 +75,7 @@ public class ControllerNuevoProducto implements Initializable {
 	
 /**VARIABLES PARA CREAR PRODUCTOS**/
 	@FXML TabPane tabpane_everything;
+	private Boolean modificado = false;
 	
 	//TABS
 	@FXML private Tab tab_general;
@@ -821,7 +822,7 @@ public class ControllerNuevoProducto implements Initializable {
     		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
     			listview_CostosResumen.getItems().remove(i);
     		}
-    		fillPartida();
+    		fillPartida(null);
     		fillPreciosTab();
     		fillGeneralTab();
     		rellenarCostosGenerales();
@@ -1555,15 +1556,15 @@ public class ControllerNuevoProducto implements Initializable {
     		listview_partida.getItems().remove(listview_partida.getSelectionModel().getSelectedIndex());
     	
     		float cantidadRestante = (Float.parseFloat(cantidad) - (cantidadConvertida*existencia));
-    		DecimalFormat formato1 = new DecimalFormat("0.00");
+    		DecimalFormat formato1 = new DecimalFormat("0.0000");
     		if(Float.parseFloat(cantidad) != Float.parseFloat(textfield_partidaCantidad.getText())) {
     			if(estandar.get(0).getUnidadMedida() != null) {
     				listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-    					cantidadRestante + "]");
+    					formato1.format(cantidadRestante) + "]");
     			}
     			else {
     				listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
-        					cantidadRestante + "]");
+        					formato1.format(cantidadRestante) + "]");
     			}
     			
     		
@@ -1572,17 +1573,15 @@ public class ControllerNuevoProducto implements Initializable {
     		for(String s : listview_partidaSelect.getItems()) {
     			String nameSelect = Controladora.getInstance().findPartidaNombre(s);
     			String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    			System.out.println(cantidadSelect);
     			if(nameSelect.equalsIgnoreCase(nameOriginal)) {
-    				
     				listview_partidaSelect.getItems().remove(s);
     				if(estandar.get(0).getUnidadMedida() != null) {
     					item_moved = nameSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", Usando: " + 
-    						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]" + " (" + ((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia) + ")";
+    						(formato1.format(cantidadConvertida + Float.parseFloat(cantidadSelect))) + "]" + " (" + (formato1.format((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia)) + ")";
     				}
     				else {
     					item_moved = nameSelect + "[" + "Unidad: " + "Unidad nula" + ", Usando: " + 
-        						(cantidadConvertida + Float.parseFloat(cantidadSelect)) + "]" + " (" + ((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia) + ")";
+        						(formato1.format(cantidadConvertida + Float.parseFloat(cantidadSelect))) + "]" + " (" + (formato1.format((cantidadConvertida + Float.parseFloat(cantidadSelect)) * existencia)) + ")";
     				}
     				
     				listview_partidaSelect.getItems().add(item_moved);
@@ -1604,18 +1603,38 @@ public class ControllerNuevoProducto implements Initializable {
     	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	float existencia = Float.parseFloat(exAct.getText());
-    	System.out.println(nombreSelect);
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nombreSelect.toLowerCase(), "Nombre");
-    	DecimalFormat formato1 = new DecimalFormat("0.00");
+    	DecimalFormat formato1 = new DecimalFormat("0.0000");
     	
     	String original = "";
+    	float originalCantidad = 0;
+    	for(String s : listview_partida.getItems()) {
+    		String originalEx = Controladora.getInstance().findPartidaNombre(s);
+    		if(originalEx.equals(nombreSelect)) {
+    			originalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
+    		}
+    	}
+    	System.out.println("La cantidad del original es: " + originalCantidad);
     	if(estandar.get(0).getUnidadMedida() != null) {
-    		original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-    			(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)*existencia)) + "]";
+    		if(modificado) {
+    			original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    	    			(formato1.format(originalCantidad)) + "]";
+    		}
+    		else {
+    			original = nombreSelect + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    			(formato1.format(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)*existencia))) + "]";
+    		}	
     	}
     	else {
-    		original = nombreSelect + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
-        			(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad))) + "]";
+    		if(modificado) {
+    			original = nombreSelect + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+            			(formato1.format(estandar.get(0).getExistenciaActual())) + "]";
+    		}
+    		else {
+    			original = nombreSelect + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+        			(formato1.format(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)))) + "]";
+    		}
+    		
     	}
     	
     	listview_partidaSelect.getItems().remove(listview_partidaSelect.getSelectionModel().getSelectedItem());
@@ -1628,102 +1647,30 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	
     	if(estandar.get(0).getUnidadMedida() != null) {
-    		listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
-				(estandar.get(0).getExistenciaActual()) + "]");
+    		if(modificado) {
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+    					(formato1.format(originalCantidad + (Float.parseFloat(cantidad)*existencia))) + "]");
+    		}
+    		else {
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + 
+				(formato1.format(estandar.get(0).getExistenciaActual())) + "]");
+    		}
+    		
     	}
     	else {
-    		listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
-    				(estandar.get(0).getExistenciaActual()) + "]");
+    		if(modificado) {
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+        				(formato1.format(estandar.get(0).getExistenciaActual() + (Float.parseFloat(cantidad)*existencia))) + "]");
+    		}
+    		else {
+    			listview_partida.getItems().add(estandar.get(0).getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
+    				(formato1.format(estandar.get(0).getExistenciaActual())) + "]");
+    		}
     	}
     	
     	listview_partida.refresh();
     	button_partidaSendBack.setDisable(true);
     }
-    
-    /*
-    //FUNCIONES COSTO DIRECTO
-    public void costoDirectoActivarAgregar(KeyEvent event) {
-    	if(textfield_costosDirectosNombre.getLength() > 0 && textfield_costosDirectosValor.getLength() >= 0) {
-    		button_costosDirectosAgregar.setDisable(false);
-    	}
-    	else {
-    		button_costosDirectosAgregar.setDisable(true);
-    	}
-    } */
-    
-    /*
-	public void costoDirectoIngresarTableView(ActionEvent event) {
-    	CostoDirecto costodirecto = new CostoDirecto(textfield_costosDirectosNombre.getText(), Double.parseDouble(textfield_costosDirectosValor.getText()), textarea_costosDirectosDescripcion.getText());
-    	ObservableList<CostoDirecto> data = FXCollections.observableArrayList();
-    	data.add(costodirecto);
-    	tablecolumn_costosDirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-    	tablecolumn_costosDirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
-    	tablecolumn_costosDirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-    	tableview_costosDirectos.getItems().add(costodirecto);
-    	System.out.println(tableview_costosDirectos);
-    	textfield_costosDirectosNombre.clear();
-    	textfield_costosDirectosValor.clear();
-    	textarea_costosDirectosDescripcion.clear();
-    	button_costosDirectosAgregar.setDisable(true);
-    }
-	
-	public void costosDirectosTableViewClicked(MouseEvent event) {
-		if(tableview_costosDirectos.getSelectionModel().isEmpty()) {
-			button_costosDirectosModificar.setDisable(true);
-			button_costosDirectosEliminar.setDisable(true);
-		}
-		else if(!tableview_costosDirectos.getSelectionModel().isEmpty()) {
-			button_costosDirectosModificar.setDisable(false);
-			button_costosDirectosEliminar.setDisable(false);
-		}
-	}
-	
-	public void costosDirectosEliminar(ActionEvent event) {
-		int index = tableview_costosDirectos.getSelectionModel().getSelectedIndex();
-		tableview_costosDirectos.getItems().remove(index);
-	}
-	
-	//FUNCIONES COSTO INDIRECTO
-	public void costoIndirectoActivarAgregar(KeyEvent event) {
-    	if(textfield_costosIndirectosNombre.getLength() > 0 && textfield_costosIndirectosValor.getLength() > 0) {
-    		button_costosIndirectosAgregar.setDisable(false);
-    	}
-    	else {
-    		button_costosIndirectosAgregar.setDisable(true);
-    	}
-    } */
-	
-    /*
-	public void costoIndirectoIngresarTableView(ActionEvent event) {
-    	CostoIndirectoProducto costoindirectoProducto = new CostoIndirectoProducto(textfield_costosIndirectosNombre.getText(), Double.parseDouble(textfield_costosIndirectosValor.getText()), textarea_costosIndirectosDescripcion.getText());
-    	ObservableList<CostoIndirectoProducto> data = FXCollections.observableArrayList();
-    	data.add(costoindirectoProducto);
-    	tablecolumn_costosIndirectosNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
-    	tablecolumn_costosIndirectosValor.setCellValueFactory(new PropertyValueFactory<>("Valor"));
-    	tablecolumn_costosIndirectosDescripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-    	tableview_costosIndirectos.getItems().add(costoindirectoProducto);
-    	textfield_costosIndirectosNombre.clear();
-    	textfield_costosIndirectosValor.clear();
-    	textarea_costosIndirectosDescripcion.clear();
-    	button_costosIndirectosAgregar.setDisable(true);
-    }
-	
-	public void costosIndirectosTableViewClicked(MouseEvent event) {
-		if(tableview_costosIndirectos.getSelectionModel().isEmpty()) {
-			button_costosIndirectosModificar.setDisable(true);
-			button_costosIndirectosEliminar.setDisable(true);
-		}
-		else if(!tableview_costosIndirectos.getSelectionModel().isEmpty()) {
-			button_costosIndirectosModificar.setDisable(false);
-			button_costosIndirectosEliminar.setDisable(false);
-		}
-	}
-	
-	public void costosIndirectosEliminar(ActionEvent event) {
-		int index = tableview_costosIndirectos.getSelectionModel().getSelectedIndex();
-		tableview_costosIndirectos.getItems().remove(index);
-	}
-	*/
     
     public ArrayList<CostoDirecto> getGastosDirectos() {
 		return gastosDirectos;
@@ -1998,7 +1945,7 @@ public class ControllerNuevoProducto implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		//Seteando tableview de la partida
-		fillPartida();
+		fillPartida(null);
 		
 		//Seteando general
 		fillGeneralTab();
@@ -2061,18 +2008,31 @@ public class ControllerNuevoProducto implements Initializable {
     	tableview_rubroBuscar.refresh();
 	}
 	
-	public void fillPartida() {
+	public void fillPartida(Producto producto) {
+		DecimalFormat formato1 = new DecimalFormat("0.0000");
 		ObservableList<String> dataPartida = FXCollections.observableArrayList();
 		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
 			if(e.getUnidadMedida() != null) {
-				dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]");
+				dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
 			}
 			else {
-				dataPartida.add(e.getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + e.getExistenciaActual() + "]");
+				dataPartida.add(e.getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
 			}
 		}
+		
 		listview_partida.setItems(dataPartida);
 		listview_partida.refresh();
+		
+		String itemRemove = "";
+		if(producto != null) {
+			for(String original : listview_partida.getItems()) {
+				String originalName = Controladora.getInstance().findPartidaNombre(original);
+				if(originalName.equalsIgnoreCase(producto.getNombre())) {
+					itemRemove = original;
+				}
+			}
+		}
+		listview_partida.getItems().remove(itemRemove);
 	}
 	
     public void fillAtributesList(ArrayList<Atributos> a) {
@@ -2138,6 +2098,53 @@ public class ControllerNuevoProducto implements Initializable {
 		tiempoData.addAll("Segundos", "Minutos", "Horas");
 		combobox_costosTiempoFabricacion.setItems(tiempoData);
 		combobox_costosTiempoFabricacion.getSelectionModel().select("Horas");
+    }
+    
+    public void modifyOpen(Producto producto) {
+    	modificado = true;
+    	
+    	textfield_generalCodigo.setText(producto.getCodigo());
+    	textfield_generalNombre.setText(producto.getNombre());
+    	if(producto.getUnidadMedida() != null) {
+    		textfield_generalUnidad.setText(producto.getUnidadMedida().getNombre());
+    	}
+    	if(producto.getRubroProductoClass() != null) {
+    		textfield_generalRubro.setText(producto.getRubroProductoClass().getNombreRubro());
+    	}
+    	if(producto.getProveedorPrinClass() != null) {
+    		textfield_generalProveedor.setText(producto.getProveedorPrinClass().getCodigo());
+    	}
+    	
+    	if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    		Estandar estandar = (Estandar) producto;
+    		combobox_generalTipoProducto.getSelectionModel().select(estandar.getTipoProducto());
+    		
+    		exAct.setText(Float.toString(estandar.getExistenciaActual()));
+    		exMin.setText(Float.toString(estandar.getExistenciaMinima()));
+    		exMax.setText(Float.toString(estandar.getExistenciaMaxima()));
+    		
+    		if(estandar.isFabricado()) {
+    			fillPartida(estandar);
+    			checkbox_generalProducible.setSelected(true);
+    			activarPartida(null);
+    			ObservableList<String> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
+    				String item_moved = "";
+    				 
+    				if(c.getProductoClass().getUnidadMedida() != null) {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    		}
+    	    		else {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    		}
+    				data.add(item_moved);
+    			}
+    			listview_partidaSelect.setItems(data);
+    		}
+    		textfield_preciosCostos.setText(Float.toString(estandar.getCosto()));
+    		textfield_preciosPrecio.setText(Float.toString(estandar.getPrecio()));
+    		
+    	}
     }
 
 }

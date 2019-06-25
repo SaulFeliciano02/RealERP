@@ -1036,6 +1036,55 @@ public class Controller implements Initializable{
     }
     
     public void pressed_modificarProducto(ActionEvent event){
+    	try {
+    		Producto producto = tableview_productList.getSelectionModel().getSelectedItem();
+    		
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProducto.fxml"));
+			Parent root1;
+			root1 = fxmlLoader.load();
+			ControllerNuevoProducto controllerProducto = fxmlLoader.getController();
+			controllerProducto.modifyOpen(producto);
+			
+			Stage stage = new Stage();
+			Window owner = button_modificarProducto.getScene().getWindow();
+			
+			stage.setTitle("Nuevo Producto");
+			stage.setScene(new Scene(root1)); 
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(owner);
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+
+			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.productos_pressed(null);
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+
+			  		    primaryStage.show();
+			  		    owner.hide();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  });
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
     }
     
     public void pressed_eliminarProducto(ActionEvent event){
