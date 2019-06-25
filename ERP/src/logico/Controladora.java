@@ -2729,6 +2729,81 @@ public class Controladora implements Serializable{
 		return costoManoObra;
 	}
 	
+	public boolean activarloadMatriz()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		Connection c2 = null;
+		Statement s2 = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		int cuenta2 = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM productos");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			//Recuperar precios
+			c2 = con.conectar();
+					
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT COUNT(*) AS TOTAL FROM matriz");
+					
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r2.next())
+			{
+				cuenta2 = r2.getInt(1);
+			}
+			
+			if(cuenta > 0 && cuenta2 > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
 	public void loadMatriz()
 	{
 		Conexion con = new Conexion();
@@ -2855,6 +2930,64 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public boolean activarLoadPrecio()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM precio");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
 	public void loadPrecio()
 	{
 		Conexion con = new Conexion();
@@ -2942,6 +3075,64 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public boolean activarLoadCliente()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM clientes");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
 	public void loadCliente()
 	{
 		Conexion con = new Conexion();
@@ -3001,7 +3192,513 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
+
+	public boolean activarLoadKit()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		Connection c2 = null;
+		Statement s2 = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		int cuenta2 = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM productos");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			//Recuperar precios
+			c2 = con.conectar();
+					
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT COUNT(*) AS TOTAL FROM kit");
+					
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r2.next())
+			{
+				cuenta2 = r2.getInt(1);
+			}
+			
+			if(cuenta > 0 && cuenta2 > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
 	
+public void loadKit()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Connection c2 = null;
+	Connection c3 = null;
+	Connection c4 = null;
+	Connection c5 = null;
+	Connection c6 = null;
+	Connection c7 = null;
+	Connection c8 = null;
+	Connection c9 = null;
+	Connection c10 = null;
+	Statement s = null;
+	Statement s2 = null;
+	Statement s3 = null;
+	Statement s4 = null;
+	Statement s5 = null;
+	Statement s6 = null;
+	Statement s7 = null;
+	Statement s8 = null;
+	Statement s9 = null;
+	Statement s10 = null;
+	ResultSet r = null;
+	ResultSet r2 = null;
+	ResultSet r3 = null;
+	ResultSet r4 = null;
+	ResultSet r5 = null;
+	ResultSet r6 = null;
+	ResultSet r7 = null;
+	ResultSet r8 = null;
+	ResultSet r9 = null;
+	ResultSet r10 = null;
+	PreparedStatement p = null;
+	//Variables para producto
+	String codigo = null;
+	String nombre = null;
+	String descripcion = null;
+	String tipoProducto = null;
+	String observ = null;
+	float costo = 0;
+	//Variables para kit
+	int id = 0;
+	int idproducto = 0;
+	float exisminima = 0;
+	float exismaxima = 0;
+	float exisactual = 0;
+	float exisinicial = 0;
+	//Variables para kitproductos
+	int idkitproducto = 0;
+	int idCantProd = 0;
+	//Variables para cantproductosutilizados
+	int idcantprodutil = 0;
+	int idestandar = 0;
+	float cantidad = 0;
+	ArrayList<CantProductosUtilizados> listado = new ArrayList<>();
+	//Variables para precioproducto
+	int idprecioprod = 0;
+	int precioidp = 0;
+	int productoidp = 0;
+	boolean activo = true;
+	//Variables para precio
+	int idprecio = 0;
+	float montoprecio = 0;
+	String descripcionprecio = null;
+	Date fechaprecio = null;
+	//Variables para rubroproducto
+	int idrubroproducto = 0;
+	int rubroid = 0;
+	int productorubroid = 0;
+	//Variables para rubro
+	int idrubros = 0;
+	String codigorubro = null;
+	String nombrerubro = null;
+	//RECUPERAR PROVEEDOR
+	int idproveedorprincipal = 0;
+	int idproveedor = 0;
+	int idprodproveedor = 0;
+		
+	//CONTINUACION DE RECUPERAR PROVEEDOR
+	String nombreproveedor = null;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM productos");
+		
+		while(r.next())
+		{
+			idproducto = r.getInt(1);
+			codigo = r.getString(2);
+			nombre = r.getString(3);
+			descripcion = r.getString(4);
+			tipoProducto = r.getString(5);
+			observ = r.getString(6);
+			costo = r.getFloat(8);
+			
+			//Recuperar kit
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM kit WHERE producto = '"+idproducto+"'");
+			
+			while(r2.next())
+			{
+				id = r2.getInt(1);
+				exisminima = r2.getFloat(3);
+				exismaxima = r2.getFloat(4);
+				exisactual = r2.getFloat(5);
+				exisinicial = r2.getFloat(6);
+				
+				//Recuperar kit
+				c3 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM kitproductos WHERE kit = '"+id+"'");
+				
+				while(r3.next())
+				{
+					idkitproducto = r3.getInt(1);
+					idCantProd = r3.getInt(3);
+					
+					//Recuperar kit
+					c4 = con.conectar();
+					
+					//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+					s4 = (Statement) c4.createStatement();
+					r4 = s4.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+idCantProd+"'");
+					
+					while(r4.next())
+					{
+						idcantprodutil = r4.getInt(1);
+						idestandar = r4.getInt(2);
+						cantidad = r4.getFloat(3);
+					}
+					
+					Estandar prod = getMisProductosEstandar().get(idestandar-1);
+					
+					CantProductosUtilizados cant = new CantProductosUtilizados(prod, cantidad);
+					
+					listado.add(cant);
+					
+				}
+				
+				c5 = con.conectar();
+				s5 = (Statement) c5.createStatement();
+				r5 = s5.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+idproducto+"'");
+				while(r5.next())
+				{
+					idprecioprod = r5.getInt(1);
+					precioidp = r5.getInt(2);
+					productoidp = r5.getInt(3);
+					activo = r5.getBoolean(4);
+				}
+				
+				c6 = con.conectar();
+				s6 = (Statement) c6.createStatement();
+				r6 = s6.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
+				while(r6.next())
+				{
+					idprecio = r6.getInt(1);
+					montoprecio = r6.getFloat(2);
+					descripcionprecio = r6.getString(3);
+					fechaprecio = r6.getDate(4);
+				}
+				
+				c7 = con.conectar();
+				s7 = (Statement) c7.createStatement();
+				r7 = s7.executeQuery("SELECT * FROM rubroproducto WHERE producto = '"+idproducto+"'");
+				while(r7.next())
+				{
+					idrubroproducto = r7.getInt(1);
+					rubroid = r7.getInt(2);
+					productorubroid = r7.getInt(3);
+				}
+				
+				c8 = con.conectar();
+				s8 = (Statement) c8.createStatement();
+				r8 = s8.executeQuery("SELECT * FROM rubros WHERE idrubros = '"+rubroid+"'");
+				while(r8.next())
+				{
+					idrubros = r8.getInt(1);
+					codigorubro = r8.getString(2);
+					nombrerubro = r8.getString(3);
+				}
+				
+				c9 = con.conectar();
+				s9 = (Statement) c9.createStatement();
+				r9 = s9.executeQuery("SELECT * FROM proveedorprincipaproducto WHERE producto = '"+idproducto+"'");
+				while(r9.next())
+				{
+					idproveedorprincipal = r9.getInt(1);
+					idproveedor = r9.getInt(2);
+					idprodproveedor = r9.getInt(3);
+				}
+				
+				c10 = con.conectar();
+				s10 = (Statement) c10.createStatement();
+				r10 = s10.executeQuery("SELECT nombre FROM proveedores WHERE idproveedores = '"+idproveedor+"'");
+				while(r10.next())
+				{
+					nombreproveedor = r10.getString(1);
+				}
+				
+				Rubro ru = buscarRubro(nombrerubro);
+				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+				Proveedores pro = buscarProveedor(nombreproveedor);
+				
+				Kit recuperado = new Kit(listado, exisactual, exisminima, exismaxima, exisinicial, null, codigo, nombre, descripcion, ru, tipoProducto, pro, null, null, observ, null, pre, null, null, 0, descripcion, null, costo);
+				
+				Controladora.getInstance().getMisProductos().add(recuperado);
+				Controladora.getInstance().getMisProductosKit().add(recuperado);
+				listado.clear();
+			}
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(c2!=null) {
+				c2.close();
+			}
+			
+			if(c3!=null) {
+				c3.close();
+			}
+			
+			if(c4!=null) {
+				c4.close();
+			}
+			
+			if(c5!=null) {
+				c5.close();
+			}
+			
+			if(c6!=null) {
+				c6.close();
+			}
+			
+			if(c7!=null) {
+				c7.close();
+			}
+			
+			if(c8!=null) {
+				c8.close();
+			}
+			
+			if(c9!=null) {
+				c9.close();
+			}
+			
+			if(c10!=null) {
+				c10.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+			if(s3!=null) {
+				s3.close();
+			}
+			
+			if(s4!=null) {
+				s4.close();
+			}
+			
+			if(s5!=null) {
+				s5.close();
+			}
+			
+			if(s6!=null) {
+				s6.close();
+			}
+			
+			if(s7!=null) {
+				s7.close();
+			}
+			
+			if(s8!=null) {
+				s8.close();
+			}
+			
+			if(s9!=null) {
+				s9.close();
+			}
+			
+			if(s10!=null) {
+				s10.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(r2!=null) {
+				r2.close();
+			}
+			
+			if(r3!=null) {
+				r3.close();
+			}
+			
+			if(r4!=null) {
+				r4.close();
+			}
+			
+			if(r5!=null) {
+				r5.close();
+			}
+			
+			if(r6!=null) {
+				r6.close();
+			}
+			
+			if(r7!=null) {
+				r7.close();
+			}
+			
+			if(r8!=null) {
+				r8.close();
+			}
+			
+			if(r9!=null) {
+				r9.close();
+			}
+			
+			if(r10!=null) {
+				r10.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+}
+	
+public boolean activarLoadServicios()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	Connection c2 = null;
+	Statement s2 = null;
+	ResultSet r2 = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	int cuenta2 = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM productos");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		//Recuperar precios
+		c2 = con.conectar();
+				
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s2 = (Statement) c2.createStatement();
+		r2 = s2.executeQuery("SELECT COUNT(*) AS TOTAL FROM servicios");
+				
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r2.next())
+		{
+			cuenta2 = r2.getInt(1);
+		}
+		
+		if(cuenta > 0 && cuenta2 > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
 public void loadServicios()
 {
 	Conexion con = new Conexion();
@@ -3190,6 +3887,8 @@ public void loadServicios()
 			CategoriaEmpleado cat = buscarCategoria(nombreCat);
 			
 			Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo);
+			Controladora.getInstance().getMisProductos().add(serv);
+			Controladora.getInstance().getMisProductosServicio().add(serv);
 		}
 		
 		
@@ -3424,7 +4123,63 @@ public void loadUnidadesMedida()
 		}
 	}
 
-
+public boolean activarLoadProveedores()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM proveedores");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
 
 public void loadProveedores()
 	{
@@ -3521,6 +4276,64 @@ public void loadProveedores()
 		}
 	}
 
+public boolean activarRecuperarRubros()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM rubros");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
 public void recuperarRubros()
 {
 	Conexion con = new Conexion();
@@ -3581,6 +4394,64 @@ public void recuperarRubros()
 			e2.printStackTrace();
 		}
 	}
+}
+
+public boolean activarLoadManoDeObra()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM manodeobra");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
 }
 
 public void loadManoDeObra()
@@ -3681,6 +4552,64 @@ public void loadManoDeObra()
 			e2.printStackTrace();
 		}
 	}
+}
+
+public boolean activarLoadProductos()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM productos");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
 }
 
 public void loadProductos()
@@ -3993,6 +4922,64 @@ public void loadProductos()
 	}
 }
 
+public boolean activarLoadPartida()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM productopartida");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
 public void loadPartida()
 {
 	Conexion con = new Conexion();
@@ -4294,6 +5281,64 @@ public Volumen isVolumen(String u)
 	return a;
 }
 
+public boolean activarLoadEmpleados()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM empleados");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
 public void loadEmpleados()
 {
 	Conexion con = new Conexion();
@@ -4378,6 +5423,64 @@ public void loadEmpleados()
 	}
 }
 
+public boolean activarLoadCategoriaEmpleado()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM categoriaempleado");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
 public void loadCategoriaEmpleado()
 {
 	Conexion con = new Conexion();
@@ -4430,6 +5533,64 @@ public void loadCategoriaEmpleado()
 			e2.printStackTrace();
 		}
 	}
+}
+
+public boolean activarLoadAtributos()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM atributos");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
 }
 
 	public void loadAtributos()
@@ -4516,6 +5677,64 @@ public void loadCategoriaEmpleado()
 	}
 }
 
+public boolean activarLoadGrupoAtributo()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM grupoatributo");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+	
 public void loadGrupoAtributo()
 {
 	Conexion con = new Conexion();
@@ -4567,6 +5786,64 @@ public void loadGrupoAtributo()
 			e2.printStackTrace();
 		}
 	}
+}
+
+public boolean activarLoadGastosGenerales()
+{
+	Conexion con = new Conexion();
+	Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM gastosgenerales");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
 }
 
 public void loadGastosGenerales()

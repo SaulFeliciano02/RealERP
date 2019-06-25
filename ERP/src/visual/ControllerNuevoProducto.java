@@ -571,6 +571,8 @@ public class ControllerNuevoProducto implements Initializable {
     			Controladora.getInstance().getMisProductosKit().add(kit);
     			Controladora.getInstance().guardarKitSQL(kit);
     			
+    			Controladora.getInstance().guardarRubroProductoSQL(kit, rubro);
+    			
     			for(CantProductosUtilizados c : productsForKit) {
     				Controladora.getInstance().guardarKitProductosSQL(kit, c);
     			}
@@ -755,7 +757,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
     		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
-    		textfield_generalCodigo.setText(""); textfield_generalBarra.setText(""); textarea_generalDescripcion.setText("");
+    		textfield_generalCodigo.setText("");  textarea_generalDescripcion.setText("");
     		textfield_generalNombre.setText(""); textfield_generalUnidad.setText("");
     		checkbox_generalProducible.setSelected(false);
     		tableview_proveedorBuscar.getSelectionModel().clearSelection();
