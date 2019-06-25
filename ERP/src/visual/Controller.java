@@ -233,10 +233,9 @@ public class Controller implements Initializable{
     //VENTAS	
     @FXML private Button button_GuardarPromedioVenta;
     @FXML private TextField textfield_PromedioVenta;
-    @FXML private TitledPane titledpane_nuevaFactura;
-    @FXML private TextField textfield_buscarClienteFactura;
-    @FXML private Button button_buscarClienteFactura;
-    @FXML private CheckBox checkbox_clienteFactura;
+    @FXML private Button button_nuevaFactura;
+    @FXML private TabPane tabpane_Ventas;
+    @FXML private Tab tab_facturacion;
     
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
@@ -1232,6 +1231,53 @@ public class Controller implements Initializable{
 		}
     }
     
+    public void pressed_nuevaFactura(ActionEvent event){
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaFactura.fxml"));
+			Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			Window owner = button_nuevaFactura.getScene().getWindow();
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Nueva Factura");
+			stage.setScene(new Scene(root1));  
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(owner);
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+
+			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.ventas_pressed(null);
+			  		    c.selectTabFacturas();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+
+			  		    primaryStage.show();
+			  		    owner.hide();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  });
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
@@ -1583,6 +1629,10 @@ public class Controller implements Initializable{
     	tabpane_recursosHumanos.getSelectionModel().select(tab_empleados);;
     }
     
+    public void selectTabFacturas() {
+    	tabpane_Ventas.getSelectionModel().select(tab_facturacion);;
+    }
+    
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
@@ -1699,22 +1749,5 @@ public class Controller implements Initializable{
     	pane_nuevoUsuario.setDisable(false);
     }
     
-    public void abrirNuevaFactura(ActionEvent event) {
-    	titledpane_nuevaFactura.setVisible(true);
-    }
-    
-    public void cerrarNuevaFactura(ActionEvent event) {
-    	titledpane_nuevaFactura.setVisible(false);
-    }
-    
-    public void habilitarClienteFactura(ActionEvent event) {
-    	if(checkbox_clienteFactura.isSelected()) {
-    	textfield_buscarClienteFactura.setDisable(false);
-    	button_buscarClienteFactura.setDisable(false);
-    	}else {
-        	textfield_buscarClienteFactura.setDisable(true);
-        	button_buscarClienteFactura.setDisable(true);
-    	}
-    }
     
 }
