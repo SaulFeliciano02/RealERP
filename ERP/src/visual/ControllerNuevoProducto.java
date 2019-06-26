@@ -623,6 +623,8 @@ public class ControllerNuevoProducto implements Initializable {
     			
     				Controladora.getInstance().guardarProductosSQL(servicio);
     				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
+    				Controladora.getInstance().guardarRubroProductoSQL(servicio, rubro);
+        			Controladora.getInstance().guardarPrecioProductoSQL(servicio, precio);
     			
     				for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
     					Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);

@@ -3490,6 +3490,7 @@ public void loadKit()
 				listado = null;
 				
 				System.out.println(recuperado.getNombre());
+				System.out.println(recuperado.getRubroProducto());
 			}
 		}
 		
@@ -3891,6 +3892,9 @@ public void loadServicios()
 				Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo);
 				Controladora.getInstance().getMisProductos().add(serv);
 				Controladora.getInstance().getMisProductosServicio().add(serv);
+				
+				System.out.println(serv.getRubroProducto());
+				listado = null;
 			}
 		}
 		
@@ -4456,10 +4460,13 @@ public void loadManoDeObra()
 	Conexion con = new Conexion();
 	Connection c = null;
 	Connection c2 = null;
+	Connection c3 = null;
 	Statement s = null;
 	Statement s2 = null;
+	Statement s3 = null;
 	ResultSet r = null;
 	ResultSet r2 = null;
+	ResultSet r3 = null;
 	PreparedStatement p = null;
 	int id =0;
 	float costo = 0;
@@ -4468,6 +4475,7 @@ public void loadManoDeObra()
 	int id2 = 0;
 	int manoobraID = 0;
 	int estandarID = 0;
+	int servicioID = 0;
 	int categoriaID = 0;
 	
 	try {
@@ -4487,31 +4495,52 @@ public void loadManoDeObra()
 			cantHoras = r.getFloat(3);
 			fecha = r.getDate(4);
 			
-		}
-		
-		c2 = con.conectar();
-		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s2 = (Statement) c2.createStatement();
-		r2 = s2.executeQuery("SELECT * FROM manodeobraproducto WHERE manodeobra = '"+id+"'");
-		
-		while(r2.next())
-		{
-			id2 = r.getInt(1);
-			manoobraID = r.getInt(2);
-			estandarID = r.getInt(3);
-			categoriaID = r.getInt(4);
-		}
-		
-		System.out.println("CategoriaID = " + categoriaID);
-		CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID+1);
-		
-		ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
-		
-		Controladora.getInstance().getMisManosDeObras().add(mano);
-		
-		Controladora.getInstance().getMisProductosEstandar().get(estandarID+1).setInfoManoDeObra(mano);
-		
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM manodeobraproducto WHERE manodeobra = '"+id+"'");
+			
+			while(r2.next())
+			{
+				id2 = r2.getInt(1);
+				manoobraID = r2.getInt(2);
+				estandarID = r2.getInt(3);
+				categoriaID = r2.getInt(4);
+				
+				System.out.println("CategoriaID = " + categoriaID);
+				CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID-1);
+				
+				ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
+				
+				Controladora.getInstance().getMisManosDeObras().add(mano);
+				
+				Controladora.getInstance().getMisProductosEstandar().get(estandarID-1).setInfoManoDeObra(mano);
+			}
+			
+			c3 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s3 = (Statement) c3.createStatement();
+			r3 = s3.executeQuery("SELECT * FROM manodeobraservicio WHERE manodeobra = '"+id+"'");
+			
+			while(r3.next())
+			{
+				id2 = r3.getInt(1);
+				manoobraID = r3.getInt(2);
+				servicioID = r3.getInt(3);
+				categoriaID = r3.getInt(4);
+				
+				System.out.println("CategoriaID = " + categoriaID);
+				CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID-1);
+				
+				ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
+				
+				Controladora.getInstance().getMisManosDeObras().add(mano);
+				
+				Controladora.getInstance().getMisProductosServicio().get(servicioID-1).setInfoManoDeObra(mano);
+			}
+		}		
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
@@ -4806,6 +4835,7 @@ public void loadProductos()
 				}
 				Controladora.getInstance().getMisProductos().add(estandar);
 				Controladora.getInstance().getMisProductosEstandar().add(estandar);
+				System.out.println(estandar.getRubroProducto());
 			}
 		}
 		
