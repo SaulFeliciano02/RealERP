@@ -7,6 +7,8 @@ public class Servicio extends Producto{
 	private CategoriaEmpleado categoria;
 	private ArrayList<CantProductosUtilizados> materialesUtilizados;
 	private ManoDeObra infoManoDeObra;
+	private float manodeobra;
+	private float costoPartida;
 
 	public Servicio(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, String observaciones,
@@ -16,8 +18,31 @@ public class Servicio extends Producto{
 				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo);
 		this.setCategoria(categoria);
 		this.materialesUtilizados = materialesUtilizados;
+		this.manodeobra = 0;
+		this.costoPartida = 0;
 	}
 	
+	
+
+	public float getManodeobra() {
+		manodeobra = infoManoDeObra.getCosto();
+		return manodeobra;
+	}
+	
+	public float getCostoPartida() {
+		costoPartida = 0;
+		for(CantProductosUtilizados c : getMaterialesUtilizados()) {
+			costoPartida += c.getProductoClass().getPrecio();
+		}
+		return costoPartida;
+	}
+
+
+
+	public void setManodeobra(float manodeobra) {
+		this.manodeobra = manodeobra;
+	}
+
 
 
 	public CategoriaEmpleado getCategoria() {

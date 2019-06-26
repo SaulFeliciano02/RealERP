@@ -2821,7 +2821,7 @@ public class Controladora implements Serializable{
 		int idcombinacionAtrib = 0;
 		int idatributo = 0;
 		int idCombinacion = 0;
-		ArrayList<Atributos> listaAtributos = new ArrayList<>();
+		ArrayList<Atributos> listaAtributos = null;
 		int idMatriz = 0;
 		int idEstandar = 0;
 		int idCombinacion2 = 0;
@@ -2842,6 +2842,7 @@ public class Controladora implements Serializable{
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
 			{
+				listaAtributos = new ArrayList<>();
 				id = r.getInt(1);
 				numserie = r.getString(2);
 				
@@ -2864,7 +2865,7 @@ public class Controladora implements Serializable{
 				
 				for(i=0; i<listaAtributos.size(); i++)
 				{
-					System.out.println(listaAtributos.get(i).getNombre());
+					System.out.println("Los atributos son: " + listaAtributos.get(i).getNombre());
 				}
 				
 				c3 = con.conectar();
@@ -2887,7 +2888,7 @@ public class Controladora implements Serializable{
 				
 				getMisProductosEstandar().get(idEstandar-1).agregarCombinacion(comb);
 				
-				listaAtributos.clear();
+				listaAtributos = null;
 				
 				if(idEstandarAnterior != idEstandar)
 				{

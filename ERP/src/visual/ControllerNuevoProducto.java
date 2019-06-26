@@ -558,6 +558,10 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
     					productsForKit.add(c);
+    					float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidad) * Float.parseFloat(existenciaActual)));
+        				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+        				
+        				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
     				}
     			}
     		}
@@ -600,6 +604,12 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
     					
     					productsForServicio.add(c);
+    					
+    					float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidadItem)));
+        				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+        				
+        				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+
     				}
     			}
     		}
@@ -722,6 +732,10 @@ public class ControllerNuevoProducto implements Initializable {
     			Controladora.getInstance().guardarProductosSQL(matriz);
     			Controladora.getInstance().guardarEstandarSQL(matriz);
     			
+    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
+    			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);
+    			Controladora.getInstance().guardarPrecioProductoSQL(matriz, precio);
+    			
     			for(Combinaciones c : combinacionFinal) {
     				Controladora.getInstance().guardarMatrizSQL(matriz, c);
     			}
@@ -774,14 +788,12 @@ public class ControllerNuevoProducto implements Initializable {
     			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
     			System.out.println(itemNombre + itemCantidad);
     			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
-    			if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
-    				for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
-    					if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
-    						Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
-    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
-    					}
-    				}
-    			}
+    			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
+    					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
+    						Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
+   					}
+   				}	
     		}
     		
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
@@ -2196,6 +2208,8 @@ public class ControllerNuevoProducto implements Initializable {
     		Servicio servicio = (Servicio) Controladora.getInstance().buscarProducto(producto.getNombre());
     		combobox_generalTipoProducto.getSelectionModel().select(servicio.getTipoProducto());
     		
+    		tipoProducto(null);
+    		
     		if(servicio.getMaterialesUtilizados() != null) {
     			ObservableList<String> data = FXCollections.observableArrayList();
     			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
@@ -2212,8 +2226,62 @@ public class ControllerNuevoProducto implements Initializable {
     			listview_partidaSelect.setItems(data);
     		}
     		
+    		System.out.println(servicio.getCosto());
+    		//textfield_costosTiempoFabricacion.setText(servicio.get);
+    		textfield_TotalManoObra.setText(Float.toString(servicio.getInfoManoDeObra().getCosto()));
+    		textfield_costosTiempoFabricacion.setText(Float.toString(servicio.getInfoManoDeObra().getCantidadHoras()));
+    		combobox_costosEncargadosFabricacion.getSelectionModel().select(servicio.getInfoManoDeObra().getCategoria().getNombre() + ": " + servicio.getInfoManoDeObra().getCategoria().getSueldo() + "$");
+    		
     		textfield_preciosCostos.setText(Float.toString(servicio.getCosto()));
 			textfield_preciosPrecio.setText(Float.toString(servicio.getPrecio()));
+    	}
+    	
+    	if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar estandar = (Estandar) producto;
+    		combobox_generalTipoProducto.getSelectionModel().select(estandar.getTipoProducto());
+    		tipoProducto(null);
+    		
+    		exAct.setText(Float.toString(estandar.getExistenciaActual()));
+    		exMin.setText(Float.toString(estandar.getExistenciaMinima()));
+    		exMax.setText(Float.toString(estandar.getExistenciaMaxima()));
+    		
+    		if(estandar.isFabricado()) {
+    			fillPartida(estandar);
+    			checkbox_generalProducible.setSelected(true);
+    			activarPartida(null);
+    			ObservableList<String> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
+    				String item_moved = "";
+    				 
+    				if(c.getProductoClass().getUnidadMedida() != null) {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    		}
+    	    		else {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    		}
+    				data.add(item_moved);
+    			}
+    			listview_partidaSelect.setItems(data);
+    		}
+    		textfield_preciosCostos.setText(Float.toString(estandar.getCosto()));
+    		textfield_preciosPrecio.setText(Float.toString(estandar.getPrecio()));
+    		System.out.println(estandar.getCombinaciones().get(0).getAtributo1());
+    		ObservableList<String> combinacionesData = FXCollections.observableArrayList();
+    		for(Combinaciones c : estandar.getCombinaciones()) {
+    			if(c.getListaAtributos().size() == 2) {
+    				combinacionesData.add(c.numeroSerie + " " + c.getListaAtributos().get(0).getGrupo() + ": " + c.getListaAtributos().get(0).getNombre() + ", " +
+    						c.getListaAtributos().get(1).getGrupo() + ": " + c.getListaAtributos().get(1).getNombre() + ", Existencia: " + c.getExistenciaActual());
+    			}
+    			else if(c.getListaAtributos().size() == 3) {
+    				combinacionesData.add(c.numeroSerie + " " + c.getListaAtributos().get(0).getGrupo() + ": " + c.getListaAtributos().get(0).getNombre() + ", " +
+    						c.getListaAtributos().get(1).getGrupo() + ": " + c.getListaAtributos().get(1).getNombre() + 
+    						", " + c.getListaAtributos().get(2).getGrupo() + ": " + c.getListaAtributos().get(2).getNombre() + 
+    						", Existencia: " + c.getExistenciaActual());
+    			}
+    			//System.out.println(c.getListaAtributos().size());
+    		}
+    		listView_combinaciones.setItems(combinacionesData);
+    		
     	}
     	
     }
