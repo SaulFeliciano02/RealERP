@@ -573,6 +573,8 @@ public class ControllerNuevoProducto implements Initializable {
     			Controladora.getInstance().guardarKitSQL(kit);
     			
     			Controladora.getInstance().guardarRubroProductoSQL(kit, rubro);
+    			Controladora.getInstance().guardarPrecioProductoSQL(kit, precio);
+    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(kit, proveedor);
     			
     			for(CantProductosUtilizados c : productsForKit) {
     				Controladora.getInstance().guardarKitProductosSQL(kit, c);
