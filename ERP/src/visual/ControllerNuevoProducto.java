@@ -605,35 +605,43 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		if(canRegister) {
     			costo = Float.parseFloat(textfield_preciosCostos.getText());
-    			CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
-    			
-    			System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
-    			
-    			Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-    					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
-    			Controladora.getInstance().addProductoServicio(servicio);
-    			Controladora.getInstance().addProducto(servicio);
-    			
-    			Controladora.getInstance().guardarProductosSQL(servicio);
-    			Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
-    			
-    			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
-    				Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
+    			a.setAlertType(AlertType.WARNING);
+    			if(combobox_costosEncargadosFabricacion.getSelectionModel().isEmpty()) {
+    				a.setContentText("Eliga la categoria de empleado que ejercera este servicio.");
+        			a.show();
+        			canRegister = false;
     			}
+    			else {
+    				CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
     			
-    			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
-				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
-				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
-				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
-				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+    				System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+    			
+    				Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
+    					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
+    				Controladora.getInstance().addProductoServicio(servicio);
+    				Controladora.getInstance().addProducto(servicio);
+    			
+    				Controladora.getInstance().guardarProductosSQL(servicio);
+    				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
+    			
+    				for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
+    					Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
+    				}
+    			
+    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+    				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
 						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
-				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
 				
-				if(infoManoDeObra != null) {
-    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
-    				servicio.setInfoManoDeObra(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraServicioSQL(servicio, infoManoDeObra, categoriaempleado);
+    				if(infoManoDeObra != null) {
+    					Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+    					servicio.setInfoManoDeObra(infoManoDeObra);
+    					Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+    					Controladora.getInstance().guardarManoDeObraServicioSQL(servicio, infoManoDeObra, categoriaempleado);
+    				}
     			}
     		}
     	}
@@ -758,6 +766,22 @@ public class ControllerNuevoProducto implements Initializable {
     		catch(NullPointerException e) {
     			
     		}
+    		//Limpiando tab partida
+    		for(String item : listview_partidaSelect.getItems()) {
+    			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
+    			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
+    			System.out.println(itemNombre + itemCantidad);
+    			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
+    			if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Estandar")) {
+    				for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+    					if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
+    						Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
+    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
+    					}
+    				}
+    			}
+    		}
+    		
     		exAct.setText(""); exMin.setText(""); exMax.setText("");
     		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
     		textfield_generalCodigo.setText("");  textarea_generalDescripcion.setText("");
@@ -766,19 +790,7 @@ public class ControllerNuevoProducto implements Initializable {
     		tableview_proveedorBuscar.getSelectionModel().clearSelection();
     		tableview_rubroBuscar.getSelectionModel().clearSelection();
 		
-    		//Limpiando tab partida
-    		for(String item : listview_partidaSelect.getItems()) {
-    			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
-    			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
-    			System.out.println(itemNombre + itemCantidad);
-    			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
-    			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
-    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
-    					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
-    							Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
-    				}
-    			}
-    		}
+    		
     		for(int i = 0; i < listview_partida.getItems().size(); i++) {
     			listview_partida.getItems().remove(i);
     		}
@@ -1720,7 +1732,7 @@ public class ControllerNuevoProducto implements Initializable {
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
 			 valorPartida += p.getCosto() * Float.parseFloat(cantidad);
 		}
-		if(checkbox_generalProducible.isSelected() && textfield_costosTiempoFabricacion.getLength() > 0) {
+		if((checkbox_generalProducible.isSelected() || combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) && textfield_costosTiempoFabricacion.getLength() > 0) {
 			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
 			String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
 			float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
@@ -2177,6 +2189,30 @@ public class ControllerNuevoProducto implements Initializable {
 			textfield_preciosCostos.setText(Float.toString(kit.getCosto()));
 			textfield_preciosPrecio.setText(Float.toString(kit.getPrecio()));
 		}
+    	
+    	if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
+    		Servicio servicio = (Servicio) Controladora.getInstance().buscarProducto(producto.getNombre());
+    		combobox_generalTipoProducto.getSelectionModel().select(servicio.getTipoProducto());
+    		
+    		if(servicio.getMaterialesUtilizados() != null) {
+    			ObservableList<String> data = FXCollections.observableArrayList();
+    			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
+    				String item_moved = "";
+    				 
+    				if(c.getProductoClass().getUnidadMedida() != null) {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
+    	    		}
+    	    		else {
+    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
+    	    		}
+    				data.add(item_moved);
+    			}
+    			listview_partidaSelect.setItems(data);
+    		}
+    		
+    		textfield_preciosCostos.setText(Float.toString(servicio.getCosto()));
+			textfield_preciosPrecio.setText(Float.toString(servicio.getPrecio()));
+    	}
     	
     }
 
