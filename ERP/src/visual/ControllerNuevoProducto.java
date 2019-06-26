@@ -458,7 +458,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
     				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    				Estandar productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
+    				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
     				
     				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
@@ -679,7 +679,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
     				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    				Estandar productoPart = Controladora.getInstance().buscarProducto(nombreSelect);
+    				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
     				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
     				
     				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
@@ -769,7 +769,7 @@ public class ControllerNuevoProducto implements Initializable {
     			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
     			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
     			System.out.println(itemNombre + itemCantidad);
-    			Estandar listview_estandar = Controladora.getInstance().buscarProducto(itemNombre);
+    			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
     			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
     				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
     					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
@@ -1329,7 +1329,7 @@ public class ControllerNuevoProducto implements Initializable {
         	{
         		posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
         		selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
-        		p = Controladora.getInstance().buscarProducto(selection);
+        		p = (Estandar) Controladora.getInstance().buscarProducto(selection);
         		
         		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Area"))
         		{
@@ -1712,7 +1712,7 @@ public class ControllerNuevoProducto implements Initializable {
 			 int posicion = valor.indexOf("[");
     		 String selection = valor.substring(0, posicion);
     		 String nombre = Controladora.getInstance().findPartidaNombre(valor);
-    		 Estandar p = Controladora.getInstance().buscarProducto(nombre);
+    		 Estandar p = (Estandar) Controladora.getInstance().buscarProducto(nombre);
     		 
 			 //String partida = Controladora.getInstance().findPartidaCosto(valor);
 			 String cantidad = Controladora.getInstance().findPartidaCantidad(valor);
@@ -2143,8 +2143,39 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		textfield_preciosCostos.setText(Float.toString(estandar.getCosto()));
     		textfield_preciosPrecio.setText(Float.toString(estandar.getPrecio()));
-    		
     	}
+    	
+    	if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    		Kit kit = (Kit) Controladora.getInstance().buscarProducto(producto.getNombre());
+    		combobox_generalTipoProducto.getSelectionModel().select(kit.getTipoProducto());
+    		System.out.println("La existencia actual: " + kit.getExistenciaActual());
+    		
+    		
+    		fillPartida(kit);
+    		tipoProducto(null);
+    		
+    		exAct.setText(Float.toString(kit.getExistenciaActual()));
+    		exMin.setText(Float.toString(kit.getExistenciaMinima()));
+    		exMax.setText(Float.toString(kit.getExistenciaMaxima()));
+    		
+    		ObservableList<String> data = FXCollections.observableArrayList();
+			for(CantProductosUtilizados c : kit.getProductosContenidos()) {
+				String item_moved = "";
+				 
+				if(c.getProductoClass().getUnidadMedida() != null) {
+	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
+	    		}
+	    		else {
+	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
+	    		}
+				data.add(item_moved);
+			}
+			listview_partidaSelect.setItems(data);
+			
+			textfield_preciosCostos.setText(Float.toString(kit.getCosto()));
+			textfield_preciosPrecio.setText(Float.toString(kit.getPrecio()));
+		}
+    	
     }
 
 }

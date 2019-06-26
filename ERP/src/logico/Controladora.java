@@ -2642,16 +2642,16 @@ public class Controladora implements Serializable{
 		return encontrado;
 	}
 	
-	public Estandar buscarProducto(String p)
+	public Producto buscarProducto(String p)
 	{
-		Estandar encontrado = null;
+		Producto encontrado = null;
 		int i = 0;
 		
-		while(i < getMisProductosEstandar().size() || encontrado == null)
+		while(i < getMisProductos().size() || encontrado == null)
 		{
-			if(p.equalsIgnoreCase(getMisProductosEstandar().get(i).getNombre()))
+			if(p.equalsIgnoreCase(getMisProductos().get(i).getNombre()))
 			{
-				encontrado = getMisProductosEstandar().get(i);
+				encontrado = getMisProductos().get(i);
 			}
 			
 			i++;
@@ -5066,7 +5066,7 @@ public void loadPartida()
 							while(r3.next())
 							{
 								nombre = r3.getString(1);
-								est = buscarProducto(nombre);
+								est = (Estandar) buscarProducto(nombre);
 								productosPartida.add(est);
 							}
 							

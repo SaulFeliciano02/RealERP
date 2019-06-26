@@ -1639,7 +1639,7 @@ public class Controller implements Initializable{
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {
     		try {
-    			Estandar e = Controladora.getInstance().buscarProducto(p.getNombre());
+    			Estandar e = (Estandar) Controladora.getInstance().buscarProducto(p.getNombre());
     			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     			for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
     				data.add(c);
@@ -1677,8 +1677,8 @@ public class Controller implements Initializable{
     	
     	if(p.getTipoProducto().equalsIgnoreCase("Kit")) {
     		try {
-    			ArrayList<Producto> productoSearch = Controladora.getInstance().searchProducts(p.getNombre().toLowerCase(), "Nombre");
-    			Kit k = (Kit) productoSearch.get(0);
+    			//Producto productoSearch = (Kit) Controladora.getInstance().buscarProducto(p.getNombre().toLowerCase());
+    			Kit k = (Kit) Controladora.getInstance().buscarProducto(p.getNombre().toLowerCase());
     			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     			for(CantProductosUtilizados c : k.getProductosContenidos()) {
     				data.add(c);
@@ -1703,7 +1703,7 @@ public class Controller implements Initializable{
     	tableview_productoCostosList.refresh();
     	
     	if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
-    		Estandar m = Controladora.getInstance().buscarProducto(p.getNombre());
+    		Estandar m = (Estandar) Controladora.getInstance().buscarProducto(p.getNombre());
     		try {
     			ObservableList<Combinaciones> combinacionesData = FXCollections.observableArrayList();
     			System.out.println("La cantidad de combinaciones: " + m.getCombinaciones().size());
