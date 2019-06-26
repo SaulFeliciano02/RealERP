@@ -1677,8 +1677,8 @@ public class Controller implements Initializable{
     	
     	if(p.getTipoProducto().equalsIgnoreCase("Kit")) {
     		try {
-    			//Producto productoSearch = (Kit) Controladora.getInstance().buscarProducto(p.getNombre().toLowerCase());
-    			Kit k = (Kit) Controladora.getInstance().buscarProducto(p.getNombre().toLowerCase());
+    			ArrayList<Producto> productoSearch = Controladora.getInstance().searchProducts(p.getNombre().toLowerCase(), "Nombre");
+    			Kit k = (Kit) productoSearch.get(0);
     			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
     			for(CantProductosUtilizados c : k.getProductosContenidos()) {
     				data.add(c);

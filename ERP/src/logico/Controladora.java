@@ -3323,7 +3323,7 @@ public void loadKit()
 	int idcantprodutil = 0;
 	int idestandar = 0;
 	float cantidad = 0;
-	ArrayList<CantProductosUtilizados> listado = new ArrayList<>();
+	ArrayList<CantProductosUtilizados> listado = null;
 	//Variables para precioproducto
 	int idprecioprod = 0;
 	int precioidp = 0;
@@ -3378,6 +3378,7 @@ public void loadKit()
 			
 			while(r2.next())
 			{
+				listado = new ArrayList<>();
 				id = r2.getInt(1);
 				exisminima = r2.getFloat(3);
 				exismaxima = r2.getFloat(4);
@@ -3486,7 +3487,7 @@ public void loadKit()
 				
 				Controladora.getInstance().getMisProductos().add(recuperado);
 				Controladora.getInstance().getMisProductosKit().add(recuperado);
-				listado.clear();
+				listado = null;
 				
 				System.out.println(recuperado.getNombre());
 			}
@@ -4503,7 +4504,7 @@ public void loadManoDeObra()
 		}
 		
 		System.out.println("CategoriaID = " + categoriaID);
-		CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID-1);
+		CategoriaEmpleado cat = Controladora.getInstance().getMisCategoriasEmpleado().get(categoriaID+1);
 		
 		ManoDeObra mano = new ManoDeObra(costo, cantHoras, (java.sql.Date) fecha, cat);
 		
