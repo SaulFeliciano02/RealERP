@@ -149,6 +149,10 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadKit();
 					}
+					if(Controladora.getInstance().activarLoadServicios())
+					{
+						Controladora.getInstance().loadServicios();
+					}
 					if(Controladora.getInstance().activarLoadManoDeObra())
 					{
 						Controladora.getInstance().loadManoDeObra();
