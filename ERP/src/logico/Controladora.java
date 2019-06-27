@@ -96,6 +96,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Partida> misPartidas;
 	private ArrayList<Combinaciones> misCombinaciones;
 	private ArrayList<ManoDeObra> misManosDeObras;
+	private ArrayList<CostoIndirectoProducto> misCostosIndirectos;
 	
 	private ArrayList<Area> misAreas;
 	private ArrayList<Longitud> misLongitudes;
@@ -128,6 +129,7 @@ public class Controladora implements Serializable{
 		this.misCantProductosUtilizados = new ArrayList<>();
 		this.misPrecios = new ArrayList<>();
 		this.misCombinaciones = new ArrayList<>();
+		this.misCostosIndirectos = new ArrayList<>();
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -183,6 +185,10 @@ public class Controladora implements Serializable{
 		this.misGastosGenerales = new ArrayList<>();
 		this.misCategoriasEmpleado = new ArrayList<>();
 		this.misManosDeObras = new ArrayList<>();
+	}
+	
+	public ArrayList<CostoIndirectoProducto> getMisCostosIndirectos(){
+		return misCostosIndirectos;
 	}
 	
 	public ArrayList<Estandar> getMisProductosMatriz(){
@@ -1663,7 +1669,7 @@ public class Controladora implements Serializable{
 		}
 	}
 	
-	public void guardarCostoIndirectoSQL(Producto producto, GastoGeneral gastogeneral) {
+	public void guardarCostoIndirectoSQL(Producto producto, CostoIndirectoProducto costoIndirecto) {
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
@@ -1673,9 +1679,9 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO producto (gastogeneral, producto, costo) VALUES (?, ?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisGastosGenerales().indexOf(gastogeneral));
-			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto));
+					c.prepareStatement("INSERT INTO costoindirecto (gastogeneral, producto, costo) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisCostosIndirectos().indexOf(costoIndirecto)+1);
+			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.setFloat(3, producto.getCosto());
 			p.executeUpdate();
 		}
