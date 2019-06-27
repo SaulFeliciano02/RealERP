@@ -476,10 +476,14 @@ public class ControllerNuevoProducto implements Initializable {
     		if(canRegister) {
     			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
-    			//for(CostoIndirectoProducto c : tableview_costosIndirectos.getItems()) {
-    				//estandar.getCostosIndirectos().add(c);
-    			//}
     			
+    			
+    			for(CostoIndirectoProducto c : gastosIndirectos) {
+    				estandar.getCostosIndirectos().add(c);
+    				
+    				Controladora.getInstance().getMisCostosIndirectos().add(c);
+    				Controladora.getInstance().guardarCostoIndirectoSQL(estandar, c);
+    			}
     			
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
@@ -576,6 +580,13 @@ public class ControllerNuevoProducto implements Initializable {
     			Controladora.getInstance().getMisProductosKit().add(kit);
     			Controladora.getInstance().guardarKitSQL(kit);
     			
+    			for(CostoIndirectoProducto c : gastosIndirectos) {
+    				kit.getCostosIndirectos().add(c);
+    				
+    				Controladora.getInstance().getMisCostosIndirectos().add(c);
+    				Controladora.getInstance().guardarCostoIndirectoSQL(kit, c);
+    			}
+    			
     			Controladora.getInstance().guardarRubroProductoSQL(kit, rubro);
     			Controladora.getInstance().guardarPrecioProductoSQL(kit, precio);
     			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(kit, proveedor);
@@ -635,6 +646,13 @@ public class ControllerNuevoProducto implements Initializable {
     				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
     				Controladora.getInstance().guardarRubroProductoSQL(servicio, rubro);
         			Controladora.getInstance().guardarPrecioProductoSQL(servicio, precio);
+        			
+        			for(CostoIndirectoProducto c : gastosIndirectos) {
+        				servicio.getCostosIndirectos().add(c);
+        				
+        				Controladora.getInstance().getMisCostosIndirectos().add(c);
+        				Controladora.getInstance().guardarCostoIndirectoSQL(servicio, c);
+        			}
     			
     				for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
     					Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
@@ -731,6 +749,13 @@ public class ControllerNuevoProducto implements Initializable {
     			
     			Controladora.getInstance().guardarProductosSQL(matriz);
     			Controladora.getInstance().guardarEstandarSQL(matriz);
+    			
+    			for(CostoIndirectoProducto c : gastosIndirectos) {
+    				matriz.getCostosIndirectos().add(c);
+    				
+    				Controladora.getInstance().getMisCostosIndirectos().add(c);
+    				Controladora.getInstance().guardarCostoIndirectoSQL(matriz, c);
+    			}
     			
     			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
     			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);

@@ -145,6 +145,10 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Combinaciones, String> tablecolumn_numSerieCombinacion;
     @FXML private TableView<Combinaciones> tableview_atributosList;
     
+    @FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_productoCostoIndirectoNombre;
+    @FXML private TableColumn<CostoIndirectoProducto, Float> tablecolumn_productoCostoIndirectoMonto;
+    @FXML private TableView<CostoIndirectoProducto> tableview_productoCostoIndirecto;
+    
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
     @FXML private TextField textfield_registrar_atributo;
@@ -1640,15 +1644,18 @@ public class Controller implements Initializable{
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {
     		try {
     			Estandar e = (Estandar) Controladora.getInstance().buscarProducto(p.getNombre());
-    			ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
-    			for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
-    				data.add(c);
+    			if(e.getPartida() != null) {
+    				ObservableList<CantProductosUtilizados> data = FXCollections.observableArrayList();
+    				for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
+    					data.add(c);
+    				}
+    				tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    				tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    				tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    				tableview_productoPartidaList.setItems(data);
+    				tableview_productoPartidaList.refresh();
     			}
-    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
-    			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-    			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
-    			tableview_productoPartidaList.setItems(data);
-    			tableview_productoPartidaList.refresh();
+    			
     		}
     		catch(NullPointerException e) {
     			e.printStackTrace();
@@ -1724,7 +1731,14 @@ public class Controller implements Initializable{
     		
     	}
     	
-    	
+    	ObservableList<CostoIndirectoProducto> dataCostoIndirecto = FXCollections.observableArrayList();
+    	for(CostoIndirectoProducto c : p.getCostosIndirectos()) {
+    		dataCostoIndirecto.add(c);
+    	}
+    	tablecolumn_productoCostoIndirectoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_productoCostoIndirectoMonto.setCellValueFactory(new PropertyValueFactory<>("valor"));
+    	tableview_productoCostoIndirecto.setItems(dataCostoIndirecto);
+    	tableview_productoCostoIndirecto.refresh();
     }
     
     public void cerrarInfoAdicionalProducto(ActionEvent event) {

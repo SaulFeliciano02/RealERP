@@ -567,10 +567,10 @@
                                                                                                                <children>
                                                                                                                   <VBox prefHeight="422.4" prefWidth="586.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                                      <children>
-                                                                                                                        <TableView prefHeight="347.0" prefWidth="586.0" VBox.vgrow="ALWAYS">
+                                                                                                                        <TableView fx:id="tableview_productoCostoIndirecto" prefHeight="347.0" prefWidth="586.0" VBox.vgrow="ALWAYS">
                                                                                                                            <columns>
-                                                                                                                              <TableColumn prefWidth="540.9999694824219" text="Nombre del producto" />
-                                                                                                                              <TableColumn minWidth="0.0" prefWidth="539.0" text="Monto" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_productoCostoIndirectoNombre" prefWidth="540.9999694824219" text="Nombre del producto" />
+                                                                                                                              <TableColumn fx:id="tablecolumn_productoCostoIndirectoMonto" minWidth="0.0" prefWidth="539.0" text="Monto" />
                                                                                                                            </columns>
                                                                                                                            <columnResizePolicy>
                                                                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
