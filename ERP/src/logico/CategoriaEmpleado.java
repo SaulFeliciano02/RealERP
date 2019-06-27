@@ -4,6 +4,7 @@ public class CategoriaEmpleado {
 	
 	String nombre;
 	float sueldo;
+	private boolean borrado;
 	
 	public String getNombre() {
 		return nombre;
@@ -25,6 +26,15 @@ public class CategoriaEmpleado {
 		super();
 		this.nombre = nombre;
 		this.sueldo = sueldo;
+		this.setBorrado(false);
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	

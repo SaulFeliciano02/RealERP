@@ -23,7 +23,7 @@ abstract public class Producto {
 	private String descripcionFija;
 	private ArrayList<CostoDirecto> costosDirectos;
 	private float costo;
-	
+	private boolean borrado;
 	
 
 	public Producto(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
@@ -50,6 +50,7 @@ abstract public class Producto {
 		this.descripcionFija = descripcionFija;
 		this.costosDirectos = new ArrayList<CostoDirecto>();
 		this.costo = costo;
+		this.setBorrado(false);
 	}
 	
 	
@@ -203,6 +204,16 @@ abstract public class Producto {
 
 	public void setCosto(float costo) {
 		this.costo = costo;
+	}
+
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	

@@ -7,6 +7,7 @@ public class Empleado extends Persona {
 	public String rnc;
 	public float sueldo;
 	public CategoriaEmpleado categoria;
+	private boolean borrado;
 	
 	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, float sueldo, CategoriaEmpleado categoria) {
 		super(codigo, nombre, telefono);
@@ -15,6 +16,7 @@ public class Empleado extends Persona {
 		this.sueldo = sueldo;
 		this.rnc = rnc;
 		this.categoria = categoria;
+		this.setBorrado(false);
 	}
 
 	public CategoriaEmpleado getCategoria() {
@@ -55,6 +57,14 @@ public class Empleado extends Persona {
 
 	public void setRnc(String rnc) {
 		this.rnc = rnc;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	

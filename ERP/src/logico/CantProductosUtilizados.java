@@ -5,11 +5,13 @@ public class CantProductosUtilizados {
 	private Producto producto;
 	private float cantidad;
 	private String unidad;
+	private boolean borrado;
 	
 	public CantProductosUtilizados(Producto producto, float cantidad) {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
+		setBorrado(false);
 		if(producto.getUnidadMedida() != null) {
 			this.unidad = producto.getUnidadMedida().getNombre();
 		}
@@ -48,6 +50,16 @@ public class CantProductosUtilizados {
 
 	public void setCantidad(float cantidad) {
 		this.cantidad = cantidad;
+	}
+
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 }

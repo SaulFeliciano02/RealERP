@@ -9,6 +9,7 @@ public class GastoGeneral {
 	private float precioUnitario;
 	private String descripcion;
 	private LocalDate remodelado;
+	private boolean borrado;
 	
 	public GastoGeneral(String nombre, float precioUnitario, String descripcion, LocalDate remodelado) {
 		super();
@@ -16,6 +17,7 @@ public class GastoGeneral {
 		this.precioUnitario = precioUnitario;
 		this.descripcion = descripcion;
 		this.remodelado = remodelado; 
+		this.setBorrado(false);
 	}
 
 	public String getNombre() {
@@ -48,6 +50,14 @@ public class GastoGeneral {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	

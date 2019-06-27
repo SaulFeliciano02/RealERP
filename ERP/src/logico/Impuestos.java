@@ -5,6 +5,7 @@ public class Impuestos {
 	private String nombreImpuesto;
 	private Float porcentaje;
 	private Float montoAplicable;
+	private boolean borrado;
 	
 	public Impuestos(String codigo, String nombreImpuesto, Float porcentaje, Float montoAplicable) {
 		super();
@@ -12,6 +13,7 @@ public class Impuestos {
 		this.nombreImpuesto = nombreImpuesto;
 		this.porcentaje = porcentaje;
 		this.montoAplicable = montoAplicable;
+		this.setBorrado(false);
 	}
 
 	public String getCodigo() {
@@ -44,6 +46,14 @@ public class Impuestos {
 
 	public void setMontoAplicable(Float montoAplicable) {
 		this.montoAplicable = montoAplicable;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	

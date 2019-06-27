@@ -5,6 +5,7 @@ public class Promocion {
 	private Float precioPromocion;
 	private Date fechaInicio; // Cambiarlo a Calendar
 	private Date fechaFinal; // Cambiarlo a Calendar
+	private boolean borrado;
 	
 	
 	public Promocion(Float precioPromocion, Date fechaInicio, Date fechaFinal) {
@@ -12,6 +13,7 @@ public class Promocion {
 		this.precioPromocion = precioPromocion;
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
+		this.setBorrado(false);
 	}
 	
 	public Float getPrecioPromocion() {
@@ -31,6 +33,14 @@ public class Promocion {
 	}
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 
 }

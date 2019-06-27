@@ -1682,7 +1682,7 @@ public class Controladora implements Serializable{
 					c.prepareStatement("INSERT INTO costoindirecto (gastogeneral, producto, costo) VALUES (?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisCostosIndirectos().indexOf(costoIndirecto)+1);
 			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
-			p.setFloat(3, producto.getCosto());
+			p.setFloat(3, costoIndirecto.getValor());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -3039,6 +3039,7 @@ public class Controladora implements Serializable{
 				}
 				
 				Precio pre = new Precio(precio, descripcion, activo);
+				pre.setFecha(LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay()));
 				
 				Controladora.getInstance().getMisPrecios().add(pre);
 			}
@@ -3138,6 +3139,128 @@ public class Controladora implements Serializable{
 		}
 		
 		return activar;
+	}
+	
+	public boolean activarLoadCostoIndirecto()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM costoindirecto");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadCostoIndirecto()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		int id = 0;
+		int idGastoGeneral = 0;
+		int idProducto = 0;
+		float costo = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM costoindirecto");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				id = r.getInt(1);
+				idGastoGeneral = r.getInt(2);
+				idProducto = r.getInt(3);
+				costo = r.getFloat(4);
+				
+				CostoIndirectoProducto costoInd = new CostoIndirectoProducto(getMisGastosGenerales().get(idGastoGeneral-1).getNombre(), costo, null);
+				
+				getMisCostosIndirectos().add(costoInd);
+				
+				getMisProductos().get(idProducto-1).getCostosIndirectos().add(costoInd);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 	
 	public void loadCliente()
