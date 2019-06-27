@@ -157,6 +157,10 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadManoDeObra();
 					}
+					if(Controladora.getInstance().activarLoadCostoIndirecto())
+					{
+						Controladora.getInstance().loadCostoIndirecto();
+					}
 					
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;

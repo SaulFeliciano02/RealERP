@@ -478,19 +478,18 @@ public class ControllerNuevoProducto implements Initializable {
     				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
     			
     			
-    			for(CostoIndirectoProducto c : gastosIndirectos) {
-    				estandar.getCostosIndirectos().add(c);
-    				
-    				Controladora.getInstance().getMisCostosIndirectos().add(c);
-    				Controladora.getInstance().guardarCostoIndirectoSQL(estandar, c);
-    			}
-    			
     			Controladora.getInstance().getMisProductosEstandar().add(estandar);
     			Controladora.getInstance().getMisProductos().add(estandar);
     			
     			Controladora.getInstance().guardarProductosSQL(estandar);
     			Controladora.getInstance().guardarEstandarSQL(estandar);
     			
+    			for(CostoIndirectoProducto c : gastosIndirectos) {
+    				estandar.getCostosIndirectos().add(c);
+    				
+    				Controladora.getInstance().getMisCostosIndirectos().add(c);
+    				Controladora.getInstance().guardarCostoIndirectoSQL(estandar, c);
+    			}
     			
     			if(infoManoDeObra != null) {
     				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);

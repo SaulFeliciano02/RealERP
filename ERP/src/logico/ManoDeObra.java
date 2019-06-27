@@ -7,6 +7,7 @@ public class ManoDeObra {
 	private float cantidadHoras;
 	private Date date;
 	private CategoriaEmpleado categoria;
+	private boolean borrado;
 	
 	public ManoDeObra(float costo, float cantidadHoras, Date date, CategoriaEmpleado categoria) {
 		super();
@@ -14,6 +15,7 @@ public class ManoDeObra {
 		this.cantidadHoras = cantidadHoras;
 		this.date = date;
 		this.categoria = categoria;
+		this.setBorrado(false);
 	}
 
 	public float getCosto() {
@@ -39,5 +41,13 @@ public class ManoDeObra {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 }

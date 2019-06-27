@@ -11,7 +11,7 @@ public class Combinaciones {
 	public Atributos atributo1;
 	public Atributos atributo2;
 	public Atributos atributo3;
-	
+	private boolean borrado;
 	
 	public Combinaciones(String numeroSerie, float existenciaActual, ArrayList<Atributos> listaAtributos) {
 		super();
@@ -27,6 +27,7 @@ public class Combinaciones {
 		else {
 			this.atributo3 = new Atributos("", null);
 		}
+		this.setBorrado(false);
 		//this.partida = partida;
 	}
 
@@ -88,6 +89,14 @@ public class Combinaciones {
 
 	public void setAtributo3(Atributos atributo3) {
 		this.atributo3 = atributo3;
+	}
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	
 	
