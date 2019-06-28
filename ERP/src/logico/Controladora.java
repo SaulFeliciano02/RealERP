@@ -2193,7 +2193,10 @@ public class Controladora implements Serializable{
 					break;
 			}
 			if(boolCount == buscador.length()) {
-				searchProducto.add(misProductos.get(i));
+				if(!Controladora.getInstance().misProductos.get(i).isBorrado()) {
+					searchProducto.add(misProductos.get(i));
+				}
+				
 			}
 		}
 		return searchProducto;
@@ -2655,9 +2658,11 @@ public class Controladora implements Serializable{
 		
 		while(i < getMisProductos().size() || encontrado == null)
 		{
-			if(p.equalsIgnoreCase(getMisProductos().get(i).getNombre()))
-			{
-				encontrado = getMisProductos().get(i);
+			if(!Controladora.getInstance().getMisProductos().get(i).isBorrado()) {
+				if(p.equalsIgnoreCase(Controladora.getInstance().getMisProductos().get(i).getNombre()))
+				{
+					encontrado = getMisProductos().get(i);
+				}
 			}
 			
 			i++;
@@ -6070,6 +6075,76 @@ public void loadGastosGenerales()
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
 					cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadRestar+"' WHERE idestandar = '"+indiceProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void sumarExistenciaActual(float cantidadSumar, int indiceProducto) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE estandar SET existactual = '"+cantidadSumar+"' WHERE idestandar = '"+indiceProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void borrarProducto(int indiceProducto) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE productos SET borrado = 1 WHERE idproductos = '"+indiceProducto+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
