@@ -1091,6 +1091,13 @@ public class Controller implements Initializable{
     }
     
     public void pressed_eliminarProducto(ActionEvent event){
+    	Producto producto = tableview_productList.getSelectionModel().getSelectedItem();
+    	
+    	if(producto!=null) {
+    		Controladora.getInstance().borrarProducto(Controladora.getInstance().getMisProductos().indexOf((producto))+1);
+    	}
+    	
+    	//Agregar acá un reload
     }
 
     public void pressed_nuevoCliente(ActionEvent event) {
