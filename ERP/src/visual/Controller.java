@@ -1513,7 +1513,12 @@ public class Controller implements Initializable{
     public void fillProductList(ArrayList<Producto> p) {
     	ObservableList<Producto> data = FXCollections.observableArrayList();
     	if(p == null) {
-    		data.addAll(Controladora.getInstance().getMisProductos());
+    		for(Producto productos : Controladora.getInstance().getMisProductos()) {
+    			if(!productos.isBorrado()) {
+    				data.add(productos);
+    			}
+    		}
+    		
     	}
     	else {
     		data.addAll(p);

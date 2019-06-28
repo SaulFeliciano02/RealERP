@@ -301,31 +301,34 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void activarProductoGuardar(KeyEvent event) {
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
-    	if(tipoProducto.equalsIgnoreCase("Matriz")) {
-    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
-    			button_productGuardar.setDisable(false);
+    	if(!modificado) {
+    		if(tipoProducto.equalsIgnoreCase("Matriz")) {
+    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
+    				button_productGuardar.setDisable(false);
+    			}
+    			else {
+    				button_productGuardar.setDisable(true);
+    			}
     		}
-    		else {
-    			button_productGuardar.setDisable(true);
+    		else if(tipoProducto.equalsIgnoreCase("Servicio")) {
+    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
+    				button_productGuardar.setDisable(false);
+    			}
+    			else {
+    				button_productGuardar.setDisable(true);
+    			}
+    		}
+    		else if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
+    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
+    					&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
+    				button_productGuardar.setDisable(false);
+    			}
+    			else {
+    				button_productGuardar.setDisable(true);
+    			}
     		}
     	}
-    	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
-    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
-    			button_productGuardar.setDisable(false);
-    		}
-    		else {
-    			button_productGuardar.setDisable(true);
-    		}
-    	}
-    	else if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
-    		if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
-    			&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
-    			button_productGuardar.setDisable(false);
-    		}
-    		else {
-    			button_productGuardar.setDisable(true);
-    		}
-    	}	
+    		
     }
     
     public void activarPartida(ActionEvent event) {
@@ -373,8 +376,7 @@ public class ControllerNuevoProducto implements Initializable {
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
     	
     	//Guardando precio en la base de datos
-    	Controladora.getInstance().getMisPrecios().add(precio);
-    	Controladora.getInstance().guardarPrecioSQL(precio);
+    	
     	
     	String descripcion = "";
     	String codigoBarra = "";
@@ -383,7 +385,12 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	float costoTotal = Float.parseFloat(textfield_preciosCostos.getText());
     	if(textfield_generalUnidad.getLength() != 0) {
-    		unidad = tableview_unidadList.getSelectionModel().getSelectedItem();
+    		for(UnidadMedida u : Controladora.getInstance().getMisUnidadMedida()) {
+    			if(u.getNombre().equalsIgnoreCase(textfield_generalUnidad.getText())) {
+    				unidad = u;
+    			}
+    		}
+    		
     	}
     	try {
     		descripcion = textarea_generalDescripcion.getText();
@@ -404,483 +411,941 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     	}
     	
-    	if(tipoProducto.equalsIgnoreCase("Estandar")) {
-    		String existenciaActual = exAct.getText();
-    		String existenciaMinima = exMin.getText();
-    		String existenciaMaxima = exMax.getText();
-    		float costoDeCompra = 0;
-    		float costoManoObra = 0;
-    		boolean fabricado = false;
-    		ManoDeObra infoManoDeObra = null;
-    		CategoriaEmpleado categoriaempleado = null;
-    		if(checkbox_generalProducible.isSelected()) {
-    			try {
-    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
-    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
-    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
-    				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
-    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
-    						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
-    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
-    			}catch(NullPointerException e) {
+    	//Iniciado del modificar
+    	if(modificado) {
+    		ArrayList<Producto> producto = Controladora.getInstance().searchProducts(codigo, "Codigo");
+    		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Estandar")) {
+    			Estandar estandar = (Estandar) producto.get(0);
+    			float existenciaInicial = estandar.getExistenciaInicial();
+    			
+    			if(!estandar.getNombre().equalsIgnoreCase(nombre) || !estandar.getProveedorPrinClass().equals(proveedor) || !estandar.getRubroProductoClass().equals(rubro)
+    				|| !estandar.getUnidadMedida().equals(unidad) || estandar.getExistenciaActual() != Float.parseFloat(exAct.getText()) || estandar.getExistenciaMinima() != Float.parseFloat(exMin.getText())
+    				|| estandar.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || estandar.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
+    				|| estandar.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || estandar.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
+    				|| checkPartida(estandar) || checkCostosIndirectos(estandar) || checkManoDeObra(estandar)) {
     				
-    			}
-    			fabricado = true;
-    		}
-    		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
-    			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
-    		}
-    		a.setAlertType(AlertType.WARNING);
-    		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
-    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
-    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
-    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
-    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		Date date = null;
-    		Partida partida = null;	
-    		if(checkbox_generalProducible.isSelected()) {
-    			partida = new Partida();
-    			for(String s : listview_partidaSelect.getItems()) {
-    				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
-    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
-    				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+    				String existenciaActual = exAct.getText();
+    	    		String existenciaMinima = exMin.getText();
+    	    		String existenciaMaxima = exMax.getText();
+    	    		float costoDeCompra = 0;
+    	    		float costoManoObra = 0;
+    	    		boolean fabricado = false;
+    	    		ManoDeObra infoManoDeObra = null;
+    	    		CategoriaEmpleado categoriaempleado = null;
+    	    		if(checkbox_generalProducible.isSelected()) {
+    	    			try {
+    	    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+    	    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+    	    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+    	    				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+    	    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+    	    						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+    	    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+    	    			}catch(NullPointerException e) {
+    	    				
+    	    			}
+    	    			fabricado = true;
+    	    		}
+    	    		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
+    	    			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
+    	    		}
+    	    		a.setAlertType(AlertType.WARNING);
+    	    		if(Float.parseFloat(existenciaMinima) > Float.parseFloat(existenciaMaxima)) {
+    	    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+    	    			a.show();
+    	    			canRegister = false;
+    	    		}
+    	    		else if(Float.parseFloat(existenciaActual) < Float.parseFloat(existenciaMinima)){
+    	    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+    	    			a.show();
+    	    			canRegister = false;
+    	    		}
+    	    		else if(Float.parseFloat(existenciaActual) > Float.parseFloat(existenciaMaxima)){
+    	    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+    	    			a.show();
+    	    			canRegister = false;
+    	    		}
+    	    		else if(Float.parseFloat(existenciaMaxima) < Float.parseFloat(existenciaMinima)){
+    	    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+    	    			a.show();
+    	    			canRegister = false;
+    	    		}
+    	    		Date date = null;
+    	    		Partida partida = null;	
+    	    		if(checkbox_generalProducible.isSelected()) {
+    	    			partida = new Partida();
+    	    			for(String s : listview_partidaSelect.getItems()) {
+    	    				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+    	    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+    	    				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
+    	    				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+    	    				
+    	    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    	    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
+    	    				partida.agregarProductoUtilizado(c);
+    	    				
+    	    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+    	    				for(String itemOriginal : listview_partida.getItems()) {
+    							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
+    							if(itemOriginalName.equalsIgnoreCase(nombreSelect)) {
+    								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
+    								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadSelect)*Float.parseFloat(existenciaActual));
+    								System.out.println("La cantidad que se esta sumando es: "  + cantidadSumar);
+    								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
+    								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart);
+    								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
+    							}
+    						}
+    	    				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
+    	    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+    	    			}
+    	    		}
+    	    		
+    	    		
+    	    		//No se registra nombre, fecha, y muchas otras cosas
+    	    		if(canRegister) {
+    	    			Estandar newEstandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, costoDeCompra, fabricado, partida, codigo, nombre,
+    	    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+    	    			
+    	    			
+    	    			Controladora.getInstance().getMisProductosEstandar().add(newEstandar);
+    	    			Controladora.getInstance().getMisProductos().add(newEstandar);
+    	    			
+    	    			Controladora.getInstance().guardarProductosSQL(newEstandar);
+    	    			Controladora.getInstance().guardarEstandarSQL(newEstandar);
+    	    			
+    	    			for(CostoIndirectoProducto c : gastosIndirectos) {
+    	    				newEstandar.getCostosIndirectos().add(c);
+    	    				
+    	    				Controladora.getInstance().getMisCostosIndirectos().add(c);
+    	    				Controladora.getInstance().guardarCostoIndirectoSQL(newEstandar, c);
+    	    			}
+    	    			
+    	    			if(infoManoDeObra != null) {
+    	    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+    	    				newEstandar.setInfoManoDeObra(infoManoDeObra);
+    	    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+    	    				Controladora.getInstance().guardarManoDeObraProductoSQL(newEstandar, infoManoDeObra, categoriaempleado);
+    	    			}
+    	    			if(checkbox_generalProducible.isSelected()) {
+    	    				
+    	    				
+    	    				
+    	    				Controladora.getInstance().getMisPartidas().add(partida);
+    	    				Controladora.getInstance().guardarPartidaSQL();
+    	    				for(CantProductosUtilizados c : partida.getListaMateriales()) {
+    	    					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+    	    				}
+    	    				Controladora.getInstance().guardarProductoPartida(newEstandar, partida);
+    	    			}	
+    	    			
+    	    			Controladora.getInstance().guardarPrecioProductoSQL(newEstandar, precio);
+    	    			
+    	    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newEstandar, proveedor);
+    	    			
+    	    			Controladora.getInstance().guardarRubroProductoSQL(newEstandar, rubro);
+    	    			
+    	    			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(estandar);
+    	    			int oldIndiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
+    	    			
+    	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
+    	    			Controladora.getInstance().getMisProductosEstandar().get(oldIndiceProductoEstandar).setBorrado(true);
+    	    			
+    	    			Controladora.getInstance().borrarProducto(oldIndiceProducto+1);
+    	    			
+    	    			cleanEverything(tipoProducto);
+    	    			cancelCreation(event);
     				
-    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
-    				partida.agregarProductoUtilizado(c);
-    				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
-    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
     				
-    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+    	    		}
     			}
     		}
     		
+    		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Kit")) {
+    			Kit kit = (Kit) producto.get(0);
+    			float existenciaInicial = kit.getExistenciaInicial();
+   
+    			if(!kit.getNombre().equalsIgnoreCase(nombre) || !kit.getProveedorPrinClass().equals(proveedor) || !kit.getRubroProductoClass().equals(rubro)
+        				|| kit.getUnidadMedida() != unidad || kit.getExistenciaActual() != Float.parseFloat(exAct.getText()) || kit.getExistenciaMinima() != Float.parseFloat(exMin.getText())
+        				|| kit.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || kit.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || kit.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
+        				|| checkPartida(kit) || checkCostosIndirectos(kit)) {
+    				String existenciaActual = exAct.getText();
+            		String existenciaMinima = exMin.getText();
+            		String existenciaMaxima = exMax.getText();
+            		float costo = 0;
+            		a.setAlertType(AlertType.WARNING);
+            		if(Float.parseFloat(existenciaMinima) > Float.parseFloat(existenciaMaxima)) {
+            			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Float.parseFloat(existenciaActual) < Float.parseFloat(existenciaMinima)){
+            			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Float.parseFloat(existenciaActual) > Float.parseFloat(existenciaMaxima)){
+            			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Float.parseFloat(existenciaMaxima) < Float.parseFloat(existenciaMinima)){
+            			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(listview_partidaSelect.getItems().size() == 0) {
+            			a.setContentText("Debe elegir los productos que conforman el kit");
+            			a.show();
+            			canRegister = false;
+            		}
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		Date date = null;
+            		ArrayList<CantProductosUtilizados> productsForKit = new ArrayList<>();
+            		for(String item : listview_partidaSelect.getItems()) {
+            			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
+            			String cantidad = Controladora.getInstance().findPartidaCantidad(item);
+            			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
+            				if(!p.isBorrado()) {
+            					if(nombreItem.equals(p.getNombre())) {
+            						CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidad));
+            						Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            						Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+            						productsForKit.add(c);
+            						
+            						//float cantidadSumar = 
+            						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+            						for(String itemOriginal : listview_partida.getItems()) {
+            							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
+            							if(itemOriginalName.equalsIgnoreCase(nombreItem)) {
+            								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
+            								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidad)*Float.parseFloat(existenciaActual));
+            								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
+            								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(p);
+            								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
+            							}
+            						}
+            						float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidad) * Float.parseFloat(existenciaActual)));
+                				
+            						Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            					}
+            				}
+            				
+            			}
+            		}
+            		//Visitar esto nuevamente
+            		if(canRegister) {
+            			Kit newKit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, codigo, nombre,
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+            			
+            			Controladora.getInstance().getMisProductos().add(newKit);
+            			Controladora.getInstance().guardarProductosSQL(newKit);
+            			
+            			Controladora.getInstance().getMisProductosKit().add(newKit);
+            			Controladora.getInstance().guardarKitSQL(newKit);
+            			
+            			for(CostoIndirectoProducto c : gastosIndirectos) {
+            				newKit.getCostosIndirectos().add(c);
+            				
+            				Controladora.getInstance().getMisCostosIndirectos().add(c);
+            				Controladora.getInstance().guardarCostoIndirectoSQL(newKit, c);
+            			}
+            			
+            			Controladora.getInstance().guardarRubroProductoSQL(newKit, rubro);
+            			Controladora.getInstance().guardarPrecioProductoSQL(newKit, precio);
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newKit, proveedor);
+            			
+            			for(CantProductosUtilizados c : productsForKit) {
+            				Controladora.getInstance().guardarKitProductosSQL(newKit, c);
+            			}
+            			
+            			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(kit);
+    	    			int oldIndiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(kit);
+    	    			
+    	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
+    	    			Controladora.getInstance().getMisProductosKit().get(oldIndiceProductoKit).setBorrado(true);
+    	    			
+    	    			Controladora.getInstance().borrarProducto(oldIndiceProducto+1);
+    	    			cleanEverything(tipoProducto);
+    	    			cancelCreation(event);
+            			
+            		}
+    			}
+    		}
     		
-    		//No se registra nombre, fecha, y muchas otras cosas
-    		if(canRegister) {
-    			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+    		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Servicio")) {
+    			Servicio servicio = (Servicio) producto.get(0);
     			
-    			
-    			Controladora.getInstance().getMisProductosEstandar().add(estandar);
-    			Controladora.getInstance().getMisProductos().add(estandar);
-    			
-    			Controladora.getInstance().guardarProductosSQL(estandar);
-    			Controladora.getInstance().guardarEstandarSQL(estandar);
-    			
-    			for(CostoIndirectoProducto c : gastosIndirectos) {
-    				estandar.getCostosIndirectos().add(c);
+    			if(!servicio.getNombre().equalsIgnoreCase(nombre) || servicio.getProveedorPrinClass() != proveedor || !servicio.getRubroProductoClass().equals(rubro)
+        				|| servicio.getUnidadMedida() != unidad || servicio.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) 
+        				|| servicio.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
+        				|| checkPartida(servicio) || checkCostosIndirectos(servicio) || checkManoDeObra(servicio)) {
+    				a.setAlertType(AlertType.WARNING);
+        			if(combobox_costosEncargadosFabricacion.getSelectionModel().isEmpty()) {
+        				a.setContentText("Eliga la categoria de empleado que ejercera este servicio.");
+            			a.show();
+            			canRegister = false;
+        			}
     				
-    				Controladora.getInstance().getMisCostosIndirectos().add(c);
-    				Controladora.getInstance().guardarCostoIndirectoSQL(estandar, c);
-    			}
-    			
-    			if(infoManoDeObra != null) {
-    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
-    				estandar.setInfoManoDeObra(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraProductoSQL(estandar, infoManoDeObra, categoriaempleado);
-    			}
-    			if(checkbox_generalProducible.isSelected()) {
-    				
-    				
-    				
-    				Controladora.getInstance().getMisPartidas().add(partida);
-    				Controladora.getInstance().guardarPartidaSQL();
-    				for(CantProductosUtilizados c : partida.getListaMateriales()) {
-    					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
-    				}
-    				Controladora.getInstance().guardarProductoPartida(estandar, partida);
-    			}	
-    			
-    			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);
-    			
-    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(estandar, proveedor);
-    			
-    			Controladora.getInstance().guardarRubroProductoSQL(estandar, rubro);
-    		
-    		
-    		}
-    	}
-    	
-    	else if(tipoProducto.equalsIgnoreCase("Kit")) {
-    		String existenciaActual = exAct.getText();
-    		String existenciaMinima = exMin.getText();
-    		String existenciaMaxima = exMax.getText();
-    		float costo = 0;
-    		a.setAlertType(AlertType.WARNING);
-    		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
-    			a.setContentText("La existencia minima no puede ser mayor que la maxima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
-    			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
-    			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
-    			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
-    			a.show();
-    			canRegister = false;
-    		}
-    		else if(listview_partidaSelect.getItems().size() == 0) {
-    			a.setContentText("Debe elegir los productos que conforman el kit");
-    			a.show();
-    			canRegister = false;
-    		}
-    		Date date = null;
-    		ArrayList<CantProductosUtilizados> productsForKit = new ArrayList<>();
-    		for(String item : listview_partidaSelect.getItems()) {
-    			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
-    			String cantidad = Controladora.getInstance().findPartidaCantidad(item);
-    			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
-    				if(nombreItem.equals(p.getNombre())) {
-    					CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidad));
-    					Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
-    					productsForKit.add(c);
-    					float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidad) * Float.parseFloat(existenciaActual)));
-        				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
-        				
-        				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
-    				}
-    			}
-    		}
-    		//Visitar esto nuevamente
-    		if(canRegister) {
-    			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
-    			
-    			Controladora.getInstance().getMisProductos().add(kit);
-    			Controladora.getInstance().guardarProductosSQL(kit);
-    			
-    			Controladora.getInstance().getMisProductosKit().add(kit);
-    			Controladora.getInstance().guardarKitSQL(kit);
-    			
-    			for(CostoIndirectoProducto c : gastosIndirectos) {
-    				kit.getCostosIndirectos().add(c);
-    				
-    				Controladora.getInstance().getMisCostosIndirectos().add(c);
-    				Controladora.getInstance().guardarCostoIndirectoSQL(kit, c);
-    			}
-    			
-    			Controladora.getInstance().guardarRubroProductoSQL(kit, rubro);
-    			Controladora.getInstance().guardarPrecioProductoSQL(kit, precio);
-    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(kit, proveedor);
-    			
-    			for(CantProductosUtilizados c : productsForKit) {
-    				Controladora.getInstance().guardarKitProductosSQL(kit, c);
-    			}
-    			
-    		}
-    	}
-    	
-    	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
-    		float costo = 0;
-    		float costoManoObra = 0;
-    		ManoDeObra infoManoDeObra = null;
-    		CategoriaEmpleado categoriaempleado = null;
-    		ArrayList<CantProductosUtilizados> productsForServicio = new ArrayList<>();
-    		for(String item : listview_partidaSelect.getItems()) {
-    			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
-    			String cantidadItem = Controladora.getInstance().findPartidaCantidad(item);
-    			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
-    				if(nombreItem.equals(p.getNombre())) {
-    					CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidadItem));
-    				
-    					Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    					Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
-    					
-    					productsForServicio.add(c);
-    					
-    					float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidadItem)));
-        				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
-        				
-        				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            		if(canRegister) {
+            			float costoManoObra = 0;
+            			ManoDeObra infoManoDeObra = null;
+            			CategoriaEmpleado categoriaempleado = null;
+            			Controladora.getInstance().getMisPrecios().add(precio);
+            			Controladora.getInstance().guardarPrecioSQL(precio);
+            			ArrayList<CantProductosUtilizados> productsForServicio = new ArrayList<>();
+            			for(String item : listview_partidaSelect.getItems()) {
+            				String nombreItem = Controladora.getInstance().findPartidaNombre(item);
+            				String cantidadItem = Controladora.getInstance().findPartidaCantidad(item);
+            				for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
+            					if(p.isBorrado()) {
+            						if(nombreItem.equals(p.getNombre())) {
+            							CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidadItem));
+            				
+            							Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            							Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+            					
+            							productsForServicio.add(c);
+            					
+            							
+            							int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+            							
+            							for(String itemOriginal : listview_partida.getItems()) {
+                							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
+                							if(itemOriginalName.equalsIgnoreCase(nombreItem)) {
+                								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
+                								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadItem));
+                								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
+                								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(p);
+                								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
+                							}
+                						}
+            							float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidadItem)));
+            							Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
 
-    				}
+            						}
+            					}
+            				}
+            			}
+      
+            			CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+            			
+            			Servicio newServicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
+           					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
+           				Controladora.getInstance().addProductoServicio(newServicio);
+           				Controladora.getInstance().addProducto(newServicio);
+           			
+           				Controladora.getInstance().guardarProductosSQL(newServicio);
+           				Controladora.getInstance().guardarServiciosSQL(newServicio, categoriaEmpleado);
+           				Controladora.getInstance().guardarRubroProductoSQL(newServicio, rubro);
+               			Controladora.getInstance().guardarPrecioProductoSQL(newServicio, precio);
+               			
+               			for(CostoIndirectoProducto c : gastosIndirectos) {
+               				newServicio.getCostosIndirectos().add(c);
+                			
+                			Controladora.getInstance().getMisCostosIndirectos().add(c);
+               				Controladora.getInstance().guardarCostoIndirectoSQL(newServicio, c);
+               			}
+            		
+           				for(CantProductosUtilizados c : newServicio.getMaterialesUtilizados()) {
+           					Controladora.getInstance().guardarServiciosMaterialesSQL(newServicio, c);
+           				}
+           			
+           				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+           				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+           				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+           				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+           				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+       						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+           				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+        			
+            			if(infoManoDeObra != null) {
+            				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+           					newServicio.setInfoManoDeObra(infoManoDeObra);
+           					Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+           					Controladora.getInstance().guardarManoDeObraServicioSQL(newServicio, infoManoDeObra, categoriaempleado);
+           				}
+            			
+            			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(servicio);
+    	    			int oldIndiceProductoServicio = Controladora.getInstance().getMisProductosServicio().indexOf(servicio);
+    	    			
+    	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
+    	    			Controladora.getInstance().getMisProductosServicio().get(oldIndiceProductoServicio).setBorrado(true);
+    	    			
+    	    			Controladora.getInstance().borrarProducto(oldIndiceProducto+1);
+    	    			cleanEverything(tipoProducto);
+    	    			cancelCreation(event);
+           			
+            		}
     			}
     		}
-    		if(canRegister) {
-    			costo = Float.parseFloat(textfield_preciosCostos.getText());
-    			a.setAlertType(AlertType.WARNING);
-    			if(combobox_costosEncargadosFabricacion.getSelectionModel().isEmpty()) {
-    				a.setContentText("Eliga la categoria de empleado que ejercera este servicio.");
+    		
+    		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Matriz")) {
+    			Estandar matriz = (Estandar) producto.get(0);
+    			float existenciaInicial = matriz.getExistenciaInicial();
+    			
+    			if(!matriz.getNombre().equalsIgnoreCase(nombre) || !matriz.getProveedorPrinClass().equals(proveedor) || !matriz.getRubroProductoClass().equals(rubro)
+        				|| !matriz.getUnidadMedida().equals(unidad) || matriz.getExistenciaMinima() != Float.parseFloat(exMin.getText())
+        				|| matriz.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || matriz.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
+        				|| matriz.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || matriz.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
+        				|| checkPartida(matriz) || checkCostosIndirectos(matriz) || checkManoDeObra(matriz) || checkCombinaciones(matriz)){
+    				float existenciaActual = 0;
+            		String existenciaMinima = exMin.getText();
+            		String existenciaMaxima = exMax.getText();
+            		float costoManoObra = 0;
+            		float costoDeCompra = 0;
+            		boolean fabricado = false;
+            		ManoDeObra infoManoDeObra = null;
+            		CategoriaEmpleado categoriaempleado = null;
+            		
+            		//Calculando la existencia actual de una matriz
+            		for(Combinaciones c : combinacionFinal) {
+            			existenciaActual += c.getExistenciaActual();
+            		}
+            		
+            		//Calculando la mano de obra del producto
+            		if(checkbox_generalProducible.isSelected()) {
+            			try {
+            				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+            				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+            				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+            				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+            				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+            						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+            				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+            			}catch(NullPointerException e) {
+            				
+            			}
+            			fabricado = true;
+            		}
+            		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
+            			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
+            		}
+            		
+            		//Calculando la partida de un producto
+            		a.setAlertType(AlertType.WARNING);
+            		Date date = null;
+            		Partida partida = null;
+            		if(checkbox_generalProducible.isSelected()) {
+            			partida = new Partida();
+            			for(String s : listview_partidaSelect.getItems()) {
+            				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+            				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+            				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
+            				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+            				
+            				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
+            				partida.agregarProductoUtilizado(c);
+            				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * existenciaActual));
+            				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+            				
+            				for(String itemOriginal : listview_partida.getItems()) {
+    							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
+    							if(itemOriginalName.equalsIgnoreCase(nombreSelect)) {
+    								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
+    								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadSelect)*existenciaActual);
+    								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
+    								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart);
+    								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
+    							}
+    						}
+            				
+            				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            			}
+            		}
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		
+            		//Registrando un producto tipo matriz
+            		if(canRegister) {
+            			Estandar newMatriz = new Estandar(existenciaActual, Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, costoDeCompra, fabricado, partida, codigo, nombre,
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            			for(Combinaciones c : combinacionFinal) {
+            				newMatriz.getCombinaciones().add(c);
+            				Controladora.getInstance().getMisCombinaciones().add(c);
+            				Controladora.getInstance().guardarCombinacionesSQL(c);
+            				for(Atributos atributo : c.getListaAtributos()) {
+            					Controladora.getInstance().guardarCombinacionesAtributosSQL(atributo, c);
+            				}
+            			}
+            			Controladora.getInstance().getMisProductos().add(newMatriz);
+            			Controladora.getInstance().getMisProductosEstandar().add(newMatriz);
+            			
+            			Controladora.getInstance().guardarProductosSQL(newMatriz);
+            			Controladora.getInstance().guardarEstandarSQL(newMatriz);
+            			
+            			for(CostoIndirectoProducto c : gastosIndirectos) {
+            				newMatriz.getCostosIndirectos().add(c);
+            				
+            				Controladora.getInstance().getMisCostosIndirectos().add(c);
+            				Controladora.getInstance().guardarCostoIndirectoSQL(newMatriz, c);
+            			}
+            			
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newMatriz, proveedor);
+            			Controladora.getInstance().guardarRubroProductoSQL(newMatriz, rubro);
+            			Controladora.getInstance().guardarPrecioProductoSQL(newMatriz, precio);
+            			
+            			for(Combinaciones c : combinacionFinal) {
+            				Controladora.getInstance().guardarMatrizSQL(newMatriz, c);
+            			}
+            			
+            			
+            			if(infoManoDeObra != null) {
+            				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+            				newMatriz.setInfoManoDeObra(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraProductoSQL(newMatriz, infoManoDeObra, categoriaempleado);
+            			}
+            			
+            			if(checkbox_generalProducible.isSelected()) {
+            				Controladora.getInstance().getMisPartidas().add(partida);
+            				Controladora.getInstance().guardarPartidaSQL();
+            				for(CantProductosUtilizados c : partida.getListaMateriales()) {
+            					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+            				}
+            				Controladora.getInstance().guardarProductoPartida(newMatriz, partida);
+            			}	
+            			
+            			Controladora.getInstance().guardarPrecioProductoSQL(newMatriz, precio);
+            			
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newMatriz, proveedor);
+            			
+            			Controladora.getInstance().guardarRubroProductoSQL(newMatriz, rubro);
+            			
+            			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(matriz);
+    	    			int oldIndiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz);
+    	    			
+    	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
+    	    			Controladora.getInstance().getMisProductosEstandar().get(oldIndiceProductoEstandar).setBorrado(true);
+    	    			
+    	    			Controladora.getInstance().borrarProducto(oldIndiceProducto+1);
+    	    			cleanEverything(tipoProducto);
+    	    			cancelCreation(event);
+            		}
+    			}
+    		}
+    	}
+    	
+    	else {
+    		//Inicio del registro
+    		for(Producto producto : Controladora.getInstance().getMisProductos()) {
+    			if(producto.getCodigo().equalsIgnoreCase(codigo)) {
+    				a.setAlertType(AlertType.WARNING);
+    				a.setContentText("Este codigo ya existe");
         			a.show();
         			canRegister = false;
     			}
-    			else {
-    				CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
-    			
-    				System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
-    			
-    				Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-    					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
-    				Controladora.getInstance().addProductoServicio(servicio);
-    				Controladora.getInstance().addProducto(servicio);
-    			
-    				Controladora.getInstance().guardarProductosSQL(servicio);
-    				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
-    				Controladora.getInstance().guardarRubroProductoSQL(servicio, rubro);
-        			Controladora.getInstance().guardarPrecioProductoSQL(servicio, precio);
-        			
-        			for(CostoIndirectoProducto c : gastosIndirectos) {
-        				servicio.getCostosIndirectos().add(c);
-        				
-        				Controladora.getInstance().getMisCostosIndirectos().add(c);
-        				Controladora.getInstance().guardarCostoIndirectoSQL(servicio, c);
-        			}
-    			
-    				for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
-    					Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
-    				}
-    			
-    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
-    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
-    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
-    				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
-    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
-						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
-    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
-				
-    				if(infoManoDeObra != null) {
-    					Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
-    					servicio.setInfoManoDeObra(infoManoDeObra);
-    					Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
-    					Controladora.getInstance().guardarManoDeObraServicioSQL(servicio, infoManoDeObra, categoriaempleado);
-    				}
-    			}
     		}
-    	}
-    	
-    	else if(tipoProducto.equalsIgnoreCase("Matriz")) {
-    		float existenciaActual = 0;
-    		String existenciaMinima = exMin.getText();
-    		String existenciaMaxima = exMax.getText();
-    		float costoManoObra = 0;
-    		float costoDeCompra = 0;
-    		boolean fabricado = false;
-    		ManoDeObra infoManoDeObra = null;
-    		CategoriaEmpleado categoriaempleado = null;
-    		
-    		//Calculando la existencia actual de una matriz
-    		for(Combinaciones c : combinacionFinal) {
-    			existenciaActual += c.getExistenciaActual();
-    		}
-    		
-    		//Calculando la mano de obra del producto
-    		if(checkbox_generalProducible.isSelected()) {
-    			try {
-    				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
-    				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
-    				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
-    				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
-    				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
-    						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
-    				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
-    			}catch(NullPointerException e) {
-    				
-    			}
-    			fabricado = true;
-    		}
-    		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
-    			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
-    		}
-    		
-    		//Calculando la partida de un producto
-    		a.setAlertType(AlertType.WARNING);
-    		Date date = null;
-    		Partida partida = null;
-    		if(checkbox_generalProducible.isSelected()) {
-    			partida = new Partida();
-    			for(String s : listview_partidaSelect.getItems()) {
-    				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
-    				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
-    				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
-    				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
-    				
-    				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
-    				partida.agregarProductoUtilizado(c);
-    				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * existenciaActual));
-    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
-    				
-    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
-    			}
-    		}
-    		
-    		//Registrando un producto tipo matriz
     		if(canRegister) {
-    			Estandar matriz = new Estandar(existenciaActual, Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaActual, date, costoDeCompra, fabricado, partida, codigo, nombre,
-    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
-    			for(Combinaciones c : combinacionFinal) {
-    				matriz.getCombinaciones().add(c);
-    				Controladora.getInstance().getMisCombinaciones().add(c);
-    				Controladora.getInstance().guardarCombinacionesSQL(c);
-    				for(Atributos atributo : c.getListaAtributos()) {
-    					Controladora.getInstance().guardarCombinacionesAtributosSQL(atributo, c);
-    				}
-    			}
-    			Controladora.getInstance().getMisProductos().add(matriz);
-    			Controladora.getInstance().getMisProductosEstandar().add(matriz);
-    			
-    			Controladora.getInstance().guardarProductosSQL(matriz);
-    			Controladora.getInstance().guardarEstandarSQL(matriz);
-    			
-    			for(CostoIndirectoProducto c : gastosIndirectos) {
-    				matriz.getCostosIndirectos().add(c);
-    				
-    				Controladora.getInstance().getMisCostosIndirectos().add(c);
-    				Controladora.getInstance().guardarCostoIndirectoSQL(matriz, c);
-    			}
-    			
-    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
-    			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);
-    			Controladora.getInstance().guardarPrecioProductoSQL(matriz, precio);
-    			
-    			for(Combinaciones c : combinacionFinal) {
-    				Controladora.getInstance().guardarMatrizSQL(matriz, c);
-    			}
-    			
-    			
-    			if(infoManoDeObra != null) {
-    				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
-    				matriz.setInfoManoDeObra(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
-    				Controladora.getInstance().guardarManoDeObraProductoSQL(matriz, infoManoDeObra, categoriaempleado);
-    			}
-    			
-    			if(checkbox_generalProducible.isSelected()) {
-    				Controladora.getInstance().getMisPartidas().add(partida);
-    				Controladora.getInstance().guardarPartidaSQL();
-    				for(CantProductosUtilizados c : partida.getListaMateriales()) {
-    					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
-    				}
-    				Controladora.getInstance().guardarProductoPartida(matriz, partida);
-    			}	
-    			
-    			Controladora.getInstance().guardarPrecioProductoSQL(matriz, precio);
-    			
-    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
-    			
-    			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);
+    			if(tipoProducto.equalsIgnoreCase("Estandar")) {
+            		String existenciaActual = exAct.getText();
+            		String existenciaMinima = exMin.getText();
+            		String existenciaMaxima = exMax.getText();
+            		float costoDeCompra = 0;
+            		float costoManoObra = 0;
+            		boolean fabricado = false;
+            		ManoDeObra infoManoDeObra = null;
+            		CategoriaEmpleado categoriaempleado = null;
+            		if(checkbox_generalProducible.isSelected()) {
+            			try {
+            				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+            				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+            				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+            				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+            				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+            						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+            				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+            			}catch(NullPointerException e) {
+            				
+            			}
+            			fabricado = true;
+            		}
+            		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
+            			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
+            		}
+            		a.setAlertType(AlertType.WARNING);
+            		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
+            			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
+            			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
+            			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
+            			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		Date date = null;
+            		Partida partida = null;	
+            		if(checkbox_generalProducible.isSelected()) {
+            			partida = new Partida();
+            			for(String s : listview_partidaSelect.getItems()) {
+            				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+            				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+            				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
+            				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+            				
+            				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
+            				partida.agregarProductoUtilizado(c);
+            				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
+            				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+            				
+            				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            			}
+            		}
+            		
+            		
+            		//No se registra nombre, fecha, y muchas otras cosas
+            		if(canRegister) {
+            			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            			
+            			
+            			Controladora.getInstance().getMisProductosEstandar().add(estandar);
+            			Controladora.getInstance().getMisProductos().add(estandar);
+            			
+            			Controladora.getInstance().guardarProductosSQL(estandar);
+            			Controladora.getInstance().guardarEstandarSQL(estandar);
+            			
+            			for(CostoIndirectoProducto c : gastosIndirectos) {
+            				estandar.getCostosIndirectos().add(c);
+            				
+            				Controladora.getInstance().getMisCostosIndirectos().add(c);
+            				Controladora.getInstance().guardarCostoIndirectoSQL(estandar, c);
+            			}
+            			
+            			if(infoManoDeObra != null) {
+            				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+            				estandar.setInfoManoDeObra(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraProductoSQL(estandar, infoManoDeObra, categoriaempleado);
+            			}
+            			if(checkbox_generalProducible.isSelected()) {
+            				
+            				
+            				
+            				Controladora.getInstance().getMisPartidas().add(partida);
+            				Controladora.getInstance().guardarPartidaSQL();
+            				for(CantProductosUtilizados c : partida.getListaMateriales()) {
+            					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+            				}
+            				Controladora.getInstance().guardarProductoPartida(estandar, partida);
+            			}	
+            			
+            			Controladora.getInstance().guardarPrecioProductoSQL(estandar, precio);
+            			
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(estandar, proveedor);
+            			
+            			Controladora.getInstance().guardarRubroProductoSQL(estandar, rubro);
+            		
+            		
+            		}
+            	}
+            	
+            	else if(tipoProducto.equalsIgnoreCase("Kit")) {
+            		String existenciaActual = exAct.getText();
+            		String existenciaMinima = exMin.getText();
+            		String existenciaMaxima = exMax.getText();
+            		float costo = 0;
+            		a.setAlertType(AlertType.WARNING);
+            		if(Integer.parseInt(existenciaMinima) > Integer.parseInt(existenciaMaxima)) {
+            			a.setContentText("La existencia minima no puede ser mayor que la maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaActual) < Integer.parseInt(existenciaMinima)){
+            			a.setContentText("La existencia actual no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaActual) > Integer.parseInt(existenciaMaxima)){
+            			a.setContentText("La existencia actual no puede ser mayor que la existencia maxima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(Integer.parseInt(existenciaMaxima) < Integer.parseInt(existenciaMinima)){
+            			a.setContentText("La existencia maxima no puede ser menor que la existencia minima");
+            			a.show();
+            			canRegister = false;
+            		}
+            		else if(listview_partidaSelect.getItems().size() == 0) {
+            			a.setContentText("Debe elegir los productos que conforman el kit");
+            			a.show();
+            			canRegister = false;
+            		}
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		Date date = null;
+            		ArrayList<CantProductosUtilizados> productsForKit = new ArrayList<>();
+            		for(String item : listview_partidaSelect.getItems()) {
+            			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
+            			String cantidad = Controladora.getInstance().findPartidaCantidad(item);
+            			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
+            				if(!p.isBorrado()) {
+            					if(nombreItem.equals(p.getNombre())) {
+            						CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidad));
+            						Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            						Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+            						productsForKit.add(c);
+            						float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidad) * Float.parseFloat(existenciaActual)));
+            						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+                				
+            						Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            					}
+            				}
+            				
+            			}
+            		}
+            		//Visitar esto nuevamente
+            		if(canRegister) {
+            			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, codigo, nombre,
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+            			
+            			Controladora.getInstance().getMisProductos().add(kit);
+            			Controladora.getInstance().guardarProductosSQL(kit);
+            			
+            			Controladora.getInstance().getMisProductosKit().add(kit);
+            			Controladora.getInstance().guardarKitSQL(kit);
+            			
+            			for(CostoIndirectoProducto c : gastosIndirectos) {
+            				kit.getCostosIndirectos().add(c);
+            				
+            				Controladora.getInstance().getMisCostosIndirectos().add(c);
+            				Controladora.getInstance().guardarCostoIndirectoSQL(kit, c);
+            			}
+            			
+            			Controladora.getInstance().guardarRubroProductoSQL(kit, rubro);
+            			Controladora.getInstance().guardarPrecioProductoSQL(kit, precio);
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(kit, proveedor);
+            			
+            			for(CantProductosUtilizados c : productsForKit) {
+            				Controladora.getInstance().guardarKitProductosSQL(kit, c);
+            			}
+            			
+            		}
+            	}
+            	
+            	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
+            		float costo = 0;
+            		float costoManoObra = 0;
+            		ManoDeObra infoManoDeObra = null;
+            		CategoriaEmpleado categoriaempleado = null;
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		ArrayList<CantProductosUtilizados> productsForServicio = new ArrayList<>();
+            		for(String item : listview_partidaSelect.getItems()) {
+            			String nombreItem = Controladora.getInstance().findPartidaNombre(item);
+            			String cantidadItem = Controladora.getInstance().findPartidaCantidad(item);
+            			for(Estandar p : Controladora.getInstance().getMisProductosEstandar()) {
+            				if(p.isBorrado()) {
+            					if(nombreItem.equals(p.getNombre())) {
+            						CantProductosUtilizados c = new CantProductosUtilizados(p, Float.parseFloat(cantidadItem));
+            				
+            						Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            						Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
+            					
+            						productsForServicio.add(c);
+            					
+            						float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidadItem)));
+            						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+                				
+            						Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+
+            					}
+            				}
+            				
+            			}
+            		}
+            		if(canRegister) {
+            			costo = Float.parseFloat(textfield_preciosCostos.getText());
+            			a.setAlertType(AlertType.WARNING);
+            			if(combobox_costosEncargadosFabricacion.getSelectionModel().isEmpty()) {
+            				a.setContentText("Eliga la categoria de empleado que ejercera este servicio.");
+                			a.show();
+                			canRegister = false;
+            			}
+            			else {
+            				CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+            			
+            				System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
+            			
+            				Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
+            					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
+            				Controladora.getInstance().addProductoServicio(servicio);
+            				Controladora.getInstance().addProducto(servicio);
+            			
+            				Controladora.getInstance().guardarProductosSQL(servicio);
+            				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
+            				Controladora.getInstance().guardarRubroProductoSQL(servicio, rubro);
+                			Controladora.getInstance().guardarPrecioProductoSQL(servicio, precio);
+                			
+                			for(CostoIndirectoProducto c : gastosIndirectos) {
+                				servicio.getCostosIndirectos().add(c);
+                				
+                				Controladora.getInstance().getMisCostosIndirectos().add(c);
+                				Controladora.getInstance().guardarCostoIndirectoSQL(servicio, c);
+                			}
+            			
+            				for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
+            					Controladora.getInstance().guardarServiciosMaterialesSQL(servicio, c);
+            				}
+            			
+            				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+            				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+            				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+            				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+            				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+        						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+            				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+        				
+            				if(infoManoDeObra != null) {
+            					Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+            					servicio.setInfoManoDeObra(infoManoDeObra);
+            					Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+            					Controladora.getInstance().guardarManoDeObraServicioSQL(servicio, infoManoDeObra, categoriaempleado);
+            				}
+            			}
+            		}
+            	}
+            	
+            	else if(tipoProducto.equalsIgnoreCase("Matriz")) {
+            		float existenciaActual = 0;
+            		String existenciaMinima = exMin.getText();
+            		String existenciaMaxima = exMax.getText();
+            		float costoManoObra = 0;
+            		float costoDeCompra = 0;
+            		boolean fabricado = false;
+            		ManoDeObra infoManoDeObra = null;
+            		CategoriaEmpleado categoriaempleado = null;
+            		
+            		//Calculando la existencia actual de una matriz
+            		for(Combinaciones c : combinacionFinal) {
+            			existenciaActual += c.getExistenciaActual();
+            		}
+            		
+            		//Calculando la mano de obra del producto
+            		if(checkbox_generalProducible.isSelected()) {
+            			try {
+            				String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
+            				String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
+            				float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());
+            				costoManoObra = Controladora.getInstance().calcularManoDeObra(nombreCategoria, tiempoMedida, tiempoCantidad);
+            				categoriaempleado = Controladora.getInstance().buscarCategoria(Controladora.getInstance().
+            						findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem()));
+            				infoManoDeObra = new ManoDeObra(costoManoObra, tiempoCantidad, Date.valueOf(LocalDate.now()), categoriaempleado);
+            			}catch(NullPointerException e) {
+            				
+            			}
+            			fabricado = true;
+            		}
+            		else if(textfield_costoPrecioCompraProducto.getLength() > 0){
+            			costoDeCompra = Float.parseFloat(textfield_costoPrecioCompraProducto.getText());
+            		}
+            		
+            		//Calculando la partida de un producto
+            		a.setAlertType(AlertType.WARNING);
+            		Date date = null;
+            		Partida partida = null;
+            		if(checkbox_generalProducible.isSelected()) {
+            			partida = new Partida();
+            			for(String s : listview_partidaSelect.getItems()) {
+            				String nombreSelect = Controladora.getInstance().findPartidaNombre(s);
+            				String cantidadSelect = Controladora.getInstance().findPartidaCantidad(s);
+            				Estandar productoPart = (Estandar) Controladora.getInstance().buscarProducto(nombreSelect);
+            				CantProductosUtilizados c = new CantProductosUtilizados(productoPart, Float.parseFloat(cantidadSelect));
+            				
+            				Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+            				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
+            				partida.agregarProductoUtilizado(c);
+            				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * existenciaActual));
+            				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+            				
+            				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+            			}
+            		}
+            		Controladora.getInstance().getMisPrecios().add(precio);
+                	Controladora.getInstance().guardarPrecioSQL(precio);
+            		
+            		//Registrando un producto tipo matriz
+            		if(canRegister) {
+            			Estandar matriz = new Estandar(existenciaActual, Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaActual, date, costoDeCompra, fabricado, partida, codigo, nombre,
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            			for(Combinaciones c : combinacionFinal) {
+            				matriz.getCombinaciones().add(c);
+            				Controladora.getInstance().getMisCombinaciones().add(c);
+            				Controladora.getInstance().guardarCombinacionesSQL(c);
+            				for(Atributos atributo : c.getListaAtributos()) {
+            					Controladora.getInstance().guardarCombinacionesAtributosSQL(atributo, c);
+            				}
+            			}
+            			Controladora.getInstance().getMisProductos().add(matriz);
+            			Controladora.getInstance().getMisProductosEstandar().add(matriz);
+            			
+            			Controladora.getInstance().guardarProductosSQL(matriz);
+            			Controladora.getInstance().guardarEstandarSQL(matriz);
+            			
+            			for(CostoIndirectoProducto c : gastosIndirectos) {
+            				matriz.getCostosIndirectos().add(c);
+            				
+            				Controladora.getInstance().getMisCostosIndirectos().add(c);
+            				Controladora.getInstance().guardarCostoIndirectoSQL(matriz, c);
+            			}
+            			
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
+            			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);
+            			Controladora.getInstance().guardarPrecioProductoSQL(matriz, precio);
+            			
+            			for(Combinaciones c : combinacionFinal) {
+            				Controladora.getInstance().guardarMatrizSQL(matriz, c);
+            			}
+            			
+            			
+            			if(infoManoDeObra != null) {
+            				Controladora.getInstance().getMisManosDeObras().add(infoManoDeObra);
+            				matriz.setInfoManoDeObra(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraSQL(infoManoDeObra);
+            				Controladora.getInstance().guardarManoDeObraProductoSQL(matriz, infoManoDeObra, categoriaempleado);
+            			}
+            			
+            			if(checkbox_generalProducible.isSelected()) {
+            				Controladora.getInstance().getMisPartidas().add(partida);
+            				Controladora.getInstance().guardarPartidaSQL();
+            				for(CantProductosUtilizados c : partida.getListaMateriales()) {
+            					Controladora.getInstance().guardarPartidaProdutilSQL(partida, c);
+            				}
+            				Controladora.getInstance().guardarProductoPartida(matriz, partida);
+            			}	
+            			
+            			Controladora.getInstance().guardarPrecioProductoSQL(matriz, precio);
+            			
+            			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(matriz, proveedor);
+            			
+            			Controladora.getInstance().guardarRubroProductoSQL(matriz, rubro);
+            		}
+            	}
+            	
+            	if(canRegister) {
+            		cleanEverything(tipoProducto);
+            	}
     		}
     	}
     	
-    	if(canRegister) {
-    		//Limpiando tab general
-    		float existencia = 1;
-    		try {
-    			if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
-    				existencia = Float.parseFloat(exAct.getText());
-    			}
-    			else {
-    				for(Combinaciones c : combinacionFinal) {
-    					existencia += c.getExistenciaActual();
-    				}
-    			}
-    			
-    		}
-    		catch(NullPointerException e) {
-    			
-    		}
-    		//Limpiando tab partida
-    		for(String item : listview_partidaSelect.getItems()) {
-    			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
-    			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
-    			System.out.println(itemNombre + itemCantidad);
-    			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
-    			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
-    				if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
-    					Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
-    						Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
-   					}
-   				}	
-    		}
-    		
-    		exAct.setText(""); exMin.setText(""); exMax.setText("");
-    		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
-    		textfield_generalCodigo.setText("");  textarea_generalDescripcion.setText("");
-    		textfield_generalNombre.setText(""); textfield_generalUnidad.setText("");
-    		checkbox_generalProducible.setSelected(false);
-    		tableview_proveedorBuscar.getSelectionModel().clearSelection();
-    		tableview_rubroBuscar.getSelectionModel().clearSelection();
-		
-    		
-    		for(int i = 0; i < listview_partida.getItems().size(); i++) {
-    			listview_partida.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listview_partidaSelect.getItems().size(); i++) {
-    			listview_partidaSelect.getItems().remove(i);
-    		}
-		
-    		//Limpiando combinaciones
-    		textfield_busquedaFamilia1.setText("");
-    		textfield_busquedaFamilia2.setText("");
-    		textfield_busquedaFamilia3.setText("");
-    		for(int i = 0; i < listView_atributos1.getItems().size(); i++) {
-    			listView_atributos1.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
-    			listView_atributos2.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
-    			listView_atributos2.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listView_combinaciones.getItems().size(); i++) {
-    			listView_combinaciones.getItems().remove(i);
-    		}
-    		textfield_numSerie.setText("");
-    		textfield_cantidadComb.setText("");
-    		tabpane_everything.getSelectionModel().select(tab_general);
-    		button_productGuardar.setDisable(true);
-    		combinacionFinal.clear();
-    		
-    		//Limpiando costos
-    		textfield_costoPrecioCompraProducto.setText("");
-    		textfield_costosValor.setText("");
-    		textfield_costosTiempoFabricacion.setText("");
-    		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
-    			listview_CostosResumen.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++) {
-    			listview_CostosSelecIndirectos.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listview_GastosGeneralesIndirectos.getItems().size(); i++) {
-    			listview_GastosGeneralesIndirectos.getItems().remove(i);
-    		}
-    		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
-    			listview_CostosResumen.getItems().remove(i);
-    		}
-    		fillPartida(null);
-    		fillPreciosTab();
-    		fillGeneralTab();
-    		rellenarCostosGenerales();
-    		getGastosDirectos().clear();
-    		getGastosIndirectos().clear();
-    	}
+    	
+    	
 		
     	
     }
@@ -904,6 +1369,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setDisable(false);
     		exMax.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
+    		checkbox_generalProducible.setSelected(false);
     		textfield_generalProveedor.setDisable(false);
     		button_productoBuscarProveedor.setDisable(false);
     		textfield_generalUnidad.setDisable(false);
@@ -934,6 +1400,8 @@ public class ControllerNuevoProducto implements Initializable {
     		textfield_costoPrecioCompraProducto.setDisable(false);
     		
     		checkbox_generalProducible.setDisable(true);
+    		checkbox_generalProducible.setSelected(true);
+    		activarPartida(null);
     		
     		exAct.setText("");
     		exMin.setText("");
@@ -959,6 +1427,8 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(false);
     		
     		checkbox_generalProducible.setDisable(true);
+    		checkbox_generalProducible.setSelected(true);
+    		activarPartida(null);
     		
     		exAct.setText("0");
     		exMin.setText("0");
@@ -984,6 +1454,8 @@ public class ControllerNuevoProducto implements Initializable {
     		button_BuscarUnidadMedida.setDisable(false);
     		textfield_costoPrecioCompraProducto.setDisable(false);
     		checkbox_generalProducible.setDisable(false);
+    		checkbox_generalProducible.setSelected(false);
+    		activarPartida(null);
     		
     		exAct.setText("");
     		exMin.setText("");
@@ -1345,9 +1817,13 @@ public class ControllerNuevoProducto implements Initializable {
     	{	
     		if(radiobutton_costosIndirectos.isSelected())
         	{
-        		int i;
+    			for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
+    				listview_CostosResumen.getItems().remove(i);
+    				listview_CostosResumen.refresh();
+    			}
+ 
         		
-        		for(i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
+        		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
         		{
         			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelecIndirectos.getItems().get(i));
         			
@@ -1559,16 +2035,18 @@ public class ControllerNuevoProducto implements Initializable {
     		
     	};
     	float existencia = 0;
-    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio") || combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
+    	if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
     		existencia = 1;
     	}
     	else {
     		try {
-        		existencia = Float.parseFloat(exAct.getText());
-        	}
-        	catch(NullPointerException e) {
-        	}
+    			existencia = Float.parseFloat(exAct.getText());
+    		}
+    		catch(NullPointerException e) {
+    		}
     	}
+   		
+    	
     	
     	if(textfield_partidaCantidad.getLength() == 0) {
     		a.setAlertType(AlertType.ERROR);
@@ -2007,7 +2485,7 @@ public class ControllerNuevoProducto implements Initializable {
 		
 		
 		//Seteando listview gastosgenerales
-		rellenarCostosGenerales();
+		rellenarCostosGenerales(null);
 	}
 	
 	public void fillUnidadMedida(ArrayList<UnidadMedida> u) {
@@ -2064,12 +2542,15 @@ public class ControllerNuevoProducto implements Initializable {
 		DecimalFormat formato1 = new DecimalFormat("0.0000");
 		ObservableList<String> dataPartida = FXCollections.observableArrayList();
 		for(Estandar e : Controladora.getInstance().getMisProductosEstandar()) {
-			if(e.getUnidadMedida() != null) {
-				dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
+			if(!e.isBorrado()) {
+				if(e.getUnidadMedida() != null) {
+					dataPartida.add(e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
+				}
+				else {
+					dataPartida.add(e.getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
+				}
 			}
-			else {
-				dataPartida.add(e.getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + formato1.format(e.getExistenciaActual()) + "]");
-			}
+			
 		}
 		
 		listview_partida.setItems(dataPartida);
@@ -2129,13 +2610,29 @@ public class ControllerNuevoProducto implements Initializable {
 		textfield_preciosImpuestos.setText("0");
     }
     
-    public void rellenarCostosGenerales() //Ver porqué no funciona
+    public void rellenarCostosGenerales(Producto producto) //Ver porqué no funciona
     {
     	ObservableList<String> ob = FXCollections.observableArrayList();
     	
-		for(GastoGeneral e : Controladora.getInstance().getMisGastosGenerales()) {
-			ob.add(e.getNombre());
-			
+    	if(producto == null) {
+    		for(GastoGeneral e : Controladora.getInstance().getMisGastosGenerales()) {
+    			ob.add(e.getNombre());
+    		}
+    	}
+    	else {
+    		if(producto.getCostosIndirectos().size() > 0) {
+    			for(GastoGeneral e : Controladora.getInstance().getMisGastosGenerales()) {
+    				boolean alreadyRegistered = false;
+    				for(CostoIndirectoProducto c : producto.getCostosIndirectos()) {
+    					if(e.getNombre() != c.getNombre()) {
+    						alreadyRegistered = true;
+    					}
+    				}
+    				if(!alreadyRegistered) {
+    					ob.add(e.getNombre());
+    				}
+    			}
+    		}
 		}
 		listview_GastosGeneralesIndirectos.setItems(ob);;
 		listview_GastosGeneralesIndirectos.refresh();
@@ -2154,6 +2651,8 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void modifyOpen(Producto producto) {
     	modificado = true;
+    	textfield_generalCodigo.setEditable(false);
+    	button_productGuardar.setDisable(false);
     	
     	textfield_generalCodigo.setText(producto.getCodigo());
     	textfield_generalNombre.setText(producto.getNombre());
@@ -2166,14 +2665,24 @@ public class ControllerNuevoProducto implements Initializable {
     	if(producto.getProveedorPrinClass() != null) {
     		textfield_generalProveedor.setText(producto.getProveedorPrinClass().getCodigo());
     	}
+    	if(producto.getCostosIndirectos().size() > 0) {
+    		for(CostoIndirectoProducto c : producto.getCostosIndirectos()) {
+    			listview_CostosResumen.getItems().add(c.getNombre() + ": " + c.getValor());
+    			listview_CostosResumen.refresh();
+    			listview_CostosSelecIndirectos.getItems().add(c.getNombre());
+    		}
+    		rellenarCostosGenerales(producto);
+    	}
     	
     	if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     		Estandar estandar = (Estandar) producto;
+    		
     		combobox_generalTipoProducto.getSelectionModel().select(estandar.getTipoProducto());
     		
     		exAct.setText(Float.toString(estandar.getExistenciaActual()));
     		exMin.setText(Float.toString(estandar.getExistenciaMinima()));
     		exMax.setText(Float.toString(estandar.getExistenciaMaxima()));
+    		textfield_costoPrecioCompraProducto.setText(Float.toString(estandar.getCostoDeCompra()));
     		
     		if(estandar.isFabricado()) {
     			fillPartida(estandar);
@@ -2192,6 +2701,11 @@ public class ControllerNuevoProducto implements Initializable {
     				data.add(item_moved);
     			}
     			listview_partidaSelect.setItems(data);
+    			if(estandar.getInfoManoDeObra() != null) {
+    				textfield_TotalManoObra.setText(Float.toString(estandar.getInfoManoDeObra().getCosto()));
+    	    		textfield_costosTiempoFabricacion.setText(Float.toString(estandar.getInfoManoDeObra().getCantidadHoras()));
+    	    		combobox_costosEncargadosFabricacion.getSelectionModel().select(estandar.getInfoManoDeObra().getCategoria().getNombre() + ": " + estandar.getInfoManoDeObra().getCategoria().getSueldo() + "$");
+    			}
     		}
     		textfield_preciosCostos.setText(Float.toString(estandar.getCosto()));
     		textfield_preciosPrecio.setText(Float.toString(estandar.getPrecio()));
@@ -2201,7 +2715,6 @@ public class ControllerNuevoProducto implements Initializable {
     		Kit kit = (Kit) Controladora.getInstance().buscarProducto(producto.getNombre());
     		combobox_generalTipoProducto.getSelectionModel().select(kit.getTipoProducto());
     		System.out.println("La existencia actual: " + kit.getExistenciaActual());
-    		
     		
     		fillPartida(kit);
     		tipoProducto(null);
@@ -2222,6 +2735,7 @@ public class ControllerNuevoProducto implements Initializable {
 	    		}
 				data.add(item_moved);
 			}
+			
 			listview_partidaSelect.setItems(data);
 			
 			textfield_preciosCostos.setText(Float.toString(kit.getCosto()));
@@ -2247,7 +2761,8 @@ public class ControllerNuevoProducto implements Initializable {
     	    		}
     				data.add(item_moved);
     			}
-    			listview_partidaSelect.setItems(data);
+    			listview_partidaSelect.setItems(data);	
+    			
     		}
     		
     		System.out.println(servicio.getCosto());
@@ -2287,6 +2802,11 @@ public class ControllerNuevoProducto implements Initializable {
     			}
     			listview_partidaSelect.setItems(data);
     		}
+    		if(estandar.getInfoManoDeObra() != null) {
+				textfield_TotalManoObra.setText(Float.toString(estandar.getInfoManoDeObra().getCosto()));
+	    		textfield_costosTiempoFabricacion.setText(Float.toString(estandar.getInfoManoDeObra().getCantidadHoras()));
+	    		combobox_costosEncargadosFabricacion.getSelectionModel().select(estandar.getInfoManoDeObra().getCategoria().getNombre() + ": " + estandar.getInfoManoDeObra().getCategoria().getSueldo() + "$");
+			}
     		textfield_preciosCostos.setText(Float.toString(estandar.getCosto()));
     		textfield_preciosPrecio.setText(Float.toString(estandar.getPrecio()));
     		System.out.println(estandar.getCombinaciones().get(0).getAtributo1());
@@ -2308,6 +2828,186 @@ public class ControllerNuevoProducto implements Initializable {
     		
     	}
     	
+    }
+    
+    public boolean checkPartida(Producto producto) {
+    	boolean isDifferent = false;
+    	int check = 0;
+    	if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    		Estandar estandar = (Estandar) producto;
+    		for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
+    			for(String s : listview_partidaSelect.getItems()) {
+    				String nombre = Controladora.getInstance().findPartidaNombre(s);
+    				float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
+    				if(nombre.equalsIgnoreCase(c.getProductoClass().getNombre()) && cantidad == c.getCantidad()) {
+    					check++;
+    				}
+    			}
+    		}
+    		if(check != estandar.getPartida().getListaMateriales().size()) {
+    			isDifferent = true;
+    		}
+    	}
+    	
+    	else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    		Kit kit = (Kit) producto;
+    		for(CantProductosUtilizados c : kit.getProductosContenidos()) {
+    			for(String s : listview_partidaSelect.getItems()) {
+    				String nombre = Controladora.getInstance().findPartidaNombre(s);
+    				float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
+    				if(nombre.equalsIgnoreCase(c.getProductoClass().getNombre()) && cantidad == c.getCantidad()) {
+    					check++;
+    				}
+    			}
+    		}
+    		if(check != kit.getProductosContenidos().size()) {
+    			isDifferent = true;
+    		}
+    	}
+    	return isDifferent;
+    }
+    
+    public boolean checkCostosIndirectos(Producto producto) {
+    	boolean isDifferent = false;
+    	int check = 0;
+    	for(CostoIndirectoProducto costoNew : gastosIndirectos) {
+    		for(CostoIndirectoProducto costoOld : producto.getCostosIndirectos()) {
+    			if(costoOld.getNombre().equalsIgnoreCase(costoNew.getNombre()) && costoOld.getValor() == costoNew.getValor()) {
+    				check++;
+    			}
+    		}
+    	}
+    	if(check != producto.getCostosIndirectos().size()) {
+    		isDifferent = true;
+    	}
+    	return isDifferent;
+    }
+    
+    public boolean checkManoDeObra(Producto producto) {
+    	boolean isDifferent = false;
+    	if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar estandar = (Estandar) producto;
+    		String categoria = estandar.getInfoManoDeObra().getCategoria().getNombre();
+    		float sueldo = estandar.getInfoManoDeObra().getCategoria().getSueldo();
+    		if(estandar.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
+    				combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().equalsIgnoreCase(categoria + ": " + Float.toString(sueldo) + "$")) {
+    			isDifferent = true;
+    		}
+    	}
+    	else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
+    		Servicio servicio = (Servicio) producto;
+    		String categoria = servicio.getInfoManoDeObra().getCategoria().getNombre();
+    		float sueldo = servicio.getInfoManoDeObra().getCategoria().getSueldo();
+    		if(servicio.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
+    				combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().equalsIgnoreCase(categoria + ": " + Float.toString(sueldo) + "$")) {
+    			isDifferent = true;
+    		}
+    	}
+    	
+    	return isDifferent;
+    }
+    
+    public boolean checkCombinaciones(Estandar matriz) {
+    	boolean isDifferent = false;
+    	if(matriz.getCombinaciones().size() != listView_combinaciones.getItems().size()) {
+    		isDifferent = true;
+    	}
+    	return isDifferent;
+    }
+    
+    public void cleanEverything(String tipoProducto) {
+    	//Limpiando tab general
+		float existencia = 1;
+		try {
+			if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
+				existencia = Float.parseFloat(exAct.getText());
+			}
+			else if(tipoProducto.equals("Matriz")) {
+				for(Combinaciones c : combinacionFinal) {
+					existencia += c.getExistenciaActual();
+				}
+			}
+			
+		}
+		catch(NullPointerException e) {
+			
+		}
+		//Limpiando tab partida
+		for(String item : listview_partidaSelect.getItems()) {
+			String itemNombre = Controladora.getInstance().findPartidaNombre(item);
+			String itemCantidad = Controladora.getInstance().findPartidaCantidad(item);
+			System.out.println(itemNombre + itemCantidad);
+			Estandar listview_estandar = (Estandar) Controladora.getInstance().buscarProducto(itemNombre);
+			for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+				if(!Controladora.getInstance().getMisProductosEstandar().get(i).isBorrado()) {
+					if(Controladora.getInstance().getMisProductosEstandar().get(i).equals(listview_estandar)) {
+						Controladora.getInstance().getMisProductosEstandar().get(i).setExistenciaActual(
+						Controladora.getInstance().getMisProductosEstandar().get(i).getExistenciaActual() - (Float.parseFloat(itemCantidad)*existencia));
+					}
+				}
+				}	
+		}
+		
+		exAct.setText(""); exMin.setText(""); exMax.setText("");
+		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
+		textfield_generalCodigo.setText("");  textarea_generalDescripcion.setText("");
+		textfield_generalNombre.setText(""); textfield_generalUnidad.setText("");
+		checkbox_generalProducible.setSelected(false);
+		tableview_proveedorBuscar.getSelectionModel().clearSelection();
+		tableview_rubroBuscar.getSelectionModel().clearSelection();
+	
+		
+		for(int i = 0; i < listview_partida.getItems().size(); i++) {
+			listview_partida.getItems().remove(i);
+		}
+		for(int i = 0; i < listview_partidaSelect.getItems().size(); i++) {
+			listview_partidaSelect.getItems().remove(i);
+		}
+	
+		//Limpiando combinaciones
+		textfield_busquedaFamilia1.setText("");
+		textfield_busquedaFamilia2.setText("");
+		textfield_busquedaFamilia3.setText("");
+		for(int i = 0; i < listView_atributos1.getItems().size(); i++) {
+			listView_atributos1.getItems().remove(i);
+		}
+		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
+			listView_atributos2.getItems().remove(i);
+		}
+		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
+			listView_atributos2.getItems().remove(i);
+		}
+		for(int i = 0; i < listView_combinaciones.getItems().size(); i++) {
+			listView_combinaciones.getItems().remove(i);
+		}
+		textfield_numSerie.setText("");
+		textfield_cantidadComb.setText("");
+		tabpane_everything.getSelectionModel().select(tab_general);
+		button_productGuardar.setDisable(true);
+		combinacionFinal.clear();
+		
+		//Limpiando costos
+		textfield_costoPrecioCompraProducto.setText("");
+		textfield_costosValor.setText("");
+		textfield_costosTiempoFabricacion.setText("");
+		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
+			listview_CostosResumen.getItems().remove(i);
+		}
+		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++) {
+			listview_CostosSelecIndirectos.getItems().remove(i);
+		}
+		for(int i = 0; i < listview_GastosGeneralesIndirectos.getItems().size(); i++) {
+			listview_GastosGeneralesIndirectos.getItems().remove(i);
+		}
+		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
+			listview_CostosResumen.getItems().remove(i);
+		}
+		fillPartida(null);
+		fillPreciosTab();
+		fillGeneralTab();
+		rellenarCostosGenerales(null);
+		getGastosDirectos().clear();
+		getGastosIndirectos().clear();
     }
 
 }
