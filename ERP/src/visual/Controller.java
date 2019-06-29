@@ -1103,11 +1103,20 @@ public class Controller implements Initializable{
     		if(producto!=null) {
     			int indice = Controladora.getInstance().getMisProductos().indexOf(producto);
     			Controladora.getInstance().getMisProductos().get(indice).setBorrado(true);
+    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    				int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(producto);
+    				Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setBorrado(true);
+    			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    				int indiceKit = Controladora.getInstance().getMisProductosKit().indexOf(producto);
+    				Controladora.getInstance().getMisProductosKit().get(indiceKit).setBorrado(true);
+    			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
+    				int indiceServicio = Controladora.getInstance().getMisProductosServicio().indexOf(producto);
+    				Controladora.getInstance().getMisProductosServicio().get(indiceServicio).setBorrado(true);
+    			}
         		Controladora.getInstance().borrarProducto(indice+1);
         		fillProductList(null);
-        		//Button button = (Button) event.getSource();
-            	//Stage stage = (Stage) button.getScene().getWindow();
-        	   	//reload(stage);
         	}
     	}
     	
