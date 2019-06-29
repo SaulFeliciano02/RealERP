@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -21,6 +22,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
@@ -1092,14 +1095,48 @@ public class Controller implements Initializable{
     
     public void pressed_eliminarProducto(ActionEvent event){
     	Producto producto = tableview_productList.getSelectionModel().getSelectedItem();
-    	
-    	if(producto!=null) {
-    		Controladora.getInstance().borrarProducto(Controladora.getInstance().getMisProductos().indexOf((producto))+1);
+
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + producto.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(producto!=null) {
+        		Controladora.getInstance().borrarProducto(Controladora.getInstance().getMisProductos().indexOf((producto))+1);
+        		fillProductList(null);
+        		Button button = (Button) event.getSource();
+            	Stage stage = (Stage) button.getScene().getWindow();
+        	   	reload(stage);
+        	}
     	}
     	
     	//Agregar acá un reload
     }
+    
+    public void reload(Stage stage) {
+    	
+   		try {
+        	Stage primaryStage = new Stage();
+        	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+		    Parent root = f.load();
+		    Controller c = f.getController();
+		    c.productos_pressed(null);
+		    Scene sc = new Scene(root);
+		    primaryStage.setScene(sc);
+		    primaryStage.setTitle("Centro Pymes");
+		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+		    primaryStage.setMaximized(true);
+		    Window owner = stage.getOwner();
+		    primaryStage.show();
+		    owner.hide();
 
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+   		
+	}
+    
     public void pressed_nuevoCliente(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoCliente.fxml"));
@@ -1491,6 +1528,11 @@ public class Controller implements Initializable{
     		tableview_CategoriaEmp.refresh();
     	}
     	
+    	//Setear valor del promedio de venta anual
+    	if(Controladora.getInstance().activarLoadPromedioGananciaAnual())
+    	{
+    		textfield_PromedioVenta.setText(Float.toString(Controladora.getInstance().getVentaPromedioMensual()));
+    	}
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
@@ -1627,9 +1669,29 @@ public class Controller implements Initializable{
     //Ventas
     public void pressed_GuardarPromedioVenta(ActionEvent event)
     {
+    	ButtonType loginButtonType = new ButtonType("Aceptar", ButtonData.OK_DONE);
+    	 Dialog<ButtonType> dialog = new Dialog<>();
+    	 dialog.getDialogPane().getButtonTypes().add(loginButtonType);
+    	 boolean disabled = false; // computed based on content of text fields, for example
+    	 dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
+    	 dialog.setContentText("Venta promedio anual modificada con éxito!");
+    	 dialog.setTitle("Notificación");
+    	 
     	if(!textfield_PromedioVenta.getText().isEmpty())
     	{
-    		Controladora.getInstance().setVentaPromedioMensual(Float.parseFloat(textfield_PromedioVenta.getText()));
+    		Optional<ButtonType> result = dialog.showAndWait();
+    		
+    			 float monto = Float.parseFloat(textfield_PromedioVenta.getText());
+    	    		
+    	    		if(monto != Controladora.getInstance().getVentaPromedioMensual())
+    	    		{
+    	    			Controladora.getInstance().setVentaPromedioMensual(monto);
+    	        		if(Controladora.getInstance().activarLoadPromedioGananciaAnual())
+    	        		{
+    	        			Controladora.getInstance().desactivarPromedioGananciaAnualActual();
+    	        		}	
+    	        		Controladora.getInstance().guardarPromedioGananciaAnualSQL(monto);
+    	    		}
     	}
     }
     

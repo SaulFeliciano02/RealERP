@@ -263,6 +263,54 @@ public class Controladora implements Serializable{
 		guardarClienteSQL(c);
 	}
 	
+	public void guardarPromedioGananciaAnualSQL(float monto)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		/*LocalDate localDate = LocalDate.now();
+		Date date1 = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());*/
+		//Date date1 = (java.sql.Date.valueOf(LocalDate.now()));
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO promediogananciaanual (monto, fecha) VALUES (?, ?)");
+			p.setFloat(1, monto);
+			p.setDate(2, (java.sql.Date.valueOf(LocalDate.now())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
 	public void guardarClienteSQL(Cliente cliente) {
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -3080,6 +3128,160 @@ public class Controladora implements Serializable{
 				
 				if(r2!=null) {
 					r2.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean activarLoadPromedioGananciaAnual()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM promediogananciaanual");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void desactivarPromedioGananciaAnualActual()
+	{
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE promediogananciaanual SET activo = 0 WHERE activo = 1");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void loadPromedioGananciaAnual()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		int id = 0;
+		float monto = 0;
+		Date fecha = null;
+		boolean activo = false;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM promediogananciaanual WHERE activo = 1");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				id = r.getInt(1);
+				monto = r.getFloat(2);
+				fecha = r.getDate(3);
+				activo = r.getBoolean(4);
+				
+				Controladora.getInstance().setVentaPromedioMensual(monto);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
 				}
 				
 			} catch (Exception e2) {
