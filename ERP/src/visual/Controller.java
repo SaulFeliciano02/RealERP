@@ -1101,11 +1101,13 @@ public class Controller implements Initializable{
 
     	if (alert.getResult() == ButtonType.YES) {
     		if(producto!=null) {
-        		Controladora.getInstance().borrarProducto(Controladora.getInstance().getMisProductos().indexOf((producto))+1);
+    			int indice = Controladora.getInstance().getMisProductos().indexOf(producto);
+    			Controladora.getInstance().getMisProductos().get(indice).setBorrado(true);
+        		Controladora.getInstance().borrarProducto(indice+1);
         		fillProductList(null);
-        		Button button = (Button) event.getSource();
-            	Stage stage = (Stage) button.getScene().getWindow();
-        	   	reload(stage);
+        		//Button button = (Button) event.getSource();
+            	//Stage stage = (Stage) button.getScene().getWindow();
+        	   	//reload(stage);
         	}
     	}
     	
