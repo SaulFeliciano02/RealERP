@@ -34,6 +34,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private CheckBox checkbox_clienteFactura;
 	    @FXML private TitledPane titledpane_busquedaClientesFactura;
 	    
+	    @FXML private TextField textfield_productoBusqueda;
 	    @FXML private TextField textfield_totalAPagar;
 	    @FXML private TextField textfield_totalRecibido;
 	    @FXML private TextField textfield_totalCambio;
@@ -168,7 +169,21 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void searchProductos(KeyEvent event) {
+    	ArrayList<Producto> productos = new ArrayList<>();
+    	System.out.println(event.getCharacter());
+    	if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    		productos = Controladora.getInstance().searchProducts(textfield_productoBusqueda.getText() + event.getCharacter(), "Codigo");
+    	}
+    	else {
+    		productos = Controladora.getInstance().searchProducts(textfield_productoBusqueda.getText() + event.getCharacter(), "Codigo");
+    	}
     	
+    	if(productos.size() == 0) {
+    		fillProductos(null);
+    	}
+    	else {
+    		fillProductos(productos);
+    	}
     }
 	
 
