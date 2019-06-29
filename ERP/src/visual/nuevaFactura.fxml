@@ -35,7 +35,7 @@
                                     <Font size="25.0" />
                                  </font>
                               </Label>
-                              <TextField promptText="Búsqueda" />
+                              <TextField fx:id="textfield_productoBusqueda" onKeyTyped="#searchProductos" promptText="Búsqueda" />
                               <ListView fx:id="listview_facturaProductoList" prefHeight="406.0" prefWidth="262.0" VBox.vgrow="ALWAYS" />
                            </children>
                            <HBox.margin>
