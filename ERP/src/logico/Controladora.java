@@ -2681,6 +2681,26 @@ public class Controladora implements Serializable{
 		return nombre;
 	}
 	
+	public String findFacturaNombre(String string) {
+		String nombre = "";
+		int i = 0;
+		while(string.charAt(i) != ':') {
+			nombre += string.charAt(i);
+			i++;
+		}
+		return nombre;
+	}
+	
+	public String findFacturaCosto(String string) {
+		String costo = "";
+		for(int i = 0; i < string.length(); i++) {
+			if(Character.isDigit(string.charAt(i)) || string.charAt(i) == '.' ) {
+				costo += string.charAt(i);
+			}
+		}
+		return costo;
+	}
+	
 	public GastoGeneral buscarGasto(String g)
 	{
 		GastoGeneral encontrado = null;
@@ -5534,163 +5554,163 @@ public void loadPartida()
 	}
 }
 
-public Proveedores buscarProveedor(String nombre)
-{
-	Proveedores p = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisProveedores().size() && !encontrado)
+	public Proveedores buscarProveedor(String nombre)
 	{
-		if(getMisProveedores().get(i).getNombre().equalsIgnoreCase(nombre))
+		Proveedores p = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<getMisProveedores().size() && !encontrado)
 		{
-			p = getMisProveedores().get(i);
-			encontrado = true;
-		}
+			if(getMisProveedores().get(i).getNombre().equalsIgnoreCase(nombre))
+			{
+				p = getMisProveedores().get(i);
+				encontrado = true;
+			}
 		
-		i++;
+			i++;
+		}
+	
+		return p;
 	}
-	
-	return p;
-}
 
-public UnidadMedida buscarUnidadMedida(String u)
-{
-	UnidadMedida a = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisUnidadMedida().size() && !encontrado)
+	public UnidadMedida buscarUnidadMedida(String u)
 	{
-		if(getMisUnidadMedida().get(i).getNombre().equalsIgnoreCase(u))
+		UnidadMedida a = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<getMisUnidadMedida().size() && !encontrado)
 		{
-			a = getMisUnidadMedida().get(i);
-			encontrado = true;
-		}
+			if(getMisUnidadMedida().get(i).getNombre().equalsIgnoreCase(u))
+			{
+				a = getMisUnidadMedida().get(i);
+				encontrado = true;
+			}
 		
-		i++;
+			i++;
+		}
+	
+		return a;
 	}
-	
-	return a;
-}
 
-public Area isArea(String u)
-{
-	Area a = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisAreas().size() && !encontrado)
+	public Area isArea(String u)
 	{
-		if(getMisAreas().get(i).getNombre().equalsIgnoreCase(u))
+		Area a = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<getMisAreas().size() && !encontrado)
 		{
-			a = getMisAreas().get(i);
-			encontrado = true;
-		}
+			if(getMisAreas().get(i).getNombre().equalsIgnoreCase(u))
+			{
+				a = getMisAreas().get(i);
+				encontrado = true;
+			}
 		
-		i++;
+			i++;
+		}
+	
+		return a;
 	}
-	
-	return a;
-}
 
-public Longitud isLongitud(String u)
-{
-	Longitud a = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisLongitudes().size() && !encontrado)
+	public Longitud isLongitud(String u)
 	{
-		if(getMisLongitudes().get(i).getNombre().equalsIgnoreCase(u))
+		Longitud a = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<getMisLongitudes().size() && !encontrado)
 		{
-			a = getMisLongitudes().get(i);
-			encontrado = true;
-		}
+			if(getMisLongitudes().get(i).getNombre().equalsIgnoreCase(u))
+			{
+				a = getMisLongitudes().get(i);
+				encontrado = true;
+			}
 		
-		i++;
+			i++;
+		}
+	
+		return a;
 	}
-	
-	return a;
-}
 
-public Masa isMasa(String u)
-{
-	Masa a = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisMasas().size() && !encontrado)
+	public Masa isMasa(String u)
 	{
-		if(getMisMasas().get(i).getNombre().equalsIgnoreCase(u))
+		Masa a = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<getMisMasas().size() && !encontrado)
 		{
-			a = getMisMasas().get(i);
-			encontrado = true;
-		}
+			if(getMisMasas().get(i).getNombre().equalsIgnoreCase(u))
+			{
+				a = getMisMasas().get(i);
+				encontrado = true;
+			}
 		
-		i++;
+			i++;
+		}
+	
+		return a;
 	}
-	
-	return a;
-}
 
-public Volumen isVolumen(String u)
-{
-	Volumen a = null;
-	int i = 0;
-	boolean encontrado = false;
-	
-	while(i<getMisVolumenes().size() && !encontrado)
+	public Volumen isVolumen(String u)
 	{
-		if(getMisVolumenes().get(i).getNombre().equalsIgnoreCase(u))
-		{
-			a = getMisVolumenes().get(i);
-			encontrado = true;
-		}
-		
-		i++;
-	}
+		Volumen a = null;
+		int i = 0;
+		boolean encontrado = false;
 	
-	return a;
-}
+		while(i<getMisVolumenes().size() && !encontrado)
+		{
+			if(getMisVolumenes().get(i).getNombre().equalsIgnoreCase(u))
+			{
+				a = getMisVolumenes().get(i);
+				encontrado = true;
+			}
+		
+			i++;
+		}
+	
+		return a;
+	}
 
-public boolean activarLoadEmpleados()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
-	boolean activar = false;
-	int cuenta = 0;
+	public boolean activarLoadEmpleados()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
 	
-	try {
-		
-		//Recuperar precios
-		c = con.conectar();
-		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM empleados");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			cuenta = r.getInt(1);
-		}
-		
-		if(cuenta > 0)
-		{
-			activar = true;
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
+		
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM empleados");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+		
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
 			
 			if(c!=null) {
 				c.close();
@@ -5704,13 +5724,13 @@ public boolean activarLoadEmpleados()
 				r.close();
 			}
 			
-		} catch (Exception e2) {
-			e2.printStackTrace();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
-	}
 	
-	return activar;
-}
+		return activar;
+	}
 
 public void loadEmpleados()
 {
@@ -5967,313 +5987,313 @@ public boolean activarLoadAtributos()
 }
 
 	public void loadAtributos()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Connection c2 = null;
-	Statement s = null;
-	Statement s2 = null;
-	ResultSet r = null;
-	ResultSet q = null;
-	PreparedStatement p = null;
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet q = null;
+		PreparedStatement p = null;
 	
-	try {
+		try {
 		
-		//Recuperar precios
-		c = con.conectar();
+			//Recuperar precios
+			c = con.conectar();
 		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT * FROM atributos");
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM atributos");
 		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			int id = r.getInt(1);
-			String nombre = r.getString(2);
-			int idgrupoatributo = r.getInt(3);
-			
-			c2 = con.conectar();
-			s2 = (Statement) c2.createStatement();
-			q = s2.executeQuery("SELECT * FROM grupoatributo WHERE idgrupoatributo = '"+idgrupoatributo+"'");
-			while(q.next())
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
 			{
-				int idr = q.getInt(1);
-				
-				String nombrecategoria = q.getString(2);
-				
-				GrupoAtributo pre = buscarGrupoAtributo(nombrecategoria);
-				
-				Atributos atr = new Atributos(nombre, pre);
-				
-				Controladora.getInstance().getMisAtributos().add(atr);
-			}
+				int id = r.getInt(1);
+				String nombre = r.getString(2);
+				int idgrupoatributo = r.getInt(3);
 			
+				c2 = con.conectar();
+				s2 = (Statement) c2.createStatement();
+				q = s2.executeQuery("SELECT * FROM grupoatributo WHERE idgrupoatributo = '"+idgrupoatributo+"'");
+				while(q.next())
+				{
+					int idr = q.getInt(1);
+				
+					String nombrecategoria = q.getString(2);
+				
+					GrupoAtributo pre = buscarGrupoAtributo(nombrecategoria);
+				
+					Atributos atr = new Atributos(nombre, pre);
+				
+					Controladora.getInstance().getMisAtributos().add(atr);
+				}
+			
+			}
+		
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
 	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
-		try {
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
 			
-			if(c!=null) {
-				c.close();
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(c2!=null) {
+					c2.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+				if(q!=null) {
+					q.close();
+				}
+			
+				if(s2!=null) {
+					s2.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
-			
-			if(c2!=null) {
-				c2.close();
-			}
-			
-			if(s!=null) {
-				s.close();
-			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-			if(q!=null) {
-				q.close();
-			}
-			
-			if(s2!=null) {
-				s2.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
 		}
 	}
-}
 
-public boolean activarLoadGrupoAtributo()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
-	boolean activar = false;
-	int cuenta = 0;
+	public boolean activarLoadGrupoAtributo()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
 	
-	try {
-		
-		//Recuperar precios
-		c = con.conectar();
-		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM grupoatributo");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			cuenta = r.getInt(1);
-		}
-		
-		if(cuenta > 0)
-		{
-			activar = true;
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
-			
-			if(c!=null) {
-				c.close();
+		
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM grupoatributo");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
 			}
-			
-			if(s!=null) {
-				s.close();
+		
+			if(cuenta > 0)
+			{
+				activar = true;
 			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	
+		return activar;
 	}
 	
-	return activar;
-}
+	public void loadGrupoAtributo()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
 	
-public void loadGrupoAtributo()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
-	
-	try {
-		
-		//Recuperar rubros
-		c = con.conectar();
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT * FROM grupoatributo");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			int id = r.getInt(1);
-			String nombre = r.getString(2);
-			
-			GrupoAtributo pre = new GrupoAtributo(nombre);
-			
-			Controladora.getInstance().getMisGrupoAtributo().add(pre);
-		}
-		
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
+		
+			//Recuperar rubros
+			c = con.conectar();
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM grupoatributo");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String nombre = r.getString(2);
 			
-			if(c!=null) {
-				c.close();
+				GrupoAtributo pre = new GrupoAtributo(nombre);
+			
+				Controladora.getInstance().getMisGrupoAtributo().add(pre);
 			}
+		
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
 			
-			if(s!=null) {
-				s.close();
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
 		}
 	}
-}
 
-public boolean activarLoadGastosGenerales()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
-	boolean activar = false;
-	int cuenta = 0;
+	public boolean activarLoadGastosGenerales()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
 	
-	try {
-		
-		//Recuperar precios
-		c = con.conectar();
-		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM gastosgenerales");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			cuenta = r.getInt(1);
-		}
-		
-		if(cuenta > 0)
-		{
-			activar = true;
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
 			
-			if(c!=null) {
-				c.close();
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM gastosgenerales");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
 			}
-			
-			if(s!=null) {
-				s.close();
+		
+			if(cuenta > 0)
+			{
+				activar = true;
 			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	}
 	
-	return activar;
-}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+			
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	
+		return activar;
+	}
 
-public void loadGastosGenerales()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
+	public void loadGastosGenerales()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
 	
-	try {
-		
-		//Recuperar rubros
-		c = con.conectar();
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT * FROM gastosgenerales");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			int id = r.getInt(1);
-			String nombre = r.getString(2);
-			float precioUnitario = r.getFloat(5);
-			String descripcion = r.getString(3);
-			Date remodelado = r.getDate(4);
-			
-			GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(remodelado)));
-			
-			Controladora.getInstance().getMisGastosGenerales().add(pre);
-		}
-		
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
+		
+			//Recuperar rubros
+			c = con.conectar();
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM gastosgenerales");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				String nombre = r.getString(2);
+				float precioUnitario = r.getFloat(5);
+				String descripcion = r.getString(3);
+				Date remodelado = r.getDate(4);
 			
-			if(c!=null) {
-				c.close();
+				GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(remodelado)));
+			
+				Controladora.getInstance().getMisGastosGenerales().add(pre);
 			}
+		
 			
-			if(s!=null) {
-				s.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
 		}
 	}
-}
 
 	public void restarExistenciaActual(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
