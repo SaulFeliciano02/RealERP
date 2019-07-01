@@ -1728,10 +1728,11 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO costoindirecto (gastogeneral, producto, costo) VALUES (?, ?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisCostosIndirectos().indexOf(costoIndirecto)+1);
+			GastoGeneral gast = buscarGasto(costoIndirecto.getNombre());
+			p.setInt(1, Controladora.getInstance().getMisGastosGenerales().indexOf(gast)+1);
 			p.setInt(2, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.setFloat(3, costoIndirecto.getValor());
-			p.executeUpdate();
+				p.executeUpdate();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -3112,7 +3113,7 @@ public class Controladora implements Serializable{
 				}
 				
 				Precio pre = new Precio(precio, descripcion, activo);
-				pre.setFecha(LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay()));
+				pre.setFecha(LocalDate.parse(fecha.toString()));
 				
 				Controladora.getInstance().getMisPrecios().add(pre);
 			}

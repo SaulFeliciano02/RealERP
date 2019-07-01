@@ -1,16 +1,26 @@
 package visual;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
+import archivos.Archivos;
+import basededatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +78,7 @@ import logico.UnidadMedida;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import org.apache.poi.hssf.usermodel.*;
 
 public class Controller implements Initializable{
 	
@@ -151,6 +161,8 @@ public class Controller implements Initializable{
     @FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_productoCostoIndirectoNombre;
     @FXML private TableColumn<CostoIndirectoProducto, Float> tablecolumn_productoCostoIndirectoMonto;
     @FXML private TableView<CostoIndirectoProducto> tableview_productoCostoIndirecto;
+    
+    @FXML private Button button_exportarInventario;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -949,6 +961,247 @@ public class Controller implements Initializable{
         	datepicker_fechaGastoG.setValue(LocalDate.now());
         	
     	}
+    }
+    
+    public void pressed_exportarInventarioExcel(ActionEvent event)
+    {
+    	Archivos.carpeta();
+		
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea exportar su inventario al archivo c:/ERPdata/data/inventario.xls?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+
+    	if (alert.getResult() == ButtonType.YES) {
+    		//File archivo = new File("c:/ERPdata/data/inventario.csv");
+    		HSSFWorkbook libro = new HSSFWorkbook();
+    		HSSFSheet hoja1 = libro.createSheet("Productos Estandar");
+    		HSSFRow fila = hoja1.createRow(0);
+    		HSSFCell celda = fila.createCell(0);
+    		celda.setCellValue("Código");
+    		int i = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda = fila.createCell(i);
+				HSSFRichTextString codigo = new HSSFRichTextString(est.getCodigo());
+				celda.setCellValue(codigo);
+				i++;
+			}
+    		
+    		HSSFRow fila2 = hoja1.createRow(1);
+    		HSSFCell celda2 = fila2.createCell(0);
+    		celda2.setCellValue("Nombre");
+    		int i2 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda2 = fila2.createCell(i2);
+				HSSFRichTextString nombre = new HSSFRichTextString(est.getNombre());
+				celda2.setCellValue(nombre);
+				i2++;
+			}
+    		
+    		HSSFRow fila3 = hoja1.createRow(2);
+    		HSSFCell celda3 = fila3.createCell(0);
+    		celda3.setCellValue("Existencia Inicial");
+    		int i3 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda3 = fila3.createCell(i3);
+				HSSFRichTextString existInit = new HSSFRichTextString(Float.toString(est.getExistenciaInicial()));
+				celda3.setCellValue(existInit);
+				i3++;
+			}
+    		
+    		HSSFRow fila4 = hoja1.createRow(3);
+    		HSSFCell celda4 = fila4.createCell(0);
+    		celda4.setCellValue("Existencia Actual");
+    		int i4 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda4 = fila4.createCell(i4);
+				HSSFRichTextString existAct = new HSSFRichTextString(Float.toString(est.getExistenciaActual()));
+				celda4.setCellValue(existAct);
+				i4++;
+			}
+    		
+    		HSSFRow fila5 = hoja1.createRow(4);
+    		HSSFCell celda5 = fila5.createCell(0);
+    		celda5.setCellValue("Existencia Mínima");
+    		int i5 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda5 = fila5.createCell(i5);
+				HSSFRichTextString existMin = new HSSFRichTextString(Float.toString(est.getExistenciaMinima()));
+				celda5.setCellValue(existMin);
+				i5++;
+			}
+    		
+    		HSSFRow fila6 = hoja1.createRow(5);
+    		HSSFCell celda6 = fila6.createCell(0);
+    		celda6.setCellValue("Existencia Máxima");
+    		int i6 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda6 = fila6.createCell(i6);
+				HSSFRichTextString existMax = new HSSFRichTextString(Float.toString(est.getExistenciaMaxima()));
+				celda6.setCellValue(existMax);
+				i6++;
+			}
+    		
+    		HSSFRow fila7 = hoja1.createRow(6);
+    		HSSFCell celda7 = fila7.createCell(0);
+    		celda7.setCellValue("Tipo");
+    		int i7 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda7 = fila7.createCell(i7);
+				HSSFRichTextString tipo = new HSSFRichTextString(est.getTipoProducto());
+				celda7.setCellValue(tipo);
+				i7++;
+			}
+    		
+    		HSSFRow fila8 = hoja1.createRow(7);
+    		HSSFCell celda8 = fila8.createCell(0);
+    		celda8.setCellValue("Rubro");
+    		int i8 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda8 = fila8.createCell(i8);
+				HSSFRichTextString rubro = new HSSFRichTextString(est.getRubroProductoClass().getNombreRubro());
+				celda8.setCellValue(rubro);
+				i8++;
+			}
+    		
+    		HSSFRow fila9 = hoja1.createRow(8);
+    		HSSFCell celda9 = fila9.createCell(0);
+    		celda9.setCellValue("Proveedor");
+    		int i9 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda9 = fila9.createCell(i9);
+				HSSFRichTextString prove = new HSSFRichTextString(est.getProveedorPrinClass().getNombre());
+				celda9.setCellValue(prove);
+				i9++;
+			}
+    		
+    		HSSFRow fila18 = hoja1.createRow(9);
+    		HSSFCell celda18 = fila18.createCell(0);
+    		celda18.setCellValue("Unidad de medida");
+    		int i18 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda18 = fila18.createCell(i18);
+				HSSFRichTextString unidad = new HSSFRichTextString(est.getUnidadMedida().getNombre());
+				celda18.setCellValue(unidad);
+				i18++;
+			}
+    		
+    		HSSFRow fila10 = hoja1.createRow(10);
+    		HSSFCell celda10 = fila10.createCell(0);
+    		celda10.setCellValue("Precio");
+    		int i10 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda10 = fila10.createCell(i10);
+				HSSFRichTextString precio = new HSSFRichTextString(Float.toString(est.getPrecio()));
+				celda10.setCellValue(precio);
+				i10++;
+			}
+    		
+    		HSSFRow fila11 = hoja1.createRow(11);
+    		HSSFCell celda11 = fila11.createCell(0);
+    		celda11.setCellValue("Costo Total");
+    		int i11 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda11 = fila11.createCell(i11);
+				HSSFRichTextString costo = new HSSFRichTextString(Float.toString(est.getCosto()));
+				celda11.setCellValue(costo);
+				i11++;
+			}
+    		
+    		HSSFRow fila12 = hoja1.createRow(12);
+    		HSSFCell celda12 = fila12.createCell(0);
+    		celda12.setCellValue("Fabricado");
+    		int i12 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda12 = fila12.createCell(i12);
+				if(est.isFabricado())
+				{
+					HSSFRichTextString fab = new HSSFRichTextString("Sí");
+					celda12.setCellValue(fab);
+				}
+				else
+				{
+					HSSFRichTextString fab = new HSSFRichTextString("No");
+					celda12.setCellValue(fab);
+				}
+				i12++;
+			}
+    		
+    		HSSFRow fila13 = hoja1.createRow(13);
+    		HSSFCell celda13 = fila13.createCell(0);
+    		celda13.setCellValue("Costo de Compra");
+    		int i13 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda13 = fila13.createCell(i13);
+				HSSFRichTextString costo = new HSSFRichTextString(Float.toString(est.getCostoDeCompra()));
+				celda13.setCellValue(costo);
+				i13++;
+			}
+    		
+    		HSSFRow fila14 = hoja1.createRow(14);
+    		HSSFCell celda14 = fila14.createCell(0);
+    		celda14.setCellValue("Costo por Partida");
+    		int i14 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda14 = fila14.createCell(i14);
+				HSSFRichTextString costo = new HSSFRichTextString(Float.toString(est.getCostoPartida()));
+				celda14.setCellValue(costo);
+				i14++;
+			}
+    		
+    		HSSFRow fila15 = hoja1.createRow(15);
+    		HSSFCell celda15 = fila15.createCell(0);
+    		celda15.setCellValue("Costo por Mano de Obra");
+    		int i15 = 1;
+    		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
+				celda15 = fila15.createCell(i15);
+				HSSFRichTextString costo = new HSSFRichTextString(Float.toString(est.getManodeobra()));
+				celda15.setCellValue(costo);
+				i15++;
+			}
+    		
+    		
+    		HSSFRow fila16;
+    		HSSFCell celda16;
+    		//celda16.setCellValue("Costo por Mano de Obra");
+    		int i16 = 0;
+    		int i17 = 0;
+    		for (GastoGeneral gast : Controladora.getInstance().getMisGastosGenerales()) {
+    			i17 = 0;
+    			fila16 = hoja1.createRow(16+i16);
+        		celda16 = fila16.createCell(i17);
+        		celda16.setCellValue(gast.getNombre());
+        		i17++;
+    			for (Estandar est : Controladora.getInstance().getMisProductosEstandar()) {
+					for(CostoIndirectoProducto cost: est.getCostosIndirectos())
+					{
+						if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
+						{
+							celda16 = fila16.createCell(i17);
+							System.out.println(cost.getNombre() + cost.getValor());
+							HSSFRichTextString costo = new HSSFRichTextString(Float.toString(cost.getValor()));
+							celda16.setCellValue(costo);
+							break;
+						}
+					}
+					i17++;
+				}
+    			i16++;
+			}
+    		
+    		int o = 0;
+    		for(; o < Controladora.getInstance().getMisProductosEstandar().size(); o++)
+    		{
+    			hoja1.autoSizeColumn(o);
+    		}
+    		
+    		try {
+    			FileOutputStream archivo = new FileOutputStream("c:/ERPdata/data/inventario.xls");
+    			libro.write(archivo);
+    			archivo.close();
+    		} catch (Exception e) {
+				System.out.println("No se escribió el archivo de inventario en Excel");
+			}
+    		
+    	}	
     }
     
     public void pressed_modificarGastoGeneral(ActionEvent event)
