@@ -97,6 +97,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Combinaciones> misCombinaciones;
 	private ArrayList<ManoDeObra> misManosDeObras;
 	private ArrayList<CostoIndirectoProducto> misCostosIndirectos;
+	private ArrayList<Factura> misFacturas;
 	
 	private ArrayList<Area> misAreas;
 	private ArrayList<Longitud> misLongitudes;
@@ -130,6 +131,7 @@ public class Controladora implements Serializable{
 		this.misPrecios = new ArrayList<>();
 		this.misCombinaciones = new ArrayList<>();
 		this.misCostosIndirectos = new ArrayList<>();
+		this.misFacturas = new ArrayList<>();
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -219,6 +221,14 @@ public class Controladora implements Serializable{
 
 
 
+
+	public ArrayList<Factura> getMisFacturas() {
+		return misFacturas;
+	}
+
+	public void setMisFacturas(ArrayList<Factura> misFacturas) {
+		this.misFacturas = misFacturas;
+	}
 
 	public ArrayList<CantProductosUtilizados> getMisCantProductosUtilizados() {
 		return misCantProductosUtilizados;
