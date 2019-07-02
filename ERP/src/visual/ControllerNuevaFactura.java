@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -23,9 +24,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.Controladora;
+import logico.Estandar;
 import logico.Producto;
 
 public class ControllerNuevaFactura implements Initializable{
@@ -34,6 +37,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private CheckBox checkbox_clienteFactura;
 	    @FXML private TitledPane titledpane_busquedaClientesFactura;
 	    
+	    @FXML private TextField textfield_facturaCantidad;
 	    @FXML private TextField textfield_productoBusqueda;
 	    @FXML private TextField textfield_totalAPagar;
 	    @FXML private TextField textfield_totalRecibido;
@@ -41,6 +45,8 @@ public class ControllerNuevaFactura implements Initializable{
 	   
 	    @FXML private Button button_sendProducto;
 	    @FXML private Button button_returnProducto;
+	    
+	    @FXML private ComboBox<String> combobox_facturaMedida;
 	    
 	    @FXML private ListView<String> listview_facturaProductoList;
 	    @FXML private ListView<String> listview_productosFacturados;
@@ -113,6 +119,43 @@ public class ControllerNuevaFactura implements Initializable{
     	titledpane_busquedaClientesFactura.setVisible(true);
     }
     
+    public void tableViewFacturaClicked(MouseEvent event) {
+    	if(listview_facturaProductoList.getSelectionModel().getSelectedIndex() > -1)
+    	{
+    		String posicion = listview_facturaProductoList.getSelectionModel().getSelectedItem();
+    		String selection = Controladora.getInstance().findFacturaNombre(posicion);
+    		Producto p = Controladora.getInstance().buscarProducto(selection);
+    		
+    		combobox_facturaMedida.getItems().clear();
+    		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Area"))
+    		{
+    			combobox_facturaMedida.getItems().addAll("Sq Pulgadas", "Sq Pies", "Sq Yardas", "Sq Milimetros", "Sq Centimetros", "Sq Metros");
+    		}
+    		
+    		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Longitud"))
+    		{
+    			combobox_facturaMedida.getItems().addAll("Pulgadas", "Pies", "Yardas", "Milimetros", "Centimetros", "Metros");
+    		}
+    		
+    		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Masa"))
+    		{
+    			combobox_facturaMedida.getItems().addAll("Grano", "Onza", "Libra", "Miligramo", "Gramo", "Kilogramo");
+    		}
+    		
+    		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Volumen"))
+    		{
+    			combobox_facturaMedida.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
+    		}
+    		if(p.getUnidadMedida() == null) {
+    			combobox_facturaMedida.getItems().clear();
+    		}
+    		else {
+    			combobox_facturaMedida.getSelectionModel().select(p.getUnidadMedida().getNombre());
+    		}
+    		
+    	}
+    }
+    
     public void calcularCambio(KeyEvent event) {
     	float recibido = 0;
     	float total = 0;
@@ -145,14 +188,138 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void sendProducto(ActionEvent event) {
-    	String producto = listview_facturaProductoList.getSelectionModel().getSelectedItem();
-    	listview_productosFacturados.getItems().add(producto);
-    	listview_productosFacturados.refresh();
+    	String item = listview_facturaProductoList.getSelectionModel().getSelectedItem();
+    	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findEncargadoNombre(item));
+    	float costoConvertido = 0;
+    	if(producto.getUnidadMedida() == null) {
+    		for(int i = 0; i < Integer.parseInt(textfield_facturaCantidad.getText()); i++) {
+    			listview_productosFacturados.getItems().add(item);
+    			listview_productosFacturados.refresh();
+    		}
+    	}
+    	else {
+    		float cantidadConvertida = 0;
+    		String tipoConversion = combobox_facturaMedida.getSelectionModel().getSelectedItem();
+        	switch(tipoConversion){
+        		case "Pulgadas":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Pulgadas", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Pies":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Pies", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Yardas":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Yardas", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Milimetros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Milimetros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Centimetros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Centimetros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Metros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Metros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		
+        		case "Pulgadas cb":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Pulgadas cb", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Pies cb":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Pies cb", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Cuchara de té":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Cuchara de té", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Onza fluida":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Onza fluida", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Taza":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Taza", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Medio litro":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Medio litro", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Cuarto de galón":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Cuarto de galón", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Galón":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Galón", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Barril":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Barril", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Milímetros cb":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Milímetros cb", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Centímetros cb":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Centímetros cb", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Metros cb":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Metros cb", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Mililitros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Mililitros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Litros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Litros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Cuchara de madera":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Cuchara de madera", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        			
+        		case "Grano":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Grano", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Onza":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Onza", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Libra":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Libra", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Miligramo":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Miligramo", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Gramo":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Gramo", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Kilogramo":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Kilogramo", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+
+        		case "Sq Pulgadas":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Pulgadas", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Sq Pies":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Pies", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Sq Yardas":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Yardas", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Sq Milimetros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Milimetros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Sq Centimetros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Centimetros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        		case "Sq Metros":
+        			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Metros", Float.parseFloat(textfield_facturaCantidad.getText()));
+        			break;
+        	};
+        	costoConvertido = cantidadConvertida * producto.getCosto();
+        	String itemNombre = Controladora.getInstance().findFacturaNombre(item);
+        	String itemMedida = itemNombre + ": " + costoConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
+        	listview_productosFacturados.getItems().add(itemMedida);
+    	}
+    	
+    	
+    	
     	float costo = 0;
     	for(String items : listview_productosFacturados.getItems()) {
-    		costo += Float.parseFloat(Controladora.getInstance().findPartidaCosto(items));
+    		costo += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
     	}
     	textfield_totalAPagar.setText(Float.toString(costo));
+    	listview_facturaProductoList.getSelectionModel().clearSelection();
+    	combobox_facturaMedida.getItems().clear();
+    	textfield_facturaCantidad.setText("1");
     	calcularCambio(null);
     }
     
@@ -162,7 +329,7 @@ public class ControllerNuevaFactura implements Initializable{
     	listview_productosFacturados.refresh();
     	float costo = 0;
     	for(String items : listview_productosFacturados.getItems()) {
-    		costo += Float.parseFloat(Controladora.getInstance().findPartidaCosto(items));
+    		costo += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));	
     	}
     	textfield_totalAPagar.setText(Float.toString(costo));
     	calcularCambio(null);
