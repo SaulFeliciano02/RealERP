@@ -2,6 +2,8 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
@@ -27,8 +30,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import logico.CantProductosUtilizados;
+import logico.Cliente;
 import logico.Controladora;
 import logico.Estandar;
+import logico.Factura;
 import logico.Producto;
 
 public class ControllerNuevaFactura implements Initializable{
@@ -42,9 +48,13 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TextField textfield_totalAPagar;
 	    @FXML private TextField textfield_totalRecibido;
 	    @FXML private TextField textfield_totalCambio;
+	    
+	    @FXML private RadioButton radiobutton_facturaEfectivo;
+	    @FXML private RadioButton radiobutton_facturaTarjeta;
 	   
 	    @FXML private Button button_sendProducto;
 	    @FXML private Button button_returnProducto;
+	    @FXML private Button guardarFactura;
 	    
 	    @FXML private ComboBox<String> combobox_facturaMedida;
 	    
@@ -117,6 +127,59 @@ public class ControllerNuevaFactura implements Initializable{
     
     public void abrirBusquedaCliente(ActionEvent event) {
     	titledpane_busquedaClientesFactura.setVisible(true);
+    }
+    
+    public void guardarFactura(ActionEvent event) {
+    	Cliente cliente = null;
+    	for(Cliente c : Controladora.getInstance().getMisClientes()) {
+    		if(c.getCodigo().equalsIgnoreCase(textfield_buscarClienteFactura.getText())) {
+    			cliente = c;	
+    		}
+    	}
+    	
+    	float montoTotal = Float.parseFloat(textfield_totalAPagar.getText());
+    	float montoRecibido = Float.parseFloat(textfield_totalRecibido.getText());
+    	float montoCambio = Float.parseFloat(textfield_totalCambio.getText());
+    	String tipoPago = "";
+    	
+    	if(radiobutton_facturaEfectivo.isSelected()) {
+    		tipoPago = radiobutton_facturaEfectivo.getText();
+    	}
+    	else {
+    		tipoPago = radiobutton_facturaTarjeta.getText();
+    	}
+    	ArrayList<String> alreadyUsed = new ArrayList<>();
+    	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
+    	
+    	for(String items : listview_productosFacturados.getItems()) {
+    		CantProductosUtilizados cantidadUtilizados = null;
+    		String nombreItem = Controladora.getInstance().findFacturaNombre(items);
+    		if(!alreadyUsed.contains(nombreItem)) {
+    			Producto producto = Controladora.getInstance().buscarProducto(nombreItem);
+    			int cantidad = 0;
+    			for(String searchSame : listview_productosFacturados.getItems()) {
+    				if(searchSame == nombreItem) {
+    					if(producto.getUnidadMedida() == null) {
+    						cantidad++;
+    					}
+    					
+    				}
+    			}
+    			cantidadUtilizados = new CantProductosUtilizados(producto, cantidad);
+    			prodFacturados.add(cantidadUtilizados);
+    			alreadyUsed.add(nombreItem);
+    		}
+    	}
+    	Factura factura = new Factura(prodFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente);
+    	Controladora.getInstance().getMisFacturas().add(factura);
+    	/**Controladora.getInstance().guardarFacturaSQL(factura);
+    	
+    	for(CantProductosUtilizados c : prodFacturados) {
+    		Controladora.getInstance().guardarCantProductosUtilizadosSQL(estandar, cantproductosutilizados);
+    	}
+    	**/
+    	
+    	//System.out.print(Controladora.getInstance().getMisFacturas().size());
     }
     
     public void tableViewFacturaClicked(MouseEvent event) {

@@ -13,15 +13,26 @@ public class Factura {
 	private float cambio;
 	private LocalDate fecha;
 	
+	private String clienteCodigo;
+	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, float montoTotal, String tipoPago,
-			float montoRecibido, float cambio) {
+			float montoRecibido, float cambio, Cliente cliente) {
 		super();
 		this.prodFacturados = prodFacturados;
 		this.montoTotal = montoTotal;
 		this.tipoPago = tipoPago;
 		this.montoRecibido = montoRecibido;
 		this.cambio = cambio;
+		this.miCliente = cliente;
 		this.fecha = LocalDate.now();
+		if(cliente != null) {
+			this.clienteCodigo = cliente.getCodigo();
+		}
+		else {
+			this.clienteCodigo = "No Cliente";
+		}
+		
+		
 	}
 
 	public ArrayList<CantProductosUtilizados> getProdFacturados() {
@@ -51,5 +62,11 @@ public class Factura {
 	public LocalDate getFecha() {
 		return fecha;
 	}
+
+	public String getClienteCodigo() {
+		return clienteCodigo;
+	}
+	
+	
 	
 }

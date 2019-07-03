@@ -67,6 +67,7 @@ import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
 import logico.Empleado;
 import logico.Estandar;
+import logico.Factura;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
@@ -157,6 +158,14 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Combinaciones, Float> tablecolumn_existenciaActualCombinacion;
     @FXML private TableColumn<Combinaciones, String> tablecolumn_numSerieCombinacion;
     @FXML private TableView<Combinaciones> tableview_atributosList;
+    
+    @FXML private TableColumn<Factura, Date> tablecolumn_facturaDate;
+    @FXML private TableColumn<Factura, Float> tablecolumn_facturaTotalPagar;
+    @FXML private TableColumn<Factura, Float> tablecolumn_facturaRecibido;
+    @FXML private TableColumn<Factura, Float> tablecolumn_facturaCambio;
+    @FXML private TableColumn<Factura, String> tablecolumn_facturaCliente;
+    @FXML private TableColumn<Factura, String> tablecolumn_facturaEmpleado;
+    @FXML private TableView<Factura> tableview_facturaList;
     
     @FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_productoCostoIndirectoNombre;
     @FXML private TableColumn<CostoIndirectoProducto, Float> tablecolumn_productoCostoIndirectoMonto;
@@ -1780,6 +1789,9 @@ public class Controller implements Initializable{
     	//Seteando los atributos
     	fillAtributesList(null);
     	
+    	//Seteando los facturas
+    	fillFactura(null);
+    	
     	//Seteando la categoria de empleados
     	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
     	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
@@ -2093,9 +2105,27 @@ public class Controller implements Initializable{
     }
     
     public void fillProductoPartida() {
-    	
-    	
+    
     }
+    
+    public void fillFactura(ArrayList<Factura> factura) {
+    	ObservableList<Factura> data = FXCollections.observableArrayList();
+    	if(factura == null) {
+    		data.addAll(Controladora.getInstance().getMisFacturas());
+    	}
+    	else {
+    		data.addAll(factura);
+    	}
+    	tablecolumn_facturaDate.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    	tablecolumn_facturaTotalPagar.setCellValueFactory(new PropertyValueFactory<>("montoTotal"));
+    	tablecolumn_facturaRecibido.setCellValueFactory(new PropertyValueFactory<>("montoRecibido"));
+    	tablecolumn_facturaCambio.setCellValueFactory(new PropertyValueFactory<>("cambio"));
+    	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("clienteCodigo"));
+    	tableview_facturaList.setItems(data);
+    	tableview_facturaList.refresh();
+    }
+    
+    
     
     public void habilitarNuevoUsuario(ActionEvent event) {
     	pane_nuevoUsuario.setDisable(false);

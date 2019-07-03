@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
@@ -893,12 +893,13 @@
                                                                               </Button>
                                                                            </children>
                                                                         </HBox>
-                                                                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                        <TableView fx:id="tableview_facturaList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Descripción" />
-                                                                            <TableColumn prefWidth="75.0" text="Total a pagar" />
-                                                                              <TableColumn prefWidth="75.0" text="Fecha" />
-                                                                              <TableColumn prefWidth="75.0" text="Registrado por" />
+                                                                            <TableColumn fx:id="tablecolumn_facturaDate" prefWidth="75.0" text="Fecha" />
+                                                                            <TableColumn fx:id="tablecolumn_facturaTotalPagar" prefWidth="75.0" text="Total a pagar" />
+                                                                              <TableColumn fx:id="tablecolumn_facturaRecibido" prefWidth="75.0" text="Recibido" />
+                                                                              <TableColumn fx:id="tablecolumn_facturaCambio" prefWidth="75.0" text="Cambio" />
+                                                                              <TableColumn fx:id="tablecolumn_facturaCliente" prefWidth="75.0" text="Cliente" />
                                                                           </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -122,12 +122,12 @@
                               <Label text="Tipo de pago" />
                               <HBox prefHeight="21.0" prefWidth="237.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" selected="true" text="Efectivo">
+                                    <RadioButton fx:id="radiobutton_facturaEfectivo" mnemonicParsing="false" selected="true" text="Efectivo">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="tipoPago" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton mnemonicParsing="false" text="Tarjeta" toggleGroup="$tipoPago">
+                                    <RadioButton fx:id="radiobutton_facturaTarjeta" mnemonicParsing="false" text="Tarjeta" toggleGroup="$tipoPago">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -176,7 +176,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="237.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Imprimir factura">
+                                    <Button fx:id="guardarFactura" mnemonicParsing="false" onAction="#guardarFactura" text="Imprimir factura">
                                        <font>
                                           <Font size="20.0" />
                                        </font>

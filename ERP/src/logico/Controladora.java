@@ -906,6 +906,86 @@ public class Controladora implements Serializable{
 		}
 	}
 
+	public void guardarFacturaSQL(Factura factura) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
+			p.setFloat(2, factura.getMontoTotal());
+			p.setString(3, factura.getTipoPago());
+			p.setFloat(4, factura.getMontoRecibido());
+			p.setFloat(5, factura.getCambio());
+			p.setDate(6,  java.sql.Date.valueOf(factura.getFecha()));
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarProductosFacturadosSQL(CantProductosUtilizados cantproductosutilizados, Factura factura) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO facturas (idcantprodutil, idfactura) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
+			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public void guardarDescuentosAutomaticsSQL(DescuentosAutomaticos descuentosAutomaticos) {
 		Conexion con = new Conexion();
 		Connection c = null;
