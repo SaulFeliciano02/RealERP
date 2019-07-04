@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class Factura {
 	
 	private ArrayList<CantProductosUtilizados> prodFacturados;
+	private ArrayList<CantKitsUtilizados> kitFacturados;
+	private ArrayList<Servicio> serviciosFacturados;
 	private Cliente miCliente;
 	private float montoTotal;
 	private String tipoPago;
@@ -15,10 +17,12 @@ public class Factura {
 	
 	private String clienteCodigo;
 	
-	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, float montoTotal, String tipoPago,
+	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<Servicio> serviciosFacturados, float montoTotal, String tipoPago,
 			float montoRecibido, float cambio, Cliente cliente) {
 		super();
 		this.prodFacturados = prodFacturados;
+		this.kitFacturados = kitFacturados;
+		this.serviciosFacturados = serviciosFacturados;
 		this.montoTotal = montoTotal;
 		this.tipoPago = tipoPago;
 		this.montoRecibido = montoRecibido;
@@ -65,6 +69,22 @@ public class Factura {
 
 	public String getClienteCodigo() {
 		return clienteCodigo;
+	}
+
+	public ArrayList<CantKitsUtilizados> getKitFacturados() {
+		return kitFacturados;
+	}
+
+	public void setKitFacturados(ArrayList<CantKitsUtilizados> kitFacturados) {
+		this.kitFacturados = kitFacturados;
+	}
+
+	public ArrayList<Servicio> getServiciosFacturados() {
+		return serviciosFacturados;
+	}
+
+	public void setServiciosFacturados(ArrayList<Servicio> serviciosFacturados) {
+		this.serviciosFacturados = serviciosFacturados;
 	}
 	
 	
