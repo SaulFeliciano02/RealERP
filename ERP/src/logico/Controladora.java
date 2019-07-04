@@ -92,6 +92,7 @@ public class Controladora implements Serializable{
 	private ArrayList<UnidadMedida> misUnidadMedida;
 	private ArrayList<CategoriaEmpleado> misCategoriasEmpleado;
 	private ArrayList<CantProductosUtilizados> misCantProductosUtilizados;
+	private ArrayList<CantKitsUtilizados> misCantKitsUtilizados;
 	private ArrayList<Precio> misPrecios;
 	private ArrayList<Partida> misPartidas;
 	private ArrayList<Combinaciones> misCombinaciones;
@@ -132,6 +133,7 @@ public class Controladora implements Serializable{
 		this.misCombinaciones = new ArrayList<>();
 		this.misCostosIndirectos = new ArrayList<>();
 		this.misFacturas = new ArrayList<>();
+		this.misCantKitsUtilizados = new ArrayList<>();
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -6511,6 +6513,14 @@ public boolean activarLoadAtributos()
 				e2.printStackTrace();
 			}
 		}
+	}
+
+	public ArrayList<CantKitsUtilizados> getMisCantKitsUtilizados() {
+		return misCantKitsUtilizados;
+	}
+
+	public void setMisCantKitsUtilizados(ArrayList<CantKitsUtilizados> misCantKitsUtilizados) {
+		this.misCantKitsUtilizados = misCantKitsUtilizados;
 	}
 
 
