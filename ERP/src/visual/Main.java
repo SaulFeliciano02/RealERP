@@ -165,6 +165,7 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadPromedioGananciaAnual();
 					}
+					Controladora.getInstance().loadFactura();
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;
 						root1 = (Parent) fxmlLoader.load();

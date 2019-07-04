@@ -917,14 +917,27 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
-			p.setFloat(2, factura.getMontoTotal());
-			p.setString(3, factura.getTipoPago());
-			p.setFloat(4, factura.getMontoRecibido());
-			p.setFloat(5, factura.getCambio());
-			p.setDate(6,  java.sql.Date.valueOf(factura.getFecha()));
+			if(factura.getMiCliente() != null) {
+				p =(PreparedStatement)
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?, ?)");
+				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
+				p.setFloat(2, factura.getMontoTotal());
+				p.setString(3, factura.getTipoPago());
+				p.setFloat(4, factura.getMontoRecibido());
+				p.setFloat(5, factura.getCambio());
+				p.setDate(6,  java.sql.Date.valueOf(factura.getFecha()));
+			}
+			else {
+				p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?)");
+				p.setFloat(1, factura.getMontoTotal());
+				p.setString(2, factura.getTipoPago());
+				p.setFloat(3, factura.getMontoRecibido());
+				p.setFloat(4, factura.getCambio());
+				p.setDate(5,  java.sql.Date.valueOf(factura.getFecha()));
+			}
+			
+			
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -960,9 +973,123 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (idcantprodutil, idfactura) VALUES (?, ?)");
+					c.prepareStatement("INSERT INTO productosfacturados (idcantprodutil, idfactura) VALUES (?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
 			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarKitsUtilizadosSQL(CantKitsUtilizados cantkitutilizados) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO cantkitsutilizados (kit, cantidad) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
+			p.setInt(2, Math.round(cantkitutilizados.getCantidad()));
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarKitsFacturadosSQL(CantKitsUtilizados cantkitutilizados, Factura factura) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO kitsfacturados (idcantkitutil, idfactura) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
+			p.setInt(2, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarServiciosFacturadosSQL(Servicio servicio, Factura factura) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO serviciosfacturado (idservicio, idfactura) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductosServicio().indexOf(servicio)+1);
+			p.setInt(2, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -6510,6 +6637,287 @@ public boolean activarLoadAtributos()
 				}
 			}
 			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void loadFactura()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Connection c4 = null;
+		Connection c5 = null;
+		Connection c6 = null;
+		Connection c7 = null;
+		Connection c8 = null;
+		Connection c9 = null;
+		Connection c10 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		Statement s4 = null;
+		Statement s5 = null;
+		Statement s6 = null;
+		Statement s7 = null;
+		Statement s8 = null;
+		Statement s9 = null;
+		Statement s10 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		ResultSet r4 = null;
+		ResultSet r5 = null;
+		ResultSet r6 = null;
+		ResultSet r7 = null;
+		ResultSet r8 = null;
+		ResultSet r9 = null;
+		ResultSet r10 = null;
+		PreparedStatement p = null;
+		int idfactura = 0;
+		int idcliente = 0;
+		Cliente cli = null;
+		float montoTotal = 0;
+		String tipoPago = null;
+		float montoRecibido = 0;
+		float cambio = 0;
+		Date fecha = null;
+		int idProdFacturado = 0;
+		int idCantProdUtil = 0;
+		int cantproductoutilizadoid2 = 0;
+		int idestandarrelacionado = 0;
+		float cantidad = 0;
+		String nombre = null;
+		Estandar est = null;
+		ArrayList<CantProductosUtilizados> cantProdFact = new ArrayList<>();
+		int idKitFacturado = 0;
+		int idCantKitUtil = 0;
+		int cantkitutilizadoid2 = 0;
+		int idkitrelacionado = 0;
+		int cantidadkit = 0;
+		String nombrekit = null;
+		Kit kit = null;
+		ArrayList<CantKitsUtilizados> cantKitFact = new ArrayList<>();
+		int idServ = 0;
+		int idProducto = 0;
+		String nombreServ = null;
+		Servicio serv = null;
+		ArrayList<Servicio> serviciosFact = new ArrayList<>();
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM facturas");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idfactura = r.getInt(0);
+				idcliente = r.getInt(1);
+				montoTotal = r.getFloat(2);
+				tipoPago = r.getString(3);
+				montoRecibido = r.getFloat(4);
+				cambio = r.getFloat(5);
+				fecha = r.getDate(6);
+				
+				if(idcliente>0)
+				{
+					cli = Controladora.getInstance().getMisClientes().get(idcliente-1);
+				}
+				
+				c2 = con.conectar();
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT * FROM productosfacturados WHERE idfactura = '"+idfactura+"'");
+				
+				while(r2.next())
+				{
+					idProdFacturado = r2.getInt(0);
+					idCantProdUtil = r2.getInt(1);
+					
+					c3 = con.conectar();
+					s3 = (Statement) c3.createStatement();
+					r3 = s3.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+idCantProdUtil+"'");
+					while(r3.next())
+					{
+						cantproductoutilizadoid2 = r3.getInt(1);
+						idestandarrelacionado = r3.getInt(2);
+						cantidad = r3.getFloat(3);
+						
+						c4 = con.conectar();
+						s4 = (Statement) c4.createStatement();
+						r4 = s4.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+						while(r4.next())
+						{
+							nombre = r4.getString(1);
+							est = (Estandar) buscarProducto(nombre);
+						}
+						
+						CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
+						cantProdFact.add(cpu);
+						Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
+					}
+				}
+				
+				c5 = con.conectar();
+				s5 = (Statement) c5.createStatement();
+				r5 = s5.executeQuery("SELECT * FROM kitsfacturados WHERE idfactura = '"+idfactura+"'");
+				
+				while(r5.next())
+				{
+					idKitFacturado = r5.getInt(0);
+					idCantKitUtil = r5.getInt(1);
+					
+					c6 = con.conectar();
+					s6 = (Statement) c6.createStatement();
+					r6 = s6.executeQuery("SELECT * FROM cantkitsutilizados WHERE idcantkitsutilizados = '"+idCantKitUtil+"'");
+					while(r6.next())
+					{
+						cantkitutilizadoid2 = r6.getInt(1);
+						idkitrelacionado = r6.getInt(2);
+						cantidadkit = r6.getInt(3);
+						
+						c7 = con.conectar();
+						s7 = (Statement) c7.createStatement();
+						r7 = s7.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+						while(r7.next())
+						{
+							nombrekit = r7.getString(1);
+							kit = (Kit) buscarProducto(nombre);
+						}
+						
+						CantKitsUtilizados cku = new CantKitsUtilizados(kit, cantidad);
+						cantKitFact.add(cku);
+						Controladora.getInstance().getMisCantKitsUtilizados().add(cku);
+					}
+				}
+				
+				c8 = con.conectar();
+				s8 = (Statement) c8.createStatement();
+				r8 = s8.executeQuery("SELECT * FROM serviciosfacturado WHERE idfactura = '"+idfactura+"'");
+				
+				while(r8.next())
+				{
+					idServ = r8.getInt(1);
+						
+					serv = Controladora.getInstance().getMisProductosServicio().get(idServ-1);
+					serviciosFact.add(serv);
+				}
+				
+				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(c2!=null) {
+					c2.close();
+				}
+				
+				if(c3!=null) {
+					c3.close();
+				}
+				
+				if(c4!=null) {
+					c4.close();
+				}
+				
+				if(c5!=null) {
+					c5.close();
+				}
+				
+				if(c6!=null) {
+					c6.close();
+				}
+				
+				if(c7!=null) {
+					c7.close();
+				}
+				
+				if(c8!=null) {
+					c8.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(s2!=null) {
+					s2.close();
+				}
+				
+				if(s3!=null) {
+					s3.close();
+				}
+				
+				if(s4!=null) {
+					s4.close();
+				}
+				
+				if(s5!=null) {
+					s5.close();
+				}
+				
+				if(s6!=null) {
+					s6.close();
+				}
+				
+				if(s7!=null) {
+					s7.close();
+				}
+				
+				if(s8!=null) {
+					s8.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+				if(r2!=null) {
+					r2.close();
+				}
+				
+				if(r3!=null) {
+					r3.close();
+				}
+				
+				if(r4!=null) {
+					r4.close();
+				}
+				
+				if(r5!=null) {
+					r5.close();
+				}
+				
+				if(r6!=null) {
+					r6.close();
+				}
+				
+				if(r7!=null) {
+					r7.close();
+				}
+				
+				if(r8!=null) {
+					r8.close();
+				}
+				
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}

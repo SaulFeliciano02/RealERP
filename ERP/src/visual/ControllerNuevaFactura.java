@@ -30,12 +30,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
 import logico.Cliente;
 import logico.Controladora;
 import logico.Estandar;
 import logico.Factura;
+import logico.Kit;
 import logico.Producto;
+import logico.Servicio;
 
 public class ControllerNuevaFactura implements Initializable{
         @FXML private TextField textfield_buscarClienteFactura;
@@ -150,34 +153,64 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     	ArrayList<String> alreadyUsed = new ArrayList<>();
     	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
+    	ArrayList<CantKitsUtilizados> kitFacturados = new ArrayList<>();
+    	ArrayList<Servicio> serviciosFacturados = new ArrayList<>();
     	
     	for(String items : listview_productosFacturados.getItems()) {
     		CantProductosUtilizados cantidadUtilizados = null;
+    		CantKitsUtilizados cantidadKitUtilizados = null;
     		String nombreItem = Controladora.getInstance().findFacturaNombre(items);
     		if(!alreadyUsed.contains(nombreItem)) {
     			Producto producto = Controladora.getInstance().buscarProducto(nombreItem);
     			int cantidad = 0;
     			for(String searchSame : listview_productosFacturados.getItems()) {
-    				if(searchSame == nombreItem) {
+    				String searchSameName = Controladora.getInstance().findFacturaNombre(searchSame);
+    				if(searchSameName.equalsIgnoreCase(nombreItem)) {			
     					if(producto.getUnidadMedida() == null) {
     						cantidad++;
     					}
     					
     				}
     			}
-    			cantidadUtilizados = new CantProductosUtilizados(producto, cantidad);
-    			prodFacturados.add(cantidadUtilizados);
+    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    				cantidadUtilizados = new CantProductosUtilizados(producto, cantidad);
+    				prodFacturados.add(cantidadUtilizados);
+    			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    				cantidadKitUtilizados = new CantKitsUtilizados((Kit) producto, cantidad);
+    				kitFacturados.add(cantidadKitUtilizados);
+    			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
+    				serviciosFacturados.add((Servicio) producto);
+    			}
+    			
     			alreadyUsed.add(nombreItem);
     		}
     	}
-    	Factura factura = new Factura(prodFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente);
+    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente);
     	Controladora.getInstance().getMisFacturas().add(factura);
-    	/**Controladora.getInstance().guardarFacturaSQL(factura);
+    	
+    	Controladora.getInstance().guardarFacturaSQL(factura);
     	
     	for(CantProductosUtilizados c : prodFacturados) {
-    		Controladora.getInstance().guardarCantProductosUtilizadosSQL(estandar, cantproductosutilizados);
+    		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
+    		Controladora.getInstance().guardarCantProductosUtilizadosSQL( (Estandar) c.getProductoClass(), c);
+    		Controladora.getInstance().guardarProductosFacturadosSQL(c, factura);
     	}
-    	**/
+    	for(CantKitsUtilizados k : kitFacturados) {
+    		Controladora.getInstance().getMisCantKitsUtilizados().add(k);
+    		Controladora.getInstance().guardarKitsUtilizadosSQL(k);
+    		Controladora.getInstance().guardarKitsFacturadosSQL(k, factura);
+    	}
+    	for(Servicio s : serviciosFacturados) {
+    		Controladora.getInstance().guardarServiciosFacturadosSQL(s, factura);
+    	}
+    	
+    	listview_productosFacturados.getItems().clear();
+    	listview_productosFacturados.refresh();
+    	textfield_totalAPagar.setText("");
+    	textfield_totalRecibido.setText("");
+    	textfield_totalCambio.setText("");
     	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
     }
