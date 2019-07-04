@@ -974,8 +974,8 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO productosfacturados (idcantprodutil, idfactura) VALUES (?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
-			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.setInt(1, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
+			p.setInt(2, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
 			p.executeUpdate();
 		}
 		catch(Exception e) {
