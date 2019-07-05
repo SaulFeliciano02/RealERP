@@ -6577,6 +6577,41 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE kit SET exisactual = '"+cantidadRestar+"' WHERE idestandar = '"+indiceProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public void sumarExistenciaActual(float cantidadSumar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;

@@ -160,6 +160,7 @@ public class Controller implements Initializable{
     @FXML private TableView<Combinaciones> tableview_atributosList;
     
     @FXML private TableColumn<Factura, Date> tablecolumn_facturaDate;
+    @FXML private TableColumn<Factura, LocalDate> tablecolumn_facturaHora;
     @FXML private TableColumn<Factura, Float> tablecolumn_facturaTotalPagar;
     @FXML private TableColumn<Factura, Float> tablecolumn_facturaRecibido;
     @FXML private TableColumn<Factura, Float> tablecolumn_facturaCambio;
@@ -2117,6 +2118,7 @@ public class Controller implements Initializable{
     		data.addAll(factura);
     	}
     	tablecolumn_facturaDate.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    	tablecolumn_facturaHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
     	tablecolumn_facturaTotalPagar.setCellValueFactory(new PropertyValueFactory<>("montoTotal"));
     	tablecolumn_facturaRecibido.setCellValueFactory(new PropertyValueFactory<>("montoRecibido"));
     	tablecolumn_facturaCambio.setCellValueFactory(new PropertyValueFactory<>("cambio"));

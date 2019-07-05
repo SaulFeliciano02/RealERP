@@ -162,16 +162,22 @@ public class ControllerNuevaFactura implements Initializable{
     		String nombreItem = Controladora.getInstance().findFacturaNombre(items);
     		if(!alreadyUsed.contains(nombreItem)) {
     			Producto producto = Controladora.getInstance().buscarProducto(nombreItem);
-    			int cantidad = 0;
-    			for(String searchSame : listview_productosFacturados.getItems()) {
-    				String searchSameName = Controladora.getInstance().findFacturaNombre(searchSame);
-    				if(searchSameName.equalsIgnoreCase(nombreItem)) {			
-    					if(producto.getUnidadMedida() == null) {
-    						cantidad++;
+    			float cantidad = 0;
+    			if(producto.getUnidadMedida() == null) {
+    				for(String searchSame : listview_productosFacturados.getItems()) {
+    					String searchSameName = Controladora.getInstance().findFacturaNombre(searchSame);
+    					if(searchSameName.equalsIgnoreCase(nombreItem)) {			
+    							cantidad++;
     					}
-    					
     				}
+    				alreadyUsed.add(nombreItem);
     			}
+    			else {
+    				float precioConvertido = Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
+    				float precio = producto.getPrecio();
+    				cantidad = precioConvertido / precio;
+    			}
+    			
     			if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     				cantidadUtilizados = new CantProductosUtilizados(producto, cantidad);
     				prodFacturados.add(cantidadUtilizados);
@@ -184,7 +190,21 @@ public class ControllerNuevaFactura implements Initializable{
     				serviciosFacturados.add((Servicio) producto);
     			}
     			
-    			alreadyUsed.add(nombreItem);
+    			
+    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    				Estandar estandar = (Estandar) producto;
+    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1;
+    				float cantidadRestar = estandar.getExistenciaActual() - cantidad;
+    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+    				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
+    			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    				Kit kit = (Kit) producto;
+    				int indiceProducto = Controladora.getInstance().getMisProductosKit().indexOf(kit)+1;
+    				float cantidadRestar = kit.getExistenciaActual() - cantidad;
+    				Controladora.getInstance().restarExistenciaActualKit(cantidadRestar, indiceProducto);
+    				Controladora.getInstance().getMisProductosKit().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
+    			}
     		}
     	}
     	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente);
@@ -284,16 +304,29 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void sendProducto(ActionEvent event) {
+    	Alert a = new Alert(AlertType.NONE); 
+    	a.setAlertType(AlertType.ERROR);
+    	boolean isValid = true;
     	String item = listview_facturaProductoList.getSelectionModel().getSelectedItem();
     	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findEncargadoNombre(item));
-    	float costoConvertido = 0;
-    	if(producto.getUnidadMedida() == null) {
+    	float precioConvertido = 0;
+    	float cantidadCheck = Float.parseFloat(textfield_facturaCantidad.getText());
+    	for(String items : listview_productosFacturados.getItems()) {
+    		if(producto.getNombre().equalsIgnoreCase(Controladora.getInstance().findFacturaNombre(items))) {
+    			cantidadCheck++;
+    		}
+    	}
+    	isValid = checkExistenciaMinima(producto, cantidadCheck);
+    	
+    	if(producto.getUnidadMedida() == null && isValid) {
     		for(int i = 0; i < Integer.parseInt(textfield_facturaCantidad.getText()); i++) {
     			listview_productosFacturados.getItems().add(item);
     			listview_productosFacturados.refresh();
     		}
     	}
+    	
     	else {
+    		isValid = true;
     		float cantidadConvertida = 0;
     		String tipoConversion = combobox_facturaMedida.getSelectionModel().getSelectedItem();
         	switch(tipoConversion){
@@ -400,19 +433,32 @@ public class ControllerNuevaFactura implements Initializable{
         			cantidadConvertida = producto.getUnidadMedida().Conversion("Sq Metros", Float.parseFloat(textfield_facturaCantidad.getText()));
         			break;
         	};
-        	costoConvertido = cantidadConvertida * producto.getCosto();
-        	String itemNombre = Controladora.getInstance().findFacturaNombre(item);
-        	String itemMedida = itemNombre + ": " + costoConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
-        	listview_productosFacturados.getItems().add(itemMedida);
+        	cantidadCheck = cantidadConvertida;
+        	for(String items : listview_productosFacturados.getItems()) {
+        		if(producto.getNombre().equalsIgnoreCase(Controladora.getInstance().findFacturaNombre(items))) {
+        			Producto productoFacturado = Controladora.getInstance().buscarProducto(Controladora.getInstance().findFacturaNombre(items));
+        			float precioCheck = Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
+        			cantidadCheck += (precioCheck / productoFacturado.getPrecio());
+        		}
+        	}
+        	System.out.println(cantidadCheck);
+        	isValid = checkExistenciaMinima(producto, cantidadCheck);
+        	if(isValid) {
+        		precioConvertido = cantidadConvertida * producto.getPrecio();
+        		String itemNombre = Controladora.getInstance().findFacturaNombre(item);
+        		String itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
+        		listview_productosFacturados.getItems().add(itemMedida);
+        	}
+        	
     	}
     	
     	
     	
-    	float costo = 0;
+    	float precio = 0;
     	for(String items : listview_productosFacturados.getItems()) {
-    		costo += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
+    		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
     	}
-    	textfield_totalAPagar.setText(Float.toString(costo));
+    	textfield_totalAPagar.setText(Float.toString(precio));
     	listview_facturaProductoList.getSelectionModel().clearSelection();
     	combobox_facturaMedida.getItems().clear();
     	textfield_facturaCantidad.setText("1");
@@ -423,11 +469,11 @@ public class ControllerNuevaFactura implements Initializable{
     	String producto = listview_productosFacturados.getSelectionModel().getSelectedItem();
     	listview_productosFacturados.getItems().remove(producto);
     	listview_productosFacturados.refresh();
-    	float costo = 0;
+    	float precio = 0;
     	for(String items : listview_productosFacturados.getItems()) {
-    		costo += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));	
+    		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));	
     	}
-    	textfield_totalAPagar.setText(Float.toString(costo));
+    	textfield_totalAPagar.setText(Float.toString(precio));
     	calcularCambio(null);
     }
     
@@ -461,10 +507,10 @@ public class ControllerNuevaFactura implements Initializable{
 			for(Producto p : Controladora.getInstance().getMisProductos()) {
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
-						data.add(p.getNombre() + ": " + p.getCosto() + "$");
+						data.add(p.getNombre() + ": " + p.getPrecio() + "$");
 					}
 					else {
-						data.add(p.getNombre() + ": " + p.getCosto() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
 					}
 				}
 			}
@@ -473,16 +519,41 @@ public class ControllerNuevaFactura implements Initializable{
 			for(Producto p : producto) {
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
-						data.add(p.getNombre() + ": " + p.getCosto() + "$");
+						data.add(p.getNombre() + ": " + p.getPrecio() + "$");
 					}
 					else {
-						data.add(p.getNombre() + ": " + p.getCosto() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
 					}
 				}
 			}
 		}
 		listview_facturaProductoList.setItems(data);
 		listview_facturaProductoList.refresh();
+	}
+	
+	public boolean checkExistenciaMinima(Producto producto, float cantidadCheck) {
+		boolean isValid = true;
+		Alert a = new Alert(AlertType.NONE); 
+    	a.setAlertType(AlertType.ERROR);
+		if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar estandar = (Estandar) producto;
+    		System.out.println(cantidadCheck);
+    		System.out.println(estandar.getExistenciaActual() - estandar.getExistenciaMinima());
+   			if(cantidadCheck > (estandar.getExistenciaActual() - estandar.getExistenciaMinima())) {
+   				a.setContentText("Esta sobrepasando la existencia minima de un producto!");
+   				a.show();
+   				isValid = false;
+   			}
+   		}
+    	else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    		Kit kit = (Kit) producto;
+    		if(cantidadCheck > (kit.getExistenciaActual() - kit.getExistenciaMinima())) {
+    			a.setContentText("Esta sobrepasando la existencia minima de un producto!");
+    			a.show();
+    			isValid = false;
+    		}
+    	}
+		return isValid;
 	}
 
 }
