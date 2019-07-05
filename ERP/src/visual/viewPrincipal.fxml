@@ -896,6 +896,7 @@
                                                                         <TableView fx:id="tableview_facturaList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                           <columns>
                                                                             <TableColumn fx:id="tablecolumn_facturaDate" prefWidth="75.0" text="Fecha" />
+                                                                              <TableColumn fx:id="tablecolumn_facturaHora" prefWidth="75.0" text="Hora" />
                                                                             <TableColumn fx:id="tablecolumn_facturaTotalPagar" prefWidth="75.0" text="Total a pagar" />
                                                                               <TableColumn fx:id="tablecolumn_facturaRecibido" prefWidth="75.0" text="Recibido" />
                                                                               <TableColumn fx:id="tablecolumn_facturaCambio" prefWidth="75.0" text="Cambio" />
