@@ -1,6 +1,8 @@
 package logico;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Factura {
@@ -14,7 +16,7 @@ public class Factura {
 	private float montoRecibido;
 	private float cambio;
 	private LocalDate fecha;
-	
+	private LocalTime hora;
 	private String clienteCodigo;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<Servicio> serviciosFacturados, float montoTotal, String tipoPago,
@@ -29,6 +31,7 @@ public class Factura {
 		this.cambio = cambio;
 		this.miCliente = cliente;
 		this.fecha = LocalDate.now();
+		this.hora = LocalTime.now();
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
 		}
@@ -65,6 +68,18 @@ public class Factura {
 
 	public LocalDate getFecha() {
 		return fecha;
+	}
+	
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public LocalTime getHora() {
+		return hora;
+	}
+
+	public void setHora(LocalTime hora) {
+		this.hora = hora;
 	}
 
 	public String getClienteCodigo() {
