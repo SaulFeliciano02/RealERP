@@ -3,8 +3,11 @@ package logico;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -919,22 +922,24 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
 				p.setFloat(4, factura.getMontoRecibido());
 				p.setFloat(5, factura.getCambio());
-				p.setDate(6,  java.sql.Date.valueOf(factura.getFecha()));
+				p.setDate(6, java.sql.Date.valueOf(factura.getFecha()));
+				p.setTime(7, java.sql.Time.valueOf(factura.getHora()));
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha) VALUES (?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
 				p.setFloat(4, factura.getCambio());
 				p.setDate(5,  java.sql.Date.valueOf(factura.getFecha()));
+				p.setTime(6, java.sql.Time.valueOf(factura.getHora()));
 			}
 			
 			
@@ -6684,6 +6689,7 @@ public boolean activarLoadAtributos()
 		float montoRecibido = 0;
 		float cambio = 0;
 		Date fecha = null;
+		Time hora = null;
 		int idProdFacturado = 0;
 		int idCantProdUtil = 0;
 		int cantproductoutilizadoid2 = 0;
@@ -6718,13 +6724,14 @@ public boolean activarLoadAtributos()
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
 			{
-				idfactura = r.getInt(0);
-				idcliente = r.getInt(1);
-				montoTotal = r.getFloat(2);
-				tipoPago = r.getString(3);
-				montoRecibido = r.getFloat(4);
-				cambio = r.getFloat(5);
-				fecha = r.getDate(6);
+				idfactura = r.getInt(1);
+				idcliente = r.getInt(2);
+				montoTotal = r.getFloat(3);
+				tipoPago = r.getString(4);
+				montoRecibido = r.getFloat(5);
+				cambio = r.getFloat(6);
+				fecha = r.getDate(7);
+				hora = r.getTime(8);
 				
 				if(idcliente>0)
 				{
@@ -6737,8 +6744,8 @@ public boolean activarLoadAtributos()
 				
 				while(r2.next())
 				{
-					idProdFacturado = r2.getInt(0);
-					idCantProdUtil = r2.getInt(1);
+					idProdFacturado = r2.getInt(1);
+					idCantProdUtil = r2.getInt(2);
 					
 					c3 = con.conectar();
 					s3 = (Statement) c3.createStatement();
@@ -6770,8 +6777,8 @@ public boolean activarLoadAtributos()
 				
 				while(r5.next())
 				{
-					idKitFacturado = r5.getInt(0);
-					idCantKitUtil = r5.getInt(1);
+					idKitFacturado = r5.getInt(1);
+					idCantKitUtil = r5.getInt(2);
 					
 					c6 = con.conectar();
 					s6 = (Statement) c6.createStatement();
@@ -6787,7 +6794,7 @@ public boolean activarLoadAtributos()
 						r7 = s7.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
 						while(r7.next())
 						{
-							nombrekit = r7.getString(1);
+							nombrekit = r7.getString(3);
 							kit = (Kit) buscarProducto(nombre);
 						}
 						
@@ -6803,13 +6810,18 @@ public boolean activarLoadAtributos()
 				
 				while(r8.next())
 				{
-					idServ = r8.getInt(1);
+					idServ = r8.getInt(2);
 						
 					serv = Controladora.getInstance().getMisProductosServicio().get(idServ-1);
 					serviciosFact.add(serv);
 				}
 				
 				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli);
+				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
+				fact.setFecha(LocalDate.parse(fecha.toString()));
+				fact.setHora(LocalTime.parse(hora.toString()));
+				getMisFacturas().add(fact);
+				//System.out.println();
 			}
 			
 			
