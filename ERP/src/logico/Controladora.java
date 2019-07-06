@@ -882,10 +882,23 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO promocion (fechaInicio, fechaFinal) VALUES (?, ?)");
-			p.setDate(1, (java.sql.Date) promocion.getFechaInicio());
-			p.setDate(2, (java.sql.Date) promocion.getFechaFinal());
+			if(promocion.getDia() != null)
+			{
+				p = (PreparedStatement)
+						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, dia) VALUES (?, ?)");
+				p.setInt(1, promocion.getPorcentajeDescuento());
+				p.setString(2, promocion.getDia());
+			}
+			else {
+				p = (PreparedStatement)
+						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, fechaInicio, fechaFinal, horaInicio, horaFinal) VALUES (?, ?, ?, ?, ?)");
+				p.setInt(1, promocion.getPorcentajeDescuento());
+				p.setDate(2, java.sql.Date.valueOf(promocion.getFechaInicio()));
+				p.setDate(3, java.sql.Date.valueOf(promocion.getFechaFinal()));
+				p.setTime(4, java.sql.Time.valueOf(promocion.getHoraInicio()));
+				p.setTime(5, java.sql.Time.valueOf(promocion.getHoraFinal()));
+			}
+			
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -1516,7 +1529,7 @@ public class Controladora implements Serializable{
 					c.prepareStatement("INSERT INTO promoproducto (producto, promocion, precioproducto) VALUES (?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.setInt(2, Controladora.getInstance().getMisPromociones().indexOf(promocion)+1);
-			p.setFloat(3, producto.getPrecio());
+			p.setFloat(3, (producto.getPromocion().getPorcentajeDescuento()/100)*producto.getPrecio());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
