@@ -176,7 +176,16 @@ abstract public class Producto {
 		this.promocion = promocion;
 	}
 
-
+	public float precioPorPromocion()
+	{
+		float precio = 0;
+		if(this.getPromocion() != null)
+		{
+			precio = (getPromocion().getPorcentajeDescuento()/100)*getPrecio();
+		}
+		return precio;
+	}
+	
 	public ArrayList<CostoDirecto> getCostosDirectos() {
 		return costosDirectos;
 	}
