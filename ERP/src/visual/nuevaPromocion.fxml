@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaPromocion">
+         <children>
+            <AnchorPane layoutX="204.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="586.0" prefWidth="942.0">
+               <children>
+                  <Label text="Promoción de:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="26.0" prefWidth="942.0">
+                     <children>
+                        <RadioButton fx:id="radiobutton_producto" mnemonicParsing="false" onAction="#cambiodePane" selected="true" text="Producto(s)">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="seleccionPromocion" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radiobutton_rubro" mnemonicParsing="false" onAction="#cambiodePane" text="Rubro(s)" toggleGroup="$seleccionPromocion">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+                  </VBox>
+            <AnchorPane fx:id="pane_PromocionProductos" layoutY="71.0" prefHeight="467.0" prefWidth="942.0">
+               <children>
+                  <HBox prefHeight="264.0" prefWidth="942.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox prefHeight="502.0" prefWidth="237.0">
+                           <children>
+                              <Label text="Listado de productos">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField promptText="Búsqueda">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="-&gt;">
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="&lt;-">
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="422.0" prefWidth="242.0">
+                           <HBox.margin>
+                              <Insets bottom="70.0" right="10.0" top="30.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label text="Seleccionados">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <ListView prefHeight="460.0" prefWidth="181.0" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </ListView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label text="Información de promoción">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Porciento de descuento:" />
+                                    <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="37.0" promptText="0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="2.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Label text="\%" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Fecha inicial:" />
+                                    <DatePicker>
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Fecha final:" />
+                                    <DatePicker>
+                                       <HBox.margin>
+                                          <Insets left="13.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Hora inicial:" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Spinner>
+                                    <Label text=":" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Label text="(hora:minuto)">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Hora final:" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                       <HBox.margin>
+                                          <Insets left="13.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Spinner>
+                                    <Label text=":" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Label text="(hora:minuto)">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Label text="Repetir cada día:">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox prefHeight="26.0" prefWidth="290.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Lunes" />
+                                    <CheckBox mnemonicParsing="false" text="Martes">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Miércoles">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Jueves">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="26.0" prefWidth="290.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Viernes" />
+                                    <CheckBox mnemonicParsing="false" text="Sábado">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Domingo">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="pane_PromocionRubro" layoutY="71.0" prefHeight="467.0" prefWidth="942.0" visible="false">
+               <children>
+                  <HBox prefHeight="264.0" prefWidth="942.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox prefHeight="502.0" prefWidth="237.0">
+                           <children>
+                              <Label text="Listado de rubros">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField promptText="Búsqueda">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="-&gt;">
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="&lt;-">
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="422.0" prefWidth="242.0">
+                           <HBox.margin>
+                              <Insets bottom="70.0" right="10.0" top="30.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label text="Seleccionados">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <ListView prefHeight="460.0" prefWidth="181.0" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </ListView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <Label text="Información de promoción">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Porciento de descuento:" />
+                                    <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="37.0" promptText="0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="2.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Label text="\%" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Fecha inicial:" />
+                                    <DatePicker>
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Fecha final:" />
+                                    <DatePicker>
+                                       <HBox.margin>
+                                          <Insets left="13.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Hora inicial:" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Spinner>
+                                    <Label text=":" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Label text="(hora:minuto)">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                 <children>
+                                    <Label text="Hora final:" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                       <HBox.margin>
+                                          <Insets left="13.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Spinner>
+                                    <Label text=":" />
+                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Label text="(hora:minuto)">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Label text="Repetir cada día:">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox prefHeight="26.0" prefWidth="290.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Lunes" />
+                                    <CheckBox mnemonicParsing="false" text="Martes">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Miércoles">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Jueves">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="26.0" prefWidth="290.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Viernes" />
+                                    <CheckBox mnemonicParsing="false" text="Sábado">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox mnemonicParsing="false" text="Domingo">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <HBox alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="539.0" prefHeight="46.0" prefWidth="922.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Guardar">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="18.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="68.0" fitWidth="175.0" layoutX="13.0" layoutY="19.0">
+                     <image>
+                        <Image url="@images/Logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+      </AnchorPane>

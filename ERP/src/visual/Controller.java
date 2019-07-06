@@ -265,9 +265,13 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevaFactura;
     @FXML private TabPane tabpane_Ventas;
     @FXML private Tab tab_facturacion;
+    @FXML private TitledPane titledpane_infoadicionalfactura;
+    @FXML private Tab tab_promocion;
+    @FXML private Button button_nuevaPromocion;
     
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
+    @FXML private TitledPane titledpane_busquedaEmpleadoUsuario;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -1600,6 +1604,53 @@ public class Controller implements Initializable{
 		}
     }
     
+    public void pressed_nuevaPromocion(ActionEvent event){
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaPromocion.fxml"));
+			Parent root1;
+			root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			Window owner = button_nuevaPromocion.getScene().getWindow();
+			//stage.initModality(Modality.APPLICATION_MODAL);
+			//stage.initStyle(StageStyle.UNDECORATED);
+			stage.setTitle("Nueva Promoción");
+			stage.setScene(new Scene(root1));  
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.initOwner(owner);
+			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			      public void handle(WindowEvent we) {
+			          
+			          try {
+			          	Stage primaryStage = new Stage();
+			          	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+
+			  		    Parent root = f.load();
+			  		    Controller c = f.getController();
+			  		    c.ventas_pressed(null);
+			  		    c.selectTabPromocion();
+			  		    Scene sc = new Scene(root);
+			  		    primaryStage.setScene(sc);
+			  		    primaryStage.setTitle("Centro Pymes");
+			  		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			  		    primaryStage.setMaximized(true);
+
+			  		    primaryStage.show();
+			  		    owner.hide();
+			  		} catch (IOException e) {
+			  			// TODO Auto-generated catch block
+			  			e.printStackTrace();
+			  			}
+			      }
+			  });
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     /**FUNCIONES GENERALES**/
     //Verifica si el input de un textfield es un numero
     public void numericFieldPressed(KeyEvent event) {
@@ -1988,6 +2039,10 @@ public class Controller implements Initializable{
     	tabpane_Ventas.getSelectionModel().select(tab_facturacion);;
     }
     
+    public void selectTabPromocion() {
+    	tabpane_Ventas.getSelectionModel().select(tab_promocion);;
+    }
+    
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
@@ -2133,5 +2188,20 @@ public class Controller implements Initializable{
     	pane_nuevoUsuario.setDisable(false);
     }
     
+    public void habilitarBusquedaEmpleadoUsuario(ActionEvent event) {
+    	titledpane_busquedaEmpleadoUsuario.setVisible(true);
+    }
+    
+    public void cerrarBusquedaEmpleadoUsuario(ActionEvent event) {
+    	titledpane_busquedaEmpleadoUsuario.setVisible(false);
+    }
+    
+    public void habilitarInfoAdicionalFactura(ActionEvent event) {
+    	titledpane_infoadicionalfactura.setVisible(true);
+    }
+    
+    public void cerrarInfoAdicionalFactura(ActionEvent event) {
+    	titledpane_infoadicionalfactura.setVisible(false);
+    }
     
 }
