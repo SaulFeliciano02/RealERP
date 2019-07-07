@@ -200,18 +200,18 @@
                               </Label>
                               <HBox prefHeight="26.0" prefWidth="290.0">
                                  <children>
-                                    <CheckBox fx:id="checkbox_lunes" mnemonicParsing="false" text="Lunes" />
-                                    <CheckBox fx:id="checkbox_martes" mnemonicParsing="false" text="Martes">
+                                    <CheckBox fx:id="checkbox_lunes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Lunes" />
+                                    <CheckBox fx:id="checkbox_martes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Martes">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox fx:id="checkbox_miercoles" mnemonicParsing="false" text="Miércoles">
+                                    <CheckBox fx:id="checkbox_miercoles" mnemonicParsing="false" onAction="#checkDiaSemana" text="Miércoles">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox fx:id="checkbox_jueves" mnemonicParsing="false" text="Jueves">
+                                    <CheckBox fx:id="checkbox_jueves" mnemonicParsing="false" onAction="#checkDiaSemana" text="Jueves">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -220,13 +220,13 @@
                               </HBox>
                               <HBox prefHeight="26.0" prefWidth="290.0">
                                  <children>
-                                    <CheckBox fx:id="checkbox_viernes" mnemonicParsing="false" text="Viernes" />
-                                    <CheckBox fx:id="checkbox_sabado" mnemonicParsing="false" text="Sábado">
+                                    <CheckBox fx:id="checkbox_viernes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Viernes" />
+                                    <CheckBox fx:id="checkbox_sabado" mnemonicParsing="false" onAction="#checkDiaSemana" text="Sábado">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox fx:id="checkbox_domingo" mnemonicParsing="false" text="Domingo">
+                                    <CheckBox fx:id="checkbox_domingo" mnemonicParsing="false" onAction="#checkDiaSemana" text="Domingo">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -428,7 +428,7 @@
             </AnchorPane>
             <HBox alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="539.0" prefHeight="46.0" prefWidth="922.0">
                <children>
-                  <Button mnemonicParsing="false" text="Guardar">
+                  <Button fx:id="button_guardarPromocion" mnemonicParsing="false" text="Guardar">
                      <font>
                         <Font size="15.0" />
                      </font>
