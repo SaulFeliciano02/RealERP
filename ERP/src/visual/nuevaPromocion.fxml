@@ -62,7 +62,7 @@
                      <children>
                         <VBox prefHeight="502.0" prefWidth="237.0">
                            <children>
-                              <Label text="Listado de productos">
+                              <Label fx:id="label_producto_rubro" text="Listado de productos">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -72,7 +72,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </TextField>
-                              <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                              <ListView fx:id="listview_promocionListado" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                            </children>
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" />
@@ -80,12 +80,12 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" text="-&gt;">
+                              <Button fx:id="button_promocionSend" mnemonicParsing="false" onAction="#sendPromocion" text="-&gt;">
                                  <VBox.margin>
                                     <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="&lt;-">
+                              <Button fx:id="button_promocionReturn" mnemonicParsing="false" onAction="#returnPromocion" text="&lt;-">
                                  <VBox.margin>
                                     <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
                                  </VBox.margin>
@@ -102,7 +102,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <ListView prefHeight="460.0" prefWidth="181.0" VBox.vgrow="ALWAYS">
+                              <ListView fx:id="listview_promocionSeleccionados" prefHeight="460.0" prefWidth="181.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -122,7 +122,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Porciento de descuento:" />
-                                    <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="37.0" promptText="0">
+                                    <TextField fx:id="textfield_promocionPorCiento" alignment="CENTER_RIGHT" onAction="#floatFieldPressed" prefHeight="26.0" prefWidth="37.0" promptText="0">
                                        <HBox.margin>
                                           <Insets left="5.0" right="2.0" />
                                        </HBox.margin>
@@ -136,7 +136,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Fecha inicial:" />
-                                    <DatePicker>
+                                    <DatePicker fx:id="datepicker_fechaInicial">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -146,7 +146,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Fecha final:" />
-                                    <DatePicker>
+                                    <DatePicker fx:id="datepicker_fechaFinal">
                                        <HBox.margin>
                                           <Insets left="13.0" />
                                        </HBox.margin>
@@ -156,7 +156,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Hora inicial:" />
-                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                    <Spinner fx:id="spinner_inicialHora" editable="true" prefHeight="20.0" prefWidth="67.0">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -165,7 +165,7 @@
                                        </opaqueInsets>
                                     </Spinner>
                                     <Label text=":" />
-                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Spinner fx:id="spinner_inicialMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
                                     <Label text="(hora:minuto)">
                                        <HBox.margin>
                                           <Insets left="2.0" />
@@ -176,7 +176,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Hora final:" />
-                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0">
+                                    <Spinner fx:id="spinner_finalHora" editable="true" prefHeight="20.0" prefWidth="67.0">
                                        <HBox.margin>
                                           <Insets left="13.0" />
                                        </HBox.margin>
@@ -185,7 +185,7 @@
                                        </opaqueInsets>
                                     </Spinner>
                                     <Label text=":" />
-                                    <Spinner editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                    <Spinner fx:id="spinner_finalMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
                                     <Label text="(hora:minuto)">
                                        <HBox.margin>
                                           <Insets left="2.0" />
@@ -200,18 +200,18 @@
                               </Label>
                               <HBox prefHeight="26.0" prefWidth="290.0">
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="Lunes" />
-                                    <CheckBox mnemonicParsing="false" text="Martes">
+                                    <CheckBox fx:id="checkbox_lunes" mnemonicParsing="false" text="Lunes" />
+                                    <CheckBox fx:id="checkbox_martes" mnemonicParsing="false" text="Martes">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox mnemonicParsing="false" text="Miércoles">
+                                    <CheckBox fx:id="checkbox_miercoles" mnemonicParsing="false" text="Miércoles">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox mnemonicParsing="false" text="Jueves">
+                                    <CheckBox fx:id="checkbox_jueves" mnemonicParsing="false" text="Jueves">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -220,19 +220,23 @@
                               </HBox>
                               <HBox prefHeight="26.0" prefWidth="290.0">
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="Viernes" />
-                                    <CheckBox mnemonicParsing="false" text="Sábado">
+                                    <CheckBox fx:id="checkbox_viernes" mnemonicParsing="false" text="Viernes" />
+                                    <CheckBox fx:id="checkbox_sabado" mnemonicParsing="false" text="Sábado">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox mnemonicParsing="false" text="Domingo">
+                                    <CheckBox fx:id="checkbox_domingo" mnemonicParsing="false" text="Domingo">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
                                  </children>
                               </HBox>
+                              <RadioButton fx:id="radiobutton_porFecha" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por fecha" />
+                              <RadioButton fx:id="radiobutton_porDia" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por dia" />
+                              <TextField fx:id="textfield_promocionNombre" prefHeight="25.0" prefWidth="154.0" />
+                              <Label text="Nombre" />
                            </children>
                         </VBox>
                      </children>
