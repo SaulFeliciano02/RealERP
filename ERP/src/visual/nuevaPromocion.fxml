@@ -136,7 +136,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Fecha inicial:" />
-                                    <DatePicker fx:id="datepicker_fechaInicial">
+                                    <DatePicker fx:id="datepicker_fechaInicial" onAction="#activarGuardar">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -146,7 +146,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Fecha final:" />
-                                    <DatePicker fx:id="datepicker_fechaFinal">
+                                    <DatePicker fx:id="datepicker_fechaFinal" onAction="#activarGuardar">
                                        <HBox.margin>
                                           <Insets left="13.0" />
                                        </HBox.margin>

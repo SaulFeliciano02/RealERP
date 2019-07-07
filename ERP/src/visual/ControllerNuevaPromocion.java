@@ -136,9 +136,9 @@ public class ControllerNuevaPromocion implements Initializable{
     }
     
     public void activarGuardar(ActionEvent event) {
-    	if(listview_promocionSeleccionados.getItems().size() > 0 && textfield_promocionNombre.getLength() > 0 && datepicker_fechaFinal.getValue() != null && datepicker_fechaInicial.getValue() != null
+    	if((listview_promocionSeleccionados.getItems().size() > 0 && textfield_promocionNombre.getLength() > 0) && (datepicker_fechaFinal.getValue() != null && datepicker_fechaInicial.getValue() != null
     			|| (checkbox_lunes.isSelected() || checkbox_martes.isSelected() || checkbox_miercoles.isSelected() || checkbox_jueves.isSelected() || checkbox_viernes.isSelected() || checkbox_sabado.isSelected() ||
-    					checkbox_domingo.isSelected())) {
+    					checkbox_domingo.isSelected()))) {
     		button_guardarPromocion.setDisable(false);
     	}
     	else {
@@ -204,6 +204,11 @@ public class ControllerNuevaPromocion implements Initializable{
     		}
     	}
     	Controladora.getInstance().addPromocion(promocion);
+    	
+    	Controladora.getInstance().guardarPromocionSQL(promocion);
+    	for(Producto p : promocion.getProductos()) {
+    		Controladora.getInstance().guardarPromoProductoSQL(p, promocion);
+    	}
     	
     }
     
@@ -326,7 +331,7 @@ public class ControllerNuevaPromocion implements Initializable{
     	listview_promocionListado.getItems().remove(item);
     	listview_promocionSeleccionados.getItems().add(item);
     	listview_promocionListado.getSelectionModel().clearSelection();
-    	
+    	activarGuardar(null);
     }
     
     public void returnPromocion(ActionEvent event) {
@@ -334,6 +339,7 @@ public class ControllerNuevaPromocion implements Initializable{
     	listview_promocionListado.getItems().add(item);
     	listview_promocionListado.getItems().remove(item);
     	listview_promocionSeleccionados.getSelectionModel().clearSelection();
+    	activarGuardar(null);
     }
 	
 	
@@ -347,6 +353,10 @@ public class ControllerNuevaPromocion implements Initializable{
 		
 		radiobutton_porFecha.setSelected(true);
 		checkDiaFecha(null);
+		
+		button_guardarPromocion.setDisable(true);
+		
+		//checkbox_lunes.setSelected(true);
 		
 		
 	}
