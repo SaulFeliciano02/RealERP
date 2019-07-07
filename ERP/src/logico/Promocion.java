@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Promocion {
 	private int porcentajeDescuento;
+	private String nombre;
 	private LocalDate fechaInicio; 
 	private LocalTime horaInicio;
 	private LocalDate fechaFinal; 
@@ -14,7 +15,7 @@ public class Promocion {
 	private boolean borrado;
 	
 	
-	public Promocion(int porcentajeDescuento, LocalDate fechaInicio, LocalDate fechaFinal, LocalTime horaInicio, LocalTime horaFinal) {
+	public Promocion(int porcentajeDescuento, String nombre, LocalDate fechaInicio, LocalDate fechaFinal, LocalTime horaInicio, LocalTime horaFinal) {
 		super();
 		this.setPorcentajeDescuento(porcentajeDescuento);
 		this.fechaInicio = fechaInicio;
@@ -22,13 +23,15 @@ public class Promocion {
 		this.fechaFinal = fechaFinal;
 		this.horaFinal = horaFinal;
 		this.productos = new ArrayList<>();
+		this.setNombre(nombre);
 		this.setBorrado(false);
 	}
 	
-	public Promocion(int porcentajeDescuento, String dia)
+	public Promocion(int porcentajeDescuento, String nombre, String dia)
 	{
 		super();
 		this.setPorcentajeDescuento(porcentajeDescuento);
+		this.setNombre(nombre);
 		this.dia = dia;
 		this.productos = new ArrayList<>();
 		this.setBorrado(false);
@@ -93,6 +96,14 @@ public class Promocion {
 
 	public void setProductos(ArrayList<Producto> productos) {
 		this.productos = productos;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 }
