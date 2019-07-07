@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
@@ -72,6 +73,7 @@ import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
 import logico.Producto;
+import logico.Promocion;
 import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
@@ -167,6 +169,16 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Factura, String> tablecolumn_facturaCliente;
     @FXML private TableColumn<Factura, String> tablecolumn_facturaEmpleado;
     @FXML private TableView<Factura> tableview_facturaList;
+    
+    @FXML private TableColumn<Promocion, String> tablecolumn_promocionCodigo;
+    @FXML private TableColumn<Promocion, Integer> tablecolumn_promocionPorcentaje;
+    @FXML private TableColumn<Promocion, LocalDate> tablecolumn_promocionFechaInicial;
+    @FXML private TableColumn<Promocion, LocalDate> tablecolumn_promocionFechaFinal;
+    @FXML private TableColumn<Promocion, LocalTime> tablecolumn_promocionHoraInicial;
+    @FXML private TableColumn<Promocion, LocalTime> tablecolumn_promocionHoraFinal;
+    @FXML private TableColumn<Promocion, String> tablecolumn_promocionDia;
+    @FXML private TableView<Promocion> tableview_promocionList;
+    
     
     @FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_productoCostoIndirectoNombre;
     @FXML private TableColumn<CostoIndirectoProducto, Float> tablecolumn_productoCostoIndirectoMonto;
@@ -1844,6 +1856,9 @@ public class Controller implements Initializable{
     	//Seteando los facturas
     	fillFactura(null);
     	
+    	//Seteando las promociones
+    	fillPromocion(null);
+    	
     	//Seteando la categoria de empleados
     	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
     	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
@@ -2180,6 +2195,25 @@ public class Controller implements Initializable{
     	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("clienteCodigo"));
     	tableview_facturaList.setItems(data);
     	tableview_facturaList.refresh();
+    }
+    
+    public void fillPromocion(ArrayList<Promocion> promocion) {
+    	ObservableList<Promocion> data = FXCollections.observableArrayList();
+    	if(promocion == null) {
+    		data.addAll(Controladora.getInstance().getMisPromociones());
+    	}
+    	else {
+    		data.addAll(promocion);
+    	}
+    	tablecolumn_promocionCodigo.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_promocionPorcentaje.setCellValueFactory(new PropertyValueFactory<>("porcentajeDescuento"));
+    	tablecolumn_promocionFechaInicial.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
+    	tablecolumn_promocionFechaFinal.setCellValueFactory(new PropertyValueFactory<>("fechaFinal"));
+    	tablecolumn_promocionHoraInicial.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
+    	tablecolumn_promocionHoraFinal.setCellValueFactory(new PropertyValueFactory<>("horaFinal"));
+    	tablecolumn_promocionDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
+    	tableview_promocionList.setItems(data);
+    	tableview_promocionList.refresh();
     }
     
     
