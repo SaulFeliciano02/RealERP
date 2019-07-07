@@ -2,6 +2,8 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -31,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.Controladora;
 import logico.Producto;
+import logico.Promocion;
 import logico.Rubro;
 
 public class ControllerNuevaPromocion implements Initializable{
@@ -70,6 +73,8 @@ public class ControllerNuevaPromocion implements Initializable{
     
     @FXML private RadioButton radiobutton_porDia;
     @FXML private RadioButton radiobutton_porFecha;
+    
+    @FXML private Button button_guardarPromocion;
     
     public void reload(Stage stage) {
     	
@@ -130,6 +135,78 @@ public class ControllerNuevaPromocion implements Initializable{
     	listview_promocionSeleccionados.getItems().clear();
     }
     
+    public void activarGuardar(ActionEvent event) {
+    	if(listview_promocionSeleccionados.getItems().size() > 0 && textfield_promocionNombre.getLength() > 0 && datepicker_fechaFinal.getValue() != null && datepicker_fechaInicial.getValue() != null
+    			|| (checkbox_lunes.isSelected() || checkbox_martes.isSelected() || checkbox_miercoles.isSelected() || checkbox_jueves.isSelected() || checkbox_viernes.isSelected() || checkbox_sabado.isSelected() ||
+    					checkbox_domingo.isSelected())) {
+    		button_guardarPromocion.setDisable(false);
+    	}
+    	else {
+    		button_guardarPromocion.setDisable(true);
+    	}
+    }
+    
+    public void guardarPromocion(ActionEvent event) {
+    	String nombre = textfield_promocionNombre.getText();
+    	int porciento = Integer.parseInt(textfield_promocionPorCiento.getText());
+    	LocalDate fechaInicio = datepicker_fechaInicial.getValue();
+    	LocalDate fechaFinal = datepicker_fechaFinal.getValue();
+    	LocalTime horaInicio = LocalTime.of(spinner_inicialHora.getValue(), spinner_inicialMinuto.getValue(), 0);
+    	LocalTime horaFinal = LocalTime.of(spinner_finalHora.getValue(), spinner_finalMinuto.getValue(), 0);
+    	String dia = "";
+    	if(checkbox_lunes.isSelected()) {
+    		dia = "Lunes";
+    	}
+    	else if(checkbox_miercoles.isSelected()) {
+    		dia = "Miercoles";
+    	}
+    	else if(checkbox_jueves.isSelected()) {
+    		dia = "Jueves";
+    	}
+    	else if(checkbox_viernes.isSelected()) {
+    		dia = "Viernes";
+    	}
+    	else if(checkbox_sabado.isSelected()) {
+    		dia = "Sabado";
+    	}
+    	else if(checkbox_martes.isSelected()) {
+    		dia = "Martes";
+    	}
+    	else if(checkbox_domingo.isSelected()) {
+    		dia = "Domingo";
+    	}
+    	
+    	Promocion promocion = null;
+    	if(radiobutton_porDia.isSelected()) {
+    		promocion = new Promocion(porciento, nombre, dia);
+    	}
+    	else {
+    		promocion = new Promocion(porciento, nombre, fechaInicio, fechaFinal, horaInicio, horaFinal);
+    	}
+    	
+    	if(radiobutton_producto.isSelected()) {
+    		for(String items : listview_promocionSeleccionados.getItems()) {
+    			Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findFacturaNombre(items));
+    			promocion.getProductos().add(producto);
+    		}
+    	}
+    	else {
+    		for(String items : listview_promocionSeleccionados.getItems()) {
+    			ArrayList<Producto> productos = new ArrayList<>();
+    			for(Producto p : Controladora.getInstance().getMisProductos()) {
+    				if(!p.isBorrado()) {
+    					if(p.getRubroProductoClass().getNombreRubro().equalsIgnoreCase(items)) {
+    						productos.add(p);
+    					}
+    				}
+    			}
+    			promocion.setProductos(productos);
+    		}
+    	}
+    	Controladora.getInstance().addPromocion(promocion);
+    	
+    }
+    
     public void checkDiaFecha(ActionEvent event) {
     	RadioButton radioEvent = null;
     	try {
@@ -176,6 +253,71 @@ public class ControllerNuevaPromocion implements Initializable{
     		
     		radiobutton_porFecha.setSelected(false);
     		radiobutton_porDia.setSelected(true);
+    	}
+    }
+    
+    public void checkDiaSemana(ActionEvent event) {
+    	CheckBox checkboxEvent = null;
+    	try {
+    		checkboxEvent = (CheckBox) event.getSource();
+    	}
+    	catch(NullPointerException e) {
+    	}
+    	if(checkboxEvent.equals(checkbox_lunes)) {
+    		checkbox_martes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_martes)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_miercoles)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_martes.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_jueves)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_martes.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_viernes)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_martes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_sabado)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_martes.setSelected(false);
+    		checkbox_domingo.setSelected(false);
+    	}
+    	else if(checkboxEvent.equals(checkbox_domingo)) {
+    		checkbox_lunes.setSelected(false);
+    		checkbox_miercoles.setSelected(false);
+    		checkbox_jueves.setSelected(false);
+    		checkbox_viernes.setSelected(false);
+    		checkbox_sabado.setSelected(false);
+    		checkbox_martes.setSelected(false);
     	}
     }
     
