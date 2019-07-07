@@ -885,18 +885,20 @@ public class Controladora implements Serializable{
 			if(promocion.getDia() != null)
 			{
 				p = (PreparedStatement)
-						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, dia) VALUES (?, ?)");
+						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, nombre, dia) VALUES (?, ?, ?)");
 				p.setInt(1, promocion.getPorcentajeDescuento());
-				p.setString(2, promocion.getDia());
+				p.setString(2, promocion.getNombre());
+				p.setString(3, promocion.getDia());
 			}
 			else {
 				p = (PreparedStatement)
-						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, fechaInicio, fechaFinal, horaInicio, horaFinal) VALUES (?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO promocion (porcentajeDescuento, nombre, fechaInicio, fechaFinal, horaInicio, horaFinal) VALUES (?, ?, ?, ?, ?, ?)");
 				p.setInt(1, promocion.getPorcentajeDescuento());
-				p.setDate(2, java.sql.Date.valueOf(promocion.getFechaInicio()));
-				p.setDate(3, java.sql.Date.valueOf(promocion.getFechaFinal()));
-				p.setTime(4, java.sql.Time.valueOf(promocion.getHoraInicio()));
-				p.setTime(5, java.sql.Time.valueOf(promocion.getHoraFinal()));
+				p.setString(2, promocion.getNombre());
+				p.setDate(3, java.sql.Date.valueOf(promocion.getFechaInicio()));
+				p.setDate(4, java.sql.Date.valueOf(promocion.getFechaFinal()));
+				p.setTime(5, java.sql.Time.valueOf(promocion.getHoraInicio()));
+				p.setTime(6, java.sql.Time.valueOf(promocion.getHoraFinal()));
 			}
 			
 			p.executeUpdate();
@@ -3721,6 +3723,113 @@ public class Controladora implements Serializable{
 				
 				getMisProductos().get(idProducto-1).getCostosIndirectos().add(costoInd);
 				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void loadPromocion()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		int idpromocion = 0;
+		int porcientoDescuento = 0;
+		String nombre = null;
+		Date fechaInicial = null;
+		Date fechaFinal = null;
+		Time horaInicio = null;
+		Time horaFinal = null;
+		String dia = null;
+		boolean borrado = false;
+		int idPromoProducto = 0;
+		int idProducto = 0;
+		int promocion = 0;
+		float precioPromocion = 0;
+		boolean borrado2 = false;
+		ArrayList<Producto> productos = new ArrayList<>();
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM promocion");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idpromocion = r.getInt(1);
+				porcientoDescuento = r.getInt(2);
+				nombre = r.getString(3);
+				fechaInicial = r.getDate(4);
+				fechaFinal = r.getDate(5);
+				horaInicio = r.getTime(6);
+				horaFinal = r.getTime(7);
+				dia = r.getString(8);
+				borrado = r.getBoolean(9);
+				
+				c2 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT * FROM promoproducto");
+				
+				while(r2.next())
+				{
+					idPromoProducto = r2.getInt(1);
+					idProducto = r2.getInt(2);
+					promocion = r2.getInt(3);
+					precioPromocion = r2.getFloat(4);
+					borrado2 = r2.getBoolean(5);
+					
+					productos.add(Controladora.getInstance().getMisProductos().get(idProducto-1));
+				}
+				
+				
+				if(dia == null)
+				{
+					Promocion promo = new Promocion(porcientoDescuento, nombre, LocalDate.parse(fechaInicial.toString()), LocalDate.parse(fechaFinal.toString()), LocalTime.parse(horaInicio.toString()), LocalTime.parse(horaFinal.toString()));
+					promo.setProductos(productos);
+					Controladora.getInstance().getMisPromociones().add(promo);
+				}
+				else
+				{
+					Promocion promo = new Promocion(porcientoDescuento, nombre, dia);
+					promo.setProductos(productos);
+					Controladora.getInstance().getMisPromociones().add(promo);
+				}
 			}
 			
 			

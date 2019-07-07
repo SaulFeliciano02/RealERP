@@ -20,6 +20,7 @@ abstract public class Producto {
 	private ArrayList<DescuentosAutomaticos> descuentos;
 	private String comision;
 	private Promocion promocion;
+	private float precioPromocion;
 	private String descripcionFija;
 	private ArrayList<CostoDirecto> costosDirectos;
 	private float costo;
@@ -183,6 +184,7 @@ abstract public class Producto {
 		{
 			precio = (getPromocion().getPorcentajeDescuento()/100)*getPrecio();
 		}
+		setPrecioPromocion(precio);
 		return precio;
 	}
 	
@@ -223,6 +225,16 @@ abstract public class Producto {
 
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+
+
+	public float getPrecioPromocion() {
+		return precioPromocion;
+	}
+
+
+	public void setPrecioPromocion(float precioPromocion) {
+		this.precioPromocion = precioPromocion;
 	}
 	
 	
