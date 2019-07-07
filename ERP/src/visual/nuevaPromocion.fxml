@@ -122,7 +122,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Porciento de descuento:" />
-                                    <TextField fx:id="textfield_promocionPorCiento" alignment="CENTER_RIGHT" onAction="#floatFieldPressed" prefHeight="26.0" prefWidth="37.0" promptText="0">
+                                    <TextField fx:id="textfield_promocionPorCiento" alignment="CENTER_RIGHT" onKeyTyped="#numericFieldPressed" prefHeight="26.0" prefWidth="37.0" promptText="0">
                                        <HBox.margin>
                                           <Insets left="5.0" right="2.0" />
                                        </HBox.margin>
@@ -235,7 +235,7 @@
                               </HBox>
                               <RadioButton fx:id="radiobutton_porFecha" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por fecha" />
                               <RadioButton fx:id="radiobutton_porDia" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por dia" />
-                              <TextField fx:id="textfield_promocionNombre" prefHeight="25.0" prefWidth="154.0" />
+                              <TextField fx:id="textfield_promocionNombre" onKeyTyped="#sendToActivar" prefHeight="25.0" prefWidth="154.0" />
                               <Label text="Nombre" />
                            </children>
                         </VBox>
@@ -428,7 +428,7 @@
             </AnchorPane>
             <HBox alignment="BOTTOM_RIGHT" layoutX="14.0" layoutY="539.0" prefHeight="46.0" prefWidth="922.0">
                <children>
-                  <Button fx:id="button_guardarPromocion" mnemonicParsing="false" text="Guardar">
+                  <Button fx:id="button_guardarPromocion" mnemonicParsing="false" onAction="#guardarPromocion" text="Guardar">
                      <font>
                         <Font size="15.0" />
                      </font>

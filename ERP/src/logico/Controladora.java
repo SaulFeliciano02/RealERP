@@ -1531,7 +1531,7 @@ public class Controladora implements Serializable{
 					c.prepareStatement("INSERT INTO promoproducto (producto, promocion, precioproducto) VALUES (?, ?, ?)");
 			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(producto)+1);
 			p.setInt(2, Controladora.getInstance().getMisPromociones().indexOf(promocion)+1);
-			p.setFloat(3, (producto.getPromocion().getPorcentajeDescuento()/100)*producto.getPrecio());
+			p.setFloat(3, (promocion.getPorcentajeDescuento()*producto.getPrecioClass().getPrecio()) / 100);
 			p.executeUpdate();
 		}
 		catch(Exception e) {

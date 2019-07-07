@@ -1044,23 +1044,23 @@
                                                                               </Button>
                                                                            </children>
                                                                         </HBox>
-                                                                        <TableView editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                        <TableView fx:id="tableview_promocionList" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Código" />
+                                                                            <TableColumn fx:id="tablecolumn_promocionCodigo" prefWidth="75.0" text="Código" />
                                                                             <TableColumn prefWidth="75.0" text="Producto" />
                                                                               <TableColumn prefWidth="75.0" text="Rubro" />
-                                                                              <TableColumn prefWidth="75.0" text="Porcentaje de descuento" />
-                                                                              <TableColumn prefWidth="75.0" text="Fecha inicial">
+                                                                              <TableColumn fx:id="tablecolumn_promocionPorcentaje" prefWidth="75.0" text="Porcentaje de descuento" />
+                                                                              <TableColumn fx:id="tablecolumn_promocionFechaInicial" prefWidth="75.0" text="Fecha inicial">
                                                                                  <columns>
-                                                                                    <TableColumn prefWidth="75.0" text="Fecha final" />
+                                                                                    <TableColumn fx:id="tablecolumn_promocionFechaFinal" prefWidth="75.0" text="Fecha final" />
                                                                                  </columns>
                                                                               </TableColumn>
-                                                                              <TableColumn prefWidth="75.0" text="Hora inicial">
+                                                                              <TableColumn fx:id="tablecolumn_promocionHoraInicial" prefWidth="75.0" text="Hora inicial">
                                                                                  <columns>
-                                                                                    <TableColumn prefWidth="75.0" text="Hora final" />
+                                                                                    <TableColumn fx:id="tablecolumn_promocionHoraFinal" prefWidth="75.0" text="Hora final" />
                                                                                  </columns>
                                                                               </TableColumn>
-                                                                              <TableColumn prefWidth="75.0" text="Día" />
+                                                                              <TableColumn fx:id="tablecolumn_promocionDia" prefWidth="75.0" text="Día" />
                                                                           </columns>
                                                                            <VBox.margin>
                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
