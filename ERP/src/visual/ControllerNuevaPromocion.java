@@ -174,10 +174,14 @@ public class ControllerNuevaPromocion implements Initializable{
     	LocalTime horaInicio = LocalTime.of(spinner_inicialHora.getValue(), spinner_inicialMinuto.getValue(), 0);
     	LocalTime horaFinal = LocalTime.of(spinner_finalHora.getValue(), spinner_finalMinuto.getValue(), 0);
     	String dia = "";
-    	if(fechaInicio.compareTo(fechaFinal) > 0) {
-    		a.setContentText("La fecha inicial es mayor que la fecha inicial!");
-    		a.show();
-    		canRegister = false;
+    	try {
+    		if(fechaInicio.compareTo(fechaFinal) > 0) {
+    			a.setContentText("La fecha inicial es mayor que la fecha inicial!");
+    			a.show();
+    			canRegister = false;
+    		}
+    	}catch(NullPointerException e) {
+    		
     	}
     	if(canRegister) {
     		if(checkbox_lunes.isSelected()) {
@@ -247,6 +251,14 @@ public class ControllerNuevaPromocion implements Initializable{
         	datepicker_fechaInicial.setValue(null);
         	datepicker_fechaFinal.setValue(null);
         	
+        	checkbox_lunes.setSelected(false);
+        	checkbox_martes.setSelected(false);
+        	checkbox_miercoles.setSelected(false);
+        	checkbox_jueves.setSelected(false);
+        	checkbox_viernes.setSelected(false);
+        	checkbox_sabado.setSelected(false);
+        	checkbox_domingo.setSelected(false);
+        	
         	radiobutton_producto.setSelected(true);
         	radiobutton_rubro.setSelected(false);
         	cambiodePane(null);
@@ -302,6 +314,7 @@ public class ControllerNuevaPromocion implements Initializable{
     		radiobutton_porFecha.setSelected(false);
     		radiobutton_porDia.setSelected(true);
     	}
+    	activarGuardar(null);
     }
     
     public void checkDiaSemana(ActionEvent event) {
