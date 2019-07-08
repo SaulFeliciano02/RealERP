@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaPromocion">
          <children>
@@ -116,9 +117,14 @@
                            <children>
                               <Label text="Información de promoción">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font size="18.0" />
                                  </font>
                               </Label>
+                              <Label text="Nombre">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin></Label>
+                              <TextField fx:id="textfield_promocionNombre" onKeyTyped="#sendToActivar" prefHeight="25.0" prefWidth="154.0" />
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
                                  <children>
                                     <Label text="Porciento de descuento:" />
@@ -133,110 +139,149 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                              <Label text="Tiempo:" />
+                              <HBox prefHeight="19.0" prefWidth="310.0">
                                  <children>
-                                    <Label text="Fecha inicial:" />
-                                    <DatePicker fx:id="datepicker_fechaInicial" onAction="#activarGuardar">
+                                    <RadioButton fx:id="radiobutton_porFecha" mnemonicParsing="false" onAction="#checkDiaFecha" selected="true" text="Por fecha">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="seleccionTIempoPromocion" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="radiobutton_porDia" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por dia" toggleGroup="$seleccionTIempoPromocion">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" />
                                        </HBox.margin>
-                                    </DatePicker>
+                                    </RadioButton>
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
-                                 <children>
-                                    <Label text="Fecha final:" />
-                                    <DatePicker fx:id="datepicker_fechaFinal" onAction="#activarGuardar">
-                                       <HBox.margin>
-                                          <Insets left="13.0" />
-                                       </HBox.margin>
-                                    </DatePicker>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
-                                 <children>
-                                    <Label text="Hora inicial:" />
-                                    <Spinner fx:id="spinner_inicialHora" editable="true" prefHeight="20.0" prefWidth="67.0">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Spinner>
-                                    <Label text=":" />
-                                    <Spinner fx:id="spinner_inicialMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
-                                    <Label text="(hora:minuto)">
-                                       <HBox.margin>
-                                          <Insets left="2.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
-                                 <children>
-                                    <Label text="Hora final:" />
-                                    <Spinner fx:id="spinner_finalHora" editable="true" prefHeight="20.0" prefWidth="67.0">
-                                       <HBox.margin>
-                                          <Insets left="13.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Spinner>
-                                    <Label text=":" />
-                                    <Spinner fx:id="spinner_finalMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
-                                    <Label text="(hora:minuto)">
-                                       <HBox.margin>
-                                          <Insets left="2.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <Label text="Repetir cada día:">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" top="20.0" />
+                                    <Insets top="3.0" />
                                  </VBox.margin>
-                              </Label>
-                              <HBox prefHeight="26.0" prefWidth="290.0">
-                                 <children>
-                                    <CheckBox fx:id="checkbox_lunes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Lunes" />
-                                    <CheckBox fx:id="checkbox_martes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Martes">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </CheckBox>
-                                    <CheckBox fx:id="checkbox_miercoles" mnemonicParsing="false" onAction="#checkDiaSemana" text="Miércoles">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </CheckBox>
-                                    <CheckBox fx:id="checkbox_jueves" mnemonicParsing="false" onAction="#checkDiaSemana" text="Jueves">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </CheckBox>
-                                 </children>
                               </HBox>
-                              <HBox prefHeight="26.0" prefWidth="290.0">
+                              <AnchorPane prefHeight="217.0" prefWidth="310.0">
                                  <children>
-                                    <CheckBox fx:id="checkbox_viernes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Viernes" />
-                                    <CheckBox fx:id="checkbox_sabado" mnemonicParsing="false" onAction="#checkDiaSemana" text="Sábado">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </CheckBox>
-                                    <CheckBox fx:id="checkbox_domingo" mnemonicParsing="false" onAction="#checkDiaSemana" text="Domingo">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </CheckBox>
+                                    <VBox fx:id="pane_porFecha" layoutX="82.0" layoutY="-19.0" prefHeight="203.0" prefWidth="330.0" AnchorPane.bottomAnchor="-17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                             <children>
+                                                <Label text="Fecha inicial:" />
+                                                <DatePicker fx:id="datepicker_fechaInicial" onAction="#activarGuardar">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                </DatePicker>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="290.0">
+                                             <children>
+                                                <Label text="Fecha final:" />
+                                                <DatePicker fx:id="datepicker_fechaFinal" onAction="#activarGuardar">
+                                                   <HBox.margin>
+                                                      <Insets left="13.0" />
+                                                   </HBox.margin>
+                                                </DatePicker>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                             <children>
+                                                <Label text="Hora inicial:" />
+                                                <Spinner fx:id="spinner_inicialHora" editable="true" prefHeight="20.0" prefWidth="67.0">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </Spinner>
+                                                <Label text=":" />
+                                                <Spinner fx:id="spinner_inicialMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                                <Label text="(hora:minutos)">
+                                                   <HBox.margin>
+                                                      <Insets left="2.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="290.0">
+                                             <children>
+                                                <Label text="Hora final:" />
+                                                <Spinner fx:id="spinner_finalHora" editable="true" prefHeight="20.0" prefWidth="67.0">
+                                                   <HBox.margin>
+                                                      <Insets left="13.0" />
+                                                   </HBox.margin>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </Spinner>
+                                                <Label text=":" />
+                                                <Spinner fx:id="spinner_finalMinuto" editable="true" prefHeight="20.0" prefWidth="67.0" />
+                                                <Label text="(hora:minutos)">
+                                                   <HBox.margin>
+                                                      <Insets left="2.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="pane_porDia" prefHeight="200.0" prefWidth="310.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Label text="Repetir cada:">
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" top="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="26.0" prefWidth="290.0">
+                                             <children>
+                                                <CheckBox fx:id="checkbox_lunes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Lunes" />
+                                                <CheckBox fx:id="checkbox_martes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Martes">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkbox_miercoles" mnemonicParsing="false" onAction="#checkDiaSemana" text="Miércoles">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </CheckBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="26.0" prefWidth="290.0">
+                                             <children>
+                                                <CheckBox fx:id="checkbox_jueves" mnemonicParsing="false" onAction="#checkDiaSemana" text="Jueves">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkbox_viernes" mnemonicParsing="false" onAction="#checkDiaSemana" text="Viernes">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkbox_sabado" mnemonicParsing="false" onAction="#checkDiaSemana" text="Sábado">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </CheckBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="26.0" prefWidth="290.0">
+                                             <children>
+                                                <CheckBox fx:id="checkbox_domingo" mnemonicParsing="false" onAction="#checkDiaSemana" text="Domingo" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </HBox>
-                              <RadioButton fx:id="radiobutton_porFecha" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por fecha" />
-                              <RadioButton fx:id="radiobutton_porDia" mnemonicParsing="false" onAction="#checkDiaFecha" text="Por dia" />
-                              <TextField fx:id="textfield_promocionNombre" onKeyTyped="#sendToActivar" prefHeight="25.0" prefWidth="154.0" />
-                              <Label text="Nombre" />
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
                            </children>
                         </VBox>
                      </children>
@@ -457,5 +502,52 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </AnchorPane>
+      <AnchorPane fx:id="pane_infoPorDia" layoutX="2.0" layoutY="475.0" prefHeight="107.0" prefWidth="167.0" style="-fx-opacity: 0.7;" visible="false">
+         <children>
+            <VBox prefHeight="143.0" prefWidth="178.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Información:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="2.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Una promoción de tiempo &quot;por">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="día&quot; tiene horas fijas de inicio">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="y fin por defecto desde las 00:00">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hasta hasta las 23:59 del día">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="seleccionado.">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+      </AnchorPane>
          </children>
       </AnchorPane>

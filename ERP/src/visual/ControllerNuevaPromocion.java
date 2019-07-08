@@ -32,6 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.Controladora;
@@ -46,6 +47,7 @@ public class ControllerNuevaPromocion implements Initializable{
     @FXML private RadioButton radiobutton_rubro;
     @FXML private AnchorPane pane_PromocionProductos;
     @FXML private AnchorPane pane_PromocionRubro;
+    @FXML private AnchorPane pane_infoPorDia;
     
     @FXML private Button button_promocionSend;
     @FXML private Button button_promocionReturn;
@@ -76,6 +78,8 @@ public class ControllerNuevaPromocion implements Initializable{
     
     @FXML private RadioButton radiobutton_porDia;
     @FXML private RadioButton radiobutton_porFecha;
+    @FXML private VBox pane_porFecha;
+    @FXML private VBox pane_porDia;
     
     @FXML private Button button_guardarPromocion;
     
@@ -277,6 +281,9 @@ public class ControllerNuevaPromocion implements Initializable{
     	}
     	
     	if(radiobutton_porFecha.equals(radioEvent) || event == null) {
+    		pane_porFecha.setVisible(true);
+    		pane_porDia.setVisible(false);
+    		
     		checkbox_lunes.setDisable(true);
     		checkbox_martes.setDisable(true);
     		checkbox_miercoles.setDisable(true);
@@ -292,10 +299,12 @@ public class ControllerNuevaPromocion implements Initializable{
     		datepicker_fechaFinal.setDisable(false);
     		datepicker_fechaInicial.setDisable(false);
     		
-    		radiobutton_porFecha.setSelected(true);
-    		radiobutton_porDia.setSelected(false);
     	}
     	else {
+    		
+    		pane_porFecha.setVisible(false);
+    		pane_porDia.setVisible(true);
+    		
     		checkbox_lunes.setDisable(false);
     		checkbox_martes.setDisable(false);
     		checkbox_miercoles.setDisable(false);
@@ -308,11 +317,12 @@ public class ControllerNuevaPromocion implements Initializable{
     		spinner_finalMinuto.setDisable(true);
     		spinner_inicialHora.setDisable(true);
     		spinner_inicialMinuto.setDisable(true);
+    		
     		datepicker_fechaFinal.setDisable(true);
     		datepicker_fechaInicial.setDisable(true);
     		
-    		radiobutton_porFecha.setSelected(false);
-    		radiobutton_porDia.setSelected(true);
+    		pane_infoPorDia.setVisible(true);
+    		
     	}
     	activarGuardar(null);
     }
