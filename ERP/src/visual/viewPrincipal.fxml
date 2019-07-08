@@ -334,13 +334,21 @@
                                                                                                                </padding>
                                                                                                             </Button>
                                                                                                             <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
-                                                                                                            <Button fx:id="button_exportarInventario" mnemonicParsing="false" onAction="#pressed_exportarInventarioExcel" text="Exportar inventario a Excel" />
                                                                                                             <Separator prefWidth="100.0" HBox.hgrow="ALWAYS" />
-                                                                                                            <Button fx:id="button_abrirInfoAdicional" alignment="TOP_LEFT" disable="true" mnemonicParsing="false" onAction="#abrirInfoAdicionalProducto" text="Información adicional del producto">
-                                                                                                               <HBox.margin>
-                                                                                                                  <Insets left="30.0" top="10.0" />
-                                                                                                               </HBox.margin>
-                                                                                                            </Button>
+                                                                                                            <VBox prefHeight="114.0" prefWidth="317.0">
+                                                                                                               <children>
+                                                                                                                  <Button fx:id="button_abrirInfoAdicional" alignment="TOP_LEFT" disable="true" mnemonicParsing="false" onAction="#abrirInfoAdicionalProducto" text="Información adicional del producto">
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets top="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </Button>
+                                                                                                                  <Button fx:id="button_exportarInventario" mnemonicParsing="false" onAction="#pressed_exportarInventarioExcel" text="Exportar inventario a Excel">
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets top="10.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </Button>
+                                                                                                               </children>
+                                                                                                            </VBox>
                                                                                                          </children>
                                                                                                       </HBox>
                                                                                                    </children>
