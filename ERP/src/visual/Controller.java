@@ -98,6 +98,7 @@ public class Controller implements Initializable{
     @FXML private Button selected_rh;
     @FXML private Button selected_historial;
     @FXML private Button selected_admin;
+    @FXML private Button selected_config;
 
     @FXML private Button button_gastos;
     @FXML private Button button_principal;
@@ -107,6 +108,7 @@ public class Controller implements Initializable{
     @FXML private Button button_rh;
     @FXML private Button button_historial;
     @FXML private Button button_admin;
+    @FXML private Button button_config;
     
     //VARIABLES DE RECURSOS HUMANOS
     @FXML private TabPane tabpane_recursosHumanos;
@@ -316,6 +318,7 @@ public class Controller implements Initializable{
 	Image pressed_rh = new Image(getClass().getResourceAsStream("images/buttons/selected_button_rh.png"));
 	Image pressed_admin = new Image(getClass().getResourceAsStream("images/buttons/selected_button_admin.png"));
 	Image pressed_help = new Image(getClass().getResourceAsStream("images/buttons/selected_button_help.png"));
+	Image pressed_config = new Image(getClass().getResourceAsStream("images/buttons/selected_button_config.png"));
 	
 	Image nonpressed_principal = new Image(getClass().getResourceAsStream("images/buttons/button_principal.png"));
 	Image nonpressed_gastos  = new Image(getClass().getResourceAsStream("images/buttons/button_gastos.png"));
@@ -325,6 +328,7 @@ public class Controller implements Initializable{
 	Image nonpressed_rh = new Image(getClass().getResourceAsStream("images/buttons/button_rh.png"));
 	Image nonpressed_admin = new Image(getClass().getResourceAsStream("images/buttons/button_admin.png"));
 	Image nonpressed_help = new Image(getClass().getResourceAsStream("images/buttons/button_help.png"));
+	Image nonpressed_config = new Image(getClass().getResourceAsStream("images/buttons/button_config.png"));
 	
 	Image nonclicked_nuevoProducto = new Image(getClass().getResourceAsStream("images/buttons/producto_nuevo.png"));
 	Image nonclicked_modificarProducto = new Image(getClass().getResourceAsStream("images/buttons/producto_modificar.png"));
@@ -342,6 +346,7 @@ public class Controller implements Initializable{
 	ImageInput pressed_rh1 = new ImageInput(); 
 	ImageInput pressed_admin1 = new ImageInput(); 
 	ImageInput pressed_help1 = new ImageInput();
+	ImageInput pressed_config1 = new ImageInput();
 	
 	ImageInput nonpressed_principal1 = new ImageInput(); 
 	ImageInput nonpressed_gastos1 = new ImageInput(); 
@@ -351,6 +356,7 @@ public class Controller implements Initializable{
 	ImageInput nonpressed_rh1 = new ImageInput(); 
 	ImageInput nonpressed_admin1 = new ImageInput(); 
 	ImageInput nonpressed_help1 = new ImageInput(); 
+	ImageInput nonpressed_config1 = new ImageInput(); 
 	
 	ImageInput clicked_nuevoProducto1 = new ImageInput(); 
 	ImageInput clicked_modificarProducto1 = new ImageInput(); 
@@ -376,7 +382,8 @@ public class Controller implements Initializable{
     	nonpressed_historial1.setSource(nonpressed_historial); 
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
-    	nonpressed_help1.setSource(nonpressed_help);
+    	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
     	
     	selected_Principal.setVisible(true);
     	selected_Gastos.setVisible(false);
@@ -386,6 +393,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_principal.setEffect(pressed_principal1);
     	text_menuName.setVisible(true);
@@ -400,6 +408,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(false);
     	pane_Gastos.setDisable(true);
@@ -409,6 +418,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(true);
     	pane_Gastos.setVisible(false);
@@ -418,6 +428,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
 
     	
     }
@@ -433,6 +444,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(true);
@@ -442,6 +454,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_gastos.setEffect(pressed_gastos1);
     	text_menuName.setVisible(true);
@@ -456,6 +469,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(false);
@@ -465,6 +479,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(true);
@@ -474,6 +489,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
 
     	
     }
@@ -489,6 +505,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -498,6 +515,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_productos.setEffect(pressed_productos1);
     	text_menuName.setVisible(true);
@@ -512,6 +530,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -521,6 +540,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -530,6 +550,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
 
     }
     
@@ -544,6 +565,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -553,6 +575,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_ventas.setEffect(pressed_ventas1);
     	text_menuName.setVisible(true);
@@ -567,6 +590,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -576,6 +600,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -585,6 +610,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
 
     	
     }
@@ -600,6 +626,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -609,6 +636,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_historial.setEffect(pressed_historial1);
     	text_menuName.setVisible(true);
@@ -623,6 +651,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -632,6 +661,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -641,6 +671,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
 
     }
     
@@ -655,6 +686,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config); 
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -664,6 +696,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(true);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_rh.setEffect(pressed_rh1);
     	text_menuName.setVisible(true);
@@ -678,6 +711,7 @@ public class Controller implements Initializable{
     	//button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -687,6 +721,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(false);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -696,6 +731,7 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(true);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
     	
     	datepicker_fechaGastoG.setValue(LocalDate.now());
     	
@@ -712,6 +748,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config); 
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -721,6 +758,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(true);
     	selected_help.setVisible(false);
+    	selected_config.setVisible(false);
     	
     	button_admin.setEffect(pressed_admin1);
     	text_menuName.setVisible(true);
@@ -735,6 +773,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	//button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -744,6 +783,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(false);
     	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -753,6 +793,67 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(true);
     	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(false);
+    	
+    }
+    
+    public void config_pressed(ActionEvent event){
+    	pressed_config1.setSource(pressed_config); 
+    	
+    	nonpressed_principal1.setSource(nonpressed_principal); 
+    	nonpressed_gastos1.setSource(nonpressed_gastos ); 
+    	nonpressed_productos1.setSource(nonpressed_productos); 
+    	nonpressed_ventas1.setSource(nonpressed_ventas); 
+    	nonpressed_historial1.setSource(nonpressed_historial); 
+    	nonpressed_rh1.setSource(nonpressed_rh); 
+    	nonpressed_admin1.setSource(nonpressed_admin); 
+    	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
+    	
+    	selected_Principal.setVisible(false);
+    	selected_Gastos.setVisible(false);
+    	selected_productos.setVisible(false);
+    	selected_ventas.setVisible(false);
+    	selected_historial.setVisible(false);
+    	selected_rh.setVisible(false);
+    	selected_admin.setVisible(false);
+    	selected_help.setVisible(false);
+    	selected_config.setVisible(true);
+    	
+    	button_config.setEffect(pressed_config1);
+    	text_menuName.setVisible(true);
+    	text_menuOptions.setVisible(false);
+    	text_menuName.setText("Configuración");
+    	
+    	button_principal.setEffect(nonpressed_principal1);
+    	button_gastos.setEffect(nonpressed_gastos1);
+    	button_productos.setEffect(nonpressed_productos1);
+    	button_ventas.setEffect(nonpressed_ventas1);
+    	button_historial.setEffect(nonpressed_historial1);
+    	button_rh.setEffect(nonpressed_rh1);
+    	button_admin.setEffect(nonpressed_admin1);
+    	button_help.setEffect(nonpressed_help1); 
+    	//button_config.setEffect(nonpressed_config1); 
+    	
+    	pane_Principal.setDisable(true);
+    	pane_Gastos.setDisable(true);
+    	pane_Productos.setDisable(true);
+    	pane_Ventas.setDisable(true);
+    	pane_Historial.setDisable(true);
+    	pane_rh.setDisable(true);
+    	pane_Admin.setDisable(true);
+    	pane_Ayuda.setDisable(true);
+    	pane_Config.setDisable(false);
+    	
+    	pane_Principal.setVisible(false);
+    	pane_Gastos.setVisible(false);
+    	pane_Productos.setVisible(false);
+    	pane_Ventas.setVisible(false);
+    	pane_Historial.setVisible(false);
+    	pane_rh.setVisible(false);
+    	pane_Admin.setVisible(false);
+    	pane_Ayuda.setVisible(false);
+    	pane_Config.setVisible(true);
     	
     }
     
@@ -768,6 +869,7 @@ public class Controller implements Initializable{
     	nonpressed_rh1.setSource(nonpressed_rh); 
     	nonpressed_admin1.setSource(nonpressed_admin); 
     	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config); 
     	
     	selected_Principal.setVisible(false);
     	selected_Gastos.setVisible(false);
@@ -777,6 +879,7 @@ public class Controller implements Initializable{
     	selected_rh.setVisible(false);
     	selected_admin.setVisible(false);
     	selected_help.setVisible(true);
+    	selected_config.setVisible(false);
     	
     	button_help.setEffect(pressed_help1);
     	
@@ -792,6 +895,7 @@ public class Controller implements Initializable{
     	button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	//button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
     	
     	pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
@@ -801,6 +905,7 @@ public class Controller implements Initializable{
     	pane_rh.setDisable(true);
     	pane_Admin.setDisable(true);
     	pane_Ayuda.setDisable(false);
+    	pane_Config.setDisable(true);
     	
     	pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
@@ -810,11 +915,12 @@ public class Controller implements Initializable{
     	pane_rh.setVisible(false);
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(true);
+    	pane_Config.setVisible(false);
 
     	
     }
     
-    public void config_pressed(ActionEvent event){
+  /*  public void config_pressed(ActionEvent event){
     	
     	    	text_menuName.setVisible(false);
     	    	text_menuOptions.setVisible(true);
@@ -822,7 +928,7 @@ public class Controller implements Initializable{
     	    	
     	    	pane_Config.setDisable(false);
     	    	pane_Config.setVisible(true);
-    }
+    } */
     
     public void config_close(ActionEvent event){
     	text_menuName.setVisible(true);
