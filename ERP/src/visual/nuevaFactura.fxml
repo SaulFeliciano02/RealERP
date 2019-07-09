@@ -154,7 +154,7 @@
                                                 <Insets left="10.0" />
                                              </HBox.margin>
                                           </RadioButton>
-                                          <RadioButton fx:id="radiobutton_facturaCredito" mnemonicParsing="false" onAction="#tipoPago" text="Crédito" toggleGroup="$tipoPago">
+                                          <RadioButton fx:id="radiobutton_facturaCredito" disable="true" mnemonicParsing="false" onAction="#tipoPago" text="Crédito" toggleGroup="$tipoPago">
                                              <HBox.margin>
                                                 <Insets left="10.0" />
                                              </HBox.margin>
@@ -182,7 +182,7 @@
                                                             </Label>
                                                             <HBox prefHeight="100.0" prefWidth="200.0">
                                                                <children>
-                                                                  <RadioButton mnemonicParsing="false" text="15 días">
+                                                                  <RadioButton fx:id="radiobutton_15Dias" mnemonicParsing="false" onAction="#calcularDias" text="15 días">
                                                                      <HBox.margin>
                                                                         <Insets left="10.0" top="10.0" />
                                                                      </HBox.margin>
@@ -193,7 +193,7 @@
                                                                         <ToggleGroup fx:id="periodoPago" />
                                                                      </toggleGroup>
                                                                   </RadioButton>
-                                                                  <RadioButton mnemonicParsing="false" text="30 días" toggleGroup="$periodoPago">
+                                                                  <RadioButton fx:id="radiobutton_30Dias" mnemonicParsing="false" onAction="#calcularDias" text="30 días" toggleGroup="$periodoPago">
                                                                      <HBox.margin>
                                                                         <Insets left="10.0" top="10.0" />
                                                                      </HBox.margin>
@@ -201,7 +201,7 @@
                                                                         <Font size="15.0" />
                                                                      </font>
                                                                   </RadioButton>
-                                                                  <RadioButton mnemonicParsing="false" text="60 días" toggleGroup="$periodoPago">
+                                                                  <RadioButton fx:id="radiobutton_60Dias" mnemonicParsing="false" onAction="#calcularDias" text="60 días" toggleGroup="$periodoPago">
                                                                      <HBox.margin>
                                                                         <Insets left="10.0" top="10.0" />
                                                                      </HBox.margin>
@@ -209,7 +209,7 @@
                                                                         <Font size="15.0" />
                                                                      </font>
                                                                   </RadioButton>
-                                                                  <RadioButton mnemonicParsing="false" text="90 días" toggleGroup="$periodoPago">
+                                                                  <RadioButton fx:id="radiobutton_90Dias" mnemonicParsing="false" onAction="#calcularDias" text="90 días" toggleGroup="$periodoPago">
                                                                      <HBox.margin>
                                                                         <Insets left="10.0" top="10.0" />
                                                                      </HBox.margin>
@@ -227,7 +227,7 @@
                                                                   <Insets left="10.0" right="10.0" top="10.0" />
                                                                </VBox.margin>
                                                             </Label>
-                                                            <DatePicker editable="false">
+                                                            <DatePicker fx:id="datepicker_fechaDePago" editable="false">
                                                                <VBox.margin>
                                                                   <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                                                                </VBox.margin>
@@ -331,14 +331,14 @@
                      <children>
                         <HBox layoutX="253.0" layoutY="180.0" prefHeight="560.0" prefWidth="940.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView prefHeight="520.0" prefWidth="695.0">
+                              <TableView fx:id="tableview_clienteList" onMouseClicked="#selectingCliente" prefHeight="520.0" prefWidth="695.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Código" />
-                                  <TableColumn prefWidth="75.0" text="Nombre" />
-                                    <TableColumn prefWidth="75.0" text="Teléfono" />
-                                    <TableColumn prefWidth="75.0" text="Cumpleaños" />
-                                    <TableColumn prefWidth="75.0" text="RNC" />
-                                    <TableColumn prefWidth="75.0" text="Tipo de cliente" />
+                                  <TableColumn fx:id="tablecolumn_clienteCodigo" prefWidth="75.0" text="Código" />
+                                  <TableColumn fx:id="tablecolumn_clienteNombre" prefWidth="75.0" text="Nombre" />
+                                    <TableColumn fx:id="tablecolumn_clienteTelefono" prefWidth="75.0" text="Teléfono" />
+                                    <TableColumn fx:id="tablecolumn_clienteCumple" prefWidth="75.0" text="Cumpleaños" />
+                                    <TableColumn fx:id="tablecolumn_clienteRNC" prefWidth="75.0" text="RNC" />
+                                    <TableColumn fx:id="tablecolumn_clienteTipo" prefWidth="75.0" text="Tipo de cliente" />
                                 </columns>
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -365,13 +365,13 @@
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <Button layoutX="14.0" layoutY="247.0" mnemonicParsing="false" text="Seleccionar">
+                                    <Button fx:id="button_clienteSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#clienteSelect" text="Seleccionar">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Button>
                                     <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrarBusquedaCliente" text="Cerrar" />
-                                    <TextField layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="191.0" />
+                                    <TextField fx:id="textfield_clienteSeleccionado" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="191.0" />
                                  </children>
                               </AnchorPane>
                            </children>
