@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -19,11 +20,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -39,6 +45,7 @@ import logico.Estandar;
 import logico.Factura;
 import logico.Kit;
 import logico.Producto;
+import logico.Promocion;
 import logico.Servicio;
 
 public class ControllerNuevaFactura implements Initializable{
@@ -65,8 +72,25 @@ public class ControllerNuevaFactura implements Initializable{
 	    
 	    @FXML private ComboBox<String> combobox_facturaMedida;
 	    
+	    @FXML private RadioButton radiobutton_15Dias;
+	    @FXML private RadioButton radiobutton_30Dias;
+	    @FXML private RadioButton radiobutton_90Dias;
+	    @FXML private RadioButton radiobutton_60Dias;
+	    @FXML private DatePicker datepicker_fechaDePago;
+	    
 	    @FXML private ListView<String> listview_facturaProductoList;
 	    @FXML private ListView<String> listview_productosFacturados;
+	    
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteCodigo;
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteNombre;
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteTelefono;
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteCumple;
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteRNC;
+	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteTipo;
+	    @FXML private TableView<Cliente> tableview_clienteList;
+	    
+	    @FXML private TextField textfield_clienteSeleccionado;
+	    @FXML private Button button_clienteSeleccionar;
 
 	public void reload(Stage stage) {
     	
@@ -115,9 +139,13 @@ public class ControllerNuevaFactura implements Initializable{
     	if(checkbox_clienteFactura.isSelected()) {
     	textfield_buscarClienteFactura.setDisable(false);
     	button_buscarClienteFactura.setDisable(false);
+    	radiobutton_facturaCredito.setDisable(false);
     	}else {
         	textfield_buscarClienteFactura.setDisable(true);
         	button_buscarClienteFactura.setDisable(true);
+        	radiobutton_facturaCredito.setDisable(true);
+        	radiobutton_facturaEfectivo.setSelected(true);
+        	tipoPago(event);
     	}
     }
     
@@ -130,10 +158,28 @@ public class ControllerNuevaFactura implements Initializable{
     
     public void cerrarBusquedaCliente(ActionEvent event) {
     	titledpane_busquedaClientesFactura.setVisible(false);
+    	textfield_clienteSeleccionado.setText("");
+    	button_clienteSeleccionar.setDisable(true);
+    	tableview_clienteList.getSelectionModel().clearSelection();
     }
     
     public void abrirBusquedaCliente(ActionEvent event) {
     	titledpane_busquedaClientesFactura.setVisible(true);
+    	fillClientList(null);
+    }
+    
+    public void selectingCliente(MouseEvent event) {
+    	System.out.println("Hola");
+    	if(!tableview_clienteList.getSelectionModel().isEmpty()) {
+    		Cliente cliente = tableview_clienteList.getSelectionModel().getSelectedItem();
+    		textfield_clienteSeleccionado.setText(cliente.getCodigo());
+    		button_clienteSeleccionar.setDisable(false);
+    	}
+    }
+    
+    public void clienteSelect(ActionEvent event) {
+    	textfield_buscarClienteFactura.setText(textfield_clienteSeleccionado.getText());
+    	cerrarBusquedaCliente(event);
     }
     
     public void guardarFactura(ActionEvent event) {
@@ -152,8 +198,13 @@ public class ControllerNuevaFactura implements Initializable{
     	if(radiobutton_facturaEfectivo.isSelected()) {
     		tipoPago = radiobutton_facturaEfectivo.getText();
     	}
-    	else {
+    	else if(radiobutton_facturaTarjeta.isSelected()) {
     		tipoPago = radiobutton_facturaTarjeta.getText();
+    	}
+    	else if(radiobutton_facturaCredito.isSelected()) {
+    		tipoPago = radiobutton_facturaCredito.getText();
+    		montoRecibido = 0;
+    		montoCambio = 0;
     	}
     	ArrayList<String> alreadyUsed = new ArrayList<>();
     	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
@@ -448,9 +499,27 @@ public class ControllerNuevaFactura implements Initializable{
         	System.out.println(cantidadCheck);
         	isValid = checkExistenciaMinima(producto, cantidadCheck);
         	if(isValid) {
-        		precioConvertido = cantidadConvertida * producto.getPrecio();
+        		precioConvertido = cantidadConvertida * Float.parseFloat(Controladora.getInstance().findFacturaCosto(item));
         		String itemNombre = Controladora.getInstance().findFacturaNombre(item);
-        		String itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
+        		Boolean hasPromotion = false;
+				//float precioPromocion = 0;
+				for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
+					for(Producto promoProductos : promocion.getProductos()) {
+							if(promoProductos.equals(producto) && 
+									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
+									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
+									|| promocion.getDia().equalsIgnoreCase(LocalDate.now().getDayOfWeek().toString()))) {
+								hasPromotion = true;
+							}
+					}
+				}
+				String itemMedida = "";
+				if(hasPromotion) {
+					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+				}else {
+					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+				}
+        		
         		listview_productosFacturados.getItems().add(itemMedida);
         	}
         	
@@ -498,23 +567,84 @@ public class ControllerNuevaFactura implements Initializable{
     		fillProductos(productos);
     	}
     }
+    
+    public void calcularDias(ActionEvent event) {
+    	RadioButton radioEvent = null;
+    	LocalDate localdate = LocalDate.now();
+    	LocalDate newDate = null;
+    	try {
+    		radioEvent = (RadioButton) event.getSource();
+    	}catch(NullPointerException e) {
+    		
+    	}
+    	if(radioEvent.equals(radiobutton_15Dias)) {
+    		radiobutton_30Dias.setSelected(false);
+    		radiobutton_90Dias.setSelected(false);
+    		radiobutton_60Dias.setSelected(false);
+    		newDate = localdate.plusDays(15);
+    	}
+    	else if(radioEvent.equals(radiobutton_30Dias)) {
+    		radiobutton_15Dias.setSelected(false);
+    		radiobutton_90Dias.setSelected(false);
+    		radiobutton_60Dias.setSelected(false);
+    		newDate = localdate.plusDays(30);
+    	}
+    	else if(radioEvent.equals(radiobutton_60Dias)) {
+    		radiobutton_30Dias.setSelected(false);
+    		radiobutton_15Dias.setSelected(false);
+    		radiobutton_90Dias.setSelected(false);
+    		newDate = localdate.plusDays(60);
+    	}
+    	else if(radioEvent.equals(radiobutton_90Dias)) {
+    		radiobutton_30Dias.setSelected(false);
+    		radiobutton_60Dias.setSelected(false);
+    		radiobutton_15Dias.setSelected(false);
+    		newDate = localdate.plusDays(90);
+    	}
+    	datepicker_fechaDePago.setValue(newDate);
+    }
 	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		fillProductos(null);
+		
+		setDatePickers();
 	}
 	
 	public void fillProductos(ArrayList<Producto> producto) {
 		ObservableList<String> data = FXCollections.observableArrayList();
 		if(producto == null) {
 			for(Producto p : Controladora.getInstance().getMisProductos()) {
+				Boolean hasPromotion = false;
+				float precioPromocion = 0;
+				for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
+					for(Producto promoProductos : promocion.getProductos()) {
+							if(promoProductos.equals(p) && 
+									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
+									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
+									|| promocion.getDia().equalsIgnoreCase(LocalDate.now().getDayOfWeek().toString()))) {
+								hasPromotion = true;
+								precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;
+							}
+					}
+				}
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
-						data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+						if(hasPromotion) {
+							data.add(p.getNombre() + ": " + precioPromocion + "$" + " (Promoción)");
+						}
+						else {
+							data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+						}
 					}
 					else {
-						data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						if(hasPromotion) {
+							data.add(p.getNombre() + ": " + precioPromocion + "$ (" + p.getUnidadMedida().getNombre() + ")" + " (Promoción)");
+						}
+						else {
+							data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						}
 					}
 				}
 			}
@@ -533,6 +663,35 @@ public class ControllerNuevaFactura implements Initializable{
 		}
 		listview_facturaProductoList.setItems(data);
 		listview_facturaProductoList.refresh();
+	}
+	
+	public void fillClientList(ArrayList<Cliente> c) {
+    	ObservableList<Cliente> data = FXCollections.observableArrayList();
+    	if(c == null) {
+    		data.addAll(Controladora.getInstance().getMisClientes());
+    	}
+    	else {
+    		data.addAll(c);
+    	}
+		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_clienteTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    	tablecolumn_clienteCumple.setCellValueFactory(new PropertyValueFactory<>("cumpleanos"));
+    	tablecolumn_clienteRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    	tablecolumn_clienteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoCliente"));
+    	tableview_clienteList.setItems(data);
+    	tableview_clienteList.refresh();
+	}
+	
+	public void setDatePickers() {
+		datepicker_fechaDePago.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
 	}
 	
 	public boolean checkExistenciaMinima(Producto producto, float cantidadCheck) {
