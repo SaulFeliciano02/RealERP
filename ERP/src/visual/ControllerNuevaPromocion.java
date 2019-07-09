@@ -299,6 +299,8 @@ public class ControllerNuevaPromocion implements Initializable{
     		datepicker_fechaFinal.setDisable(false);
     		datepicker_fechaInicial.setDisable(false);
     		
+    		pane_infoPorDia.setVisible(false);
+    		
     	}
     	else {
     		
