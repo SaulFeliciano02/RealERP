@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.CantKitsUtilizados;
@@ -54,6 +55,9 @@ public class ControllerNuevaFactura implements Initializable{
 	    
 	    @FXML private RadioButton radiobutton_facturaEfectivo;
 	    @FXML private RadioButton radiobutton_facturaTarjeta;
+	    @FXML private RadioButton radiobutton_facturaCredito;
+	    @FXML private AnchorPane paneEfectivo;
+	    @FXML private AnchorPane paneCredito;
 	   
 	    @FXML private Button button_sendProducto;
 	    @FXML private Button button_returnProducto;
@@ -554,6 +558,24 @@ public class ControllerNuevaFactura implements Initializable{
     		}
     	}
 		return isValid;
+	}
+	
+	public void tipoPago(ActionEvent event) {
+		if(radiobutton_facturaEfectivo.isSelected()) {
+			paneEfectivo.setVisible(true);
+			paneCredito.setVisible(false);
+		}
+		
+		if(radiobutton_facturaCredito.isSelected()) {
+			paneEfectivo.setVisible(false);
+			paneCredito.setVisible(true);
+		}
+		
+		if(radiobutton_facturaTarjeta.isSelected()) {
+			paneEfectivo.setVisible(false);
+			paneCredito.setVisible(false);
+		}
+		
 	}
 
 }
