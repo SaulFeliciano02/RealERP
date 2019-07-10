@@ -5,15 +5,35 @@ import java.time.LocalDate;
 
 public class Cliente extends Persona{
 
-	public String tipoCliente;
-	public Date cumpleanos;
-	public String rnc;
-
+	private String tipoCliente;
+	private Date cumpleanos;
+	private String rnc;
+	private float credito;
+	private float deuda;
+	
 	public Cliente(String codigo, String nombre, String telefono, String tipoCliente, Date cumpleanos, String rnc) {
 		super(codigo, nombre, telefono);
 		this.tipoCliente = tipoCliente;
 		this.cumpleanos = cumpleanos;
 		this.rnc = rnc;
+		this.credito = 0;
+		this.deuda = 0;
+	}
+
+	public float getCredito() {
+		return credito;
+	}
+
+	public void setCredito(float credito) {
+		this.credito = credito;
+	}
+
+	public float getDeuda() {
+		return deuda;
+	}
+
+	public void setDeuda(float deuda) {
+		this.deuda = deuda;
 	}
 
 	public String getTipoCliente() {

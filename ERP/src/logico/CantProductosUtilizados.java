@@ -1,6 +1,6 @@
 package logico;
 
-public class CantProductosUtilizados {
+public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 	
 	private Producto producto;
 	private float cantidad;
