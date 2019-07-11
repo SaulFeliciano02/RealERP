@@ -10,6 +10,8 @@ public class Cliente extends Persona{
 	private String rnc;
 	private float credito;
 	private float deuda;
+	private LocalDate ultimaActualizacionCredito;
+	private LocalDate ultimaActualizacionDeuda;
 	
 	public Cliente(String codigo, String nombre, String telefono, String tipoCliente, Date cumpleanos, String rnc) {
 		super(codigo, nombre, telefono);
@@ -58,6 +60,22 @@ public class Cliente extends Persona{
 
 	public void setRnc(String rnc) {
 		this.rnc = rnc;
+	}
+
+	public LocalDate getUltimaActualizacionCredito() {
+		return ultimaActualizacionCredito;
+	}
+
+	public void setUltimaActualizacionCredito(LocalDate ultimaActualizacionCredito) {
+		this.ultimaActualizacionCredito = ultimaActualizacionCredito;
+	}
+
+	public LocalDate getUltimaActualizacionDeuda() {
+		return ultimaActualizacionDeuda;
+	}
+
+	public void setUltimaActualizacionDeuda(LocalDate ultimaActualizacionDeuda) {
+		this.ultimaActualizacionDeuda = ultimaActualizacionDeuda;
 	}
 	
 }
