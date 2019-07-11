@@ -20,19 +20,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 437.5f;
+					transformado = valorTransformar * 0.0023f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 7000f;
+					transformado = valorTransformar * 0.0014f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 0.015f;
+					transformado = valorTransformar * 64.7989f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 15.43f;
+					transformado = valorTransformar * 0.065f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 15432.36f;
+					transformado = valorTransformar * 0.000065f;
 					break;
 			}
 		}
@@ -45,19 +45,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Grano":
-					transformado = valorTransformar * 0.0023f;
+					transformado = valorTransformar * 437.5f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 16f;
+					transformado = valorTransformar * 0.0625f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 0.000035f;
+					transformado = valorTransformar * 28349.5f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 0.035f;
+					transformado = valorTransformar * 28.3f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 35.27f;
+					transformado = valorTransformar * 0.028f;
 					break;
 			}
 		}
@@ -70,19 +70,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Grano":
-					transformado = valorTransformar * 0.00014f;
+					transformado = valorTransformar * 7000f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 0.0625f;
+					transformado = valorTransformar * 16f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 0.0000022f;
+					transformado = valorTransformar * 453592f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 0.0022f;
+					transformado = valorTransformar * 453.592f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 2.20f;
+					transformado = valorTransformar * 0.45f;
 					break;
 			}
 		}
@@ -95,19 +95,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Grano":
-					transformado = valorTransformar * 64.80f;
+					transformado = valorTransformar * 0.015f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 28349.52f;
+					transformado = valorTransformar * 0.000035f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 453592.37f;
+					transformado = valorTransformar * 0.0000022f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 1000f;
+					transformado = valorTransformar * 0.001f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 1000000f;
+					transformado = valorTransformar * 0.000001f;
 					break;
 			}
 		}
@@ -120,19 +120,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Grano":
-					transformado = valorTransformar * 0.065f;
+					transformado = valorTransformar * 15.43f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 28.35f;
+					transformado = valorTransformar * 0.035f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 453.59f;
+					transformado = valorTransformar * 0.0022f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 1000f;
+					transformado = valorTransformar * 0.001f;
 					break;
 			}
 		}
@@ -145,19 +145,19 @@ public class Masa extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Grano":
-					transformado = valorTransformar * 0.000065f;
+					transformado = valorTransformar * 15432.36f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 0.028f;
+					transformado = valorTransformar * 35.3f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 0.45f;
+					transformado = valorTransformar * 2.20f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 0.000001f;
+					transformado = valorTransformar * 100000f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 			}
 		}
