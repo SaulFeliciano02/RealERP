@@ -336,12 +336,104 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO empleados (codigo, telefono, cumpleanos, rnc, nombre) VALUES (?, ?, ?, ?, ?, ?)");
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO clientes (codigo, telefono, cumpleanos, rnc, nombre) VALUES (?, ?, ?, ?, ?, ?)");
 			p.setString(1, cliente.getCodigo());
 			p.setString(2, cliente.getTelefono());
 			p.setDate(3, cliente.getCumpleanos());
 			p.setString(4, cliente.getRnc());
 			p.setString(5, cliente.getNombre());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
+	public void guardarClienteCreditoSQL(Cliente cliente, float credito) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO clientecredito (cliente, credito, fecha) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(cliente)+1);
+			p.setFloat(2, credito);
+			p.setDate(3, java.sql.Date.valueOf(LocalDate.now())); 
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
+	public void guardarClienteDeudaSQL(Cliente cliente) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO clientedeuda (cliente, deuda, fecha) VALUES (?, ?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(cliente)+1);
+			p.setFloat(2, cliente.getDeuda());
+			p.setDate(3, java.sql.Date.valueOf(LocalDate.now())); 
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();

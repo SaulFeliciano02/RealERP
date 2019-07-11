@@ -281,6 +281,11 @@ public class ControllerNuevaFactura implements Initializable{
     		Controladora.getInstance().guardarServiciosFacturadosSQL(s, factura);
     	}
     	
+    	if(radiobutton_facturaCredito.isSelected()) {
+    		cliente.setDeuda(cliente.getDeuda() + montoTotal);
+    		Controladora.getInstance().guardarClienteDeudaSQL(cliente);
+    	}
+    	
     	listview_productosFacturados.getItems().clear();
     	listview_productosFacturados.refresh();
     	textfield_totalAPagar.setText("");
