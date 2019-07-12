@@ -21,19 +21,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 0.083f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 73.2f;
+					transformado = valorTransformar * 0.028f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 39.37f;
+					transformado = valorTransformar * 25.4f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 393.70f;
+					transformado = valorTransformar * 2.54f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 39370f;
+					transformado = valorTransformar * 0.025f;
 					break;
 			}
 		}
@@ -46,19 +46,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 0.0833f;
+					transformado = valorTransformar * 73.2f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 3f;
+					transformado = valorTransformar * 2.03f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 0.0033f;
+					transformado = valorTransformar * 1859.28f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 0.033f;
+					transformado = valorTransformar * 185.93f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 3.28f;
+					transformado = valorTransformar * 1.86f;
 					break;
 			}
 		}
@@ -71,19 +71,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 0.028f;
+					transformado = valorTransformar * 36f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 2.03f;
+					transformado = valorTransformar * 3f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 0.0011f;
+					transformado = valorTransformar * 914.4f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 0.011f;
+					transformado = valorTransformar * 91.4f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 1.09f;
+					transformado = valorTransformar * 0.91f;
 					break;
 			}
 		}
@@ -96,19 +96,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 25.4f;
+					transformado = valorTransformar * 0.039f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 1859.28f;
+					transformado = valorTransformar * 0.0033f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 914.4f;
+					transformado = valorTransformar * 0.0011f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 10f;
+					transformado = valorTransformar * 0.1f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 1000f;
+					transformado = valorTransformar * 0.001f;
 					break;
 			}
 		}
@@ -121,19 +121,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 2.54f;
+					transformado = valorTransformar * 0.39f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 185.93f;
+					transformado = valorTransformar * 0.033f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 91.44f;
+					transformado = valorTransformar * 0.011f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 0.1f;
+					transformado = valorTransformar * 10f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 100f;
+					transformado = valorTransformar * 0.01f;
 					break;
 			}
 		}
@@ -146,19 +146,19 @@ public class Longitud extends UnidadMedida {
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 0.0254f;
+					transformado = valorTransformar * 39.37f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 1.86f;
+					transformado = valorTransformar * 3.28f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 0.914f;
+					transformado = valorTransformar * 1.09f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 0.01f;
+					transformado = valorTransformar * 100f;
 					break;
 			}
 		}
