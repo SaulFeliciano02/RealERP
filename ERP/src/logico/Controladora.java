@@ -1124,7 +1124,7 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO cantkitsutilizados (kit, cantidad) VALUES (?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKitClass())+1);
 			p.setInt(2, Math.round(cantkitutilizados.getCantidad()));
 			p.executeUpdate();
 		}
@@ -1162,7 +1162,7 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO kitsfacturados (idcantkitutil, idfactura) VALUES (?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKitClass())+1);
 			p.setInt(2, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
 			p.executeUpdate();
 		}
@@ -7205,7 +7205,7 @@ public boolean activarLoadAtributos()
 		int idProducto = 0;
 		String nombreServ = null;
 		Servicio serv = null;
-		ArrayList<Servicio> serviciosFact = new ArrayList<>();
+		ArrayList<ServicioUtilizado> serviciosFact = new ArrayList<>();
 		
 		try {
 			
@@ -7308,7 +7308,8 @@ public boolean activarLoadAtributos()
 					idServ = r8.getInt(2);
 						
 					serv = Controladora.getInstance().getMisProductosServicio().get(idServ-1);
-					serviciosFact.add(serv);
+					ServicioUtilizado servutil = new ServicioUtilizado(serv); 
+					serviciosFact.add(servutil);
 				}
 				
 				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli);

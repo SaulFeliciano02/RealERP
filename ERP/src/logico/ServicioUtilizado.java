@@ -6,20 +6,13 @@ public class ServicioUtilizado extends CantBienesYServiciosUtilizados{
 	private boolean borrado;
 	private float precioUnitario;
 	private float valor;
-	private String unidad;
 	
-	public ServicioUtilizado(Servicio servicio, boolean borrado) {
+	public ServicioUtilizado(Servicio servicio) {
 		super();
 		this.servicio = servicio;
-		this.borrado = borrado;
+		this.borrado = false;
 		this.precioUnitario = servicio.getPrecio();
 		this.valor = servicio.getPrecio();
-		if(servicio.getUnidadMedida() != null) {
-			this.unidad = servicio.getUnidadMedida().getNombre();
-		}
-		else {
-			this.unidad = "";
-		}
 	}
 
 	public String getProducto() {
@@ -58,9 +51,7 @@ public class ServicioUtilizado extends CantBienesYServiciosUtilizados{
 		this.valor = valor;
 	}
 
-	public String getUnidad() {
-		return unidad;
-	}
+	
 	
 	
 	
