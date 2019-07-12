@@ -6,6 +6,8 @@ public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 	private float cantidad;
 	private String unidad;
 	private boolean borrado;
+	private float precioUnitario;
+	private float valor;
 	
 	public CantProductosUtilizados(Producto producto, float cantidad) {
 		super();
@@ -18,6 +20,8 @@ public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 		else {
 			this.unidad = "";
 		}
+		this.precioUnitario = producto.getPrecio();
+		this.valor = cantidad * producto.getPrecio();
 		
 	}
 
@@ -61,5 +65,17 @@ public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
+
+	public float getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+
+	public float getValor() {
+		return valor;
+	}
+	
+	
 	
 }
