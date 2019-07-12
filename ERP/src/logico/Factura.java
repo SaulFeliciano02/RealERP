@@ -9,7 +9,7 @@ public class Factura {
 	
 	private ArrayList<CantProductosUtilizados> prodFacturados;
 	private ArrayList<CantKitsUtilizados> kitFacturados;
-	private ArrayList<Servicio> serviciosFacturados;
+	private ArrayList<ServicioUtilizado> serviciosFacturados;
 	private Cliente miCliente;
 	private float montoTotal;
 	private String tipoPago;
@@ -18,8 +18,9 @@ public class Factura {
 	private LocalDate fecha;
 	private LocalTime hora;
 	private String clienteCodigo;
+	private ArrayList<CantBienesYServiciosUtilizados> facturados;
 	
-	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<Servicio> serviciosFacturados, float montoTotal, String tipoPago,
+	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
 			float montoRecibido, float cambio, Cliente cliente) {
 		super();
 		this.prodFacturados = prodFacturados;
@@ -38,6 +39,7 @@ public class Factura {
 		else {
 			this.clienteCodigo = "No Cliente";
 		}
+		this.facturados = new ArrayList<>();
 		
 		
 	}
@@ -94,12 +96,26 @@ public class Factura {
 		this.kitFacturados = kitFacturados;
 	}
 
-	public ArrayList<Servicio> getServiciosFacturados() {
+	public ArrayList<ServicioUtilizado> getServiciosFacturados() {
 		return serviciosFacturados;
 	}
 
-	public void setServiciosFacturados(ArrayList<Servicio> serviciosFacturados) {
+	public void setServiciosFacturados(ArrayList<ServicioUtilizado> serviciosFacturados) {
 		this.serviciosFacturados = serviciosFacturados;
+	}
+	
+	public ArrayList<CantBienesYServiciosUtilizados> getFacturados(){
+		facturados = null;
+		for(CantProductosUtilizados c : prodFacturados) {
+			facturados.add(c);
+		}
+		for(CantKitsUtilizados k : kitFacturados) {
+			facturados.add(k);
+		}
+		for(ServicioUtilizado s : serviciosFacturados) {
+			facturados.add(s);
+		}
+		return facturados;
 	}
 	
 	

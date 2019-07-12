@@ -58,6 +58,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Atributos;
+import logico.CantBienesYServiciosUtilizados;
 import logico.CantProductosUtilizados;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
@@ -171,6 +172,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Factura, String> tablecolumn_facturaCliente;
     @FXML private TableColumn<Factura, String> tablecolumn_facturaEmpleado;
     @FXML private TableView<Factura> tableview_facturaList;
+    
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProducto;
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProductoUnidad;
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoCantidad;
+    @FXML private TableView<CantBienesYServiciosUtilizados> tablecolumn_facturaProductoList;
     
     @FXML private TableColumn<Promocion, String> tablecolumn_promocionCodigo;
     @FXML private TableColumn<Promocion, Integer> tablecolumn_promocionPorcentaje;
