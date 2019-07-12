@@ -281,7 +281,7 @@ public class ControllerNuevaFactura implements Initializable{
     		Controladora.getInstance().guardarKitsFacturadosSQL(k, factura);
     	}
     	for(ServicioUtilizado s : serviciosFacturados) {
-    		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicio(), factura);
+    		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicioClass(), factura);
     	}
     	
     	if(radiobutton_facturaCredito.isSelected()) {

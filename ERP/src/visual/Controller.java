@@ -173,10 +173,12 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Factura, String> tablecolumn_facturaEmpleado;
     @FXML private TableView<Factura> tableview_facturaList;
     
-    @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProducto;
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProductoList;
     @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProductoUnidad;
     @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoCantidad;
-    @FXML private TableView<CantBienesYServiciosUtilizados> tablecolumn_facturaProductoList;
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoPrecioUnitario;
+    @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoValor;
+    @FXML private TableView<CantBienesYServiciosUtilizados> tableview_facturaProductoList;
     
     @FXML private TableColumn<Promocion, String> tablecolumn_promocionCodigo;
     @FXML private TableColumn<Promocion, Integer> tablecolumn_promocionPorcentaje;
@@ -2343,11 +2345,29 @@ public class Controller implements Initializable{
     }
     
     public void habilitarInfoAdicionalFactura(ActionEvent event) {
+    	Factura factura = tableview_facturaList.getSelectionModel().getSelectedItem();
+    	fillInfoAdicionalFactura(factura);
     	titledpane_infoadicionalfactura.setVisible(true);
     }
     
     public void cerrarInfoAdicionalFactura(ActionEvent event) {
     	titledpane_infoadicionalfactura.setVisible(false);
+    	tableview_facturaProductoList.getItems().clear();
+    }
+    
+    public void fillInfoAdicionalFactura(Factura factura) {
+    	ObservableList<CantBienesYServiciosUtilizados> data = FXCollections.observableArrayList();
+    	for(CantBienesYServiciosUtilizados c : factura.getFacturados()) {
+    		data.add(c);
+    	}
+    	tablecolumn_facturaProductoList.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    	tablecolumn_facturaProductoUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    	tablecolumn_facturaProductoCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    	tablecolumn_facturaProductoPrecioUnitario.setCellValueFactory(new PropertyValueFactory<>("precioUnitario"));
+    	tablecolumn_facturaProductoValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+    	
+    	tableview_facturaProductoList.setItems(data);
+    	tableview_facturaProductoList.refresh();
     }
     
 }
