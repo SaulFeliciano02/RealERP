@@ -47,6 +47,7 @@ import logico.Kit;
 import logico.Producto;
 import logico.Promocion;
 import logico.Servicio;
+import logico.ServicioUtilizado;
 
 public class ControllerNuevaFactura implements Initializable{
         @FXML private TextField textfield_buscarClienteFactura;
@@ -209,11 +210,12 @@ public class ControllerNuevaFactura implements Initializable{
     	ArrayList<String> alreadyUsed = new ArrayList<>();
     	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
     	ArrayList<CantKitsUtilizados> kitFacturados = new ArrayList<>();
-    	ArrayList<Servicio> serviciosFacturados = new ArrayList<>();
+    	ArrayList<ServicioUtilizado> serviciosFacturados = new ArrayList<>();
     	
     	for(String items : listview_productosFacturados.getItems()) {
     		CantProductosUtilizados cantidadUtilizados = null;
     		CantKitsUtilizados cantidadKitUtilizados = null;
+    		ServicioUtilizado cantidadServicioUtilizados = null;
     		String nombreItem = Controladora.getInstance().findFacturaNombre(items);
     		if(!alreadyUsed.contains(nombreItem)) {
     			Producto producto = Controladora.getInstance().buscarProducto(nombreItem);
@@ -242,7 +244,8 @@ public class ControllerNuevaFactura implements Initializable{
     				kitFacturados.add(cantidadKitUtilizados);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
-    				serviciosFacturados.add((Servicio) producto);
+    				cantidadServicioUtilizados = new ServicioUtilizado((Servicio) producto, false);
+    				serviciosFacturados.add(cantidadServicioUtilizados);
     			}
     			
     			
@@ -277,8 +280,8 @@ public class ControllerNuevaFactura implements Initializable{
     		Controladora.getInstance().guardarKitsUtilizadosSQL(k);
     		Controladora.getInstance().guardarKitsFacturadosSQL(k, factura);
     	}
-    	for(Servicio s : serviciosFacturados) {
-    		Controladora.getInstance().guardarServiciosFacturadosSQL(s, factura);
+    	for(ServicioUtilizado s : serviciosFacturados) {
+    		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicio(), factura);
     	}
     	
     	if(radiobutton_facturaCredito.isSelected()) {
