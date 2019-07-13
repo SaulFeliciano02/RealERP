@@ -7317,6 +7317,9 @@ public boolean activarLoadAtributos()
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
 				getMisFacturas().add(fact);
+				cantProdFact.clear();
+				cantKitFact.clear();
+				serviciosFact.clear();
 				for(CantProductosUtilizados cant : fact.getProdFacturados()) {
 					System.out.println("El nombre del producto es: " + cant.getNombre());
 				}
