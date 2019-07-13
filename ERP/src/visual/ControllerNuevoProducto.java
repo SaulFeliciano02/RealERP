@@ -2692,11 +2692,11 @@ public class ControllerNuevoProducto implements Initializable {
     			for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
     				String item_moved = "";
     				 
-    				if(c.getProductoClass().getUnidadMedida() != null) {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    				if(c.getProducto().getUnidadMedida() != null) {
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + c.getProducto().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
     	    		}
     	    		else {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
     	    		}
     				data.add(item_moved);
     			}
@@ -2727,11 +2727,11 @@ public class ControllerNuevoProducto implements Initializable {
 			for(CantProductosUtilizados c : kit.getProductosContenidos()) {
 				String item_moved = "";
 				 
-				if(c.getProductoClass().getUnidadMedida() != null) {
-	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
+				if(c.getProducto().getUnidadMedida() != null) {
+	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + c.getProducto().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
 	    		}
 	    		else {
-	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
+	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*kit.getExistenciaActual() + ")";
 	    		}
 				data.add(item_moved);
 			}
@@ -2753,11 +2753,11 @@ public class ControllerNuevoProducto implements Initializable {
     			for(CantProductosUtilizados c : servicio.getMaterialesUtilizados()) {
     				String item_moved = "";
     				 
-    				if(c.getProductoClass().getUnidadMedida() != null) {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
+    				if(c.getProducto().getUnidadMedida() != null) {
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + c.getProducto().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
     	    		}
     	    		else {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad() + ")";
     	    		}
     				data.add(item_moved);
     			}
@@ -2792,11 +2792,11 @@ public class ControllerNuevoProducto implements Initializable {
     			for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
     				String item_moved = "";
     				 
-    				if(c.getProductoClass().getUnidadMedida() != null) {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + c.getProductoClass().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    				if(c.getProducto().getUnidadMedida() != null) {
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + c.getProducto().getUnidadMedida().getAbreviatura() + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
     	    		}
     	    		else {
-    	    			item_moved = c.getProductoClass().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
+    	    			item_moved = c.getProducto().getNombre() + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + c.getCantidad() + "]" + " (" + c.getCantidad()*estandar.getExistenciaActual() + ")";
     	    		}
     				data.add(item_moved);
     			}
@@ -2839,7 +2839,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombre = Controladora.getInstance().findPartidaNombre(s);
     				float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
-    				if(nombre.equalsIgnoreCase(c.getProductoClass().getNombre()) && cantidad == c.getCantidad()) {
+    				if(nombre.equalsIgnoreCase(c.getProducto().getNombre()) && cantidad == c.getCantidad()) {
     					check++;
     				}
     			}
@@ -2855,7 +2855,7 @@ public class ControllerNuevoProducto implements Initializable {
     			for(String s : listview_partidaSelect.getItems()) {
     				String nombre = Controladora.getInstance().findPartidaNombre(s);
     				float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
-    				if(nombre.equalsIgnoreCase(c.getProductoClass().getNombre()) && cantidad == c.getCantidad()) {
+    				if(nombre.equalsIgnoreCase(c.getProducto().getNombre()) && cantidad == c.getCantidad()) {
     					check++;
     				}
     			}

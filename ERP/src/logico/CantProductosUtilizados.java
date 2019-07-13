@@ -1,11 +1,12 @@
 package logico;
 
-public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
+public class CantProductosUtilizados{
 	
 	private Producto producto;
 	private float cantidad;
 	private String unidad;
 	private boolean borrado;
+	private String nombre;
 	private float precioUnitario;
 	private float valor;
 	
@@ -20,6 +21,7 @@ public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 		else {
 			this.unidad = "";
 		}
+		this.nombre = producto.getNombre();
 		this.precioUnitario = producto.getPrecio();
 		this.valor = cantidad * producto.getPrecio();
 		
@@ -36,12 +38,12 @@ public class CantProductosUtilizados extends CantBienesYServiciosUtilizados{
 	}
 
 
-	public String getProducto() {
-		return producto.getNombre();
+	public Producto getProducto() {
+		return producto;
 	}
 	
-	public Producto getProductoClass() {
-		return producto;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public void setProducto(Producto producto) {

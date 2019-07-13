@@ -244,7 +244,7 @@ public class ControllerNuevaFactura implements Initializable{
     				kitFacturados.add(cantidadKitUtilizados);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
-    				cantidadServicioUtilizados = new ServicioUtilizado((Servicio) producto, false);
+    				cantidadServicioUtilizados = new ServicioUtilizado((Servicio) producto);
     				serviciosFacturados.add(cantidadServicioUtilizados);
     			}
     			
@@ -272,7 +272,7 @@ public class ControllerNuevaFactura implements Initializable{
     	
     	for(CantProductosUtilizados c : prodFacturados) {
     		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
-    		Controladora.getInstance().guardarCantProductosUtilizadosSQL( (Estandar) c.getProductoClass(), c);
+    		Controladora.getInstance().guardarCantProductosUtilizadosSQL( (Estandar) c.getProducto(), c);
     		Controladora.getInstance().guardarProductosFacturadosSQL(c, factura);
     	}
     	for(CantKitsUtilizados k : kitFacturados) {
@@ -281,7 +281,7 @@ public class ControllerNuevaFactura implements Initializable{
     		Controladora.getInstance().guardarKitsFacturadosSQL(k, factura);
     	}
     	for(ServicioUtilizado s : serviciosFacturados) {
-    		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicioClass(), factura);
+    		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicio(), factura);
     	}
     	
     	if(radiobutton_facturaCredito.isSelected()) {

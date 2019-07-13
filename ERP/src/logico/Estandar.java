@@ -110,7 +110,7 @@ public class Estandar extends Producto{
 		costoPartida = 0;
 		try {
 			for(CantProductosUtilizados c : this.partida.getListaMateriales()) {
-				costoPartida += (c.getProductoClass().getCosto() * c.getCantidad());
+				costoPartida += (c.getProducto().getCosto() * c.getCantidad());
 			}
 		}catch(NullPointerException e) {}
 		return costoPartida;

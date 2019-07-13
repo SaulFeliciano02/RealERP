@@ -1,11 +1,11 @@
 package logico;
 
-public class CantKitsUtilizados extends CantBienesYServiciosUtilizados{
+public class CantKitsUtilizados{
 	
 	private Kit kit;
 	private float cantidad;
 	private boolean borrado;
-	private String kitNombre;
+	private String nombre;
 	private float precioUnitario;
 	private float valor;
 	private String unidad;
@@ -15,7 +15,7 @@ public class CantKitsUtilizados extends CantBienesYServiciosUtilizados{
 		this.kit = kit;
 		this.cantidad = cantidad;
 		this.borrado = false;
-		this.kitNombre = kit.getNombre();
+		this.nombre = kit.getNombre();
 		this.precioUnitario = kit.getPrecio();
 		this.valor = cantidad * kit.getPrecio();
 		if(kit.getUnidadMedida() != null) {
@@ -26,11 +26,7 @@ public class CantKitsUtilizados extends CantBienesYServiciosUtilizados{
 		}
 	}
 
-	public String getProducto() {
-		return kit.getNombre();
-	}
-	
-	public Kit getKitClass() {
+	public Kit getKit() {
 		return kit;
 	}
 
@@ -54,8 +50,8 @@ public class CantKitsUtilizados extends CantBienesYServiciosUtilizados{
 		this.borrado = borrado;
 	}
 
-	public String getKitNombre() {
-		return kitNombre;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public float getPrecioUnitario() {

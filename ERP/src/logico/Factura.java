@@ -40,6 +40,18 @@ public class Factura {
 			this.clienteCodigo = "No Cliente";
 		}
 		this.facturados = new ArrayList<>();
+		for(CantProductosUtilizados c : prodFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados(c.getUnidad(), c.getCantidad(), c.getNombre(), c.getPrecioUnitario(), c.getValor());
+			facturados.add(all);
+		}
+		for(CantKitsUtilizados k : kitFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados(k.getUnidad(), k.getCantidad(), k.getNombre(), k.getPrecioUnitario(), k.getValor());
+			facturados.add(all);
+		}
+		for(ServicioUtilizado s : serviciosFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados("", 1, s.getNombre(), s.getPrecioUnitario(), s.getValor());
+			facturados.add(all);
+		}
 		
 		
 	}
@@ -105,16 +117,7 @@ public class Factura {
 	}
 	
 	public ArrayList<CantBienesYServiciosUtilizados> getFacturados(){
-		facturados = null;
-		for(CantProductosUtilizados c : prodFacturados) {
-			facturados.add(c);
-		}
-		for(CantKitsUtilizados k : kitFacturados) {
-			facturados.add(k);
-		}
-		for(ServicioUtilizado s : serviciosFacturados) {
-			facturados.add(s);
-		}
+		
 		return facturados;
 	}
 	
