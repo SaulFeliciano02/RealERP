@@ -1124,7 +1124,7 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO cantkitsutilizados (kit, cantidad) VALUES (?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKitClass())+1);
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
 			p.setInt(2, Math.round(cantkitutilizados.getCantidad()));
 			p.executeUpdate();
 		}
@@ -1162,7 +1162,7 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement)
 					c.prepareStatement("INSERT INTO kitsfacturados (idcantkitutil, idfactura) VALUES (?, ?)");
-			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKitClass())+1);
+			p.setInt(1, Controladora.getInstance().getMisProductosKit().indexOf(cantkitutilizados.getKit())+1);
 			p.setInt(2, Controladora.getInstance().getMisFacturas().indexOf(factura)+1);
 			p.executeUpdate();
 		}
@@ -7317,7 +7317,10 @@ public boolean activarLoadAtributos()
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
 				getMisFacturas().add(fact);
-				//System.out.println();
+				for(CantProductosUtilizados cant : fact.getProdFacturados()) {
+					System.out.println("El nombre del producto es: " + cant.getNombre());
+				}
+				
 			}
 			
 			

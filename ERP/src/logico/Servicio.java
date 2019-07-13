@@ -32,7 +32,7 @@ public class Servicio extends Producto{
 	public float getCostoPartida() {
 		costoPartida = 0;
 		for(CantProductosUtilizados c : getMaterialesUtilizados()) {
-			costoPartida += c.getProductoClass().getPrecio();
+			costoPartida += c.getProducto().getPrecio();
 		}
 		return costoPartida;
 	}

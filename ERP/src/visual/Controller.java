@@ -59,6 +59,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import logico.Atributos;
 import logico.CantBienesYServiciosUtilizados;
+import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
@@ -78,6 +79,7 @@ import logico.Promocion;
 import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
+import logico.ServicioUtilizado;
 import logico.UnidadMedida;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -2184,7 +2186,7 @@ public class Controller implements Initializable{
     				for(CantProductosUtilizados c : e.getPartida().getListaMateriales()) {
     					data.add(c);
     				}
-    				tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    				tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     				tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     				tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
     				tableview_productoPartidaList.setItems(data);
@@ -2206,7 +2208,7 @@ public class Controller implements Initializable{
     			for(CantProductosUtilizados c : s.getMaterialesUtilizados()) {
     				data.add(c);
     			}
-    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
     			tableview_productoPartidaList.setItems(data);
@@ -2225,7 +2227,7 @@ public class Controller implements Initializable{
     			for(CantProductosUtilizados c : k.getProductosContenidos()) {
     				data.add(c);
     			}
-    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    			tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     			tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     			tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
     			tableview_productoPartidaList.setItems(data);
@@ -2357,10 +2359,12 @@ public class Controller implements Initializable{
     
     public void fillInfoAdicionalFactura(Factura factura) {
     	ObservableList<CantBienesYServiciosUtilizados> data = FXCollections.observableArrayList();
+    	System.out.println(factura.getFacturados().size());
     	for(CantBienesYServiciosUtilizados c : factura.getFacturados()) {
+    		System.out.println("Hola");
     		data.add(c);
     	}
-    	tablecolumn_facturaProductoList.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    	tablecolumn_facturaProductoList.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     	tablecolumn_facturaProductoUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
     	tablecolumn_facturaProductoCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     	tablecolumn_facturaProductoPrecioUnitario.setCellValueFactory(new PropertyValueFactory<>("precioUnitario"));

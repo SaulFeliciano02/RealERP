@@ -1,9 +1,10 @@
 package logico;
 
-public class ServicioUtilizado extends CantBienesYServiciosUtilizados{
+public class ServicioUtilizado{
 	
 	private Servicio servicio;
 	private boolean borrado;
+	private String nombre;
 	private float precioUnitario;
 	private float valor;
 	
@@ -11,16 +12,17 @@ public class ServicioUtilizado extends CantBienesYServiciosUtilizados{
 		super();
 		this.servicio = servicio;
 		this.borrado = false;
+		this.nombre = servicio.getNombre();
 		this.precioUnitario = servicio.getPrecio();
 		this.valor = servicio.getPrecio();
 	}
 
-	public String getProducto() {
-		return servicio.getNombre();
+	public Servicio getServicio() {
+		return servicio;
 	}
 	
-	public Servicio getServicioClass() {
-		return servicio;
+	public String getNombre() {
+		return nombre;
 	}
 
 	public void setServicio(Servicio servicio) {
