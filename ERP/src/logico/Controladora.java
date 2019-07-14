@@ -108,6 +108,8 @@ public class Controladora implements Serializable{
 	private ArrayList<Masa> misMasas;
 	private ArrayList<Volumen> misVolumenes;
 	
+	private Empresa miEmpresa;
+	
 	private float ventaPromedioMensual;
 	
 	private static Controladora controladora;
@@ -192,7 +194,19 @@ public class Controladora implements Serializable{
 		this.misGastosGenerales = new ArrayList<>();
 		this.misCategoriasEmpleado = new ArrayList<>();
 		this.misManosDeObras = new ArrayList<>();
+		
+		this.miEmpresa = null;
 	}
+	
+	
+	public void setMiEmpresa(Empresa miEmpresa) {
+		this.miEmpresa = miEmpresa;
+	}
+
+	public Empresa getMiEmpresa() {
+		return miEmpresa;
+	}
+	
 	
 	public ArrayList<CostoIndirectoProducto> getMisCostosIndirectos(){
 		return misCostosIndirectos;
@@ -2372,6 +2386,132 @@ public class Controladora implements Serializable{
 			p.setInt(1, Controladora.getInstance().getMisManosDeObras().indexOf(manodeobra)+1);
 			p.setInt(2, Controladora.getInstance().getMisProductosServicio().indexOf(servicio)+1);
 			p.setInt(3, Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoriaempleado)+1);
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarInfoEmpresaSQL(Empresa empresa) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			if(empresa.getITBIS() != 18) {
+				p = (PreparedStatement)
+					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis) VALUES (?, ?, ?, ?, ?)");
+				p.setInt(5, empresa.getITBIS());
+			}else {
+				p = (PreparedStatement)
+						c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio) VALUES (?, ?, ?, ?)");
+			}
+			p.setString(1, empresa.getNombre());
+			p.setString(2, empresa.getRnc());
+			p.setString(3, empresa.getTelefono());
+			p.setString(4, empresa.getDomicilio());
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarRangoNumerosValorFiscal(Empresa empresa) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+				c.prepareStatement("INSERT INTO rangonumerosvalorfiscal (valorfiscalinferior, valorfiscalsuperior, fechasolicitada, fechavencimiento) VALUES (?, ?, ?, ?)");
+		
+			p.setInt(1, empresa.getValorFiscalInferior());
+			p.setInt(2, empresa.getValorFiscalMayor());
+			p.setDate(3, java.sql.Date.valueOf(empresa.getFechaSecSolicitada()));
+			p.setDate(4, java.sql.Date.valueOf(empresa.getFechasecvencimiento()));
+			p.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void guardarAnioFiscal(Empresa empresa) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement)
+				c.prepareStatement("INSERT INTO aniofiscal (fechainicio, fechafinal) VALUES (?, ?)");
+		
+			p.setDate(1, java.sql.Date.valueOf(empresa.getFechaInicio()));
+			p.setDate(2, java.sql.Date.valueOf(empresa.getFechaFinal()));
 			p.executeUpdate();
 		}
 		catch(Exception e) {

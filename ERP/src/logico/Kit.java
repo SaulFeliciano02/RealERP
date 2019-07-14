@@ -16,9 +16,9 @@ public class Kit extends Producto{
 	public Kit(ArrayList<CantProductosUtilizados> productosContenidos, float existenciaActual, float existenciaMinima, float existenciaMaxima, float existenciaInicial, Date fechaVencimiento, String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, Moneda moneda, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, float costoManoDeObra,
-			String descripcionFija, String descripcionVariable, float costo) {
+			String descripcionFija, String descripcionVariable, float costo, float costoitbis) {
 		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
-				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo);
+				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo, costoitbis);
 		this.existenciaActual = existenciaActual;
 		this.existenciaMinima = existenciaMinima;
 		this.existenciaMaxima = existenciaMaxima;

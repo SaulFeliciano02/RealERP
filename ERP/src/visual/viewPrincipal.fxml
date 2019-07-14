@@ -1583,7 +1583,7 @@
                                                                   <VBox prefHeight="71.0" prefWidth="312.0">
                                                                      <children>
                                                                         <Label text="Nombre de la empresa" />
-                                                                        <TextField prefHeight="26.0" prefWidth="271.0" />
+                                                                        <TextField fx:id="textfield_empresaNombre" prefHeight="26.0" prefWidth="271.0" />
                                                                      </children>
                                                                      <HBox.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -1592,7 +1592,7 @@
                                                                   <VBox prefHeight="71.0" prefWidth="334.0">
                                                                      <children>
                                                                         <Label text="RNC" />
-                                                                        <TextField prefHeight="26.0" prefWidth="271.0" />
+                                                                        <TextField fx:id="textfield_empresaRNC" prefHeight="26.0" prefWidth="271.0" />
                                                                      </children>
                                                                      <HBox.margin>
                                                                         <Insets bottom="10.0" left="80.0" right="10.0" top="10.0" />
@@ -1608,7 +1608,7 @@
                                                                   <VBox prefHeight="71.0" prefWidth="312.0">
                                                                      <children>
                                                                         <Label text="Domicilio" />
-                                                                        <TextArea prefHeight="200.0" prefWidth="200.0" />
+                                                                        <TextArea fx:id="textarea_empresaDomicilio" prefHeight="200.0" prefWidth="200.0" />
                                                                      </children>
                                                                      <HBox.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -1617,7 +1617,7 @@
                                                                   <VBox prefHeight="71.0" prefWidth="334.0">
                                                                      <children>
                                                                         <Label text="Teléfono" />
-                                                                        <TextField prefHeight="26.0" prefWidth="271.0" />
+                                                                        <TextField fx:id="textfield_empresaTelefono" prefHeight="26.0" prefWidth="271.0" />
                                                                      </children>
                                                                      <HBox.margin>
                                                                         <Insets bottom="10.0" left="80.0" right="10.0" top="10.0" />
@@ -1636,7 +1636,7 @@
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Desde:" />
-                                                                              <Spinner prefHeight="26.0" prefWidth="135.0">
+                                                                              <Spinner fx:id="spinner_empresaValorFiscalMin" prefHeight="26.0" prefWidth="135.0">
                                                                                  <HBox.margin>
                                                                                     <Insets left="10.0" />
                                                                                  </HBox.margin>
@@ -1646,7 +1646,7 @@
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:" />
-                                                                              <Spinner prefHeight="26.0" prefWidth="135.0">
+                                                                              <Spinner fx:id="spinner_empresaValorFiscalMax" prefHeight="26.0" prefWidth="135.0">
                                                                                  <HBox.margin>
                                                                                     <Insets left="13.0" />
                                                                                  </HBox.margin>
@@ -1664,7 +1664,7 @@
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio:" />
-                                                                              <DatePicker prefHeight="26.0" prefWidth="160.0">
+                                                                              <DatePicker fx:id="datepicker_empresaFechaInicio" prefHeight="26.0" prefWidth="160.0">
                                                                                  <HBox.margin>
                                                                                     <Insets left="10.0" />
                                                                                  </HBox.margin>
@@ -1674,7 +1674,7 @@
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fin:" />
-                                                                              <DatePicker prefHeight="26.0" prefWidth="160.0">
+                                                                              <DatePicker fx:id="datepicker_empresaFechaFinal" prefHeight="26.0" prefWidth="160.0">
                                                                                  <HBox.margin>
                                                                                     <Insets left="25.0" />
                                                                                  </HBox.margin>
@@ -1726,7 +1726,7 @@
                                                             </VBox>
                                                          </children>
                                                       </AnchorPane>
-                                                      <Button layoutX="536.0" layoutY="562.0" mnemonicParsing="false" text="Guardar">
+                                                      <Button fx:id="button_empresaGuardar" layoutX="536.0" layoutY="562.0" mnemonicParsing="false" onAction="#guardarEmpresa" text="Guardar">
                                                          <font>
                                                             <Font size="16.0" />
                                                          </font>
