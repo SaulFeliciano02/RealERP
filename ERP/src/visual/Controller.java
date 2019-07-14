@@ -1336,7 +1336,7 @@ public class Controller implements Initializable{
     		}
     		
     		try {
-    			FileOutputStream archivo = new FileOutputStream("c:/ERPdata/data/inventario.xls");
+    			FileOutputStream archivo = new FileOutputStream("c:/ERPdata/data/inventario/inventario.xls");
     			libro.write(archivo);
     			archivo.close();
     		} catch (Exception e) {

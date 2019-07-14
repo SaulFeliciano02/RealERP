@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import archivos.FacturaValorFiscal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -296,6 +297,7 @@ public class ControllerNuevaFactura implements Initializable{
     	textfield_totalCambio.setText("");
     	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
+    	FacturaValorFiscal.CrearFactura(factura);
     }
     
     public void tableViewFacturaClicked(MouseEvent event) {
