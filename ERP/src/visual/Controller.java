@@ -175,6 +175,12 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Factura, String> tablecolumn_facturaEmpleado;
     @FXML private TableView<Factura> tableview_facturaList;
     
+    @FXML private Button button_facturaInfoAdicional;
+    
+    @FXML private TextField textfield_facturaClienteCodigo;
+    @FXML private TextField textfield_facturaClienteNombre;
+    @FXML private TextField textfield_facturaTotalPagado;
+    
     @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProductoList;
     @FXML private TableColumn<CantBienesYServiciosUtilizados, String> tablecolumn_facturaProductoUnidad;
     @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoCantidad;
@@ -2346,6 +2352,15 @@ public class Controller implements Initializable{
     	titledpane_busquedaEmpleadoUsuario.setVisible(false);
     }
     
+    public void tableviewFacturaClicked(MouseEvent event) {
+    	if(!tableview_facturaList.getSelectionModel().isEmpty()) {
+    		button_facturaInfoAdicional.setDisable(false);
+    	}
+    	else {
+    		button_facturaInfoAdicional.setDisable(true);
+    	}
+    }
+    
     public void habilitarInfoAdicionalFactura(ActionEvent event) {
     	Factura factura = tableview_facturaList.getSelectionModel().getSelectedItem();
     	fillInfoAdicionalFactura(factura);
@@ -2355,6 +2370,12 @@ public class Controller implements Initializable{
     public void cerrarInfoAdicionalFactura(ActionEvent event) {
     	titledpane_infoadicionalfactura.setVisible(false);
     	tableview_facturaProductoList.getItems().clear();
+    	textfield_facturaClienteCodigo.setText("");
+    	textfield_facturaClienteNombre.setText("");
+    	textfield_facturaTotalPagado.setText("");
+    	
+    	tableview_facturaList.getSelectionModel().clearSelection();
+    	tableviewFacturaClicked(null);
     }
     
     public void fillInfoAdicionalFactura(Factura factura) {
@@ -2372,6 +2393,13 @@ public class Controller implements Initializable{
     	
     	tableview_facturaProductoList.setItems(data);
     	tableview_facturaProductoList.refresh();
+    	
+    	if(factura.getMiCliente() != null) {
+    		textfield_facturaClienteCodigo.setText(factura.getClienteCodigo());
+    		textfield_facturaClienteNombre.setText(factura.getMiCliente().getNombre());
+    	}
+    	
+    	textfield_facturaTotalPagado.setText(Float.toString(factura.getMontoTotal()));
     }
     
 }

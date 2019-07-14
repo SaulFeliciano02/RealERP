@@ -1882,6 +1882,7 @@ public class ControllerNuevoProducto implements Initializable {
         			combobox_ConversorUnidad.getItems().clear();
         			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
         		}
+        		combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
         	}
     	}
     	else if (listview_partida.getSelectionModel().isEmpty() || textfield_partidaCantidad.getLength() == 0) {

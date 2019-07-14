@@ -888,7 +888,7 @@
                                                                               </Button>
                                                                            </children>
                                                                         </HBox>
-                                                                        <TableView fx:id="tableview_facturaList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                        <TableView fx:id="tableview_facturaList" onMouseClicked="#tableviewFacturaClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                           <columns>
                                                                             <TableColumn fx:id="tablecolumn_facturaDate" prefWidth="75.0" text="Fecha" />
                                                                               <TableColumn fx:id="tablecolumn_facturaHora" prefWidth="75.0" text="Hora" />
@@ -918,7 +918,7 @@
                                                                               </Button>
                                                                               <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="401.0" HBox.hgrow="ALWAYS">
                                                                                  <children>
-                                                                                    <Button mnemonicParsing="false" onAction="#habilitarInfoAdicionalFactura" text="Información adicional de factura" />
+                                                                                    <Button fx:id="button_facturaInfoAdicional" disable="true" mnemonicParsing="false" onAction="#habilitarInfoAdicionalFactura" text="Información adicional de factura" />
                                                                                  </children>
                                                                               </HBox>
                                                                            </children>
@@ -963,7 +963,7 @@
                                                                                                       <HBox prefHeight="33.0" prefWidth="233.0">
                                                                                                          <children>
                                                                                                             <Label text="Código:" />
-                                                                                                            <TextField prefHeight="26.0" prefWidth="120.0">
+                                                                                                            <TextField fx:id="textfield_facturaClienteCodigo" editable="false" prefHeight="26.0" prefWidth="120.0">
                                                                                                                <HBox.margin>
                                                                                                                   <Insets left="10.0" />
                                                                                                                </HBox.margin>
@@ -973,7 +973,7 @@
                                                                                                       <HBox prefHeight="38.0" prefWidth="233.0">
                                                                                                          <children>
                                                                                                             <Label text="Nombre:" />
-                                                                                                            <TextField prefHeight="26.0" prefWidth="200.0">
+                                                                                                            <TextField fx:id="textfield_facturaClienteNombre" editable="false" prefHeight="26.0" prefWidth="200.0">
                                                                                                                <HBox.margin>
                                                                                                                   <Insets left="5.0" />
                                                                                                                </HBox.margin>
@@ -1002,7 +1002,7 @@
                                                                                                 <Label text="Total pagado:" />
                                                                                                 <HBox alignment="CENTER" prefHeight="26.0" prefWidth="268.0">
                                                                                                    <children>
-                                                                                                      <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="178.0" promptText="0.0" />
+                                                                                                      <TextField fx:id="textfield_facturaTotalPagado" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="178.0" promptText="0.0" />
                                                                                                       <Label text="RD$">
                                                                                                          <HBox.margin>
                                                                                                             <Insets left="5.0" />

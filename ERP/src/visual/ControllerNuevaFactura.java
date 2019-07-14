@@ -527,7 +527,7 @@ public class ControllerNuevaFactura implements Initializable{
 				if(hasPromotion) {
 					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
 				}else {
-					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
 				}
         		
         		listview_productosFacturados.getItems().add(itemMedida);
