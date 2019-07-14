@@ -1,10 +1,19 @@
 package archivos;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.print.Doc;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.swing.text.StyleConstants.FontConstants;
 
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -192,17 +201,41 @@ public class FacturaValorFiscal {
 	            document.add(p10);
 	            p11 = new Paragraph();
 	            p11.add(new Chunk(glue));
-	            p11.add("TOTAL:  " + subtotal + descuentototal + itbistotal);
+	            p11.add("TOTAL:  " + Math.round(subtotal + descuentototal + itbistotal));
 	            document.add(p11);
 	            
 		        document.close();
 		        writer.close();
+		        
+		        openFile(file);
+		        
+		        
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 	
 	}
 	
+	public static void openFile(String file)
+	{
+		 Desktop desktop = Desktop.getDesktop();
+	        if(!Desktop.isDesktopSupported()){
+	            System.out.println("Desktop is not supported");
+	            return;
+	        }
+	        
+	     File fileToOpen = new File(file);
+	     
+	     if(fileToOpen.exists())
+	     {
+	    	 try {
+				desktop.open(fileToOpen);
+			} catch (IOException e) {
+				System.out.println("Error al abrir el pdf");
+				e.printStackTrace();
+			} 
+	     }  	 
+	}
 	
 	/*public static PdfPCell getCell(String text, int alignment) {
 	    PdfPCell cell = new PdfPCell(new Phrase(text));
