@@ -374,6 +374,13 @@ public class ControllerNuevoProducto implements Initializable {
     	Proveedores proveedor = null;
     	setCostoYPrecioTotal(null);
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
+    	float costoitbis = 0;
+    	if(Controladora.getInstance().getMiEmpresa() != null && checkbox_Impuestos.isSelected()) {
+    		costoitbis = precio.getPrecio() * (Controladora.getInstance().getMiEmpresa().getITBIS()/100);
+    	}
+    	else if(checkbox_Impuestos.isSelected()) {
+    		costoitbis = precio.getPrecio() * (18/100);
+    	}
     	
     	//Guardando precio en la base de datos
     	
@@ -505,7 +512,7 @@ public class ControllerNuevoProducto implements Initializable {
     	    		//No se registra nombre, fecha, y muchas otras cosas
     	    		if(canRegister) {
     	    			Estandar newEstandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, costoDeCompra, fabricado, partida, codigo, nombre,
-    	    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+    	    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
     	    			
     	    			
     	    			Controladora.getInstance().getMisProductosEstandar().add(newEstandar);
@@ -637,7 +644,7 @@ public class ControllerNuevoProducto implements Initializable {
             		//Visitar esto nuevamente
             		if(canRegister) {
             			Kit newKit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, codigo, nombre,
-            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal, costoitbis);
             			
             			Controladora.getInstance().getMisProductos().add(newKit);
             			Controladora.getInstance().guardarProductosSQL(newKit);
@@ -732,7 +739,7 @@ public class ControllerNuevoProducto implements Initializable {
             			CategoriaEmpleado categoriaEmpleado = Controladora.getInstance().buscarCategoria(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
             			
             			Servicio newServicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-           					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
+           					descripcion, categoriaEmpleado, productsForServicio, costoTotal, costoitbis);
            				Controladora.getInstance().addProductoServicio(newServicio);
            				Controladora.getInstance().addProducto(newServicio);
            			
@@ -861,7 +868,7 @@ public class ControllerNuevoProducto implements Initializable {
             		//Registrando un producto tipo matriz
             		if(canRegister) {
             			Estandar newMatriz = new Estandar(existenciaActual, Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, costoDeCompra, fabricado, partida, codigo, nombre,
-            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
             			for(Combinaciones c : combinacionFinal) {
             				newMatriz.getCombinaciones().add(c);
             				Controladora.getInstance().getMisCombinaciones().add(c);
@@ -1012,7 +1019,7 @@ public class ControllerNuevoProducto implements Initializable {
             		//No se registra nombre, fecha, y muchas otras cosas
             		if(canRegister) {
             			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
-            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
             			
             			
             			Controladora.getInstance().getMisProductosEstandar().add(estandar);
@@ -1113,7 +1120,7 @@ public class ControllerNuevoProducto implements Initializable {
             		//Visitar esto nuevamente
             		if(canRegister) {
             			Kit kit = new Kit(productsForKit, Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, codigo, nombre,
-            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal);
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costo, "", "", costoTotal, costoitbis);
             			
             			Controladora.getInstance().getMisProductos().add(kit);
             			Controladora.getInstance().guardarProductosSQL(kit);
@@ -1184,7 +1191,7 @@ public class ControllerNuevoProducto implements Initializable {
             				System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().substring(0, combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().indexOf(":")));
             			
             				Servicio servicio = new Servicio(codigo, nombre, descripcion, rubro, tipoProducto, proveedor, null, "", unidad, precio, "", codigoBarra,
-            					descripcion, categoriaEmpleado, productsForServicio, costoTotal);
+            					descripcion, categoriaEmpleado, productsForServicio, costoTotal, costoitbis);
             				Controladora.getInstance().addProductoServicio(servicio);
             				Controladora.getInstance().addProducto(servicio);
             			
@@ -1283,7 +1290,7 @@ public class ControllerNuevoProducto implements Initializable {
             		//Registrando un producto tipo matriz
             		if(canRegister) {
             			Estandar matriz = new Estandar(existenciaActual, Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaActual, date, costoDeCompra, fabricado, partida, codigo, nombre,
-            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal);
+            				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
             			for(Combinaciones c : combinacionFinal) {
             				matriz.getCombinaciones().add(c);
             				Controladora.getInstance().getMisCombinaciones().add(c);
@@ -2312,7 +2319,13 @@ public class ControllerNuevoProducto implements Initializable {
 	public void habilitarImpuestos(ActionEvent event) {
 		if(checkbox_Impuestos.isSelected()) {
 			textfield_preciosImpuestos.setDisable(false);
-			textfield_preciosImpuestos.setText("18");
+			if(Controladora.getInstance().getMiEmpresa() != null) {
+				textfield_preciosImpuestos.setText(Integer.toString(Controladora.getInstance().getMiEmpresa().getITBIS()));
+			}
+			else {
+				textfield_preciosImpuestos.setText("18");
+			}
+			
 			calcularPrecio(null);
 		}
 		else {
@@ -2487,6 +2500,7 @@ public class ControllerNuevoProducto implements Initializable {
 		
 		//Seteando listview gastosgenerales
 		rellenarCostosGenerales(null);
+		textfield_preciosImpuestos.setEditable(false);
 	}
 	
 	public void fillUnidadMedida(ArrayList<UnidadMedida> u) {

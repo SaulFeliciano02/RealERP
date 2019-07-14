@@ -57,6 +57,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import jdk.nashorn.internal.ir.SetSplitState;
 import logico.Atributos;
 import logico.CantBienesYServiciosUtilizados;
 import logico.CantKitsUtilizados;
@@ -69,6 +70,7 @@ import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
 import logico.Empleado;
+import logico.Empresa;
 import logico.Estandar;
 import logico.Factura;
 import logico.GastoGeneral;
@@ -112,6 +114,8 @@ public class Controller implements Initializable{
     @FXML private Button button_historial;
     @FXML private Button button_admin;
     @FXML private Button button_config;
+    
+    @FXML private Label text_negocioName;
     
     //VARIABLES DE RECURSOS HUMANOS
     @FXML private TabPane tabpane_recursosHumanos;
@@ -302,6 +306,19 @@ public class Controller implements Initializable{
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
     @FXML private TitledPane titledpane_busquedaEmpleadoUsuario;
+    
+    @FXML private TextField textfield_empresaNombre;
+    @FXML private TextField textfield_empresaRNC;
+    @FXML private TextArea textarea_empresaDomicilio;
+    @FXML private TextField textfield_empresaTelefono;
+    
+    @FXML private Spinner<Integer> spinner_empresaValorFiscalMin;
+    @FXML private Spinner<Integer> spinner_empresaValorFiscalMax;
+    
+    @FXML private DatePicker datepicker_empresaFechaInicio;
+    @FXML private DatePicker datepicker_empresaFechaFinal;
+    
+    @FXML private Button button_empresaGuardar;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -1945,6 +1962,47 @@ public class Controller implements Initializable{
     		tableview_CategoriaEmp.refresh();	
     	}
     }
+    
+    public void guardarEmpresa(ActionEvent event) {
+    	String nombre = "";
+    	String rnc = "";
+    	String telefono = "";
+    	String domicilio = "";
+    	int valorFiscalInferior = spinner_empresaValorFiscalMin.getValue();
+    	int valorFiscalMayor = spinner_empresaValorFiscalMax.getValue();
+    	LocalDate fechaInicio = null;
+    	LocalDate fechaFinal = null;
+    	try {
+    		nombre = textfield_empresaNombre.getText();
+    		rnc = textfield_empresaRNC.getText();
+    		domicilio = textarea_empresaDomicilio.getText();
+    		telefono = textfield_empresaTelefono.getText();
+    		fechaInicio = datepicker_empresaFechaInicio.getValue();
+    		fechaFinal = datepicker_empresaFechaFinal.getValue();
+    	}catch(NullPointerException e) {
+    		
+    	}
+    	
+    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, null, null, fechaInicio, fechaFinal);
+    	Controladora.getInstance().setMiEmpresa(empresa);
+    	
+    	Controladora.getInstance().guardarInfoEmpresaSQL(empresa);
+    	Controladora.getInstance().guardarAnioFiscal(empresa);
+    	Controladora.getInstance().guardarRangoNumerosValorFiscal(empresa);
+    	
+    	text_negocioName.setText(nombre);
+    	
+    	textfield_empresaNombre.setText("");
+    	textfield_empresaRNC.setText("");
+    	textfield_empresaTelefono.setText("");
+    	textarea_empresaDomicilio.setText("");
+    	spinner_empresaValorFiscalMin.getValueFactory().setValue(0);
+    	spinner_empresaValorFiscalMax.getValueFactory().setValue(0);
+    	datepicker_empresaFechaInicio.setValue(null);
+    	datepicker_empresaFechaFinal.setValue(null);
+    	
+   
+    }
 
 	
 
@@ -1982,21 +2040,21 @@ public class Controller implements Initializable{
     	fillPromocion(null);
     	
     	//Seteando la categoria de empleados
-    	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
-    	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
-    		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
-    			dataC.add(c);
-    		}
-    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
-    		tableview_CategoriaEmp.setItems(dataC);
-    		tableview_CategoriaEmp.refresh();
-    	}
+    	fillCategoriaEmpleado();
     	
     	//Setear valor del promedio de venta anual
     	if(Controladora.getInstance().activarLoadPromedioGananciaAnual())
     	{
     		textfield_PromedioVenta.setText(Float.toString(Controladora.getInstance().getVentaPromedioMensual()));
+    	}
+    	
+    	//Seteando los spinners y datepickers de la configuracion
+    	setDatePickersConfiguracion();
+    	setSpinnersConfiguracion();
+    	
+    	//Seteando el nombre de la empresa
+    	if(Controladora.getInstance().getMiEmpresa() != null) {
+    		text_negocioName.setText(Controladora.getInstance().getMiEmpresa().getNombre());
     	}
     }
     
@@ -2124,6 +2182,19 @@ public class Controller implements Initializable{
     	tablecolumn_empleadoSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
     	tableview_empleadoList.setItems(data);
     	tableview_empleadoList.refresh();
+    }
+    
+    public void fillCategoriaEmpleado() {
+    	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
+    	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
+    		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+    			dataC.add(c);
+    		}
+    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    		tableview_CategoriaEmp.setItems(dataC);
+    		tableview_CategoriaEmp.refresh();
+    	}
     }
     
     public TableView<Cliente> getTableview_clientesList(){
@@ -2297,10 +2368,6 @@ public class Controller implements Initializable{
     	}
     }
     
-    public void fillProductoPartida() {
-    
-    }
-    
     public void fillFactura(ArrayList<Factura> factura) {
     	ObservableList<Factura> data = FXCollections.observableArrayList();
     	if(factura == null) {
@@ -2400,6 +2467,33 @@ public class Controller implements Initializable{
     	}
     	
     	textfield_facturaTotalPagado.setText(Float.toString(factura.getMontoTotal()));
+    }
+    
+    public void setDatePickersConfiguracion() {
+		datepicker_empresaFechaInicio.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+		
+		datepicker_empresaFechaFinal.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+	}
+    
+    public void setSpinnersConfiguracion() {
+    	SpinnerValueFactory<Integer> valueFactoryDateInicial = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999999999, 0);
+		SpinnerValueFactory<Integer> valueFactoryDateFinal = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999999999, 0);
+		spinner_empresaValorFiscalMin.setValueFactory(valueFactoryDateInicial);
+		spinner_empresaValorFiscalMax.setValueFactory(valueFactoryDateFinal);
     }
     
 }

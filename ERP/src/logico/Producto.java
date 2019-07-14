@@ -24,6 +24,7 @@ abstract public class Producto {
 	private String descripcionFija;
 	private ArrayList<CostoDirecto> costosDirectos;
 	private float costo;
+	private float costoitbis;
 	private boolean borrado;
 	
 
@@ -31,7 +32,7 @@ abstract public class Producto {
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, 
 			String observaciones,
 			UnidadMedida unidadMedida, Precio precio,
-			String comision, String codigoBarra, String descripcionFija, float costo) {
+			String comision, String codigoBarra, String descripcionFija, float costo, float costoitbis) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -51,6 +52,7 @@ abstract public class Producto {
 		this.descripcionFija = descripcionFija;
 		this.costosDirectos = new ArrayList<CostoDirecto>();
 		this.costo = costo;
+		this.costoitbis = costoitbis;
 		this.setBorrado(false);
 	}
 	
@@ -235,6 +237,16 @@ abstract public class Producto {
 
 	public void setPrecioPromocion(float precioPromocion) {
 		this.precioPromocion = precioPromocion;
+	}
+
+
+	public float getCostoitbis() {
+		return costoitbis;
+	}
+
+
+	public void setCostoitbis(float costoitbis) {
+		this.costoitbis = costoitbis;
 	}
 	
 	

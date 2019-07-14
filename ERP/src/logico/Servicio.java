@@ -13,9 +13,9 @@ public class Servicio extends Producto{
 	public Servicio(String codigo, String nombre, String descripcion, Rubro rubroProducto, String tipoProducto,
 			Proveedores proveedorPrin, ArrayList<Proveedores> proveedoresSec, String observaciones,
 			UnidadMedida unidadMedida, Precio precio, String comision, String codigoBarra, String descripcionFija,
-			CategoriaEmpleado categoria, ArrayList<CantProductosUtilizados> materialesUtilizados, float costo) {
+			CategoriaEmpleado categoria, ArrayList<CantProductosUtilizados> materialesUtilizados, float costo, float costoitbis) {
 		super(codigo, nombre, descripcion, rubroProducto, tipoProducto, proveedorPrin, proveedoresSec, observaciones,
-				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo);
+				unidadMedida, precio, comision, codigoBarra, descripcionFija, costo, costoitbis);
 		this.setCategoria(categoria);
 		this.materialesUtilizados = materialesUtilizados;
 		this.manodeobra = 0;
