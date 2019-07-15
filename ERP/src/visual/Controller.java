@@ -57,7 +57,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import jdk.nashorn.internal.ir.SetSplitState;
+//import jdk.nashorn.internal.ir.SetSplitState;
 import logico.Atributos;
 import logico.CantBienesYServiciosUtilizados;
 import logico.CantKitsUtilizados;
@@ -1244,8 +1244,15 @@ public class Controller implements Initializable{
     		int i18 = 1;
     		for (Estandar est  : Controladora.getInstance().getMisProductosEstandar()) {
 				celda18 = fila18.createCell(i18);
-				HSSFRichTextString unidad = new HSSFRichTextString(est.getUnidadMedida().getNombre());
-				celda18.setCellValue(unidad);
+				if(est.getUnidadMedida() != null)
+				{
+					HSSFRichTextString unidad = new HSSFRichTextString(est.getUnidadMedida().getNombre());
+					celda18.setCellValue(unidad);
+				}
+				else
+				{
+					celda18.setCellValue("Sin unidad");
+				}
 				i18++;
 			}
     		

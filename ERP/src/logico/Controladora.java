@@ -4513,6 +4513,7 @@ public void loadKit()
 	String tipoProducto = null;
 	String observ = null;
 	float costo = 0;
+	float costoitbis = 0;
 	boolean borrado = false;
 	//Variables para kit
 	int id = 0;
@@ -4573,7 +4574,8 @@ public void loadKit()
 			tipoProducto = r.getString(5);
 			observ = r.getString(6);
 			costo = r.getFloat(8);
-			borrado = r.getBoolean(9);
+			costoitbis = r.getFloat(9);
+			borrado = r.getBoolean(10);
 			
 			//Recuperar kit
 			c2 = con.conectar();
@@ -4689,7 +4691,7 @@ public void loadKit()
 				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
 				Proveedores pro = buscarProveedor(nombreproveedor);
 				
-				Kit recuperado = new Kit(listado, exisactual, exisminima, exismaxima, exisinicial, null, codigo, nombre, descripcion, ru, tipoProducto, pro, null, null, observ, null, pre, null, null, 0, descripcion, null, costo);
+				Kit recuperado = new Kit(listado, exisactual, exisminima, exismaxima, exisinicial, null, codigo, nombre, descripcion, ru, tipoProducto, pro, null, null, observ, null, pre, null, null, 0, descripcion, null, costo, costoitbis);
 				recuperado.setBorrado(borrado);
 				
 				Controladora.getInstance().getMisProductos().add(recuperado);
@@ -4956,6 +4958,7 @@ public boolean activarLoadServicios()
 		String tipoProducto = null;
 		String observ = null;
 		float costo = 0;
+		float costoitbis = 0;
 		int idprecioprod = 0;
 		int precioidp = 0;
 		int productoidp = 0;
@@ -4991,7 +4994,8 @@ public boolean activarLoadServicios()
 				tipoProducto = r.getString(5);
 				observ = r.getString(6);
 				costo = r.getFloat(8);
-				borrado = r.getBoolean(9);
+				costoitbis = r.getFloat(9);
+				borrado = r.getBoolean(10);
 			
 				//Recuperar precios
 				c2 = con.conectar();
@@ -5098,7 +5102,7 @@ public boolean activarLoadServicios()
 					Precio pre = new Precio(montoprecio, descripcionprecio, activo);
 					CategoriaEmpleado cat = buscarCategoria(nombreCat);
 				
-					Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo);
+					Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo, costoitbis);
 					serv.setBorrado(borrado);
 					Controladora.getInstance().getMisProductos().add(serv);
 					Controladora.getInstance().getMisProductosServicio().add(serv);
@@ -5886,6 +5890,7 @@ public void loadProductos()
 	String observaciones = null;
 	String unidadmedida = null;
 	Float costo = null;
+	float costoitbis = 0;
 	UnidadMedida unidad1 = null;
 	boolean borrado = false;
 	
@@ -5948,7 +5953,8 @@ public void loadProductos()
 			observaciones = r.getString(6);
 			unidadmedida = r.getString(7);
 			costo = r.getFloat(8);
-			borrado = r.getBoolean(9);
+			costoitbis = r.getFloat(9);
+			borrado = r.getBoolean(10);
 			
 			c2 = con.conectar();
 			s2 = (Statement) c2.createStatement();
@@ -6034,7 +6040,7 @@ public void loadProductos()
 				Rubro ru = buscarRubro(nombrerubro);
 				Proveedores pro = buscarProveedor(nombreproveedor);
 				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
-				Estandar estandar = new Estandar(exitact, exitmin, exitmax, exitinit, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcionprecio, ru, tipoproducto, pro, null, null, observaciones, unidad1, pre, null, null, manodeobra, descripcion, null, costo);
+				Estandar estandar = new Estandar(exitact, exitmin, exitmax, exitinit, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcionprecio, ru, tipoproducto, pro, null, null, observaciones, unidad1, pre, null, null, manodeobra, descripcion, null, costo, costoitbis);
 				estandar.setBorrado(borrado);
 				
 				System.out.println(unidadmedida);
