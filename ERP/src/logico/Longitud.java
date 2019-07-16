@@ -17,152 +17,134 @@ public class Longitud extends UnidadMedida {
 		{
 			switch(comparador)
 			{
-				case "Pulgadas":
-					transformado = valorTransformar;
-					break;
 				case "Pies":
-					transformado = valorTransformar * 0.083f;
+					transformado = valorTransformar * 0.001f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 0.028f;
+					transformado = valorTransformar * 73.2f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 25.4f;
+					transformado = valorTransformar * 39.37f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 2.54f;
+					transformado = valorTransformar * 393.70f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 0.025f;
+					transformado = valorTransformar * 39370f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Pies"))
 		{
 			switch(comparador)
 			{
-				case "Pies":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 73.2f;
+					transformado = valorTransformar * 0.0833f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 2.03f;
+					transformado = valorTransformar * 3f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 1859.28f;
+					transformado = valorTransformar * 0.0033f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 185.93f;
+					transformado = valorTransformar * 0.033f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 1.86f;
+					transformado = valorTransformar * 3.28f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Yardas"))
 		{
 			switch(comparador)
 			{
-				case "Yardas":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 36f;
+					transformado = valorTransformar * 0.028f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 3f;
+					transformado = valorTransformar * 2.03f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 914.4f;
+					transformado = valorTransformar * 0.0011f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 91.4f;
+					transformado = valorTransformar * 0.011f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 0.91f;
+					transformado = valorTransformar * 1.09f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Milimetros"))
 		{
 			switch(comparador)
 			{
-				case "Milimetros":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 0.039f;
+					transformado = valorTransformar * 25.4f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 0.0033f;
+					transformado = valorTransformar * 1859.28f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 0.0011f;
+					transformado = valorTransformar * 914.4f;
 					break;
 				case "Centimetros":
-					transformado = valorTransformar * 0.1f;
+					transformado = valorTransformar * 10f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Centimetros"))
 		{
 			switch(comparador)
 			{
-				case "Centimetros":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas":
-					transformado = valorTransformar * 0.39f;
+					transformado = valorTransformar * 2.54f;
 					break;
 				case "Pies":
-					transformado = valorTransformar * 0.033f;
+					transformado = valorTransformar * 185.93f;
 					break;
 				case "Yardas":
-					transformado = valorTransformar * 0.011f;
+					transformado = valorTransformar * 91.44f;
 					break;
 				case "Milimetros":
-					transformado = valorTransformar * 10f;
+					transformado = valorTransformar * 0.1f;
 					break;
 				case "Metros":
-					transformado = valorTransformar * 0.01f;
-					break;
-			}
-		}
-		
-		if(this.getNombre().equalsIgnoreCase("Metros"))
-		{
-			switch(comparador)
-			{
-				case "Metros":
-					transformado = valorTransformar;
-					break;
-				case "Pulgadas":
-					transformado = valorTransformar * 39.37f;
-					break;
-				case "Pies":
-					transformado = valorTransformar * 3.28f;
-					break;
-				case "Yardas":
-					transformado = valorTransformar * 1.09f;
-					break;
-				case "Milimetros":
-					transformado = valorTransformar * 1000f;
-					break;
-				case "Centimetros":
 					transformado = valorTransformar * 100f;
 					break;
 			}
 		}
-		
+
+		if(this.getNombre().equalsIgnoreCase("Metros"))
+		{
+			switch(comparador)
+			{
+				case "Pulgadas":
+					transformado = valorTransformar * 0.0254f;
+					break;
+				case "Pies":
+					transformado = valorTransformar * 1.86f;
+					break;
+				case "Yardas":
+					transformado = valorTransformar * 0.914f;
+					break;
+				case "Milimetros":
+					transformado = valorTransformar * 0.001f;
+					break;
+				case "Centimetros":
+					transformado = valorTransformar * 0.01f;
+					break;
+			}
+		}
+
 		return transformado;
 	}
 	

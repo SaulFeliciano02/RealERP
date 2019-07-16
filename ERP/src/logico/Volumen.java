@@ -16,9 +16,6 @@ public class Volumen extends UnidadMedida {
 		{
 			switch(comparador)
 			{
-				case "Pulgadas Cb":
-					transformado = valorTransformar;
-					break;
 				case "Pies  Cb":
 					transformado = valorTransformar * 1728f;
 					break;
@@ -66,14 +63,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Pies  Cb"))
 		{
 			switch(comparador)
 			{
-				case "Pies  Cb":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.000578704f;
 					break;
@@ -121,14 +115,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Yardas Cb"))
 		{
 			switch(comparador)
 			{
-				case "Yardas Cb":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.000021f;
 					break;
@@ -176,14 +167,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Cuchara de té"))
 		{
 			switch(comparador)
 			{
-				case "Cuchara de té":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 3.324675325f;
 					break;
@@ -231,14 +219,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Cuchara de madera"))
 		{
 			switch(comparador)
 			{
-				case "Cuchara de madera":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 1.108225108f;
 					break;
@@ -286,14 +271,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Onza fluida"))
 		{
 			switch(comparador)
 			{
-				case "Onza fluida":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.554112554f;
 					break;
@@ -341,14 +323,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Taza"))
 		{
 			switch(comparador)
 			{
-				case "Taza":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.069264069f;
 					break;
@@ -396,14 +375,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Medio litro"))
 		{
 			switch(comparador)
 			{
-				case "Medio litro":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.034632035f;
 					break;
@@ -451,14 +427,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Cuarto de galón"))
 		{
 			switch(comparador)
 			{
-				case "Cuarto de galón":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.017316017f;
 					break;
@@ -506,14 +479,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Galón"))
 		{
 			switch(comparador)
 			{
-				case "Galón":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.004329004f;
 					break;
@@ -561,14 +531,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Barril"))
 		{
 			switch(comparador)
 			{
-				case "Barril":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.000103072f;
 					break;
@@ -616,14 +583,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Milímetros cb"))
 		{
 			switch(comparador)
 			{
-				case "Milímetros cb":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 16387.064f;
 					break;
@@ -671,14 +635,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Centímetros cb"))
 		{
 			switch(comparador)
 			{
-				case "Centímetros cb":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 16.387064f;
 					break;
@@ -726,14 +687,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Metros cb"))
 		{
 			switch(comparador)
 			{
-				case "Metros cb":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.000016f;
 					break;
@@ -781,14 +739,11 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Mililitros"))
 		{
 			switch(comparador)
 			{
-				case "Mililitros":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 16.387064f;
 					break;
@@ -836,17 +791,13 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Litros"))
 		{
 			switch(comparador)
 			{
-				case "Litros":
-					transformado = valorTransformar;
-					break;
 				case "Pulgadas Cb":
 					transformado = valorTransformar * 0.016387064f;
-					System.out.println(transformado);
 					break;
 				case "Pies  Cb":
 					transformado = valorTransformar * 28.31684659f;
@@ -892,7 +843,7 @@ public class Volumen extends UnidadMedida {
 					break;
 			}
 		}
-		
+
 		return transformado;
 	}
 	
