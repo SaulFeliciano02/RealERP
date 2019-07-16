@@ -16,152 +16,134 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
-				case "Grano":
-					transformado = valorTransformar;
-					break;
 				case "Onza":
-					transformado = valorTransformar * 0.0023f;
+					transformado = valorTransformar * 437.5f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 0.0014f;
+					transformado = valorTransformar * 7000f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 64.7989f;
+					transformado = valorTransformar * 0.015f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 0.065f;
+					transformado = valorTransformar * 15.43f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 0.000065f;
+					transformado = valorTransformar * 15432.36f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Onza"))
 		{
 			switch(comparador)
 			{
-				case "Onza":
-					transformado = valorTransformar;
-					break;
 				case "Grano":
-					transformado = valorTransformar * 437.5f;
+					transformado = valorTransformar * 0.0023f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 0.0625f;
+					transformado = valorTransformar * 16f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 28349.5f;
+					transformado = valorTransformar * 0.000035f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 28.3f;
+					transformado = valorTransformar * 0.035f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 0.028f;
+					transformado = valorTransformar * 35.27f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Libra"))
 		{
 			switch(comparador)
 			{
-				case "Libra":
-					transformado = valorTransformar;
-					break;
 				case "Grano":
-					transformado = valorTransformar * 7000f;
+					transformado = valorTransformar * 0.00014f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 16f;
+					transformado = valorTransformar * 0.0625f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 453592f;
+					transformado = valorTransformar * 0.0000022f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 453.592f;
+					transformado = valorTransformar * 0.0022f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 0.45f;
+					transformado = valorTransformar * 2.20f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Miligramo"))
 		{
 			switch(comparador)
 			{
-				case "Miligramo":
-					transformado = valorTransformar;
-					break;
 				case "Grano":
-					transformado = valorTransformar * 0.015f;
+					transformado = valorTransformar * 64.80f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 0.000035f;
+					transformado = valorTransformar * 28349.52f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 0.0000022f;
+					transformado = valorTransformar * 453592.37f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 0.000001f;
+					transformado = valorTransformar * 1000000f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Gramo"))
 		{
 			switch(comparador)
 			{
-				case "Gramo":
-					transformado = valorTransformar;
-					break;
 				case "Grano":
-					transformado = valorTransformar * 15.43f;
+					transformado = valorTransformar * 0.065f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 0.035f;
+					transformado = valorTransformar * 28.35f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 0.0022f;
+					transformado = valorTransformar * 453.59f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 1000f;
+					transformado = valorTransformar * 0.001f;
 					break;
 				case "Kilogramo":
-					transformado = valorTransformar * 0.001f;
+					transformado = valorTransformar * 1000f;
 					break;
 			}
 		}
-		
+
 		if(this.getNombre().equalsIgnoreCase("Kilogramo"))
 		{
 			switch(comparador)
 			{
-				case "Kilogramo":
-					transformado = valorTransformar;
-					break;
 				case "Grano":
-					transformado = valorTransformar * 15432.36f;
+					transformado = valorTransformar * 0.000065f;
 					break;
 				case "Onza":
-					transformado = valorTransformar * 35.3f;
+					transformado = valorTransformar * 0.028f;
 					break;
 				case "Libra":
-					transformado = valorTransformar * 2.20f;
+					transformado = valorTransformar * 0.45f;
 					break;
 				case "Miligramo":
-					transformado = valorTransformar * 100000f;
+					transformado = valorTransformar * 0.000001f;
 					break;
 				case "Gramo":
-					transformado = valorTransformar * 1000f;
+					transformado = valorTransformar * 0.001f;
 					break;
 			}
 		}
-		
+
 		return transformado;
 	}
 	

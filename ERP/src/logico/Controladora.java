@@ -3804,6 +3804,64 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public boolean activarLoadInfoEmpresa()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM infoempresa");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
 	public boolean activarLoadCliente()
 	{
 		Conexion con = new Conexion();
@@ -4329,6 +4387,134 @@ public class Controladora implements Serializable{
 				
 				if(r!=null) {
 					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void loadInfoEmpresa()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		PreparedStatement p = null;
+		int idInfoEmpresa = 0;
+		String nombre = null;
+		String rnc = null;
+		String telefono = null;
+		String domicilio = null;
+		int itbis = 0;
+		boolean borrado = false;
+		int valorfiscalinferior = 0;
+		int valorfiscalsuperior = 0;
+		Date fechasolicitada = null;
+		Date fechaVencimiento = null;
+		Date fechainicio = null;
+		Date fechaFinal = null;
+		boolean borradoAnioFiscal = false;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM infoempresa");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idInfoEmpresa = r.getInt(1);
+				nombre = r.getString(2);
+				rnc = r.getString(3);
+				telefono = r.getString(4);
+				domicilio = r.getString(5);
+				itbis = r.getInt(6);
+				borrado = r.getBoolean(7);
+				
+			}
+			
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM rangonumerosvalorfiscal");
+			while(r2.next())
+			{
+				valorfiscalinferior = r2.getInt(2);
+				valorfiscalsuperior = r2.getInt(3);
+				fechasolicitada = r2.getDate(4);
+				fechaVencimiento = r2.getDate(5);
+			}
+			
+			c3 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s3 = (Statement) c3.createStatement();
+			r3 = s3.executeQuery("SELECT * FROM aniofiscal");
+			while(r3.next())
+			{
+				fechainicio = r3.getDate(2);
+				fechaFinal = r3.getDate(3);
+				borradoAnioFiscal = r3.getBoolean(4);
+			}
+			
+			Empresa emp = new Empresa(nombre, rnc, telefono, domicilio, valorfiscalinferior, valorfiscalsuperior, LocalDate.parse(fechasolicitada.toString()), LocalDate.parse(fechaVencimiento.toString()), LocalDate.parse(fechainicio.toString()), LocalDate.parse(fechaFinal.toString()));
+			Controladora.getInstance().setMiEmpresa(emp);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(c2!=null) {
+					c2.close();
+				}
+				
+				if(c3!=null) {
+					c3.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(s2!=null) {
+					s2.close();
+				}
+				
+				if(s3!=null) {
+					s3.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+				if(r2!=null) {
+					r2.close();
+				}
+				
+				if(r3!=null) {
+					r3.close();
 				}
 				
 			} catch (Exception e2) {
@@ -7193,7 +7379,7 @@ public boolean activarLoadAtributos()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE kit SET exisactual = '"+cantidadRestar+"' WHERE idestandar = '"+indiceProducto+"'");
+					cSQL.prepareStatement("UPDATE kit SET exisactual = '"+cantidadRestar+"' WHERE idkit = '"+indiceProducto+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -7300,7 +7486,6 @@ public boolean activarLoadAtributos()
 		Connection c7 = null;
 		Connection c8 = null;
 		Connection c9 = null;
-		Connection c10 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -7310,7 +7495,6 @@ public boolean activarLoadAtributos()
 		Statement s7 = null;
 		Statement s8 = null;
 		Statement s9 = null;
-		Statement s10 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
@@ -7320,7 +7504,6 @@ public boolean activarLoadAtributos()
 		ResultSet r7 = null;
 		ResultSet r8 = null;
 		ResultSet r9 = null;
-		ResultSet r10 = null;
 		PreparedStatement p = null;
 		int idfactura = 0;
 		int idcliente = 0;
@@ -7344,6 +7527,7 @@ public boolean activarLoadAtributos()
 		int cantkitutilizadoid2 = 0;
 		int idkitrelacionado = 0;
 		int cantidadkit = 0;
+		int idkit = 0;
 		String nombrekit = null;
 		Kit kit = null;
 		ArrayList<CantKitsUtilizados> cantKitFact = new ArrayList<>();
@@ -7405,7 +7589,9 @@ public boolean activarLoadAtributos()
 							nombre = r4.getString(1);
 							est = (Estandar) buscarProducto(nombre);
 						}
-						
+						c4.close();
+						s4.close();
+						r4.close();
 						CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
 						cantProdFact.add(cpu);
 						Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
@@ -7430,18 +7616,32 @@ public boolean activarLoadAtributos()
 						idkitrelacionado = r6.getInt(2);
 						cantidadkit = r6.getInt(3);
 						
-						c7 = con.conectar();
-						s7 = (Statement) c7.createStatement();
-						r7 = s7.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
-						while(r7.next())
+						c9 = con.conectar();
+						s9 = (Statement) c9.createStatement();
+						r9 = s9.executeQuery("SELECT producto FROM kit WHERE idkit = '"+idkitrelacionado+"'");
+						while(r9.next())
 						{
-							nombrekit = r7.getString(3);
-							kit = (Kit) buscarProducto(nombre);
+							idkit = r.getInt(1);
 						}
 						
-						CantKitsUtilizados cku = new CantKitsUtilizados(kit, cantidad);
-						cantKitFact.add(cku);
-						Controladora.getInstance().getMisCantKitsUtilizados().add(cku);
+						c7 = con.conectar();
+						s7 = (Statement) c7.createStatement();
+						r7 = s7.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idkit+"'");
+						while(r7.next())
+						{
+							nombrekit = r7.getString(1);
+							System.out.println(nombrekit);
+							kit = (Kit) buscarProducto(nombrekit);
+							CantKitsUtilizados cku = new CantKitsUtilizados(kit, cantidad);
+							cantKitFact.add(cku);
+							Controladora.getInstance().getMisCantKitsUtilizados().add(cku);
+							c7.close();
+							s7.close();
+							r7.close();
+							c9.close();
+							s9.close();
+							r9.close();
+						}
 					}
 				}
 				
@@ -7470,6 +7670,101 @@ public boolean activarLoadAtributos()
 					System.out.println("El nombre del producto es: " + cant.getNombre());
 				}
 				
+				if(c2!=null) {
+					c2.close();
+				}
+				
+				if(c3!=null) {
+					c3.close();
+				}
+				
+				if(c4!=null) {
+					c4.close();
+				}
+				
+				if(c5!=null) {
+					c5.close();
+				}
+				
+				if(c6!=null) {
+					c6.close();
+				}
+				
+				if(c7!=null) {
+					c7.close();
+				}
+				
+				if(c8!=null) {
+					c8.close();
+				}
+				
+				if(c9!=null) {
+					c9.close();
+				}
+				
+				if(s2!=null) {
+					s2.close();
+				}
+				
+				if(s3!=null) {
+					s3.close();
+				}
+				
+				if(s4!=null) {
+					s4.close();
+				}
+				
+				if(s5!=null) {
+					s5.close();
+				}
+				
+				if(s6!=null) {
+					s6.close();
+				}
+				
+				if(s7!=null) {
+					s7.close();
+				}
+				
+				if(s8!=null) {
+					s8.close();
+				}
+				
+				if(s9!=null) {
+					s9.close();
+				}
+				
+				if(r2!=null) {
+					r2.close();
+				}
+				
+				if(r3!=null) {
+					r3.close();
+				}
+				
+				if(r4!=null) {
+					r4.close();
+				}
+				
+				if(r5!=null) {
+					r5.close();
+				}
+				
+				if(r6!=null) {
+					r6.close();
+				}
+				
+				if(r7!=null) {
+					r7.close();
+				}
+				
+				if(r8!=null) {
+					r8.close();
+				}
+				
+				if(r9!=null) {
+					r9.close();
+				}
 			}
 			
 			
@@ -7513,6 +7808,10 @@ public boolean activarLoadAtributos()
 					c8.close();
 				}
 				
+				if(c9!=null) {
+					c9.close();
+				}
+				
 				if(s!=null) {
 					s.close();
 				}
@@ -7545,6 +7844,10 @@ public boolean activarLoadAtributos()
 					s8.close();
 				}
 				
+				if(s9!=null) {
+					s9.close();
+				}
+				
 				if(r!=null) {
 					r.close();
 				}
@@ -7575,6 +7878,10 @@ public boolean activarLoadAtributos()
 				
 				if(r8!=null) {
 					r8.close();
+				}
+				
+				if(r9!=null) {
+					r9.close();
 				}
 				
 			} catch (Exception e2) {

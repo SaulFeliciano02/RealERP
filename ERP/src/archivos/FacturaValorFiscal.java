@@ -102,18 +102,18 @@ public class FacturaValorFiscal {
 		        document.add(table);*/
 				
 				Chunk glue = new Chunk(new VerticalPositionMark());
-				p = new Paragraph("Nombre de prueba para la empresa");
+				p = new Paragraph("" + Controladora.getInstance().getMiEmpresa().getNombre());
 				p.add(new Chunk(glue));
 				p.add("Factura de crédito fiscal");
 				//p.setFont((Font) FontConstants.Bold);
 				document.add(p);
 				
-				p2 = new Paragraph("Sucursal prueba");
+				p2 = new Paragraph("Domicilio: " + Controladora.getInstance().getMiEmpresa().getDomicilio());
 				p2.add(new Chunk(glue));
 				p2.add("NCF: B0100000572");
 				document.add(p2);
 				
-				p3 = new Paragraph("RNC: 123456789");
+				p3 = new Paragraph("RNC: " + Controladora.getInstance().getMiEmpresa().getRnc());
 				p3.add(new Chunk(glue));
 				p3.add("Vencimiento secuencia:");
 				document.add(p3);
@@ -150,8 +150,17 @@ public class FacturaValorFiscal {
 	            table.addCell(cell4);
 	            
 	            for (CantProductosUtilizados estandar : factura.getProdFacturados()) {
-	            	PdfPCell cellDinamic = new PdfPCell(new Paragraph(estandar.getCantidad() + " " + estandar.getUnidad()));
-	            	table.addCell(cellDinamic);
+	            	if(estandar.getUnidad() != null)
+	            	{
+	            		PdfPCell cellDinamic = new PdfPCell(new Paragraph(estandar.getCantidad() + " " + estandar.getUnidad()));
+		            	table.addCell(cellDinamic);
+	            	}
+	            	else
+	            	{
+	            		PdfPCell cellDinamic = new PdfPCell(new Paragraph(estandar.getCantidad()));
+		            	table.addCell(cellDinamic);
+	            	}
+	            	
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(estandar.getNombre()));
 	            	table.addCell(cellDinamic2);
 	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("0"));
