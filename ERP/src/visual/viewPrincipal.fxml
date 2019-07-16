@@ -270,7 +270,7 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox fx:id="pane_Productos" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox fx:id="pane_Productos" disable="true" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
@@ -525,49 +525,6 @@
                                                                                                                                  </HBox.margin>
                                                                                                                               </Button>
                                                                                                                               <Button mnemonicParsing="false" text="Agregar">
-                                                                                                                                 <HBox.margin>
-                                                                                                                                    <Insets right="10.0" />
-                                                                                                                                 </HBox.margin>
-                                                                                                                              </Button>
-                                                                                                                           </children>
-                                                                                                                        </HBox>
-                                                                                                                     </children>
-                                                                                                                  </VBox>
-                                                                                                               </children>
-                                                                                                            </AnchorPane>
-                                                                                                         </content>
-                                                                                                      </Tab>
-                                                                                                      <Tab text="Costos Directos">
-                                                                                                         <content>
-                                                                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                                                                               <children>
-                                                                                                                  <VBox prefHeight="422.4" prefWidth="586.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                                                                     <children>
-                                                                                                                        <TableView prefHeight="303.0" prefWidth="1081.0" VBox.vgrow="ALWAYS">
-                                                                                                                           <columns>
-                                                                                                                              <TableColumn prefWidth="540.9999694824219" text="Nombre del producto" />
-                                                                                                                              <TableColumn minWidth="0.0" prefWidth="539.0" text="Monto" />
-                                                                                                                           </columns>
-                                                                                                                           <columnResizePolicy>
-                                                                                                                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                                                                                           </columnResizePolicy>
-                                                                                                                           <VBox.margin>
-                                                                                                                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                                                                                           </VBox.margin>
-                                                                                                                        </TableView>
-                                                                                                                        <HBox alignment="CENTER_RIGHT" prefHeight="52.8" prefWidth="586.0">
-                                                                                                                           <children>
-                                                                                                                              <Button mnemonicParsing="false" text="Nuevo costo">
-                                                                                                                                 <HBox.margin>
-                                                                                                                                    <Insets right="10.0" />
-                                                                                                                                 </HBox.margin>
-                                                                                                                              </Button>
-                                                                                                                              <Button mnemonicParsing="false" text="Eliminar">
-                                                                                                                                 <HBox.margin>
-                                                                                                                                    <Insets right="10.0" />
-                                                                                                                                 </HBox.margin>
-                                                                                                                              </Button>
-                                                                                                                              <Button mnemonicParsing="false" text="Modificar">
                                                                                                                                  <HBox.margin>
                                                                                                                                     <Insets right="10.0" />
                                                                                                                                  </HBox.margin>
@@ -1576,7 +1533,7 @@
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: TRANSPARENT;">
                                                    <children>
-                                                      <VBox prefHeight="354.0" prefWidth="630.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <VBox prefHeight="583.0" prefWidth="630.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <children>
                                                             <HBox prefHeight="92.0" prefWidth="630.0">
                                                                <children>
@@ -1630,10 +1587,13 @@
                                                             </HBox>
                                                             <HBox prefHeight="115.0" prefWidth="630.0">
                                                                <children>
-                                                                  <VBox prefHeight="71.0" prefWidth="312.0">
+                                                                  <VBox prefHeight="372.0" prefWidth="366.0">
                                                                      <children>
-                                                                        <Label text="Números de valor fiscal" />
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                                        <Label prefHeight="22.0" prefWidth="258.0" text="Números de valor fiscal">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font></Label>
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="156.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Desde:" />
                                                                               <Spinner fx:id="spinner_empresaValorFiscalMin" prefHeight="26.0" prefWidth="135.0">
@@ -1642,8 +1602,11 @@
                                                                                  </HBox.margin>
                                                                               </Spinner>
                                                                            </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="5.0" />
+                                                                           </VBox.margin>
                                                                         </HBox>
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="156.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:" />
                                                                               <Spinner fx:id="spinner_empresaValorFiscalMax" prefHeight="26.0" prefWidth="135.0">
@@ -1652,16 +1615,38 @@
                                                                                  </HBox.margin>
                                                                               </Spinner>
                                                                            </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="10.0" />
+                                                                           </VBox.margin>
                                                                         </HBox>
+                                                                        <VBox prefHeight="200.0" prefWidth="248.0">
+                                                                           <children>
+                                                                              <Label text="Fecha solicitada:" />
+                                                                              <DatePicker />
+                                                                              <Label text="Fecha de vencimiento:">
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </Label>
+                                                                              <DatePicker />
+                                                                           </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </VBox>
                                                                      </children>
                                                                      <HBox.margin>
                                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                      </HBox.margin>
                                                                   </VBox>
-                                                                  <VBox prefHeight="71.0" prefWidth="334.0">
+                                                                  <VBox prefHeight="371.0" prefWidth="315.0">
                                                                      <children>
-                                                                        <Label text="Año fiscal" />
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                                        <Label text="Año fiscal">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="266.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio:" />
                                                                               <DatePicker fx:id="datepicker_empresaFechaInicio" prefHeight="26.0" prefWidth="160.0">
@@ -1670,8 +1655,11 @@
                                                                                  </HBox.margin>
                                                                               </DatePicker>
                                                                            </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="5.0" />
+                                                                           </VBox.margin>
                                                                         </HBox>
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="266.0">
                                                                            <children>
                                                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fin:" />
                                                                               <DatePicker fx:id="datepicker_empresaFechaFinal" prefHeight="26.0" prefWidth="160.0">
@@ -1680,10 +1668,57 @@
                                                                                  </HBox.margin>
                                                                               </DatePicker>
                                                                            </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="10.0" />
+                                                                           </VBox.margin>
                                                                         </HBox>
+                                                                        <VBox prefHeight="322.0" prefWidth="318.0">
+                                                                           <children>
+                                                                              <Label text="Logo">
+                                                                                 <font>
+                                                                                    <Font name="System Bold" size="15.0" />
+                                                                                 </font>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </Label>
+                                                                              <AnchorPane prefHeight="178.0" prefWidth="251.0" style="-fx-background-color: WHITE;">
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="5.0" left="10.0" right="60.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                                 <children>
+                                                                                    <ImageView fitHeight="120.0" fitWidth="190.0" layoutX="11.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+                                                                                 </children>
+                                                                              </AnchorPane>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="263.0">
+                                                                                 <children>
+                                                                                    <Button mnemonicParsing="false" text="Subir imagen">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Button>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                    <Button fx:id="button_empresaGuardar" mnemonicParsing="false" onAction="#guardarEmpresa" text="Guardar">
+                                                                                       <font>
+                                                                                          <Font size="16.0" />
+                                                                                       </font>
+                                                                                    </Button>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="50.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                           </children>
+                                                                           <VBox.margin>
+                                                                              <Insets top="20.0" />
+                                                                           </VBox.margin>
+                                                                        </VBox>
                                                                      </children>
                                                                      <HBox.margin>
-                                                                        <Insets bottom="10.0" left="80.0" right="10.0" top="10.0" />
+                                                                        <Insets bottom="10.0" left="35.0" right="10.0" top="10.0" />
                                                                      </HBox.margin>
                                                                   </VBox>
                                                                </children>
@@ -1693,44 +1728,6 @@
                                                             </HBox>
                                                          </children>
                                                       </VBox>
-                                                      <AnchorPane layoutX="14.0" layoutY="354.0" prefHeight="262.0" prefWidth="368.0">
-                                                         <children>
-                                                            <VBox prefHeight="200.0" prefWidth="263.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                               <children>
-                                                                  <Label text="Logo">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                     <VBox.margin>
-                                                                        <Insets left="10.0" />
-                                                                     </VBox.margin>
-                                                                  </Label>
-                                                                  <AnchorPane prefHeight="188.0" prefWidth="298.0" style="-fx-background-color: WHITE;">
-                                                                     <VBox.margin>
-                                                                        <Insets bottom="5.0" left="10.0" right="60.0" top="5.0" />
-                                                                     </VBox.margin>
-                                                                     <children>
-                                                                        <ImageView fitHeight="166.0" fitWidth="271.0" layoutX="11.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
-                                                                     </children>
-                                                                  </AnchorPane>
-                                                                  <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="263.0">
-                                                                     <children>
-                                                                        <Button mnemonicParsing="false" text="Subir imagen">
-                                                                           <HBox.margin>
-                                                                              <Insets left="10.0" />
-                                                                           </HBox.margin>
-                                                                        </Button>
-                                                                     </children>
-                                                                  </HBox>
-                                                               </children>
-                                                            </VBox>
-                                                         </children>
-                                                      </AnchorPane>
-                                                      <Button fx:id="button_empresaGuardar" layoutX="536.0" layoutY="562.0" mnemonicParsing="false" onAction="#guardarEmpresa" text="Guardar">
-                                                         <font>
-                                                            <Font size="16.0" />
-                                                         </font>
-                                                      </Button>
                                                    </children>
                                                 </AnchorPane>
                                           </content>
