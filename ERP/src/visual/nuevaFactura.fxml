@@ -13,7 +13,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,13 +20,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1500.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
-      <AnchorPane layoutX="204.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane layoutX="275.0" layoutY="52.0" prefHeight="606.0" prefWidth="1212.0">
          <children>
-            <VBox prefHeight="606.0" prefWidth="942.0">
+            <VBox layoutX="30.0" prefHeight="606.0" prefWidth="1253.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <HBox prefHeight="606.0" prefWidth="1098.0" VBox.vgrow="ALWAYS">
                      <children>
                         <VBox prefHeight="523.0" prefWidth="183.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -73,7 +72,7 @@
                         </VBox>
                         <VBox prefHeight="454.0" prefWidth="450.0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                            </HBox.margin>
                            <children>
                               <VBox prefHeight="50.0" prefWidth="237.0" style="-fx-border-color: LIGHTGRAY;">
@@ -86,15 +85,7 @@
                                                 <Insets left="10.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Button fx:id="button_buscarClienteFactura" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="31.0" prefWidth="30.0">
-                                             <effect>
-                                                <ImageInput>
-                                                   <source>
-                                                      <Image url="@images/icons/icon_search.png" />
-                                                   </source>
-                                                </ImageInput>
-                                             </effect>
-                                          </Button>
+                                          <Button fx:id="button_buscarClienteFactura" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="26.0" prefWidth="70.0" text="Buscar" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -112,7 +103,7 @@
                                     <Font name="System Bold" size="25.0" />
                                  </font>
                               </Label>
-                              <ListView fx:id="listview_productosFacturados" prefHeight="202.0" prefWidth="450.0" VBox.vgrow="ALWAYS">
+                              <ListView fx:id="listview_productosFacturados" prefHeight="374.0" prefWidth="523.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
@@ -135,6 +126,10 @@
                                     <Label text="RD$" />
                                  </children>
                               </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="606.0" prefWidth="344.0">
+                           <children>
                               <VBox prefHeight="204.0" prefWidth="421.0" style="-fx-border-color: LIGHTGRAY;">
                                  <children>
                                     <Label text="Tipo de pago">
@@ -296,25 +291,39 @@
                                     </VBox>
                                  </children>
                                  <VBox.margin>
-                                    <Insets bottom="10.0" top="10.0" />
+                                    <Insets bottom="10.0" top="200.0" />
                                  </VBox.margin>
                               </VBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="237.0">
+                              <CheckBox mnemonicParsing="false" text="Facturar con Valor Fiscal">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="422.0">
                                  <children>
                                     <Button fx:id="guardarFactura" mnemonicParsing="false" onAction="#guardarFactura" text="Imprimir factura">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
                                     </Button>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="BOTTOM_RIGHT" prefHeight="30.0" prefWidth="237.0">
+                              <HBox alignment="BOTTOM_RIGHT" prefHeight="293.0" prefWidth="422.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>
