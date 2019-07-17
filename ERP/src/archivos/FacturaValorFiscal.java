@@ -104,7 +104,7 @@ public class FacturaValorFiscal {
 				Chunk glue = new Chunk(new VerticalPositionMark());
 				p = new Paragraph("" + Controladora.getInstance().getMiEmpresa().getNombre());
 				p.add(new Chunk(glue));
-				p.add("Factura de crédito fiscal");
+				p.add("Factura de Crédito Fiscal");
 				//p.setFont((Font) FontConstants.Bold);
 				document.add(p);
 				
