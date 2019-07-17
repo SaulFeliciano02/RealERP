@@ -3156,7 +3156,7 @@ public class Controladora implements Serializable{
 	public String findFacturaNombre(String string) {
 		String nombre = "";
 		int i = 0;
-		while(string.charAt(i) != ':') {
+		while(string.charAt(i) != ':' || string.charAt(i) != ',') {
 			nombre += string.charAt(i);
 			i++;
 		}
@@ -3193,6 +3193,21 @@ public class Controladora implements Serializable{
 			i++;
 		}
 		return costoConvertido;
+	}
+	
+	public String findFacturaNumeroSerie(String string) {
+		int i = 0;
+		String numeroSerie = "";
+		boolean check = true;
+		while(string.charAt(i) != ')') {
+			if(string.charAt(i) == '(') {
+				check = false;
+			}
+			if(!check) {
+				numeroSerie += string.charAt(i);
+			}
+		}
+		return numeroSerie;
 	}
 	
 	public GastoGeneral buscarGasto(String g)
@@ -7367,6 +7382,44 @@ public boolean activarLoadAtributos()
 				e2.printStackTrace();
 			}
 		}
+	}
+	
+	public void restarExistenciaActualMatriz(float cantidadRestar, int indiceProducto, Estandar matriz) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE matriz SET existactual = '"+cantidadRestar+"' WHERE idmatriz = '"+indiceProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz)+1;
+		Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceEstandar);
 	}
 	
 	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
