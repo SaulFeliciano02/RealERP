@@ -38,9 +38,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import logico.Atributos;
 import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
 import logico.Cliente;
+import logico.Combinaciones;
 import logico.Controladora;
 import logico.Estandar;
 import logico.Factura;
@@ -257,6 +259,12 @@ public class ControllerNuevaFactura implements Initializable{
     				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
     				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
     			}
+    			else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    				Estandar matriz = (Estandar) producto;
+    				int indiceProducto = Controladora.getInstance().getMisProductosMatriz().indexOf(matriz)+1;
+    				float cantidadRestar = matriz.getExistenciaActual() - cantidad;
+    				Controladora.getInstance().restarExistenciaActualMatriz(cantidadRestar, indiceProducto, matriz);
+    			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
     				Kit kit = (Kit) producto;
     				int indiceProducto = Controladora.getInstance().getMisProductosKit().indexOf(kit)+1;
@@ -373,7 +381,7 @@ public class ControllerNuevaFactura implements Initializable{
     	a.setAlertType(AlertType.ERROR);
     	boolean isValid = true;
     	String item = listview_facturaProductoList.getSelectionModel().getSelectedItem();
-    	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findEncargadoNombre(item));
+    	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findFacturaNombre(item));
     	float precioConvertido = 0;
     	float cantidadCheck = Float.parseFloat(textfield_facturaCantidad.getText());
     	for(String items : listview_productosFacturados.getItems()) {
@@ -525,8 +533,37 @@ public class ControllerNuevaFactura implements Initializable{
 				}
 				String itemMedida = "";
 				if(hasPromotion) {
-					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+					if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+						Estandar estandar = (Estandar) producto;
+						String numeroSerie = Controladora.getInstance().findFacturaNumeroSerie(item);
+						for(Combinaciones c : estandar.getCombinaciones()) {
+							if(numeroSerie.equalsIgnoreCase(c.getNumeroSerie())) {
+								itemMedida = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+								for(Atributos atributo : c.getListaAtributos()) {
+									itemMedida += ", (" + atributo.getNombre() + "), ";
+								}
+								itemMedida += ": " + cantidadConvertida + "$" +  "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+							}
+						}
+					}
+					else {
+						itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")" + " (Promoción)";
+					}
+					
 				}else {
+					if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+						Estandar estandar = (Estandar) producto;
+						String numeroSerie = Controladora.getInstance().findFacturaNumeroSerie(item);
+						for(Combinaciones c : estandar.getCombinaciones()) {
+							if(numeroSerie.equalsIgnoreCase(c.getNumeroSerie())) {
+								itemMedida = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+								for(Atributos atributo : c.getListaAtributos()) {
+									itemMedida += ", (" + atributo.getNombre() + "), ";
+								}
+								itemMedida += ": " + cantidadConvertida + "$" +  "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
+							}
+						}
+					}
 					itemMedida = itemNombre + ": " + precioConvertido + "$ " + "(" + cantidadConvertida + " " + producto.getUnidadMedida().getNombre() + ")";
 				}
         		
@@ -642,18 +679,74 @@ public class ControllerNuevaFactura implements Initializable{
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
 						if(hasPromotion) {
-							data.add(p.getNombre() + ": " + precioPromocion + "$" + " (Promoción)");
+							if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+								Estandar estandar = (Estandar) p;
+								for(Combinaciones c : estandar.getCombinaciones()) {
+									String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+									for(Atributos atributo : c.getListaAtributos()) {
+										matrizInfo += ", (" + atributo.getNombre() + "), ";
+									}
+									matrizInfo += ": " + precioPromocion + "$" + " (Promocion)";
+									data.add(matrizInfo);
+								}
+							}
+							else {
+								data.add(p.getNombre() + ": " + precioPromocion + "$" + " (Promoción)");
+							}
+							
 						}
 						else {
-							data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+							if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+								Estandar estandar = (Estandar) p;
+								for(Combinaciones c : estandar.getCombinaciones()) {
+									String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+									for(Atributos atributo : c.getListaAtributos()) {
+										matrizInfo += ", (" + atributo.getNombre() + "), ";
+									}
+									matrizInfo += ": " + estandar.getPrecio() + "$";
+									data.add(matrizInfo);
+								}
+							}
+							else {
+								data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+							}
+							
 						}
 					}
 					else {
 						if(hasPromotion) {
-							data.add(p.getNombre() + ": " + precioPromocion + "$ (" + p.getUnidadMedida().getNombre() + ")" + " (Promoción)");
+							if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+								Estandar estandar = (Estandar) p;
+								for(Combinaciones c : estandar.getCombinaciones()) {
+									String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+									for(Atributos atributo : c.getListaAtributos()) {
+										matrizInfo += ", (" + atributo.getNombre() + "), ";
+									}
+									matrizInfo += ": " + precioPromocion + "$ (" + estandar.getUnidadMedida().getNombre() + ")" + " (Promocion)";
+									data.add(matrizInfo);
+								}
+							}
+							else {
+								data.add(p.getNombre() + ": " + precioPromocion + "$ (" + p.getUnidadMedida().getNombre() + ")" + " (Promoción)");
+							}
+							
 						}
 						else {
-							data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+							if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+								Estandar estandar = (Estandar) p;
+								for(Combinaciones c : estandar.getCombinaciones()) {
+									String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+									for(Atributos atributo : c.getListaAtributos()) {
+										matrizInfo += ", (" + atributo.getNombre() + "), ";
+									}
+									matrizInfo += ": " + precioPromocion + "$ (" + estandar.getUnidadMedida().getNombre() + ")";
+									data.add(matrizInfo);
+								}
+							}
+							else {
+								data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+							}
+							
 						}
 					}
 				}
@@ -663,10 +756,38 @@ public class ControllerNuevaFactura implements Initializable{
 			for(Producto p : producto) {
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
-						data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+						if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+							Estandar estandar = (Estandar) p;
+							for(Combinaciones c : estandar.getCombinaciones()) {
+								String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+								for(Atributos atributo : c.getListaAtributos()) {
+									matrizInfo += ", (" + atributo.getNombre() + "), ";
+								}
+								matrizInfo += ": " + estandar.getPrecio() + "$";
+								data.add(matrizInfo);
+							}
+						}
+						else {
+							data.add(p.getNombre() + ": " + p.getPrecio() + "$");
+						}
+						
 					}
 					else {
-						data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						if(p.getTipoProducto().equalsIgnoreCase("Matriz")) {
+							Estandar estandar = (Estandar) p;
+							for(Combinaciones c : estandar.getCombinaciones()) {
+								String matrizInfo = estandar.getNombre() + ", Num.Serie (" + c.getNumeroSerie()  + ")";
+								for(Atributos atributo : c.getListaAtributos()) {
+									matrizInfo += ", (" + atributo.getNombre() + "), ";
+								}
+								matrizInfo += ": " + estandar.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")";
+								data.add(matrizInfo);
+							}
+						}
+						else {
+							data.add(p.getNombre() + ": " + p.getPrecio() + "$ (" + p.getUnidadMedida().getNombre() + ")");
+						}
+						
 					}
 				}
 			}
