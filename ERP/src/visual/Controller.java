@@ -315,6 +315,9 @@ public class Controller implements Initializable{
     @FXML private Spinner<Integer> spinner_empresaValorFiscalMin;
     @FXML private Spinner<Integer> spinner_empresaValorFiscalMax;
     
+    @FXML private DatePicker datepicker_empresaFechaSolicitada;
+    @FXML private DatePicker datepicker_empresaFechaVencimiento;
+    
     @FXML private DatePicker datepicker_empresaFechaInicio;
     @FXML private DatePicker datepicker_empresaFechaFinal;
     
@@ -1858,6 +1861,8 @@ public class Controller implements Initializable{
     	String domicilio = "";
     	int valorFiscalInferior = spinner_empresaValorFiscalMin.getValue();
     	int valorFiscalMayor = spinner_empresaValorFiscalMax.getValue();
+    	LocalDate fechaSolicitada = null;
+    	LocalDate fechaVencimiento = null;
     	LocalDate fechaInicio = null;
     	LocalDate fechaFinal = null;
     	try {
@@ -1865,13 +1870,15 @@ public class Controller implements Initializable{
     		rnc = textfield_empresaRNC.getText();
     		domicilio = textarea_empresaDomicilio.getText();
     		telefono = textfield_empresaTelefono.getText();
+    		fechaSolicitada = datepicker_empresaFechaSolicitada.getValue();
+    		fechaVencimiento = datepicker_empresaFechaVencimiento.getValue();
     		fechaInicio = datepicker_empresaFechaInicio.getValue();
     		fechaFinal = datepicker_empresaFechaFinal.getValue();
     	}catch(NullPointerException e) {
     		
     	}
     	
-    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, null, null, fechaInicio, fechaFinal);
+    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, fechaSolicitada, fechaVencimiento, fechaInicio, fechaFinal);
     	Controladora.getInstance().setMiEmpresa(empresa);
     	
     	Controladora.getInstance().guardarInfoEmpresaSQL(empresa);
@@ -2368,6 +2375,22 @@ public class Controller implements Initializable{
 	    });
 		
 		datepicker_empresaFechaFinal.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+		datepicker_empresaFechaVencimiento.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+		datepicker_empresaFechaSolicitada.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
 	            LocalDate today = LocalDate.now();
