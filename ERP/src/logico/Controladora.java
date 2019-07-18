@@ -3156,8 +3156,15 @@ public class Controladora implements Serializable{
 	public String findFacturaNombre(String string) {
 		String nombre = "";
 		int i = 0;
-		while(string.charAt(i) != ':' || string.charAt(i) != ',') {
-			nombre += string.charAt(i);
+		boolean check = true;
+		while(check) {
+			if(string.charAt(i) == ':' || string.charAt(i) == ',') {
+				check = false;
+			}
+			if(check) {
+				nombre += string.charAt(i);
+			}
+			
 			i++;
 		}
 		return nombre;
