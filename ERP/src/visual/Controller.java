@@ -2365,14 +2365,14 @@ public class Controller implements Initializable{
     }
     
     public void setDatePickersConfiguracion() {
-		datepicker_empresaFechaInicio.setDayCellFactory(picker -> new DateCell() {
+		/*datepicker_empresaFechaInicio.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
 	            LocalDate today = LocalDate.now();
 
 	            setDisable(empty || date.compareTo(today) < 0 );
 	        }
-	    });
+	    });*/
 		
 		datepicker_empresaFechaFinal.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
@@ -2390,14 +2390,14 @@ public class Controller implements Initializable{
 	            setDisable(empty || date.compareTo(today) < 0 );
 	        }
 	    });
-		datepicker_empresaFechaSolicitada.setDayCellFactory(picker -> new DateCell() {
+		/*datepicker_empresaFechaSolicitada.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
 	            LocalDate today = LocalDate.now();
 
 	            setDisable(empty || date.compareTo(today) < 0 );
 	        }
-	    });
+	    });*/
 	}
     
     public void setSpinnersConfiguracion() {

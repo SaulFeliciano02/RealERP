@@ -2467,7 +2467,7 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-				c.prepareStatement("INSERT INTO rangonumerosvalorfiscal (valorfiscalinferior, valorfiscalsuperior, fechasolicitada, fechavencimiento) VALUES (?, ?, ?, ?)");
+				c.prepareStatement("INSERT INTO rangonumerosvalorfiscal (valorfiscalinferior, valorfiscalsuperior, fechasecsolicitada, fechasecvencimiento) VALUES (?, ?, ?, ?)");
 		
 			p.setInt(1, empresa.getValorFiscalInferior());
 			p.setInt(2, empresa.getValorFiscalMayor());
