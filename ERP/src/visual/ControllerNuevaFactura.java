@@ -381,6 +381,7 @@ public class ControllerNuevaFactura implements Initializable{
     	a.setAlertType(AlertType.ERROR);
     	boolean isValid = true;
     	String item = listview_facturaProductoList.getSelectionModel().getSelectedItem();
+    	System.out.println("El nombre es " + Controladora.getInstance().findFacturaNombre(item));
     	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findFacturaNombre(item));
     	float precioConvertido = 0;
     	float cantidadCheck = Float.parseFloat(textfield_facturaCantidad.getText());
