@@ -1141,6 +1141,7 @@ public class Controller implements Initializable{
     	if (alert.getResult() == ButtonType.YES) {
     		//File archivo = new File("c:/ERPdata/data/inventario.csv");
     		
+    		//Productos Estandar
     		HSSFWorkbook libro = new HSSFWorkbook();
     		HSSFSheet hoja1 = libro.createSheet("Productos Estandar");
     		int i;
@@ -1244,10 +1245,153 @@ public class Controller implements Initializable{
     			i3++;
 			}
     		
+    		HSSFSheet hoja2 = libro.createSheet("Productos Matriz");
+    		int i5;
+    		ArrayList<String> titulosMatriz = new ArrayList<>();
+    		titulosMatriz.add("Código");
+    		titulosMatriz.add("Nombre");
+    		titulosMatriz.add("N. de Serie");
+    		titulosMatriz.add("Atributo 1");
+    		titulosMatriz.add("Atributo 2");
+    		titulosMatriz.add("Atributo 3");
+    		titulosMatriz.add("Existencia Inicial");
+    		titulosMatriz.add("Existencia Actual");
+    		titulosMatriz.add("Existencia Mínima");
+    		titulosMatriz.add("Existencia Máxima");
+    		titulosMatriz.add("Tipo");
+    		titulosMatriz.add("Rubro");
+    		titulosMatriz.add("Proveedor");
+    		titulosMatriz.add("Unidad de medida");
+    		titulosMatriz.add("Fabricado");
+    		titulosMatriz.add("Precio");
+    		titulosMatriz.add("Costo de Compra");
+    		titulosMatriz.add("Costo por Partida");
+    		titulosMatriz.add("Costo por Mano de Obra");
+    		titulosMatriz.add("Costo Total");
+    		
+    		HSSFRow fila3 = hoja2.createRow(0);
+    		for (i5 = 0; i5 < titulosMatriz.size(); i5++) {
+    			HSSFCell celda = fila3.createCell(i5);
+    			celda.setCellValue(titulosMatriz.get(i5));
+			}
+    		
+    		int i6 = titulosMatriz.size();
+    		for (i5 = 0; i5 < Controladora.getInstance().getMisGastosGenerales().size(); i5++) {
+    			HSSFCell celda = fila3.createCell(i6);
+    			celda.setCellValue(Controladora.getInstance().getMisGastosGenerales().get(i5).getNombre());
+    			i6++;
+			}
+    		
+    		int i7 = 1;
+    		for (Estandar est : Controladora.getInstance().getMisProductosMatriz()) {
+    			for (Combinaciones comb : est.getCombinaciones()) {
+    				HSSFRow fila4 = hoja2.createRow(i7);
+        			HSSFCell celda2 = fila4.createCell(0);
+        			celda2.setCellValue(est.getCodigo());
+        			HSSFCell celda3 = fila4.createCell(1);
+        			celda3.setCellValue(est.getNombre());
+        			HSSFCell celda19 = fila4.createCell(2);
+        			celda19.setCellValue(comb.numeroSerie);
+        			HSSFCell celda20 = fila4.createCell(3);
+        			if(comb.getAtributo1() != "")
+        			{
+        				celda20.setCellValue(comb.getAtributo1());
+        			}
+        			else
+        			{
+        				celda20.setCellValue("Sin Atributo");
+        			}
+        			HSSFCell celda21 = fila4.createCell(4);
+        			if(comb.getAtributo2() != "")
+        			{
+        				celda21.setCellValue(comb.getAtributo2());
+        			}
+        			else
+        			{
+        				celda21.setCellValue("Sin Atributo");
+        			}
+        			
+        			HSSFCell celda22 = fila4.createCell(5);
+        			if(comb.getAtributo3() != "")
+        			{
+        				celda22.setCellValue(comb.getAtributo3());
+        			}
+        			else
+        			{
+        				celda22.setCellValue("Sin Atributo");
+        			}
+        			
+        			HSSFCell celda4 = fila4.createCell(6);
+        			celda4.setCellValue(est.getExistenciaInicial());
+        			HSSFCell celda5 = fila4.createCell(7);
+        			celda5.setCellValue(comb.getExistenciaActual());
+        			HSSFCell celda6 = fila4.createCell(8);
+        			celda6.setCellValue(est.getExistenciaMinima());
+        			HSSFCell celda7 = fila4.createCell(9);
+        			celda7.setCellValue(est.getExistenciaMaxima());
+        			HSSFCell celda8 = fila4.createCell(10);
+        			celda8.setCellValue(est.getTipoProducto());
+        			HSSFCell celda9 = fila4.createCell(11);
+        			celda9.setCellValue(est.getRubroProducto());
+        			HSSFCell celda10 = fila4.createCell(12);
+        			celda10.setCellValue(est.getProveedorPrin());
+        			HSSFCell celda11 = fila4.createCell(13);
+        			if(est.getUnidadMedida() != null)
+    				{
+        				celda11.setCellValue(est.getUnidadMedida().getNombre());
+    				}
+    				else
+    				{
+    					celda11.setCellValue("Sin unidad");
+    				}
+        			HSSFCell celda12 = fila4.createCell(14);
+        			if(est.isFabricado())
+        			{
+        				celda12.setCellValue("SI");
+        			}
+        			else
+        			{
+        				celda12.setCellValue("NO");
+        			}
+        			HSSFCell celda13 = fila4.createCell(15);
+        			celda13.setCellValue(est.getPrecio());
+        			HSSFCell celda14 = fila4.createCell(16);
+        			celda14.setCellValue(est.getCostoDeCompra());
+        			HSSFCell celda15 = fila4.createCell(17);
+        			celda15.setCellValue(est.getCostoPartida());
+        			HSSFCell celda16 = fila4.createCell(18);
+        			celda16.setCellValue(est.getManodeobra());
+        			HSSFCell celda17 = fila4.createCell(19);
+        			celda17.setCellValue(est.getCosto());
+        			int i4 = 20;
+        			for (GastoGeneral gast : Controladora.getInstance().getMisGastosGenerales()) 
+        			{
+        				HSSFCell celda18 = fila4.createCell(i4);
+    	    			for(CostoIndirectoProducto cost: est.getCostosIndirectos())
+    					{
+    	    				if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
+    						{
+    	    					celda18.setCellValue(cost.getValor());
+    						}
+    						else
+    						{
+    							celda18.setCellValue(0);
+    						}
+    					}
+    	    			i4++;
+        			}
+        			i7++;
+    			}
+			}
+    		
+    		//Servicios
+    		
+    		
     		int o;
     		for(o=0; o < titulosEstandar.size()+Controladora.getInstance().getMisGastosGenerales().size(); o++)
     		{
     			hoja1.autoSizeColumn(o);
+    			hoja2.autoSizeColumn(o);
     		}
     		
     		try {
