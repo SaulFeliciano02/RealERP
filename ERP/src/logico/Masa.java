@@ -16,6 +16,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Grano":
+					transformado = valorTransformar;
+					break;
 				case "Onza":
 					transformado = valorTransformar * 437.5f;
 					break;
@@ -38,6 +41,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Onza":
+					transformado = valorTransformar;
+					break;
 				case "Grano":
 					transformado = valorTransformar * 0.0023f;
 					break;
@@ -60,6 +66,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Libra":
+					transformado = valorTransformar;
+					break;
 				case "Grano":
 					transformado = valorTransformar * 0.00014f;
 					break;
@@ -82,6 +91,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Miligramo":
+					transformado = valorTransformar;
+					break;
 				case "Grano":
 					transformado = valorTransformar * 64.80f;
 					break;
@@ -104,6 +116,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Gramo":
+					transformado = valorTransformar;
+					break;
 				case "Grano":
 					transformado = valorTransformar * 0.065f;
 					break;
@@ -126,6 +141,9 @@ public class Masa extends UnidadMedida {
 		{
 			switch(comparador)
 			{
+				case "Kilogramo":
+					transformado = valorTransformar;
+					break;
 				case "Grano":
 					transformado = valorTransformar * 0.000065f;
 					break;
