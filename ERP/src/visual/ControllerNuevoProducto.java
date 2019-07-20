@@ -1866,32 +1866,40 @@ public class ControllerNuevoProducto implements Initializable {
         		selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
         		p = (Estandar) Controladora.getInstance().buscarProducto(selection);
         		
-        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Area"))
+        		if(p.getUnidadMedida() != null)
         		{
-        			combobox_ConversorUnidad.getItems().clear();
-        			combobox_ConversorUnidad.getItems().addAll("Sq Pulgadas", "Sq Pies", "Sq Yardas", "Sq Milimetros", "Sq Centimetros", "Sq Metros");
-        			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
+        			if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Area"))
+            		{
+            			combobox_ConversorUnidad.getItems().clear();
+            			combobox_ConversorUnidad.getItems().addAll("Sq Pulgadas", "Sq Pies", "Sq Yardas", "Sq Milimetros", "Sq Centimetros", "Sq Metros");
+            			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
+            		}
+            		
+            		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Longitud"))
+            		{
+            			combobox_ConversorUnidad.getItems().clear();
+            			combobox_ConversorUnidad.getItems().addAll("Pulgadas", "Pies", "Yardas", "Milimetros", "Centimetros", "Metros");
+            			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
+            		}
+            		
+            		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Masa"))
+            		{
+            			combobox_ConversorUnidad.getItems().clear();
+            			combobox_ConversorUnidad.getItems().addAll("Grano", "Onza", "Libra", "Miligramo", "Gramo", "Kilogramo");
+            			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
+            		}
+            		
+            		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Volumen"))
+            		{
+            			combobox_ConversorUnidad.getItems().clear();
+            			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
+            			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
+            		}
         		}
         		
-        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Longitud"))
+        		else
         		{
         			combobox_ConversorUnidad.getItems().clear();
-        			combobox_ConversorUnidad.getItems().addAll("Pulgadas", "Pies", "Yardas", "Milimetros", "Centimetros", "Metros");
-        			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
-        		}
-        		
-        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Masa"))
-        		{
-        			combobox_ConversorUnidad.getItems().clear();
-        			combobox_ConversorUnidad.getItems().addAll("Grano", "Onza", "Libra", "Miligramo", "Gramo", "Kilogramo");
-        			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
-        		}
-        		
-        		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Volumen"))
-        		{
-        			combobox_ConversorUnidad.getItems().clear();
-        			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
-        			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
         		}
         	}
     	}
