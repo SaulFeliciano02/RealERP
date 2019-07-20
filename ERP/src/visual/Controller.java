@@ -1229,17 +1229,25 @@ public class Controller implements Initializable{
     			for (GastoGeneral gast : Controladora.getInstance().getMisGastosGenerales()) 
     			{
     				HSSFCell celda18 = fila2.createCell(i4);
-	    			for(CostoIndirectoProducto cost: est.getCostosIndirectos())
-					{
-	    				if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
-						{
-	    					celda18.setCellValue(cost.getValor());
-						}
-						else
-						{
-							celda18.setCellValue(0);
-						}
-					}
+    				if(est.getCostosIndirectos() != null)
+    				{
+    					for(CostoIndirectoProducto cost: est.getCostosIndirectos())
+    					{
+    	    				if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
+    						{
+    	    					celda18.setCellValue(cost.getValor());
+    	    					break;
+    						}
+    						else
+    						{
+    							celda18.setCellValue(0);
+    						}
+    					}
+    				}
+    				else
+    				{
+    					celda18.setCellValue(0);
+    				}
 	    			i4++;
     			}
     			i3++;
@@ -1367,7 +1375,86 @@ public class Controller implements Initializable{
         			for (GastoGeneral gast : Controladora.getInstance().getMisGastosGenerales()) 
         			{
         				HSSFCell celda18 = fila4.createCell(i4);
-    	    			for(CostoIndirectoProducto cost: est.getCostosIndirectos())
+        				if(est.getCostosIndirectos() != null)
+        				{
+        					for(CostoIndirectoProducto cost: est.getCostosIndirectos())
+        					{
+        	    				if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
+        						{
+        	    					celda18.setCellValue(cost.getValor());
+        						}
+        						else
+        						{
+        							celda18.setCellValue(0);
+        						}
+        					}
+        				}
+        				else
+        				{
+        					celda18.setCellValue(0);
+        				}
+        				
+        				i4++;
+        			}
+        			i7++;
+    			}
+			}
+    		
+    		//Servicios
+    		HSSFSheet hoja3 = libro.createSheet("Servicios");
+    		int i8;
+    		ArrayList<String> titulosServicio = new ArrayList<>();
+    		titulosServicio.add("Código");
+    		titulosServicio.add("Nombre");
+    		titulosServicio.add("Tipo");
+    		titulosServicio.add("Rubro");
+    		titulosServicio.add("Encargados Mano de Obra");
+    		titulosServicio.add("Horas Mano de Obra");
+    		titulosServicio.add("Precio");
+    		titulosServicio.add("Costo por Mano de Obra");
+    		titulosServicio.add("Costo Total");
+    		
+    		HSSFRow fila5 = hoja3.createRow(0);
+    		for (i8 = 0; i8 < titulosServicio.size(); i8++) {
+    			HSSFCell celda = fila5.createCell(i8);
+    			celda.setCellValue(titulosServicio.get(i8));
+			}
+    		
+    		int i9 = titulosServicio.size();
+    		for (i8 = 0; i8 < Controladora.getInstance().getMisGastosGenerales().size(); i8++) {
+    			HSSFCell celda = fila5.createCell(i9);
+    			celda.setCellValue(Controladora.getInstance().getMisGastosGenerales().get(i8).getNombre());
+    			i9++;
+			}
+    		
+    		int i10 = 1;
+    		for (Servicio est : Controladora.getInstance().getMisProductosServicio()) {
+    			HSSFRow fila2 = hoja3.createRow(i10);
+    			HSSFCell celda2 = fila2.createCell(0);
+    			celda2.setCellValue(est.getCodigo());
+    			HSSFCell celda3 = fila2.createCell(1);
+    			celda3.setCellValue(est.getNombre());
+    			HSSFCell celda8 = fila2.createCell(2);
+    			celda8.setCellValue(est.getTipoProducto());
+    			HSSFCell celda9 = fila2.createCell(3);
+    			celda9.setCellValue(est.getRubroProducto());
+    			HSSFCell celda13 = fila2.createCell(4);
+    			celda13.setCellValue(est.getCategoria().getNombre());
+    			HSSFCell celda14 = fila2.createCell(5);
+    			celda14.setCellValue(est.getInfoManoDeObra().getCantidadHoras());
+    			HSSFCell celda15 = fila2.createCell(6);
+    			celda15.setCellValue(est.getPrecio());
+    			HSSFCell celda16 = fila2.createCell(7);
+    			celda16.setCellValue(est.getManodeobra());
+    			HSSFCell celda17 = fila2.createCell(8);
+    			celda17.setCellValue(est.getCosto());
+    			int i4 = 9;
+    			for (GastoGeneral gast : Controladora.getInstance().getMisGastosGenerales()) 
+    			{
+    				HSSFCell celda18 = fila2.createCell(i4);
+    				if(est.getCostosIndirectos() != null)
+    				{
+    					for(CostoIndirectoProducto cost: est.getCostosIndirectos())
     					{
     	    				if(cost.getNombre().equalsIgnoreCase(gast.getNombre()))
     						{
@@ -1378,20 +1465,21 @@ public class Controller implements Initializable{
     							celda18.setCellValue(0);
     						}
     					}
-    	    			i4++;
-        			}
-        			i7++;
+    				}
+    				else {
+    					celda18.setCellValue(0);
+    				}
+	    			i4++;
     			}
+    			i10++;
 			}
-    		
-    		//Servicios
-    		
     		
     		int o;
     		for(o=0; o < titulosEstandar.size()+Controladora.getInstance().getMisGastosGenerales().size(); o++)
     		{
     			hoja1.autoSizeColumn(o);
     			hoja2.autoSizeColumn(o);
+    			hoja3.autoSizeColumn(o);
     		}
     		
     		try {
