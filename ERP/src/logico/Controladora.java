@@ -4004,13 +4004,17 @@ public class Controladora implements Serializable{
 	{
 		Conexion con = new Conexion();
 		Connection c = null;
+		Connection c2 = null;
 		Statement s = null;
+		Statement s2 = null;
 		ResultSet r = null;
+		ResultSet r2 = null;
 		PreparedStatement p = null;
 		int id = 0;
 		int idGastoGeneral = 0;
 		int idProducto = 0;
 		float costo = 0;
+		String nombreprod = null;
 		
 		try {
 			
@@ -4029,11 +4033,24 @@ public class Controladora implements Serializable{
 				idProducto = r.getInt(3);
 				costo = r.getFloat(4);
 				
+				c2 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idProducto+"'");
+				
+				while(r2.next())
+				{
+					nombreprod = r2.getString(1);
+				}
+				
 				CostoIndirectoProducto costoInd = new CostoIndirectoProducto(getMisGastosGenerales().get(idGastoGeneral-1).getNombre(), costo, null);
 				
 				getMisCostosIndirectos().add(costoInd);
 				
-				getMisProductos().get(idProducto-1).getCostosIndirectos().add(costoInd);
+				buscarProducto(nombreprod).getCostosIndirectos().add(costoInd);
+				
+				//getMisProductos().get(idProducto-1).getCostosIndirectos().add(costoInd);
 				
 			}
 			
