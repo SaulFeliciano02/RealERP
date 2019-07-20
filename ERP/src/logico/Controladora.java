@@ -3173,12 +3173,15 @@ public class Controladora implements Serializable{
 	public String findFacturaCosto(String string) {
 		String costo = "";
 		int i = 0;
-		boolean check = true;
+		boolean check = false;
 		while(i < string.length()) {
 			if(check && (Character.isDigit(string.charAt(i)) || string.charAt(i) == '.' )) {
 				costo += string.charAt(i);
 			}
-			if(string.charAt(i) == '(') {
+			if(string.charAt(i) == ':') {
+				check = true;
+			}
+			if(check && string.charAt(i) == '(') {
 				check = false;
 			}
 			i++;
