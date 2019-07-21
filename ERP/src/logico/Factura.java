@@ -19,9 +19,10 @@ public class Factura {
 	private LocalTime hora;
 	private String clienteCodigo;
 	private ArrayList<CantBienesYServiciosUtilizados> facturados;
+	private String tipoFactura;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
-			float montoRecibido, float cambio, Cliente cliente) {
+			float montoRecibido, float cambio, Cliente cliente, String tipoFactura) {
 		super();
 		this.prodFacturados = prodFacturados;
 		this.kitFacturados = kitFacturados;
@@ -33,6 +34,7 @@ public class Factura {
 		this.miCliente = cliente;
 		this.fecha = LocalDate.now();
 		this.hora = LocalTime.now();
+		this.setTipoFactura(tipoFactura);
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
 		}
@@ -119,6 +121,14 @@ public class Factura {
 	public ArrayList<CantBienesYServiciosUtilizados> getFacturados(){
 		
 		return facturados;
+	}
+
+	public String getTipoFactura() {
+		return tipoFactura;
+	}
+
+	public void setTipoFactura(String tipoFactura) {
+		this.tipoFactura = tipoFactura;
 	}
 	
 	

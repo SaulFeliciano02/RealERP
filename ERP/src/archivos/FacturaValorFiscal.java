@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.print.Doc;
 import javax.print.DocPrintJob;
@@ -31,7 +33,11 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
+import basededatos.Conexion;
 import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
 import logico.Controladora;
@@ -62,8 +68,6 @@ public class FacturaValorFiscal {
 		document.open();
 		
 		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11;
-		ColumnText ct = new ColumnText(writer.getDirectContent());
-		ColumnText ct2 = new ColumnText(writer.getDirectContent());
 		List list, list2;
 		float subtotal = 0;
 		float itbistotal = 0;
@@ -110,7 +114,23 @@ public class FacturaValorFiscal {
 				
 				p2 = new Paragraph("Domicilio: " + Controladora.getInstance().getMiEmpresa().getDomicilio());
 				p2.add(new Chunk(glue));
-				p2.add("NCF: B0100000572");
+				if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
+				{
+					int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
+					int i;
+					String ceros = "";
+					for(i = digitos; i < 8; i++)
+					{
+						ceros += "0";
+					}
+					
+					p2.add("NCF: B01" + ceros + Controladora.getInstance().getMisFacturas().size());
+				}
+				else
+				{
+					p2.add("NCF: B01" + Controladora.getInstance().getMisFacturas().size());
+				}
+				
 				document.add(p2);
 				
 				p3 = new Paragraph("RNC: " + Controladora.getInstance().getMiEmpresa().getRnc());
@@ -118,16 +138,39 @@ public class FacturaValorFiscal {
 				p3.add("Vencimiento secuencia:");
 				document.add(p3);
 				
+				Conexion con = new Conexion();
+				Connection c = null;
+				Statement s = null;
+				ResultSet r = null;
+				PreparedStatement pre = null;
+				int valorfiscalinferior = 0;
+				int valorfiscalsuperior = 0;
+				Date fechasolicitada = null;
+				Date fechaVencimiento = null;
+				
+				c = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s = (Statement) c.createStatement();
+				r = s.executeQuery("SELECT * FROM rangonumerosvalorfiscal WHERE valorfiscalinferior <= '"+Controladora.getInstance().getMisFacturas().size()+"' AND valorfiscalsuperior >= '"+Controladora.getInstance().getMisFacturas().size()+"'");
+				while(r.next())
+				{
+					valorfiscalinferior = r.getInt(2);
+					valorfiscalsuperior = r.getInt(3);
+					fechasolicitada = r.getDate(4);
+					fechaVencimiento = r.getDate(5);
+				}
+				
 				p4 = new Paragraph("Fecha: " + LocalDate.now());
 				p4.add(new Chunk(glue));
-				p4.add("" + LocalDate.of(LocalDate.now().getYear()+2, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()));
+				p4.add("" + fechaVencimiento);
 				document.add(p4);
 				
 				p5=new Paragraph();
 		        list=new List();
-		        list.add(new ListItem("RNC CLIENTE: 987654321"));
+		        list.add(new ListItem("RNC CLIENTE: " + factura.getMiCliente().getRnc()));
 		        list.add(new ListItem("NOMBRE O RAZÓN SOCIAL:"));
-		        list.add(new ListItem("NOMBRE DE PRUEBA EMPRESA CLIENTE"));
+		        list.add(new ListItem("NOMBRE DE PRUEBA EMPRESA CLIENTE")); //acá va el nombre de la empresa del cliente
 		        p5.add(list);
 		        document.add(p5);
 		        

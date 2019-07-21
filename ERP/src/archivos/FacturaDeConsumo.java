@@ -67,7 +67,23 @@ public class FacturaDeConsumo {
 			
 			p2 = new Paragraph("Domicilio: " + Controladora.getInstance().getMiEmpresa().getDomicilio());
 			p2.add(new Chunk(glue));
-			p2.add("NCF: B0200000572");
+			if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
+			{
+				int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
+				int i;
+				String ceros = "";
+				for(i = digitos; i < 8; i++)
+				{
+					ceros += "0";
+				}
+				
+				p2.add("NCF: B02" + ceros + Controladora.getInstance().getMisFacturas().size());
+			}
+			else
+			{
+				p2.add("NCF: B02" + Controladora.getInstance().getMisFacturas().size());
+			}
+			
 			document.add(p2);
 			
 			p3 = new Paragraph("RNC: " + Controladora.getInstance().getMiEmpresa().getRnc());
