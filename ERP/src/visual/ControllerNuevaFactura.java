@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import archivos.FacturaDeConsumo;
 import archivos.FacturaValorFiscal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,6 +96,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    
 	    @FXML private TextField textfield_clienteSeleccionado;
 	    @FXML private Button button_clienteSeleccionar;
+	    @FXML private CheckBox checkbox_facturaValorFiscal;
 
 	public void reload(Stage stage) {
     	
@@ -274,10 +276,22 @@ public class ControllerNuevaFactura implements Initializable{
     			}
     		}
     	}
-    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente);
+    	
+    	String tipoFactura = null;
+    	
+    	if(checkbox_facturaValorFiscal.isSelected())
+    	{
+    		tipoFactura = "01";
+    	}
+    	if(!checkbox_facturaValorFiscal.isSelected())
+    	{
+    		tipoFactura = "02";
+    	}
+    	
+    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura);
     	Controladora.getInstance().getMisFacturas().add(factura);
     	
-    	Controladora.getInstance().guardarFacturaSQL(factura);
+    	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
     	
     	for(CantProductosUtilizados c : prodFacturados) {
     		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
@@ -305,7 +319,14 @@ public class ControllerNuevaFactura implements Initializable{
     	textfield_totalCambio.setText("");
     	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
-    	FacturaValorFiscal.CrearFactura(factura);
+    	if(checkbox_facturaValorFiscal.isSelected())
+    	{
+    		FacturaValorFiscal.CrearFactura(factura);
+    	}
+    	if(!checkbox_facturaValorFiscal.isSelected())
+    	{
+    		FacturaDeConsumo.CrearFactura(factura);
+    	}
     }
     
     public void tableViewFacturaClicked(MouseEvent event) {

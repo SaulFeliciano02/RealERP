@@ -102,7 +102,7 @@ public class Controladora implements Serializable{
 	private ArrayList<ManoDeObra> misManosDeObras;
 	private ArrayList<CostoIndirectoProducto> misCostosIndirectos;
 	private ArrayList<Factura> misFacturas;
-	
+	private ArrayList<Factura> misFacturasValorFiscal;
 	private ArrayList<Area> misAreas;
 	private ArrayList<Longitud> misLongitudes;
 	private ArrayList<Masa> misMasas;
@@ -139,6 +139,7 @@ public class Controladora implements Serializable{
 		this.misCostosIndirectos = new ArrayList<>();
 		this.misFacturas = new ArrayList<>();
 		this.misCantKitsUtilizados = new ArrayList<>();
+		this.setMisFacturasValorFiscal(new ArrayList<>());
 		
 		misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -1032,7 +1033,7 @@ public class Controladora implements Serializable{
 		}
 	}
 
-	public void guardarFacturaSQL(Factura factura) {
+	public void guardarFacturaSQL(Factura factura, String tipoFactura) {
 		Conexion con = new Conexion();
 		Connection c = null;
 		Statement s = null;
@@ -1043,7 +1044,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1051,16 +1052,18 @@ public class Controladora implements Serializable{
 				p.setFloat(5, factura.getCambio());
 				p.setDate(6, java.sql.Date.valueOf(factura.getFecha()));
 				p.setTime(7, java.sql.Time.valueOf(factura.getHora()));
+				p.setString(8, tipoFactura);
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura) VALUES (?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
 				p.setFloat(4, factura.getCambio());
 				p.setDate(5,  java.sql.Date.valueOf(factura.getFecha()));
 				p.setTime(6, java.sql.Time.valueOf(factura.getHora()));
+				p.setString(7, tipoFactura);
 			}
 			
 			
@@ -7594,6 +7597,7 @@ public boolean activarLoadAtributos()
 		float cambio = 0;
 		Date fecha = null;
 		Time hora = null;
+		String tipoFactura = null;
 		int idProdFacturado = 0;
 		int idCantProdUtil = 0;
 		int cantproductoutilizadoid2 = 0;
@@ -7637,6 +7641,7 @@ public boolean activarLoadAtributos()
 				cambio = r.getFloat(6);
 				fecha = r.getDate(7);
 				hora = r.getTime(8);
+				tipoFactura = r.getString(9);
 				
 				if(idcliente>0)
 				{
@@ -7738,7 +7743,7 @@ public boolean activarLoadAtributos()
 					serviciosFact.add(servutil);
 				}
 				
-				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli);
+				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura);
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
@@ -7976,6 +7981,16 @@ public boolean activarLoadAtributos()
 
 	public void setMisCantKitsUtilizados(ArrayList<CantKitsUtilizados> misCantKitsUtilizados) {
 		this.misCantKitsUtilizados = misCantKitsUtilizados;
+	}
+
+
+	public ArrayList<Factura> getMisFacturasValorFiscal() {
+		return misFacturasValorFiscal;
+	}
+
+
+	public void setMisFacturasValorFiscal(ArrayList<Factura> misFacturasValorFiscal) {
+		this.misFacturasValorFiscal = misFacturasValorFiscal;
 	}
 
 
