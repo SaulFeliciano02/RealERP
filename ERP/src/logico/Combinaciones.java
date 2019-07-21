@@ -98,6 +98,11 @@ public class Combinaciones {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
+	public void setExistenciaActual(float existenciaActual) {
+		this.existenciaActual = existenciaActual;
+	}
+	
 	
 	
 	

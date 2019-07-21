@@ -3216,9 +3216,11 @@ public class Controladora implements Serializable{
 			if(string.charAt(i) == '(') {
 				check = false;
 			}
-			if(!check) {
+			if(!check && string.charAt(i) != ')' && string.charAt(i) != '(') {
+				System.out.println(numeroSerie);
 				numeroSerie += string.charAt(i);
 			}
+			i++;
 		}
 		return numeroSerie;
 	}
@@ -7414,7 +7416,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
-	public void restarExistenciaActualMatriz(float cantidadRestar, int indiceProducto, Estandar matriz) {
+	public void restarExistenciaActualMatriz(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
 		Statement sSQL = null;
@@ -7424,10 +7426,11 @@ public boolean activarLoadAtributos()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE matriz SET existactual = '"+cantidadRestar+"' WHERE idmatriz = '"+indiceProducto+"'");
+					cSQL.prepareStatement("UPDATE matriz SET existactual = '"+cantidadRestar+"' WHERE combinacion = '"+indiceProducto+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			System.out.println("Klk");
 		}
 		finally {
 			try {
@@ -7447,9 +7450,6 @@ public boolean activarLoadAtributos()
 				e2.printStackTrace();
 			}
 		}
-		
-		int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz)+1;
-		Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceEstandar);
 	}
 	
 	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
