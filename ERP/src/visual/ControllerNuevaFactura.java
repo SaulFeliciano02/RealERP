@@ -240,7 +240,7 @@ public class ControllerNuevaFactura implements Initializable{
     				cantidad = precioConvertido / precio;
     			}
     			
-    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
+    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     				cantidadUtilizados = new CantProductosUtilizados(producto, cantidad);
     				prodFacturados.add(cantidadUtilizados);
     			}
@@ -254,18 +254,28 @@ public class ControllerNuevaFactura implements Initializable{
     			}
     			
     			
-    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    			if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     				Estandar estandar = (Estandar) producto;
     				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1;
     				float cantidadRestar = estandar.getExistenciaActual() - cantidad;
-    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+    				
     				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     				Estandar matriz = (Estandar) producto;
     				int indiceProducto = Controladora.getInstance().getMisProductosMatriz().indexOf(matriz)+1;
+    				System.out.println(indiceProducto);
     				float cantidadRestar = matriz.getExistenciaActual() - cantidad;
-    				Controladora.getInstance().restarExistenciaActualMatriz(cantidadRestar, indiceProducto, matriz);
+    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
+    				
+    				for(Combinaciones c : Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).getCombinaciones()) {
+    					if(c.getNumeroSerie().equalsIgnoreCase(Controladora.getInstance().findFacturaNumeroSerie(items))) {
+    						int indiceCombinacion = Controladora.getInstance().getMisCombinaciones().indexOf(c)+1;	
+    						Controladora.getInstance().restarExistenciaActualMatriz(c.getExistenciaActual()-cantidad, indiceCombinacion);
+    						c.setExistenciaActual(c.getExistenciaActual()-cantidad);
+    					}
+    				}
+    				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
     				Kit kit = (Kit) producto;
@@ -598,6 +608,7 @@ public class ControllerNuevaFactura implements Initializable{
     	
     	float precio = 0;
     	for(String items : listview_productosFacturados.getItems()) {
+    		System.out.println(Controladora.getInstance().findFacturaCosto(items));
     		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
     	}
     	textfield_totalAPagar.setText(Float.toString(precio));

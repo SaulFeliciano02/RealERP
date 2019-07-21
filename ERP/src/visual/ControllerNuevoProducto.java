@@ -879,6 +879,7 @@ public class ControllerNuevoProducto implements Initializable {
             			}
             			Controladora.getInstance().getMisProductos().add(newMatriz);
             			Controladora.getInstance().getMisProductosEstandar().add(newMatriz);
+            			Controladora.getInstance().getMisProductosMatriz().add(newMatriz);
             			
             			Controladora.getInstance().guardarProductosSQL(newMatriz);
             			Controladora.getInstance().guardarEstandarSQL(newMatriz);
@@ -1301,6 +1302,7 @@ public class ControllerNuevoProducto implements Initializable {
             			}
             			Controladora.getInstance().getMisProductos().add(matriz);
             			Controladora.getInstance().getMisProductosEstandar().add(matriz);
+            			Controladora.getInstance().getMisProductosMatriz().add(matriz);
             			
             			Controladora.getInstance().guardarProductosSQL(matriz);
             			Controladora.getInstance().guardarEstandarSQL(matriz);
