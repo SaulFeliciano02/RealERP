@@ -956,6 +956,21 @@ public class Controller implements Initializable{
     	
     }
     
+    public void floatFieldPressed(KeyEvent event) {
+    	
+    	TextField source = (TextField) event.getSource();
+    	if(source.getLength() == 0) {
+    		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
+        		event.consume();
+        	}
+    	}
+    	else {
+    		if(!Controladora.getInstance().isFloat(source.getText(), event.getCharacter())) {
+    			event.consume();
+    		}
+    	}
+    	
+    }
   /*  public void config_pressed(ActionEvent event){
     	
     	    	text_menuName.setVisible(false);
@@ -1995,7 +2010,9 @@ public class Controller implements Initializable{
     //FUNCIONES PARA CREAR RUBROS
     
     public void activarRegistro(ActionEvent event) {
-    	pane_rubroCreate.setDisable(false);
+    	//pane_rubroCreate.setDisable(false);
+    	textfield_rubroCodigo.setDisable(false);
+    	textfield_rubroNombre.setDisable(false);
     	button_rubroGuardar.setDisable(true);
     }
     
@@ -2022,11 +2039,11 @@ public class Controller implements Initializable{
     	tableview_rubro.refresh();
     	textfield_rubroCodigo.setText("");
     	textfield_rubroNombre.setText("");
-    	pane_rubroCreate.setDisable(true);
+    	textfield_rubroCodigo.setDisable(true);
+    	textfield_rubroNombre.setDisable(true);
     }
     
     public void rubroTableViewClicked(MouseEvent event) {
-    	System.out.print("klk");
     	if(!tableview_rubro.getSelectionModel().isEmpty()) {
     		button_rubroEliminar.setDisable(false);
     	}

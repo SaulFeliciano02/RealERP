@@ -44,7 +44,7 @@
                               <Text layoutX="433.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre*" />
                               <TextField fx:id="textfield_empleadoNombre" layoutX="433.0" layoutY="55.0" onKeyTyped="#empleadoActivarGuardar" prefHeight="31.0" prefWidth="294.0" />
                               <TextField fx:id="textfield_empleadoTelefono" layoutX="42.0" layoutY="136.0" onKeyTyped="#numericFieldPressed" prefHeight="31.0" prefWidth="285.0" />
-                              <Text layoutX="42.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono*" />
+                              <Text layoutX="42.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono" />
                               <Text layoutX="438.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono Adicional" />
                               <TextField fx:id="textfield_empleadoTelefonoAdicional" layoutX="438.0" layoutY="136.0" prefHeight="31.0" prefWidth="285.0" />
                               <Text layoutX="40.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dominicilio" />

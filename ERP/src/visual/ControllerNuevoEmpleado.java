@@ -125,8 +125,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 	
 
 	public void empleadoActivarGuardar(KeyEvent event) {
-		if(textfield_empleadoCodigo.getLength() > 0 && textfield_empleadoNombre.getLength() > 0 && textfield_empleadoRNC.getLength() > 0
-				&& textfield_empleadoTelefono.getLength() > 0) {
+		if(textfield_empleadoCodigo.getLength() > 0 && textfield_empleadoNombre.getLength() > 0 && textfield_empleadoRNC.getLength() > 0) {
 			button_empleadoGuardar.setDisable(false);
 		}
 		else {
@@ -250,7 +249,22 @@ public class ControllerNuevoEmpleado implements Initializable{
 	  
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		fillCategoriaEmpleado();
 	}
+	
+	 public void fillCategoriaEmpleado() {
+	    	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
+	    	System.out.println("Klk");
+	    	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
+	    		
+	    		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+	    			dataC.add(c);
+	    		}
+	    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+	    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+	    		tableview_CategoriaEmp.setItems(dataC);
+	    		tableview_CategoriaEmp.refresh();
+	    	}
+	    }
 
 }
