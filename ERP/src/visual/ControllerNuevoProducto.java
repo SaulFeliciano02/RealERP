@@ -511,6 +511,9 @@ public class ControllerNuevoProducto implements Initializable {
     	    		
     	    		//No se registra nombre, fecha, y muchas otras cosas
     	    		if(canRegister) {
+    	    			Controladora.getInstance().getMisPrecios().add(precio);
+                    	Controladora.getInstance().guardarPrecioSQL(precio);
+                    	
     	    			Estandar newEstandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), existenciaInicial, date, costoDeCompra, fabricado, partida, codigo, nombre,
     	    				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
     	    			
@@ -1388,6 +1391,9 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText("");
     		exMin.setText("");
     		exMax.setText("");
+    		
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalProveedor.setDisable(false);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Kit")) {
     		exAct.setDisable(false);
@@ -1415,6 +1421,9 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText("");
     		exMin.setText("");
     		exMax.setText("");
+    		
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalProveedor.setDisable(false);
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) {
     		exAct.setDisable(true);
@@ -1442,6 +1451,12 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText("0");
     		exMin.setText("0");
     		exMax.setText("0");
+    		
+    		textfield_generalProveedor.setText("");
+    		textfield_generalProveedor.setDisable(true);
+    		button_productoBuscarProveedor.setDisable(true);
+    		
+    		textfield_generalUnidad.setText("");
     	}
     	else if(combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Matriz")) {
     		tab_combinaciones.setDisable(false);
@@ -1469,6 +1484,9 @@ public class ControllerNuevoProducto implements Initializable {
     		exAct.setText("");
     		exMin.setText("");
     		exMax.setText("");
+    		
+    		button_productoBuscarProveedor.setDisable(false);
+    		textfield_generalProveedor.setDisable(false);
     	}
     }
     
@@ -1831,9 +1849,10 @@ public class ControllerNuevoProducto implements Initializable {
     				listview_CostosResumen.refresh();
     			}
  
-        		
+        		gastosIndirectos.clear();
         		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
         		{
+        			
         			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelecIndirectos.getItems().get(i));
         			
         			DecimalFormat df = new DecimalFormat("#.00");
@@ -2695,6 +2714,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     	if(producto.getCostosIndirectos().size() > 0) {
     		for(CostoIndirectoProducto c : producto.getCostosIndirectos()) {
+    			gastosIndirectos.add(c);
     			listview_CostosResumen.getItems().add(c.getNombre() + ": " + c.getValor());
     			listview_CostosResumen.refresh();
     			listview_CostosSelecIndirectos.getItems().add(c.getNombre());
