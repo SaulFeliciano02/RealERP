@@ -7557,6 +7557,41 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	public void borrarGastoGeneral(int indiceGasto) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE gastosgenerales SET borrado = 1 WHERE idgastosgenerales = '"+indiceGasto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public void loadFactura()
 	{
 		Conexion con = new Conexion();
