@@ -1849,9 +1849,11 @@ public class ControllerNuevoProducto implements Initializable {
     				listview_CostosResumen.refresh();
     			}
  
-        		gastosIndirectos.clear();
+        		gastosIndirectos = null;
+        		gastosIndirectos = new ArrayList<>();
         		for(int i = 0; i < listview_CostosSelecIndirectos.getItems().size(); i++)
         		{
+        			System.out.println("Klk");
         			
         			GastoGeneral enlistado = Controladora.getInstance().buscarGasto(listview_CostosSelecIndirectos.getItems().get(i));
         			
@@ -1868,7 +1870,13 @@ public class ControllerNuevoProducto implements Initializable {
         			listview_CostosResumen.getItems().add(m);
         		}
         	}
-        }	
+        }
+    	else if(listview_CostosSelecIndirectos.getItems().size() > 0 && textfield_costosValor.getText().isEmpty()) {
+    		Alert a = new Alert(AlertType.NONE); 
+        	a.setAlertType(AlertType.WARNING);
+        	a.setContentText("Necesita Ingresar el precio estimado del producto.");
+        	a.show();
+    	}
     }
     
     //FUNCIONES CREACION DE LA PARTIDA
@@ -2673,9 +2681,10 @@ public class ControllerNuevoProducto implements Initializable {
     				for(CostoIndirectoProducto c : producto.getCostosIndirectos()) {
     					if(e.getNombre() != c.getNombre()) {
     						alreadyRegistered = true;
+    						System.out.println("El de la controladora es: " + e.getNombre() + "El del producto es: " + c.getNombre());
     					}
     				}
-    				if(!alreadyRegistered) {
+    				if(alreadyRegistered) {
     					ob.add(e.getNombre());
     				}
     			}
