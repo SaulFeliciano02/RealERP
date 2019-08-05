@@ -1467,7 +1467,7 @@
                                                                                                 <DatePicker fx:id="datepicker_fechaGastoG" prefHeight="25.0" prefWidth="195.0" />
                                                                                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                                    <children>
-                                                                                                      <Button fx:id="button_eliminarGastoG" disable="true" mnemonicParsing="false" text="Eliminar">
+                                                                                                      <Button fx:id="button_eliminarGastoG" disable="true" mnemonicParsing="false" onAction="#eliminarGastoGeneral" text="Eliminar">
                                                                                                          <HBox.margin>
                                                                                                             <Insets bottom="30.0" />
                                                                                                          </HBox.margin>

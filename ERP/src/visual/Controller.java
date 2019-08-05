@@ -1030,19 +1030,16 @@ public class Controller implements Initializable{
         			GastoGeneral encontrado = m.get(i);
         			textfield_nombreGastoG.setText(encontrado.getNombre());
         			textfield_montoGastoG.setText(Float.toString(encontrado.getPrecioUnitario()));
-        			if(encontrado.getDescripcion() != null)
-        			{
-        				textarea_descricionGastoG.setText(encontrado.getDescripcion());
-        			}
+        			textarea_descricionGastoG.setText(encontrado.getDescripcion());
         			datepicker_fechaGastoG.setValue(encontrado.getRemodelado());
         			break;
         		}
         	}
         	
         	textfield_nombreGastoG.setDisable(true);
-    		textfield_montoGastoG.setDisable(true);
-    		textarea_descricionGastoG.setDisable(true);
-    		datepicker_fechaGastoG.setDisable(true);
+    		//textfield_montoGastoG.setDisable(true);
+    		//textarea_descricionGastoG.setDisable(true);
+    		//datepicker_fechaGastoG.setDisable(true);
     		button_modificarGastoG.setDisable(false);
         	button_eliminarGastoG.setDisable(false);
     	}
@@ -1115,36 +1112,57 @@ public class Controller implements Initializable{
     
     public void pressed_nuevoGastoGeneral(ActionEvent event)
     {
-    	if (!textfield_nombreGastoG.isDisabled() && !textfield_montoGastoG.isDisabled() && !textarea_descricionGastoG.isDisabled() && !datepicker_fechaGastoG.isDisabled())
-    	{
-    		String nombre = textfield_nombreGastoG.getText();
-        	float monto = Float.parseFloat(textfield_montoGastoG.getText());
-        	String descripcion = textarea_descricionGastoG.getText();
-        	LocalDate fecha = datepicker_fechaGastoG.getValue();
-        	
-        	GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
-        	int indice = listview_gastosG.getSelectionModel().getSelectedIndex();
-        	
-        	if(indice <= -1)
-        	{
-        		Controladora.getInstance().addGastoGeneral(g);
-            	listview_gastosG.getItems().add(g.getNombre());
+    	if(!textfield_nombreGastoG.isDisabled()) {
+    		Alert a = new Alert(AlertType.NONE); 
+           	a.setAlertType(AlertType.WARNING);
+        	String nombre = "";
+       		float monto = 0;
+       		String descripcion = "";
+       		LocalDate fecha = null;
+       		boolean canRegister = true;
+       		try {
+       			nombre = textfield_nombreGastoG.getText();
+       			
+       			descripcion = textarea_descricionGastoG.getText();
+       			fecha = datepicker_fechaGastoG.getValue();
         	}
-        	else
-        	{
-        		Controladora.getInstance().getMisGastosGenerales().remove(indice);
-        		Controladora.getInstance().getMisGastosGenerales().add(indice, g);
-        		listview_gastosG.getItems().remove(indice);
-        		listview_gastosG.getItems().add(indice, g.getNombre());
+        	catch(NullPointerException e) {}
+       		try {
+       			monto = Float.parseFloat(textfield_montoGastoG.getText());
+       		}
+        	catch(NumberFormatException n) {}
+        	
+       		if(nombre == "" || monto == 0 || fecha == null) {
+       			a.setContentText("Se requieren mas datos para registrar el gasto.");
+       			a.show();
+        		canRegister = false;
         	}
-        	
-        	textfield_nombreGastoG.setText("");
-        	textfield_montoGastoG.setText("");
-        	textarea_descricionGastoG.setText("");
-        	datepicker_fechaGastoG.setValue(LocalDate.now());
-        	
-    	}
-    }
+        		
+           	if(canRegister) {
+           		GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
+           		int indice = listview_gastosG.getSelectionModel().getSelectedIndex();
+           	
+           		if(indice <= -1)
+            	{
+            		Controladora.getInstance().addGastoGeneral(g);
+           			listview_gastosG.getItems().add(g.getNombre());
+           		}
+           		else
+           		{
+           			Controladora.getInstance().getMisGastosGenerales().remove(indice);
+           			Controladora.getInstance().getMisGastosGenerales().add(indice, g);
+           			listview_gastosG.getItems().remove(indice);
+           			listview_gastosG.getItems().add(indice, g.getNombre());
+            	}
+            	
+            	textfield_nombreGastoG.setText("");
+           		textfield_montoGastoG.setText("");
+           		textarea_descricionGastoG.setText("");
+           		datepicker_fechaGastoG.setValue(LocalDate.now());
+           	}
+    	}   	
+    	
+   }
     
     public void pressed_exportarInventarioExcel(ActionEvent event)
     {
@@ -1509,7 +1527,53 @@ public class Controller implements Initializable{
     
     public void pressed_modificarGastoGeneral(ActionEvent event)
     {
-    	if(textfield_nombreGastoG.isDisabled() && textfield_montoGastoG.isDisabled() && textarea_descricionGastoG.isDisabled() && datepicker_fechaGastoG.isDisabled())
+    	GastoGeneral gasto = Controladora.getInstance().buscarGasto(textfield_nombreGastoG.getText());
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar " + gasto.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	if(alert.getResult() == ButtonType.YES) {
+    		boolean canModify = true;
+    		boolean productUsing = false;
+    		boolean stillSame = false;
+    		ArrayList<String> productosGastos = new ArrayList<>();
+    		for(Producto p : Controladora.getInstance().getMisProductos()) {
+    			for(CostoIndirectoProducto g : p.getCostosIndirectos()) {
+    				if(g.getNombre() == gasto.getNombre()) {
+    					canModify = false;
+    					productUsing = true;
+    					productosGastos.add(p.getNombre());
+    				}
+    			}
+    		}
+    		if(Float.parseFloat(textfield_montoGastoG.getText()) == gasto.getPrecioUnitario() && textfield_montoGastoG.getText().isEmpty()
+    				&& datepicker_fechaGastoG.getValue() == gasto.getRemodelado() && textarea_descricionGastoG.getText() == gasto.getDescripcion()) {
+    			canModify = false;
+    			if(!productUsing) {
+    				stillSame = true;
+    			}
+    		}
+    		
+    		if(canModify) {
+    			int indice = Controladora.getInstance().getMisGastosGenerales().indexOf(gasto);
+    			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
+    			Controladora.getInstance().borrarGastoGeneral(indice+1);
+    			listview_gastosG.getItems().clear();
+    			fillGastosGenerales(null);
+    			textfield_nombreGastoG.setDisable(false);
+    			pressed_nuevoGastoGeneral(null);		
+    		}
+    		else {
+    			Alert a = new Alert(AlertType.WARNING);
+    			if(productUsing) {
+    				a.setContentText("Remueva el gasto del producto que lo esta utilizando");
+    			}
+    			else if(stillSame) {
+    				a.setContentText("No ha modificado nada del producto");
+    			}
+    			a.show();
+    		}
+    		
+    	}
+    	/**if(textfield_nombreGastoG.isDisabled() && textfield_montoGastoG.isDisabled() && textarea_descricionGastoG.isDisabled() && datepicker_fechaGastoG.isDisabled())
     	{
     		textfield_nombreGastoG.setDisable(false);
     		textfield_montoGastoG.setDisable(false);
@@ -1522,8 +1586,48 @@ public class Controller implements Initializable{
     		textfield_montoGastoG.setDisable(true);
     		textarea_descricionGastoG.setDisable(true);
     		datepicker_fechaGastoG.setDisable(true);
+    	}**/
+    }
+    
+    public void eliminarGastoGeneral(ActionEvent event) {
+    	GastoGeneral encontrado = null;
+    	Controladora.getInstance().getMisCostosIndirectos();
+    	String gasto = listview_gastosG.getSelectionModel().getSelectedItem();
+    	for(GastoGeneral g : Controladora.getInstance().getMisGastosGenerales()) {
+    		if(g.getNombre().equalsIgnoreCase(gasto))
+    		{
+    			encontrado = g;
+    			break;
+    		}
+    	}
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + encontrado.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	if(alert.getResult() == ButtonType.YES) {
+    		boolean canDelete = true;
+    		ArrayList<String> productosGastos = new ArrayList<>();
+    		for(Producto p : Controladora.getInstance().getMisProductos()) {
+    			for(CostoIndirectoProducto g : p.getCostosIndirectos()) {
+    				if(g.getNombre() == encontrado.getNombre()) {
+    					canDelete = false;
+    					productosGastos.add(p.getNombre());
+    				}
+    			}
+    		}
+    		if(canDelete) {
+    			int indice = Controladora.getInstance().getMisGastosGenerales().indexOf(encontrado);
+    			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
+    			Controladora.getInstance().borrarGastoGeneral(indice+1);
+    			listview_gastosG.getItems().clear();
+    			fillGastosGenerales(null);
+    		}
+    		else {
+    			Alert a = new Alert(AlertType.WARNING);
+    			a.setContentText("Remueva el gasto del producto que lo esta utilizando");
+    			a.show();
+    		}
     	}
     }
+    
     /*public void activarGuardarGastoG(KeyEvent event) // HACER UN WARNING QUE APAREZCA CUANDO INTENTA REGISTRAR UN GASTOGENERAL SIN NOMBRE, SIN MONTO O SIN FECHA
     {
     	String nombre = textfield_nombreGastoG.getText();
@@ -2218,11 +2322,10 @@ public class Controller implements Initializable{
     
     public void fillGastosGenerales(ArrayList<GastoGeneral> g)
     {
-    	int i;
-    	
-    	for(i = 0; i < Controladora.getInstance().getMisGastosGenerales().size(); i++)
-    	{
-    		listview_gastosG.getItems().add(Controladora.getInstance().getMisGastosGenerales().get(i).getNombre());
+    	for(GastoGeneral gasto : Controladora.getInstance().getMisGastosGenerales()) {
+    		if(!gasto.isBorrado()) {
+    			listview_gastosG.getItems().add(gasto.getNombre());
+    		}
     	}
     }
     

@@ -2671,7 +2671,9 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	if(producto == null) {
     		for(GastoGeneral e : Controladora.getInstance().getMisGastosGenerales()) {
-    			ob.add(e.getNombre());
+    			if(!e.isBorrado()) {
+    				ob.add(e.getNombre());
+    			}
     		}
     	}
     	else {
