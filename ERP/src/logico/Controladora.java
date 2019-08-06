@@ -389,6 +389,51 @@ public class Controladora implements Serializable{
 		
 	}
 	
+	public void guardarImagenProductoSQL(byte[] foto, Producto prod) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO imagenproducto (producto, imagen) VALUES (?, ?)");
+			p.setInt(1, Controladora.getInstance().getMisProductos().indexOf(prod)+1);
+			p.setBytes(2, foto);
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
 	public void guardarClienteCreditoSQL(Cliente cliente, float credito) {
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -7348,9 +7393,10 @@ public boolean activarLoadAtributos()
 				float precioUnitario = r.getFloat(5);
 				String descripcion = r.getString(3);
 				Date remodelado = r.getDate(4);
-			
+				boolean borrado = r.getBoolean(6);
 				GastoGeneral pre = new GastoGeneral(nombre, precioUnitario, descripcion, LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(remodelado)));
-			
+				pre.setBorrado(borrado);
+				
 				Controladora.getInstance().getMisGastosGenerales().add(pre);
 			}
 		
@@ -7380,7 +7426,118 @@ public boolean activarLoadAtributos()
 			}
 		}
 	}
+	
+	public boolean activarLoadImagenProducto()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+	
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM imagenproducto");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+		
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+			
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	
+		return activar;
+	}
 
+	public void loadImagenProducto()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+	
+		try {
+		
+			//Recuperar rubros
+			c = con.conectar();
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM imagenproducto");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				int id = r.getInt(1);
+				int producto = r.getInt(2);
+				byte[] foto = r.getBytes(3);
+				boolean borrado = r.getBoolean(4);
+				
+				Controladora.getInstance().getMisProductos().get(producto-1).setFoto(foto);
+			}
+		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public void restarExistenciaActual(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;

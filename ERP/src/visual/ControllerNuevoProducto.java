@@ -1,5 +1,9 @@
 package visual;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -10,6 +14,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -17,6 +27,7 @@ import com.mysql.jdbc.Statement;
 import basededatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -43,6 +54,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -227,7 +239,12 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML TableColumn<UnidadMedida, String> tablecolumn_unidadAbreviatura;
     @FXML TableView<UnidadMedida> tableview_unidadList;
     @FXML Button button_aceptarUnidad;
-   
+    
+    //VARIABLES PARA LAS IMAGENES
+    @FXML TextField textfield_imagen;
+    @FXML ImageView imageview_imagen;
+    @FXML Button button_agregarImagen;
+    
     /**FUNCIONES GENERALES**/
     
     //Verifica si el input de un textfield es un numero
@@ -362,6 +379,50 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
+    public void seleccionarFoto(ActionEvent action)
+    {
+    	JFileChooser j = new JFileChooser();
+        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        j.setFileFilter(fil);
+        
+        int s = j.showOpenDialog(j);
+        if(s == JFileChooser.APPROVE_OPTION){
+            String ruta = j.getSelectedFile().getAbsolutePath();
+            textfield_imagen.setText(ruta);
+            try{
+            	File fotofile = new File(textfield_imagen.getText());
+            	//BufferedImage imagen = ImageIO.read(fotofile);
+                Image imagenmuestra = new Image(fotofile.toURI().toString());
+            	//Image imagenmuestra = imagen.getScaledInstance(649, 324, (Integer) null);
+                //ImageIcon imgi = new ImageIcon(((java.awt.Image) image).getScaledInstance(60, 60, 0));
+                imageview_imagen.setImage(imagenmuestra);
+                double w = 0;
+                double h = 0;
+
+                double ratioX = imageview_imagen.getFitWidth() / imagenmuestra.getWidth();
+                double ratioY = imageview_imagen.getFitHeight() / imagenmuestra.getHeight();
+
+                double reducCoeff = 0;
+                if(ratioX >= ratioY) {
+                    reducCoeff = ratioY;
+                } else {
+                    reducCoeff = ratioX;
+                }
+
+                w = imagenmuestra.getWidth() * reducCoeff;
+                h = imagenmuestra.getHeight() * reducCoeff;
+
+                imageview_imagen.setX((imageview_imagen.getFitWidth() - w) / 2);
+                imageview_imagen.setY((imageview_imagen.getFitHeight() - h) / 2);
+                //imageview_imagen.setFitWidth(649);
+                //imageview_imagen.setFitHeight(324);
+                //fila[4] = new JLabel(imgi);
+
+            }catch(Exception ex){
+                System.out.println("Error al cargar la imagen");
+            }
+        }
+    }
     
     //Guardar Producto (En Progreso)
     public void guardarProducto(ActionEvent event) {
@@ -375,6 +436,21 @@ public class ControllerNuevoProducto implements Initializable {
     	setCostoYPrecioTotal(null);
     	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
     	float costoitbis = 0;
+    	byte[] foto = null;
+    	
+    	if(textfield_imagen.getText() != null)
+    	{
+    		File fotofile = new File(textfield_imagen.getText());
+    		try{
+    			foto = new byte[(int) fotofile.length()];
+	            FileInputStream input = new FileInputStream(fotofile);
+	            input.read(foto);
+	            
+    	    }catch(Exception ex){
+    	    	System.out.println("Error al cargar la imagen");
+    	    }
+    	}
+    	
     	if(Controladora.getInstance().getMiEmpresa() != null && checkbox_Impuestos.isSelected()) {
     		costoitbis = precio.getPrecio() * (Controladora.getInstance().getMiEmpresa().getITBIS()/100);
     	}
@@ -1025,12 +1101,17 @@ public class ControllerNuevoProducto implements Initializable {
             			Estandar estandar = new Estandar(Float.parseFloat(existenciaActual), Float.parseFloat(existenciaMinima), Float.parseFloat(existenciaMaxima), Float.parseFloat(existenciaActual), date, costoDeCompra, fabricado, partida, codigo, nombre,
             				descripcion, rubro, tipoProducto, proveedor, null, null, "", unidad, precio, "", codigoBarra, costoManoObra, "", "", costoTotal, costoitbis);
             			
-            			
             			Controladora.getInstance().getMisProductosEstandar().add(estandar);
             			Controladora.getInstance().getMisProductos().add(estandar);
             			
             			Controladora.getInstance().guardarProductosSQL(estandar);
             			Controladora.getInstance().guardarEstandarSQL(estandar);
+            			
+            			if(foto != null)
+            			{
+            				estandar.setFoto(foto);
+            				Controladora.getInstance().guardarImagenProductoSQL(foto, estandar);
+            			}
             			
             			for(CostoIndirectoProducto c : gastosIndirectos) {
             				estandar.getCostosIndirectos().add(c);
@@ -1132,6 +1213,12 @@ public class ControllerNuevoProducto implements Initializable {
             			Controladora.getInstance().getMisProductosKit().add(kit);
             			Controladora.getInstance().guardarKitSQL(kit);
             			
+            			if(foto != null)
+            			{
+            				kit.setFoto(foto);
+            				Controladora.getInstance().guardarImagenProductoSQL(foto, kit);
+            			}
+            			
             			for(CostoIndirectoProducto c : gastosIndirectos) {
             				kit.getCostosIndirectos().add(c);
             				
@@ -1203,6 +1290,12 @@ public class ControllerNuevoProducto implements Initializable {
             				Controladora.getInstance().guardarServiciosSQL(servicio, categoriaEmpleado);
             				Controladora.getInstance().guardarRubroProductoSQL(servicio, rubro);
                 			Controladora.getInstance().guardarPrecioProductoSQL(servicio, precio);
+                			
+                			if(foto != null)
+                			{
+                				servicio.setFoto(foto);
+                				Controladora.getInstance().guardarImagenProductoSQL(foto, servicio);
+                			}
                 			
                 			for(CostoIndirectoProducto c : gastosIndirectos) {
                 				servicio.getCostosIndirectos().add(c);
@@ -1309,6 +1402,12 @@ public class ControllerNuevoProducto implements Initializable {
             			
             			Controladora.getInstance().guardarProductosSQL(matriz);
             			Controladora.getInstance().guardarEstandarSQL(matriz);
+            			
+            			if(foto != null)
+            			{
+            				matriz.setFoto(foto);
+            				Controladora.getInstance().guardarImagenProductoSQL(foto, matriz);
+            			}
             			
             			for(CostoIndirectoProducto c : gastosIndirectos) {
             				matriz.getCostosIndirectos().add(c);
@@ -3044,6 +3143,8 @@ public class ControllerNuevoProducto implements Initializable {
 		tabpane_everything.getSelectionModel().select(tab_general);
 		button_productGuardar.setDisable(true);
 		combinacionFinal.clear();
+		imageview_imagen.setImage(null);
+		textfield_imagen.setText("");
 		
 		//Limpiando costos
 		textfield_costoPrecioCompraProducto.setText("");
