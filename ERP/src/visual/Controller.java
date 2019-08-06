@@ -1,8 +1,10 @@
 package visual;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
@@ -207,6 +209,7 @@ public class Controller implements Initializable{
     @FXML private TableView<CostoIndirectoProducto> tableview_productoCostoIndirecto;
     
     @FXML private Button button_exportarInventario;
+    @FXML private ImageView imageview_image;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -2590,6 +2593,34 @@ public class Controller implements Initializable{
     			
     		}
     		
+    	}
+    	
+    	if(p.getFoto() != null)
+    	{	
+    		byte[] foto = p.getFoto();
+        	InputStream in = new ByteArrayInputStream(foto);
+        	Image fotomuestra = new Image(in);
+        	
+        	imageview_image.setImage(fotomuestra);
+        	
+        	double w = 0;
+            double h = 0;
+
+            double ratioX = imageview_image.getFitWidth() / fotomuestra.getWidth();
+            double ratioY = imageview_image.getFitHeight() / fotomuestra.getHeight();
+
+            double reducCoeff = 0;
+            if(ratioX >= ratioY) {
+                reducCoeff = ratioY;
+            } else {
+                reducCoeff = ratioX;
+            }
+
+            w = fotomuestra.getWidth() * reducCoeff;
+            h = fotomuestra.getHeight() * reducCoeff;
+
+            imageview_image.setX((imageview_image.getFitWidth() - w) / 2);
+            imageview_image.setY((imageview_image.getFitHeight() - h) / 2);
     	}
     	
     	ObservableList<CostoIndirectoProducto> dataCostoIndirecto = FXCollections.observableArrayList();

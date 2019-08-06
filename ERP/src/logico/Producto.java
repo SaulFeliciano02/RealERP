@@ -25,6 +25,7 @@ abstract public class Producto {
 	private ArrayList<CostoDirecto> costosDirectos;
 	private float costo;
 	private float costoitbis;
+	private byte[] foto;
 	private boolean borrado;
 	
 
@@ -247,6 +248,16 @@ abstract public class Producto {
 
 	public void setCostoitbis(float costoitbis) {
 		this.costoitbis = costoitbis;
+	}
+
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 	
 	
