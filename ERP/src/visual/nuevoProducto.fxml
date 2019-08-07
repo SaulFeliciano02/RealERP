@@ -20,11 +20,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1190.0">
          <children>
@@ -346,22 +348,51 @@
                   </Tab>
                   <Tab fx:id="tab_promocion" text="Promoción">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="227.0" layoutY="240.0" prefHeight="553.6" prefWidth="932.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox fillWidth="false" prefHeight="534.0" prefWidth="420.0">
+                                       <children>
+                                          <Label text="Listado de promociones">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField prefHeight="26.0" prefWidth="308.0" promptText="Búsqueda">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </TextField>
+                                          <ListView prefHeight="453.0" prefWidth="420.0" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="CENTER_LEFT" fillWidth="false" prefHeight="485.0" prefWidth="318.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Seleccionar promoción">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="50.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Label text="Promoción actual" />
+                                          <TextField editable="false" prefHeight="26.0" prefWidth="280.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children></AnchorPane>
                      </content>
                   </Tab>
                   <Tab fx:id="tab_combinaciones" text="Combinaciones">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="textfield_busquedaFamilia1" layoutX="14.0" layoutY="36.0" onKeyTyped="#habilitar_busqueda1" />
-                              <TextField fx:id="textfield_busquedaFamilia2" layoutX="261.0" layoutY="36.0" onKeyTyped="#habilitar_busqueda2" />
-                              <TextField fx:id="textfield_busquedaFamilia3" layoutX="508.0" layoutY="36.0" onKeyTyped="#habilitar_busqueda3" />
-                              <Button fx:id="button_buscarFamilia1" disable="true" layoutX="179.0" layoutY="34.0" mnemonicParsing="false" onAction="#rellenarListview_atributos1" prefHeight="31.0" prefWidth="42.0" text="Button" />
-                              <Button fx:id="button_buscarFamilia2" disable="true" layoutX="430.0" layoutY="36.0" mnemonicParsing="false" onAction="#rellenarListview_atributos2" prefHeight="31.0" prefWidth="42.0" text="Button" />
-                              <Button fx:id="button_buscarFamilia3" disable="true" layoutX="677.0" layoutY="33.0" mnemonicParsing="false" onAction="#rellenarListview_atributos3" prefHeight="31.0" prefWidth="42.0" text="Button" />
-                              <Button fx:id="button_combinar" disable="true" layoutX="819.0" layoutY="499.0" mnemonicParsing="false" onAction="#createCombination" text="Combinar" />
-                              <Button disable="true" layoutX="744.0" layoutY="499.0" mnemonicParsing="false" text="Borrar" />
-                              <Button layoutX="577.0" layoutY="499.0" mnemonicParsing="false" onAction="#abrirBusquedaAtributo" text="Listado de atributos" />
                               <TitledPane disable="true" layoutX="6.0" prefHeight="548.0" prefWidth="921.0" text="Listado de familias y atributos" visible="false">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="595.0" prefWidth="933.0">
@@ -394,47 +425,6 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                              <TextField fx:id="textfield_cantidadComb" layoutX="377.0" layoutY="499.0" />
-                              <Label layoutX="293.0" layoutY="504.0" text="Cantidad:" />
-                              <Label layoutX="778.0" layoutY="41.0" text="Combinaciones:" />
-                              <Label layoutX="26.0" layoutY="504.0" text="N.Serie:" />
-                              <TextField fx:id="textfield_numSerie" layoutX="89.0" layoutY="499.0" />
-                              <ScrollPane layoutX="14.0" layoutY="84.0" prefHeight="402.0" prefWidth="220.0">
-                                <content>
-                                  <AnchorPane layoutX="14.0" layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="220.0">
-                                       <children>
-                                          <ListView fx:id="listView_atributos1" onMouseClicked="#habilitar_combinar" prefHeight="402.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
-                              <ScrollPane layoutX="261.0" layoutY="84.0" prefHeight="402.0" prefWidth="220.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="220.0">
-                                       <children>
-                                          <ListView fx:id="listView_atributos2" onMouseClicked="#habilitar_combinar" prefHeight="402.0" prefWidth="220.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
-                              <ScrollPane layoutX="508.0" layoutY="84.0" prefHeight="402.0" prefWidth="220.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="404.0" prefWidth="223.0">
-                                       <children>
-                                          <ListView fx:id="listView_atributos3" onMouseClicked="#habilitar_combinar" prefHeight="402.0" prefWidth="220.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
-                              <ScrollPane layoutX="740.0" layoutY="84.0" prefHeight="401.0" prefWidth="180.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="600.0">
-                                       <children>
-                                          <ListView fx:id="listView_combinaciones" prefHeight="401.0" prefWidth="600.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
                               <TitledPane fx:id="titledpane_productoBuscarAtributo" collapsible="false" layoutX="6.0" layoutY="4.0" prefHeight="535.0" prefWidth="920.0" text="Listado de Familias y Atributos" visible="false">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -474,6 +464,155 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
+                              <HBox layoutX="134.0" layoutY="-33.0" prefHeight="553.6" prefWidth="932.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox prefHeight="554.0" prefWidth="235.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="46.0" prefWidth="262.0">
+                                             <children>
+                                                <TextField fx:id="textfield_busquedaFamilia1" onKeyTyped="#habilitar_busqueda1" prefHeight="26.0" prefWidth="140.0" />
+                                                <Button fx:id="button_buscarFamilia1" disable="true" mnemonicParsing="false" onAction="#rellenarListview_atributos1" prefHeight="31.0" prefWidth="75.0" text="Buscar">
+                                                   <HBox.margin>
+                                                      <Insets left="2.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <ScrollPane prefHeight="402.0" prefWidth="220.0">
+                                            <content>
+                                              <AnchorPane layoutX="14.0" layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="220.0">
+                                                   <children>
+                                                      <ListView fx:id="listView_atributos1" onMouseClicked="#habilitar_combinar" prefHeight="402.0" prefWidth="220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
+                                          <HBox prefHeight="72.0" prefWidth="235.0">
+                                             <children>
+                                                <Label text="N.Serie:" />
+                                                <TextField fx:id="textfield_numSerie" prefHeight="26.0" prefWidth="122.0">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="15.0" top="25.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="491.0" prefWidth="230.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="30.0" prefWidth="230.0">
+                                             <children>
+                                                <TextField fx:id="textfield_busquedaFamilia2" onKeyTyped="#habilitar_busqueda2" prefHeight="26.0" prefWidth="140.0" />
+                                                <Button fx:id="button_buscarFamilia2" disable="true" mnemonicParsing="false" onAction="#rellenarListview_atributos2" prefHeight="31.0" prefWidth="75.0" text="Buscar">
+                                                   <HBox.margin>
+                                                      <Insets left="2.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <ScrollPane prefHeight="402.0" prefWidth="220.0">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="402.0" prefWidth="220.0">
+                                                   <children>
+                                                      <ListView fx:id="listView_atributos2" onMouseClicked="#habilitar_combinar" prefHeight="410.0" prefWidth="220.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
+                                          <HBox prefHeight="51.0" prefWidth="230.0">
+                                             <children>
+                                                <Label text="Cantidad:" />
+                                                <TextField fx:id="textfield_cantidadComb" prefHeight="26.0" prefWidth="129.0">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="15.0" top="35.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="554.0" prefWidth="236.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="38.0" prefWidth="236.0">
+                                             <children>
+                                                <TextField fx:id="textfield_busquedaFamilia3" onKeyTyped="#habilitar_busqueda3" prefHeight="26.0" prefWidth="140.0" />
+                                                <Button fx:id="button_buscarFamilia3" disable="true" mnemonicParsing="false" onAction="#rellenarListview_atributos3" prefHeight="31.0" prefWidth="75.0" text="Buscar" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <ScrollPane prefHeight="402.0" prefWidth="220.0">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="404.0" prefWidth="223.0">
+                                                   <children>
+                                                      <ListView fx:id="listView_atributos3" onMouseClicked="#habilitar_combinar" prefHeight="402.0" prefWidth="220.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
+                                          <HBox alignment="BOTTOM_RIGHT" prefHeight="55.0" prefWidth="236.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#abrirBusquedaAtributo" text="Listado de atributos" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="15.0" top="30.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="554.0" prefWidth="218.0">
+                                       <children>
+                                          <Label text="Combinaciones:">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <ScrollPane prefHeight="401.0" prefWidth="180.0">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="231.0">
+                                                   <children>
+                                                      <ListView fx:id="listView_combinaciones" prefHeight="408.0" prefWidth="231.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
+                                          <HBox alignment="BOTTOM_LEFT" prefHeight="55.0" prefWidth="218.0">
+                                             <children>
+                                                <Button disable="true" mnemonicParsing="false" text="Borrar" />
+                                                <Button fx:id="button_combinar" disable="true" mnemonicParsing="false" onAction="#createCombination" text="Combinar">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets right="10.0" top="50.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
                     </content>

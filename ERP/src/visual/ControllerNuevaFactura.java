@@ -70,6 +70,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private RadioButton radiobutton_facturaCredito;
 	    @FXML private AnchorPane paneEfectivo;
 	    @FXML private AnchorPane paneCredito;
+	    @FXML private AnchorPane paneTarjeta;
 	   
 	    @FXML private Button button_sendProducto;
 	    @FXML private Button button_returnProducto;
@@ -97,6 +98,8 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TextField textfield_clienteSeleccionado;
 	    @FXML private Button button_clienteSeleccionar;
 	    @FXML private CheckBox checkbox_facturaValorFiscal;
+	    
+	    @FXML private TitledPane titledpane_busquedaProductos;
 
 	public void reload(Stage stage) {
     	
@@ -883,20 +886,31 @@ public class ControllerNuevaFactura implements Initializable{
 		return isValid;
 	}
 	
+	public void abrirBusquedaProductos(ActionEvent event) {
+		titledpane_busquedaProductos.setVisible(true);
+	}
+	
+	public void cerrarBusquedaProductos(ActionEvent event) {
+		titledpane_busquedaProductos.setVisible(false);
+	}
+	
 	public void tipoPago(ActionEvent event) {
 		if(radiobutton_facturaEfectivo.isSelected()) {
 			paneEfectivo.setVisible(true);
 			paneCredito.setVisible(false);
+			paneTarjeta.setVisible(false);
 		}
 		
 		if(radiobutton_facturaCredito.isSelected()) {
 			paneEfectivo.setVisible(false);
 			paneCredito.setVisible(true);
+			paneTarjeta.setVisible(false);
 		}
 		
 		if(radiobutton_facturaTarjeta.isSelected()) {
 			paneEfectivo.setVisible(false);
 			paneCredito.setVisible(false);
+			paneTarjeta.setVisible(true);
 		}
 		
 	}
