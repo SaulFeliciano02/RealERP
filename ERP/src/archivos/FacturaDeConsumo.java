@@ -53,6 +53,7 @@ public class FacturaDeConsumo {
 		ColumnText ct = new ColumnText(writer.getDirectContent());
 		ColumnText ct2 = new ColumnText(writer.getDirectContent());
 		List list, list2;
+		float itbis = 0;
 		float subtotal = 0;
 		float itbistotal = 0;
 		float descuentototal = 0;
@@ -124,8 +125,10 @@ public class FacturaDeConsumo {
             	
             	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(estandar.getNombre()));
             	table.addCell(cellDinamic2);
-            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("0"));
+            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(estandar)).getCostoitbis();
+            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
             	table.addCell(cellDinamic3);
+            	itbistotal += itbis;
             	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + estandar.getValor()));
             	table.addCell(cellDinamic4);
             	subtotal+=estandar.getValor();
@@ -136,8 +139,10 @@ public class FacturaDeConsumo {
             	table.addCell(cellDinamic);
             	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(kit.getNombre()));
             	table.addCell(cellDinamic2);
-            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("0"));
+            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(kit)).getCostoitbis();
+            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
             	table.addCell(cellDinamic3);
+            	itbistotal += itbis;
             	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + kit.getValor()));
             	table.addCell(cellDinamic4);
             	subtotal+=kit.getValor();
@@ -148,8 +153,10 @@ public class FacturaDeConsumo {
             	table.addCell(cellDinamic);
             	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(serv.getNombre()));
             	table.addCell(cellDinamic2);
-            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("0"));
+            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(serv)).getCostoitbis();
+            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
             	table.addCell(cellDinamic3);
+            	itbistotal += itbis;
             	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + serv.getValor()));
             	table.addCell(cellDinamic4);
             	subtotal+=serv.getValor();
@@ -167,7 +174,7 @@ public class FacturaDeConsumo {
             document.add(p9);
             p10 = new Paragraph();
             p10.add(new Chunk(glue));
-            p10.add("ITBIS:  0");
+            p10.add("ITBIS: " + itbistotal);
             document.add(p10);
             p11 = new Paragraph();
             p11.add(new Chunk(glue));

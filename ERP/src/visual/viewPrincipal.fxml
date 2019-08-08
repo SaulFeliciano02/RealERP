@@ -30,7 +30,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -270,7 +270,7 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox fx:id="pane_Productos" disable="true" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox fx:id="pane_Productos" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
@@ -280,7 +280,7 @@
                                                    <center>
                                                       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                                                         <tabs>
-                                                            <Tab closable="false" text="General">
+                                                            <Tab text="General">
                                                                <content>
                                                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                      <children>
@@ -374,7 +374,7 @@
                                                                               </VBox>
                                                                            </center>
                                                                         </BorderPane>
-                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" disable="true" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
                                                                               <TitledPane fx:id="titledpane_productoInformacionAdicional" collapsible="false" prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <content>
