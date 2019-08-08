@@ -36,7 +36,7 @@
                                     <Font name="System Bold" size="25.0" />
                                  </font>
                               </Label>
-                              <ListView fx:id="listview_productosFacturados1" prefHeight="458.0" prefWidth="355.0" VBox.vgrow="ALWAYS">
+                              <ListView fx:id="listview_productosFacturadosMain" prefHeight="458.0" prefWidth="355.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
@@ -99,7 +99,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Nombre:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="230.0">
+                                          <TextField fx:id="textfield_clienteNombre" editable="false" prefHeight="26.0" prefWidth="230.0">
                                              <HBox.margin>
                                                 <Insets left="5.0" />
                                              </HBox.margin>
@@ -112,7 +112,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="RNC:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="230.0">
+                                          <TextField fx:id="textfield_clienteRNC" editable="false" prefHeight="26.0" prefWidth="230.0">
                                              <HBox.margin>
                                                 <Insets left="30.0" />
                                              </HBox.margin>
@@ -125,7 +125,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Crédito:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
                                              <HBox.margin>
                                                 <Insets left="12.0" />
                                              </HBox.margin>
@@ -143,7 +143,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Deuda:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteDeuda" editable="false" prefHeight="26.0" prefWidth="218.0">
                                              <HBox.margin>
                                                 <Insets left="16.0" />
                                              </HBox.margin>
@@ -177,7 +177,7 @@
                                           <Font name="System Bold" size="25.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="textfield_totalAPagar1" alignment="CENTER_RIGHT" editable="false" prefHeight="29.0" prefWidth="114.0" promptText="0.0">
+                                    <TextField fx:id="textfield_totalAPagar" alignment="CENTER_RIGHT" editable="false" prefHeight="29.0" prefWidth="114.0" promptText="0.0">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -586,7 +586,7 @@
                                        <children>
                                           <HBox prefHeight="90.0" prefWidth="298.0">
                                              <children>
-                                                <Button mnemonicParsing="false" text="Guardar">
+                                                <Button mnemonicParsing="false" onAction="#sendProductsToMain" text="Guardar">
                                                    <font>
                                                       <Font size="22.0" />
                                                    </font>

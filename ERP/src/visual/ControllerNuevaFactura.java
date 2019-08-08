@@ -86,6 +86,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    
 	    @FXML private ListView<String> listview_facturaProductoList;
 	    @FXML private ListView<String> listview_productosFacturados;
+	    @FXML private ListView<String> listview_productosFacturadosMain;
 	    
 	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteCodigo;
 	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteNombre;
@@ -95,6 +96,11 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TableColumn<Cliente, String> tablecolumn_clienteTipo;
 	    @FXML private TableView<Cliente> tableview_clienteList;
 	    
+	    @FXML private TextField textfield_clienteNombre;
+	    @FXML private TextField textfield_clienteRNC;
+	    @FXML private TextField textfield_clienteCredito;
+	    @FXML private TextField textfield_clienteDeuda;
+
 	    @FXML private TextField textfield_clienteSeleccionado;
 	    @FXML private Button button_clienteSeleccionar;
 	    @FXML private CheckBox checkbox_facturaValorFiscal;
@@ -178,7 +184,6 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void selectingCliente(MouseEvent event) {
-    	System.out.println("Hola");
     	if(!tableview_clienteList.getSelectionModel().isEmpty()) {
     		Cliente cliente = tableview_clienteList.getSelectionModel().getSelectedItem();
     		textfield_clienteSeleccionado.setText(cliente.getCodigo());
@@ -188,6 +193,11 @@ public class ControllerNuevaFactura implements Initializable{
     
     public void clienteSelect(ActionEvent event) {
     	textfield_buscarClienteFactura.setText(textfield_clienteSeleccionado.getText());
+    	Cliente cliente = Controladora.getInstance().buscarCliente(textfield_clienteSeleccionado.getText());
+    	textfield_clienteNombre.setText(cliente.getNombre());
+    	textfield_clienteRNC.setText(cliente.getRnc());
+    	textfield_clienteCredito.setText(Float.toString(cliente.getCredito()));
+    	textfield_clienteDeuda.setText(Float.toString(cliente.getDeuda()));
     	cerrarBusquedaCliente(event);
     }
     
@@ -606,19 +616,6 @@ public class ControllerNuevaFactura implements Initializable{
         	}
         	
     	}
-    	
-    	
-    	
-    	float precio = 0;
-    	for(String items : listview_productosFacturados.getItems()) {
-    		System.out.println(Controladora.getInstance().findFacturaCosto(items));
-    		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
-    	}
-    	textfield_totalAPagar.setText(Float.toString(precio));
-    	listview_facturaProductoList.getSelectionModel().clearSelection();
-    	combobox_facturaMedida.getItems().clear();
-    	textfield_facturaCantidad.setText("1");
-    	calcularCambio(null);
     }
     
     public void returnProducto(ActionEvent event) {
@@ -649,6 +646,25 @@ public class ControllerNuevaFactura implements Initializable{
     	else {
     		fillProductos(productos);
     	}
+    }
+    
+    public void sendProductsToMain(ActionEvent event) {
+    	ObservableList<String> selectedItems = listview_productosFacturados.getItems();
+    	listview_productosFacturadosMain.setItems(selectedItems);
+    	listview_productosFacturadosMain.refresh();
+    	
+    	float precio = 0;
+    	for(String items : listview_productosFacturadosMain.getItems()) {
+    		System.out.println(Controladora.getInstance().findFacturaCosto(items));
+    		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));
+    	}
+    	textfield_totalAPagar.setText(Float.toString(precio));
+    	listview_facturaProductoList.getSelectionModel().clearSelection();
+    	combobox_facturaMedida.getItems().clear();
+    	textfield_facturaCantidad.setText("1");
+    	calcularCambio(null);
+    	
+    	titledpane_busquedaProductos.setVisible(false);
     }
     
     public void calcularDias(ActionEvent event) {

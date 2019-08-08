@@ -3308,6 +3308,25 @@ public class Controladora implements Serializable{
 		return encontrado;
 	}
 	
+	public Cliente buscarCliente(String codigo) {
+		Cliente encontrado = null;
+		int i = 0;
+		
+		while(i < Controladora.getInstance().getMisClientes().size() || encontrado == null)
+		{
+			if(!Controladora.getInstance().getMisClientes().get(i).isBorrado()) {
+				if(codigo.equalsIgnoreCase(Controladora.getInstance().getMisClientes().get(i).getCodigo()))
+				{
+					encontrado = Controladora.getInstance().getMisClientes().get(i);
+				}
+			}
+			
+			i++;
+		}
+		
+		return encontrado;
+	}
+	
 	public ArrayList<GastoGeneral> getMisGastosGenerales() {
 		return misGastosGenerales;
 	}
