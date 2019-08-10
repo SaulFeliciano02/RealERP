@@ -1089,7 +1089,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1098,10 +1098,11 @@ public class Controladora implements Serializable{
 				p.setDate(6, java.sql.Date.valueOf(factura.getFecha()));
 				p.setTime(7, java.sql.Time.valueOf(factura.getHora()));
 				p.setString(8, tipoFactura);
+				p.setInt(9, factura.getCantcopias());
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
@@ -1109,6 +1110,7 @@ public class Controladora implements Serializable{
 				p.setDate(5,  java.sql.Date.valueOf(factura.getFecha()));
 				p.setTime(6, java.sql.Time.valueOf(factura.getHora()));
 				p.setString(7, tipoFactura);
+				p.setInt(8, factura.getCantcopias());
 			}
 			
 			
@@ -1721,7 +1723,7 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO productos (codigo, nombre, descripcion, tipoproducto, observaciones, unidadmedida, costo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO productos (codigo, nombre, descripcion, tipoproducto, observaciones, unidadmedida, costo, costoitbis) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			p.setString(1, producto.getCodigo());
 			p.setString(2, producto.getNombre());
 			p.setString(3, producto.getDescripcion());
@@ -1734,6 +1736,7 @@ public class Controladora implements Serializable{
 				p.setString(6, producto.getUnidadMedida().getNombre()); 
 			}
 			p.setFloat(7, producto.getCosto());
+			p.setFloat(8, producto.getCostoitbis());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -7831,6 +7834,7 @@ public boolean activarLoadAtributos()
 		String nombreServ = null;
 		Servicio serv = null;
 		ArrayList<ServicioUtilizado> serviciosFact = new ArrayList<>();
+		int cantcopias = 0;
 		
 		try {
 			
@@ -7853,6 +7857,7 @@ public boolean activarLoadAtributos()
 				fecha = r.getDate(7);
 				hora = r.getTime(8);
 				tipoFactura = r.getString(9);
+				cantcopias = r.getInt(10);
 				
 				if(idcliente>0)
 				{
@@ -7954,7 +7959,7 @@ public boolean activarLoadAtributos()
 					serviciosFact.add(servutil);
 				}
 				
-				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura);
+				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias);
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));

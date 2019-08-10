@@ -26,6 +26,8 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -104,6 +106,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TextField textfield_clienteSeleccionado;
 	    @FXML private Button button_clienteSeleccionar;
 	    @FXML private CheckBox checkbox_facturaValorFiscal;
+	    @FXML private Spinner<Integer> spinner_cantcopias;
 	    
 	    @FXML private TitledPane titledpane_busquedaProductos;
 
@@ -201,6 +204,11 @@ public class ControllerNuevaFactura implements Initializable{
     	cerrarBusquedaCliente(event);
     }
     
+    public void setSpinnersConfiguracion() {
+    	SpinnerValueFactory<Integer> copias = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 999999999, 1);
+		spinner_cantcopias.setValueFactory(copias);
+    }
+    
     public void guardarFactura(ActionEvent event) {
     	Cliente cliente = null;
     	for(Cliente c : Controladora.getInstance().getMisClientes()) {
@@ -213,6 +221,7 @@ public class ControllerNuevaFactura implements Initializable{
     	float montoRecibido = Float.parseFloat(textfield_totalRecibido.getText());
     	float montoCambio = Float.parseFloat(textfield_totalCambio.getText());
     	String tipoPago = "";
+    	int cantcopias = spinner_cantcopias.getValue();
     	
     	if(radiobutton_facturaEfectivo.isSelected()) {
     		tipoPago = radiobutton_facturaEfectivo.getText();
@@ -311,7 +320,7 @@ public class ControllerNuevaFactura implements Initializable{
     		tipoFactura = "02";
     	}
     	
-    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura);
+    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura, cantcopias);
     	Controladora.getInstance().getMisFacturas().add(factura);
     	
     	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
@@ -340,6 +349,7 @@ public class ControllerNuevaFactura implements Initializable{
     	textfield_totalAPagar.setText("");
     	textfield_totalRecibido.setText("");
     	textfield_totalCambio.setText("");
+    	spinner_cantcopias.getValueFactory().setValue(1);
     	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
     	if(checkbox_facturaValorFiscal.isSelected())
@@ -709,6 +719,8 @@ public class ControllerNuevaFactura implements Initializable{
 		fillProductos(null);
 		
 		setDatePickers();
+		
+		setSpinnersConfiguracion();
 	}
 	
 	public void fillProductos(ArrayList<Producto> producto) {
