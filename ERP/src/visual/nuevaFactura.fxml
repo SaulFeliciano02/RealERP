@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
       <AnchorPane layoutX="254.0" layoutY="52.0" prefHeight="616.0" prefWidth="1084.0">
          <children>
@@ -483,7 +483,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="363.0">
                                  <children>
                                     <Label text="Cantidad de copias:" />
-                                    <Spinner prefHeight="26.0" prefWidth="77.0">
+                                    <Spinner fx:id="spinner_cantcopias" prefHeight="26.0" prefWidth="77.0">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>

@@ -452,10 +452,12 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     	
     	if(Controladora.getInstance().getMiEmpresa() != null && checkbox_Impuestos.isSelected()) {
-    		costoitbis = precio.getPrecio() * (Controladora.getInstance().getMiEmpresa().getITBIS()/100);
+    		costoitbis = (float) (((precio.getPrecio() * (18.0/100.0)) * 100.0) / 100.0);
+    		System.out.println("El valor del costoitbis1: " + costoitbis + "Precio: " + precio.getPrecio());
     	}
     	else if(checkbox_Impuestos.isSelected()) {
-    		costoitbis = precio.getPrecio() * (18/100);
+    		costoitbis = (float) (((precio.getPrecio() * (18.0/100.0)) * 100.0) / 100.0);
+    		System.out.println("El valor del costoitbis2: " + costoitbis + "Precio: " + precio.getPrecio());
     	}
     	
     	//Guardando precio en la base de datos

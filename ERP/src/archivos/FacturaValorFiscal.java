@@ -207,8 +207,8 @@ public class FacturaValorFiscal {
 	            	
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(estandar.getNombre()));
 	            	table.addCell(cellDinamic2);
-	            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(estandar)).getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
+	            	itbis = estandar.getProducto().getCostoitbis();
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + estandar.getValor()));
@@ -221,8 +221,8 @@ public class FacturaValorFiscal {
 	            	table.addCell(cellDinamic);
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(kit.getNombre()));
 	            	table.addCell(cellDinamic2);
-	            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(kit)).getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
+	            	itbis = kit.getKit().getCostoitbis();
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + kit.getValor()));
@@ -235,8 +235,8 @@ public class FacturaValorFiscal {
 	            	table.addCell(cellDinamic);
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(serv.getNombre()));
 	            	table.addCell(cellDinamic2);
-	            	itbis = Controladora.getInstance().getMisProductos().get(Controladora.getInstance().getMisProductos().indexOf(serv)).getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph(itbis));
+	            	itbis = serv.getServicio().getCostoitbis();
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + serv.getValor()));

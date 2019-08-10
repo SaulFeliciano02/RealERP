@@ -20,9 +20,10 @@ public class Factura {
 	private String clienteCodigo;
 	private ArrayList<CantBienesYServiciosUtilizados> facturados;
 	private String tipoFactura;
+	private int cantcopias;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
-			float montoRecibido, float cambio, Cliente cliente, String tipoFactura) {
+			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias) {
 		super();
 		this.prodFacturados = prodFacturados;
 		this.kitFacturados = kitFacturados;
@@ -34,6 +35,7 @@ public class Factura {
 		this.miCliente = cliente;
 		this.fecha = LocalDate.now();
 		this.hora = LocalTime.now();
+		this.cantcopias = cantcopias;
 		this.setTipoFactura(tipoFactura);
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
@@ -129,6 +131,14 @@ public class Factura {
 
 	public void setTipoFactura(String tipoFactura) {
 		this.tipoFactura = tipoFactura;
+	}
+
+	public int getCantcopias() {
+		return cantcopias;
+	}
+
+	public void setCantcopias(int cantcopias) {
+		this.cantcopias = cantcopias;
 	}
 	
 	
