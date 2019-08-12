@@ -154,7 +154,7 @@ public class Controller implements Initializable{
     @FXML private Button button_modificarProducto;
     @FXML private Button button_eliminarProducto;
     @FXML private AnchorPane pane_InfoAdicionalProducto;
-    
+    @FXML private TitledPane titledpane_productoInformacionAdicional;
     @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUtilizado;
     @FXML private TableColumn<CantProductosUtilizados, Float> tablecolumn_productoPartidaCantidad;
     @FXML private TableColumn<CantProductosUtilizados, String> tablecolumn_productoPartidaUnidad;
@@ -2509,6 +2509,7 @@ public class Controller implements Initializable{
     
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
+    	titledpane_productoInformacionAdicional.setVisible(true);
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {

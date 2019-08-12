@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
+import java.text.DecimalFormat;
 import javax.print.Doc;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
@@ -208,7 +208,8 @@ public class FacturaValorFiscal {
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(estandar.getNombre()));
 	            	table.addCell(cellDinamic2);
 	            	itbis = estandar.getProducto().getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
+	            	DecimalFormat format = new DecimalFormat("##.00");
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + format.format(itbis)));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + estandar.getValor()));
@@ -222,7 +223,8 @@ public class FacturaValorFiscal {
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(kit.getNombre()));
 	            	table.addCell(cellDinamic2);
 	            	itbis = kit.getKit().getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
+	            	DecimalFormat format = new DecimalFormat("##.00");
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + format.format(itbis)));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + kit.getValor()));
@@ -235,8 +237,9 @@ public class FacturaValorFiscal {
 	            	table.addCell(cellDinamic);
 	            	PdfPCell cellDinamic2 = new PdfPCell(new Paragraph(serv.getNombre()));
 	            	table.addCell(cellDinamic2);
+	            	DecimalFormat format = new DecimalFormat("##.00");
 	            	itbis = serv.getServicio().getCostoitbis();
-	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + itbis));
+	            	PdfPCell cellDinamic3 = new PdfPCell(new Paragraph("" + format.format(itbis)));
 	            	table.addCell(cellDinamic3);
 	            	itbistotal += itbis;
 	            	PdfPCell cellDinamic4 = new PdfPCell(new Paragraph("" + serv.getValor()));
@@ -256,7 +259,8 @@ public class FacturaValorFiscal {
 	            document.add(p9);
 	            p10 = new Paragraph();
 	            p10.add(new Chunk(glue));
-	            p10.add("ITBIS: " + itbistotal);
+	            DecimalFormat format = new DecimalFormat("##.00");
+	            p10.add("ITBIS: " + format.format(itbistotal));
 	            document.add(p10);
 	            p11 = new Paragraph();
 	            p11.add(new Chunk(glue));
