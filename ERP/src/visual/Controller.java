@@ -326,6 +326,12 @@ public class Controller implements Initializable{
     
     @FXML private Button button_empresaGuardar;
     
+    
+    //Historial
+    @FXML private VBox vbox_totalTransacciones;
+    @FXML private VBox vbox_transaccionesporDia;
+    
+    
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
@@ -2788,6 +2794,16 @@ public class Controller implements Initializable{
 		SpinnerValueFactory<Integer> valueFactoryDateFinal = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999999999, 0);
 		spinner_empresaValorFiscalMin.setValueFactory(valueFactoryDateInicial);
 		spinner_empresaValorFiscalMax.setValueFactory(valueFactoryDateFinal);
+    }
+    
+    public void totaltransacciones(ActionEvent event) {
+    	vbox_totalTransacciones.setVisible(true);
+    	vbox_transaccionesporDia.setVisible(false);
+    }
+    
+    public void transaccionespordia(ActionEvent event) {
+    	vbox_totalTransacciones.setVisible(false);
+    	vbox_transaccionesporDia.setVisible(true);
     }
     
 }

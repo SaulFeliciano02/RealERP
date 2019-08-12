@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
@@ -30,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -250,7 +251,8 @@
                         <Pane prefHeight="1.0" prefWidth="630.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;">
                            <VBox.margin>
                               <Insets />
-                           </VBox.margin></Pane>
+                           </VBox.margin>
+                        </Pane>
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
@@ -374,9 +376,9 @@
                                                                               </VBox>
                                                                            </center>
                                                                         </BorderPane>
-                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" disable="true" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" prefHeight="589.6" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <TitledPane fx:id="titledpane_productoInformacionAdicional" collapsible="false" prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <TitledPane fx:id="titledpane_productoInformacionAdicional" collapsible="false" prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <content>
                                                                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                        <children>
@@ -1514,11 +1516,984 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox fx:id="pane_Historial" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox fx:id="pane_Historial" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <TabPane layoutX="183.0" layoutY="251.0" prefHeight="644.0" prefWidth="629.6" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <tabs>
+                                                    <Tab text="Transacciones">
+                                                      <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <VBox alignment="TOP_CENTER" layoutX="265.0" layoutY="191.0" prefHeight="613.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <children>
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="630.0">
+                                                                           <children>
+                                                                              <Button mnemonicParsing="false" onAction="#totaltransacciones" text="Total de transacciones" />
+                                                                              <Button mnemonicParsing="false" onAction="#transaccionespordia" text="Transacciones por día">
+                                                                                 <HBox.margin>
+                                                                                    <Insets left="10.0" />
+                                                                                 </HBox.margin>
+                                                                              </Button>
+                                                                           </children>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="10.0" left="5.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </HBox>
+                                                                        <Pane prefHeight="1.0" prefWidth="630.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;" />
+                                                                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                           <children>
+                                                                              <VBox fx:id="vbox_totalTransacciones" prefHeight="720.0" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="TOP" opacity="0.3" text="Total de transacciones">
+                                                                                       <font>
+                                                                                          <Font size="16.0" />
+                                                                                       </font>
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="10.0" left="5.0" />
+                                                                                       </VBox.margin>
+                                                                                    </Label>
+                                                                                    <HBox alignment="TOP_CENTER" prefHeight="56.0" prefWidth="630.0">
+                                                                                       <children>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="189.0">
+                                                                                             <children>
+                                                                                                <Label text="Fecha inicial" />
+                                                                                                <DatePicker />
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="182.0">
+                                                                                             <children>
+                                                                                                <Label text="Fecha final" />
+                                                                                                <DatePicker />
+                                                                                             </children>
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="50.0" />
+                                                                                             </HBox.margin>
+                                                                                          </VBox>
+                                                                                       </children>
+                                                                                    </HBox>
+                                                                                    <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                       <children>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                             <children>
+                                                                                                <Label text="Ingresos" />
+                                                                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                   <children>
+                                                                                                      <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                      <Label text="RD$" />
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="129.0">
+                                                                                             <children>
+                                                                                                <Label text="Egresos" />
+                                                                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                   <children>
+                                                                                                      <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                      <Label text="RD$" />
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="35.0" />
+                                                                                             </HBox.margin>
+                                                                                          </VBox>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                             <children>
+                                                                                                <Label text="Balance" />
+                                                                                                <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                   <children>
+                                                                                                      <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                      <Label text="RD$" />
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="35.0" />
+                                                                                             </HBox.margin>
+                                                                                          </VBox>
+                                                                                       </children>
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="10.0" top="10.0" />
+                                                                                       </VBox.margin>
+                                                                                    </HBox>
+                                                                                    <Pane prefHeight="1.0" prefWidth="546.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;" />
+                                                                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minViewportHeight="565.0" prefHeight="565.0" prefViewportHeight="850.0">
+                                                                                       <content>
+                                                                                          <HBox prefHeight="510.0" prefWidth="628.0">
+                                                                                             <children>
+                                                                                                <VBox prefHeight="510.0" prefWidth="396.0" HBox.hgrow="ALWAYS">
+                                                                                                   <children>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="618.0" style="-fx-border-color: GRAY;">
+                                                                                                         <children>
+                                                                                                            <Label text="Total de ventas">
+                                                                                                               <font>
+                                                                                                                  <Font name="System Bold" size="15.0" />
+                                                                                                               </font>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </Label>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Ventas pagadas" textFill="WHITE">
+                                                                                                                           <font>
+                                                                                                                              <Font size="15.0" />
+                                                                                                                           </font>
+                                                                                                                        </Label>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Cantidad" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="129.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Ingresos" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="35.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Ganancia" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="35.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                               <children>
+                                                                                                                  <Label text="Ventas por cobrar" textFill="WHITE">
+                                                                                                                     <font>
+                                                                                                                        <Font size="15.0" />
+                                                                                                                     </font>
+                                                                                                                  </Label>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </VBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                                     <children>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Cantidad" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="162.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Ingresos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Pagos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Deuda" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" right="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </HBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="176.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Total Ingresos" />
+                                                                                                                        <Label text="(incluye ventas por cobrar)" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="189.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Total Ganancias" />
+                                                                                                                        <Label text="(incluye ventas por cobrar)" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="50.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" top="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <VBox.margin>
+                                                                                                            <Insets bottom="10.0" top="20.0" />
+                                                                                                         </VBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="194.0" prefWidth="630.0" style="-fx-border-color: GRAY;">
+                                                                                                         <children>
+                                                                                                            <Label text="Total de compras">
+                                                                                                               <font>
+                                                                                                                  <Font name="System Bold" size="15.0" />
+                                                                                                               </font>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </Label>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Compras pagadas" textFill="WHITE">
+                                                                                                                           <font>
+                                                                                                                              <Font size="15.0" />
+                                                                                                                           </font>
+                                                                                                                        </Label>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Cantidad" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="129.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Egresos" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="35.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                               <children>
+                                                                                                                  <Label text="Compras por pagar" textFill="WHITE">
+                                                                                                                     <font>
+                                                                                                                        <Font size="15.0" />
+                                                                                                                     </font>
+                                                                                                                  </Label>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </VBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                                     <children>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Cantidad" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Egresos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Pagos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Deuda" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" right="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="10.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </HBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                         </children>
+                                                                                                         <VBox.margin>
+                                                                                                            <Insets bottom="10.0" top="10.0" />
+                                                                                                         </VBox.margin>
+                                                                                                      </VBox>
+                                                                                                   </children>
+                                                                                                   <HBox.margin>
+                                                                                                      <Insets left="10.0" />
+                                                                                                   </HBox.margin>
+                                                                                                </VBox>
+                                                                                                <VBox prefHeight="510.0" prefWidth="426.0" HBox.hgrow="ALWAYS">
+                                                                                                   <children>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="202.0" prefWidth="330.0" style="-fx-border-color: GRAY;">
+                                                                                                         <children>
+                                                                                                            <Label text="Total de ingresos extras">
+                                                                                                               <font>
+                                                                                                                  <Font name="System Bold" size="15.0" />
+                                                                                                               </font>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </Label>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Ingresos extras pagados" textFill="WHITE">
+                                                                                                                           <font>
+                                                                                                                              <Font size="15.0" />
+                                                                                                                           </font>
+                                                                                                                        </Label>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Cantidad" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="129.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Ingresos" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="35.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                               <children>
+                                                                                                                  <Label text="Ingresos extras por cobrar" textFill="WHITE">
+                                                                                                                     <font>
+                                                                                                                        <Font size="15.0" />
+                                                                                                                     </font>
+                                                                                                                  </Label>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </VBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                                     <children>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Cantidad" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="162.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Ingresos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Pagos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Deuda" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" right="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </HBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                         </children>
+                                                                                                         <VBox.margin>
+                                                                                                            <Insets bottom="10.0" top="20.0" />
+                                                                                                         </VBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="194.0" prefWidth="630.0" style="-fx-border-color: GRAY;">
+                                                                                                         <children>
+                                                                                                            <Label text="Total de gastos extras">
+                                                                                                               <font>
+                                                                                                                  <Font name="System Bold" size="15.0" />
+                                                                                                               </font>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="5.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </Label>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Compras pagadas" textFill="WHITE">
+                                                                                                                           <font>
+                                                                                                                              <Font size="15.0" />
+                                                                                                                           </font>
+                                                                                                                        </Label>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="5.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Cantidad" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="129.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Gastos" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                     <HBox.margin>
+                                                                                                                        <Insets left="35.0" />
+                                                                                                                     </HBox.margin>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                               <children>
+                                                                                                                  <Label text="Compras por pagar" textFill="WHITE">
+                                                                                                                     <font>
+                                                                                                                        <Font size="15.0" />
+                                                                                                                     </font>
+                                                                                                                  </Label>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </VBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                                     <children>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Cantidad" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Gastos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Pagos" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                                           <children>
+                                                                                                                              <Label text="Deuda" />
+                                                                                                                              <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                                                 <children>
+                                                                                                                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                                    <Label text="RD$" />
+                                                                                                                                 </children>
+                                                                                                                              </HBox>
+                                                                                                                           </children>
+                                                                                                                           <HBox.margin>
+                                                                                                                              <Insets left="35.0" right="10.0" />
+                                                                                                                           </HBox.margin>
+                                                                                                                        </VBox>
+                                                                                                                     </children>
+                                                                                                                     <VBox.margin>
+                                                                                                                        <Insets bottom="10.0" />
+                                                                                                                     </VBox.margin>
+                                                                                                                  </HBox>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <VBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                               <children>
+                                                                                                                  <Label text="Salario" textFill="WHITE">
+                                                                                                                     <font>
+                                                                                                                        <Font size="15.0" />
+                                                                                                                     </font>
+                                                                                                                  </Label>
+                                                                                                               </children>
+                                                                                                            </VBox>
+                                                                                                            <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                               <children>
+                                                                                                                  <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="128.0">
+                                                                                                                     <children>
+                                                                                                                        <Label text="Total" />
+                                                                                                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                                           <children>
+                                                                                                                              <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0" />
+                                                                                                                              <Label text="RD$" />
+                                                                                                                           </children>
+                                                                                                                        </HBox>
+                                                                                                                     </children>
+                                                                                                                  </VBox>
+                                                                                                               </children>
+                                                                                                               <VBox.margin>
+                                                                                                                  <Insets bottom="10.0" />
+                                                                                                               </VBox.margin>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <VBox.margin>
+                                                                                                            <Insets top="10.0" />
+                                                                                                         </VBox.margin>
+                                                                                                      </VBox>
+                                                                                                   </children>
+                                                                                                   <HBox.margin>
+                                                                                                      <Insets left="20.0" right="10.0" />
+                                                                                                   </HBox.margin>
+                                                                                                </VBox>
+                                                                                             </children>
+                                                                                          </HBox>
+                                                                                       </content>
+                                                                                    </ScrollPane>
+                                                                                 </children>
+                                                                              </VBox>
+                                                                              <VBox fx:id="vbox_transaccionesporDia" prefHeight="720.0" prefWidth="620.0" visible="false">
+                                                                                 <children>
+                                                                                    <Label opacity="0.4" text="Transacciones por día">
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                    <VBox alignment="CENTER" prefHeight="50.0" prefWidth="620.0">
+                                                                                       <children>
+                                                                                          <Label text="Fecha" />
+                                                                                          <DatePicker />
+                                                                                       </children>
+                                                                                       <VBox.margin>
+                                                                                          <Insets bottom="10.0" />
+                                                                                       </VBox.margin>
+                                                                                    </VBox>
+                                                                                    <VBox alignment="TOP_CENTER" prefHeight="194.0" prefWidth="630.0" style="-fx-border-color: LIGHTGRAY;">
+                                                                                       <children>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                             <children>
+                                                                                                <VBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                                   <children>
+                                                                                                      <Label text="Resumen de ingresos" textFill="WHITE">
+                                                                                                         <font>
+                                                                                                            <Font size="15.0" />
+                                                                                                         </font>
+                                                                                                      </Label>
+                                                                                                   </children>
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets bottom="5.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </VBox>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                             <children>
+                                                                                                <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                   <children>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Ventas pagadas" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="10.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Pagos de ventas" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Ingresos pagados" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Pagos de ingresos" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" right="10.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                   </children>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                             <VBox.margin>
+                                                                                                <Insets bottom="10.0" />
+                                                                                             </VBox.margin>
+                                                                                          </HBox>
+                                                                                          <VBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="630.0" style="-fx-background-color: GRAY;">
+                                                                                             <children>
+                                                                                                <Label text="Resumen de gastos" textFill="WHITE">
+                                                                                                   <font>
+                                                                                                      <Font size="15.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                             </children>
+                                                                                             <VBox.margin>
+                                                                                                <Insets bottom="10.0" />
+                                                                                             </VBox.margin>
+                                                                                          </VBox>
+                                                                                          <VBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="630.0">
+                                                                                             <children>
+                                                                                                <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="630.0">
+                                                                                                   <children>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Compras pagadas" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="10.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Pagos de compras" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Gastos pagados" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="160.0">
+                                                                                                         <children>
+                                                                                                            <Label text="Salario empleados" />
+                                                                                                            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
+                                                                                                               <children>
+                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <Label text="RD$" />
+                                                                                                               </children>
+                                                                                                            </HBox>
+                                                                                                         </children>
+                                                                                                         <HBox.margin>
+                                                                                                            <Insets left="30.0" right="10.0" />
+                                                                                                         </HBox.margin>
+                                                                                                      </VBox>
+                                                                                                   </children>
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets bottom="10.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </HBox>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <Label text="Balance">
+                                                                                                   <font>
+                                                                                                      <Font name="System Bold" size="15.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                                <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="82.0" promptText="0.0">
+                                                                                                   <HBox.margin>
+                                                                                                      <Insets left="5.0" />
+                                                                                                   </HBox.margin>
+                                                                                                </TextField>
+                                                                                                <Label text="RD$" />
+                                                                                             </children>
+                                                                                             <VBox.margin>
+                                                                                                <Insets bottom="10.0" />
+                                                                                             </VBox.margin>
+                                                                                          </HBox>
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                 </children>
+                                                                              </VBox>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                            </AnchorPane>
+                                                      </content>
+                                                    </Tab>
+                                                  </tabs>
+                                                </TabPane>
+                                             </children></AnchorPane>
                                        </children>
                                     </HBox>
                                  </children>
