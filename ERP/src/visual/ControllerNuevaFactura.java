@@ -662,6 +662,7 @@ public class ControllerNuevaFactura implements Initializable{
     	ObservableList<String> selectedItems = listview_productosFacturados.getItems();
     	listview_productosFacturadosMain.setItems(selectedItems);
     	listview_productosFacturadosMain.refresh();
+    	titledpane_busquedaProductos.setVisible(false);
     	
     	float precio = 0;
     	for(String items : listview_productosFacturadosMain.getItems()) {
