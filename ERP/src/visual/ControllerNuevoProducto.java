@@ -3107,7 +3107,7 @@ public class ControllerNuevoProducto implements Initializable {
 				}
 				}	
 		}
-		
+		listview_partidaSelect.getItems().clear();
 		exAct.setText(""); exMin.setText(""); exMax.setText("");
 		textfield_generalProveedor.setText(""); textfield_generalRubro.setText("");
 		textfield_generalCodigo.setText("");  textarea_generalDescripcion.setText("");
@@ -3115,7 +3115,8 @@ public class ControllerNuevoProducto implements Initializable {
 		checkbox_generalProducible.setSelected(false);
 		tableview_proveedorBuscar.getSelectionModel().clearSelection();
 		tableview_rubroBuscar.getSelectionModel().clearSelection();
-	
+		combobox_costosEncargadosFabricacion.getSelectionModel().clearSelection();
+		textfield_TotalManoObra.setText("0.0");
 		
 		for(int i = 0; i < listview_partida.getItems().size(); i++) {
 			listview_partida.getItems().remove(i);
@@ -3164,6 +3165,11 @@ public class ControllerNuevoProducto implements Initializable {
 		for(int i = 0; i < listview_CostosResumen.getItems().size(); i++) {
 			listview_CostosResumen.getItems().remove(i);
 		}
+		listview_CostosResumen.getItems().clear();
+		listview_CostosSelecIndirectos.getItems().clear();
+		listview_GastosGeneralesIndirectos.getItems().clear();
+		checkbox_Impuestos.setSelected(false);
+		checkbox_preciosHabilitar.setSelected(false);
 		fillPartida(null);
 		fillPreciosTab();
 		fillGeneralTab();
