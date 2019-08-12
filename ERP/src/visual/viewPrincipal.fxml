@@ -374,7 +374,7 @@
                                                                               </VBox>
                                                                            </center>
                                                                         </BorderPane>
-                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" prefHeight="589.6" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                        <AnchorPane fx:id="pane_InfoAdicionalProducto" disable="true" prefHeight="589.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
                                                                               <TitledPane fx:id="titledpane_productoInformacionAdicional" collapsible="false" prefHeight="589.6" prefWidth="629.6" text="Información adicional producto" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <content>
