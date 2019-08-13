@@ -107,6 +107,12 @@ public class Controladora implements Serializable{
 	private ArrayList<Longitud> misLongitudes;
 	private ArrayList<Masa> misMasas;
 	private ArrayList<Volumen> misVolumenes;
+	private float deudaTotal;
+	private float gananciaVentasPagadas;
+	private float ingresosVentasPagadas;
+	private float ingresosVentasPorPagar;
+	private float ingresoTotal;
+	private float gananciaTotal;
 	
 	private Empresa miEmpresa;
 	
@@ -8209,9 +8215,129 @@ public boolean activarLoadAtributos()
 		this.misFacturasValorFiscal = misFacturasValorFiscal;
 	}
 
+	public void calcularDeudafacturas()
+	{
+		deudaTotal = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				deudaTotal += fac.getAdeudado();
+			}
+		}
+	}
 
 
+	public float getDeudaTotal() {
+		return deudaTotal;
+	}
+
+
+	public void setDeudaTotal(float deudaTotal) {
+		this.deudaTotal = deudaTotal;
+	}
+
+
+	public float getGananciaVentasPagadas() {
+		return gananciaVentasPagadas;
+	}
+
+
+	public void setGananciaVentasPagadas(float gananciaVentasPagadas) {
+		this.gananciaVentasPagadas = gananciaVentasPagadas;
+	}
+
+	public void calcularGananciaVentasPagadas()
+	{
+		gananciaVentasPagadas = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				gananciaVentasPagadas += fac.calcularGanancia();
+			}
+		}
+	}
 	
+	public void calcularIngresosVentasPagadas()
+	{
+		ingresosVentasPagadas = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				setIngresosVentasPagadas(getIngresosVentasPagadas() + fac.calcularIngreso());
+			}
+		}
+	}
+	
+	public void calcularIngresosVentasPorPagar()
+	{
+		ingresosVentasPorPagar = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				ingresosVentasPorPagar += fac.calcularIngresoPorPagar();
+			}
+		}
+	}
+
+
+	public float getIngresosVentasPagadas() {
+		return ingresosVentasPagadas;
+	}
+
+
+	public void setIngresosVentasPagadas(float ingresosVentasPagadas) {
+		this.ingresosVentasPagadas = ingresosVentasPagadas;
+	}
+
+
+	public float getIngresosVentasPorPagar() {
+		return ingresosVentasPorPagar;
+	}
+
+
+	public void setIngresosVentasPorPagar(float ingresosVentasPorPagar) {
+		this.ingresosVentasPorPagar = ingresosVentasPorPagar;
+	}
+	
+	public void calcularIngresoTotal()
+	{
+		ingresoTotal = ingresosVentasPagadas + ingresosVentasPorPagar;
+	}
+	
+	public void calcularGanaciaTotal()
+	{
+		
+	}
+
+	public float getIngresoTotal() {
+		return ingresoTotal;
+	}
+
+
+	public void setIngresoTotal(float ingresoTotal) {
+		this.ingresoTotal = ingresoTotal;
+	}
+	
+	public int cantidadVentasPorCobrar()
+	{
+		int cantidad = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				if(fac.getAdeudado() > 0)
+				{
+					cantidad++;
+				}
+			}
+		}
+		
+		return cantidad;
+	}
 	
 }
 
