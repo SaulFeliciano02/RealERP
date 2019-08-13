@@ -21,6 +21,7 @@ public class Factura {
 	private ArrayList<CantBienesYServiciosUtilizados> facturados;
 	private String tipoFactura;
 	private int cantcopias;
+	private float adeudado;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
 			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias) {
@@ -140,7 +141,57 @@ public class Factura {
 	public void setCantcopias(int cantcopias) {
 		this.cantcopias = cantcopias;
 	}
-	
+
+	public float getAdeudado() {
+		return adeudado;
+	}
+
+	public void setAdeudado(float adeudado) {
+		this.adeudado = adeudado;
+	}
+
+	public float calcularGanancia() {
+		float ganancia = 0;
+		
+		if(adeudado == 0)
+		{
+			for (CantProductosUtilizados fac : prodFacturados) {
+				ganancia += fac.getProducto().getPrecio() - fac.getProducto().getCosto();
+			}
+			
+			for (CantKitsUtilizados fac : kitFacturados) {
+				ganancia += fac.getKit().getPrecio() - fac.getKit().getCosto();
+			}
+			
+			for (ServicioUtilizado fac : serviciosFacturados) {
+				ganancia += fac.getServicio().getPrecio() - fac.getServicio().getCosto();
+			}
+		}
+		
+		return ganancia;
+	}
+
+	public float calcularIngreso() {
+		float ingreso = 0;
+		
+		if(adeudado == 0)
+		{
+			ingreso = montoTotal;
+		}
+		
+		return ingreso;
+	}
+
+	public float calcularIngresoPorPagar() {
+		float ingreso = 0;
+		
+		if(adeudado > 0)
+		{
+			ingreso = montoTotal;
+		}
+		
+		return ingreso;
+	}
 	
 	
 }
