@@ -39,6 +39,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import logico.Atributos;
@@ -109,6 +110,8 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private Spinner<Integer> spinner_cantcopias;
 	    
 	    @FXML private TitledPane titledpane_busquedaProductos;
+	    @FXML private VBox vbox_facturarProducto;
+	    @FXML private VBox vbox_facturaCredito; 
 
 	public void reload(Stage stage) {
     	
@@ -941,6 +944,16 @@ public class ControllerNuevaFactura implements Initializable{
 			paneTarjeta.setVisible(true);
 		}
 		
+	}
+	
+	public void facturaProducto(ActionEvent event) {
+		vbox_facturarProducto.setVisible(true);
+		vbox_facturaCredito.setVisible(false);
+	}
+	
+	public void facturaCredito(ActionEvent event) {
+		vbox_facturarProducto.setVisible(false);
+		vbox_facturaCredito.setVisible(true);
 	}
 
 }
