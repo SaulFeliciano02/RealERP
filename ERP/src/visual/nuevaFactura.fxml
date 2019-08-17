@@ -41,7 +41,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </ListView>
-                              <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos">
+                              <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos" >
                                  <font>
                                     <Font size="20.0" />
                                  </font>

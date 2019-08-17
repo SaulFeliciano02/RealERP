@@ -111,7 +111,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    
 	    @FXML private TitledPane titledpane_busquedaProductos;
 	    @FXML private VBox vbox_facturarProducto;
-	    @FXML private VBox vbox_facturaCredito;
+	    @FXML private VBox vbox_facturaCredito; 
 
 	public void reload(Stage stage) {
     	
