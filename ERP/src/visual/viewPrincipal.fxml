@@ -1389,7 +1389,7 @@
                                                                            <children>
                                                                               <Button fx:id="button_nuevoCliente" mnemonicParsing="false" onAction="#pressed_nuevoCliente" text="Nuevo Cliente" />
                                                                               <Separator opacity="0.0" prefWidth="200.0" />
-                                                                              <Button fx:id="button_eliminarCliente" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente" />
+                                                                              <Button fx:id="button_eliminarCliente" mnemonicParsing="false" onAction="#pressed_eliminarCliente" text="Eliminar Cliente" />
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1446,7 +1446,7 @@
                                                                            <children>
                                                                               <Button fx:id="button_nuevoProveedor" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" text="Nuevo Proveedor" />
                                                                               <Separator opacity="0.0" prefWidth="200.0" />
-                                                                              <Button fx:id="button_eliminarProveedor" mnemonicParsing="false" onAction="#eliminarProveedor" text="Eliminar Proveedor" />
+                                                                              <Button fx:id="button_eliminarProveedor" mnemonicParsing="false" onAction="#pressed_eliminarProveedor" text="Eliminar Proveedor" />
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1500,7 +1500,7 @@
                                                                            <children>
                                                                               <Button fx:id="button_nuevoEmpleado" mnemonicParsing="false" onAction="#pressed_nuevoEmpleado" text="Nuevo Empleado" />
                                                                               <Separator opacity="0.0" prefWidth="200.0" />
-                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" text="Eliminar Empleado" />
+                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" onAction="#pressed_eliminarEmpleado" text="Eliminar Empleado" />
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
