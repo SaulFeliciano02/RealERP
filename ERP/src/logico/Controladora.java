@@ -3336,6 +3336,16 @@ public class Controladora implements Serializable{
 		return encontrado;
 	}
 	
+	public boolean isRubroInProduct(Rubro rubro) {
+		boolean check = false;
+		for(Producto p : Controladora.getInstance().getMisProductos()) {
+			if(!p.isBorrado() && (p.getRubroProductoClass().equals(rubro))) {
+				check = true;
+			}
+		}
+		return check;
+	}
+	
 	public ArrayList<GastoGeneral> getMisGastosGenerales() {
 		return misGastosGenerales;
 	}
@@ -6532,186 +6542,186 @@ public boolean activarLoadPartida()
 	return activar;
 }
 
-public void loadPartida()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Connection c2 = null;
-	Connection c3 = null;
-	Connection c4 = null;
-	Connection c5 = null;
-	Statement s = null;
-	Statement s2 = null;
-	Statement s3 = null;
-	Statement s4 = null;
-	Statement s5 = null;
-	ResultSet r = null;
-	ResultSet r2 = null;
-	ResultSet r3 = null;
-	ResultSet r4 = null;
-	ResultSet r5 = null;
-	PreparedStatement p = null;
-	int i;
-	int idProducto = 0;
-	int idprodpart = 0;
-	int productoid = 0;
-	int partidaid = 0;
-	int idpartidaprodutil = 0;
-	int partidaid2 = 0;
-	int cantproductoutilizadoid = 0;
-	int cantproductoutilizadoid2 = 0;
-	int idestandarrelacionado = 0;
-	float cantidad = 0;
-	String nombre = null;
-	Estandar est = null;
-	ArrayList<Producto> productosPartida = new ArrayList<>();
-	Partida partidaRecuperada = new Partida();
-	
-	for (i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++)
+	public void loadPartida()
 	{
-		try {	
-			//Recuperar rubros
-			c = con.conectar();
-			s = (Statement) c.createStatement();
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Connection c4 = null;
+		Connection c5 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		Statement s4 = null;
+		Statement s5 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		ResultSet r4 = null;
+		ResultSet r5 = null;
+		PreparedStatement p = null;
+		int i;
+		int idProducto = 0;
+		int idprodpart = 0;
+		int productoid = 0;
+		int partidaid = 0;
+		int idpartidaprodutil = 0;
+		int partidaid2 = 0;
+		int cantproductoutilizadoid = 0;
+		int cantproductoutilizadoid2 = 0;
+		int idestandarrelacionado = 0;
+		float cantidad = 0;
+		String nombre = null;
+		Estandar est = null;
+		ArrayList<Producto> productosPartida = new ArrayList<>();
+		Partida partidaRecuperada = new Partida();
+	
+		for (i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++)
+		{
+			try {	
+				//Recuperar rubros
+				c = con.conectar();
+				s = (Statement) c.createStatement();
 		
-				if(Controladora.getInstance().getMisProductosEstandar().get(i).isFabricado())
-				{
-					partidaRecuperada = new Partida();
-					System.out.println(getMisProductosEstandar().get(i).isFabricado());
-					r = s.executeQuery("SELECT idproductos FROM productos WHERE codigo = '"+getMisProductosEstandar().get(i).getCodigo()+"'");
-					while(r.next())
+					if(Controladora.getInstance().getMisProductosEstandar().get(i).isFabricado())
 					{
-						idProducto = r.getInt(1); 
-					}
-					
-					c4 = con.conectar();
-					s4 = (Statement) c4.createStatement();
-					r4 = s4.executeQuery("SELECT * FROM productopartida WHERE producto = '"+idProducto+"'");
-					while(r4.next())
-					{
-						idprodpart = r4.getInt(1);
-						productoid = r4.getInt(2);
-						partidaid = r4.getInt(3); 
-					}
-					
-					c5 = con.conectar();
-					s5 = (Statement) c5.createStatement();
-					r5 = s5.executeQuery("SELECT * FROM partidaprodutil WHERE partida = '"+partidaid+"'");
-					while(r5.next())
-					{
-						idpartidaprodutil = r5.getInt(1);
-						partidaid2 = r5.getInt(2);
-						cantproductoutilizadoid = r5.getInt(3);
-						
-						c2 = con.conectar();
-						s2 = (Statement) c2.createStatement();
-						r2 = s2.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+cantproductoutilizadoid+"'");
-						while(r2.next())
+						partidaRecuperada = new Partida();
+						System.out.println(getMisProductosEstandar().get(i).isFabricado());
+						r = s.executeQuery("SELECT idproductos FROM productos WHERE codigo = '"+getMisProductosEstandar().get(i).getCodigo()+"'");
+						while(r.next())
 						{
-							cantproductoutilizadoid2 = r2.getInt(1);
-							idestandarrelacionado = r2.getInt(2);
-							cantidad = r2.getFloat(3);
-							
-							c3 = con.conectar();
-							s3 = (Statement) c3.createStatement();
-							r3 = s3.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
-							while(r3.next())
-							{
-								nombre = r3.getString(1);
-								est = (Estandar) buscarProducto(nombre);
-								productosPartida.add(est);
-							}
-							
-							CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
-							Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
-							partidaRecuperada.agregarProductoUtilizado(cpu);
-							System.out.println("La clase de cantproductosutilizados: " + cpu.getProducto() + " " + cpu.getCantidad());
-							
+							idProducto = r.getInt(1); 
 						}
 					
-						
-					}
-					Controladora.getInstance().getMisPartidas().add(partidaRecuperada);	
-					Controladora.getInstance().getMisProductosEstandar().get(i).setPartida(partidaRecuperada);
-					System.out.println(Controladora.getInstance().getMisProductosEstandar().get(i).getPartida().getListaMateriales().size());
-					partidaRecuperada = null;
+						c4 = con.conectar();
+						s4 = (Statement) c4.createStatement();
+						r4 = s4.executeQuery("SELECT * FROM productopartida WHERE producto = '"+idProducto+"'");
+						while(r4.next())
+						{
+							idprodpart = r4.getInt(1);
+							productoid = r4.getInt(2);
+							partidaid = r4.getInt(3); 
+						}
 					
-				}
+						c5 = con.conectar();
+						s5 = (Statement) c5.createStatement();
+						r5 = s5.executeQuery("SELECT * FROM partidaprodutil WHERE partida = '"+partidaid+"'");
+						while(r5.next())
+						{
+							idpartidaprodutil = r5.getInt(1);
+							partidaid2 = r5.getInt(2);
+							cantproductoutilizadoid = r5.getInt(3);
+						
+							c2 = con.conectar();
+							s2 = (Statement) c2.createStatement();
+							r2 = s2.executeQuery("SELECT * FROM cantproductosutilizados WHERE idcantproductosutilizados = '"+cantproductoutilizadoid+"'");
+							while(r2.next())
+							{
+								cantproductoutilizadoid2 = r2.getInt(1);
+								idestandarrelacionado = r2.getInt(2);
+								cantidad = r2.getFloat(3);
+							
+								c3 = con.conectar();
+								s3 = (Statement) c3.createStatement();
+								r3 = s3.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+								while(r3.next())
+								{
+									nombre = r3.getString(1);
+									est = (Estandar) buscarProducto(nombre);
+									productosPartida.add(est);
+								}
+							
+								CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
+								Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
+								partidaRecuperada.agregarProductoUtilizado(cpu);
+								System.out.println("La clase de cantproductosutilizados: " + cpu.getProducto() + " " + cpu.getCantidad());
+							
+							}
+					
+						
+						}
+						Controladora.getInstance().getMisPartidas().add(partidaRecuperada);	
+						Controladora.getInstance().getMisProductosEstandar().get(i).setPartida(partidaRecuperada);
+						System.out.println(Controladora.getInstance().getMisProductosEstandar().get(i).getPartida().getListaMateriales().size());
+						partidaRecuperada = null;
+					
+					}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		
-		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-		finally {
-			try {
+			//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
 				
-				if(c!=null) {
-					c.close();
+					if(c!=null) {
+						c.close();
+					}
+				
+					if(c2!=null) {
+						c2.close();
+					}
+				
+					if(c3!=null) {
+						c3.close();
+					}
+				
+					if(c4!=null) {
+						c4.close();
+					}
+				
+					if(c5!=null) {
+						c5.close();
+					}
+				
+					if(s!=null) {
+						s.close();
+					}
+				
+					if(s2!=null) {
+						s2.close();
+					}
+				
+					if(s3!=null) {
+						s3.close();
+					}
+				
+					if(s4!=null) {
+						s4.close();
+					}
+				
+					if(s5!=null) {
+						s5.close();
+					}
+				
+					if(r!=null) {
+						r.close();
+					}
+				
+					if(r2!=null) {
+						r2.close();
+					}
+				
+					if(r3!=null) {
+						r3.close();
+					}
+				
+					if(r4!=null) {
+						r4.close();
+					}
+				
+					if(r5!=null) {
+						r5.close();
+					}
+				
+				} catch (Exception e2) {
+					e2.printStackTrace();
 				}
-				
-				if(c2!=null) {
-					c2.close();
-				}
-				
-				if(c3!=null) {
-					c3.close();
-				}
-				
-				if(c4!=null) {
-					c4.close();
-				}
-				
-				if(c5!=null) {
-					c5.close();
-				}
-				
-				if(s!=null) {
-					s.close();
-				}
-				
-				if(s2!=null) {
-					s2.close();
-				}
-				
-				if(s3!=null) {
-					s3.close();
-				}
-				
-				if(s4!=null) {
-					s4.close();
-				}
-				
-				if(s5!=null) {
-					s5.close();
-				}
-				
-				if(r!=null) {
-					r.close();
-				}
-				
-				if(r2!=null) {
-					r2.close();
-				}
-				
-				if(r3!=null) {
-					r3.close();
-				}
-				
-				if(r4!=null) {
-					r4.close();
-				}
-				
-				if(r5!=null) {
-					r5.close();
-				}
-				
-			} catch (Exception e2) {
-				e2.printStackTrace();
 			}
 		}
 	}
-}
 
 	public Proveedores buscarProveedor(String nombre)
 	{
@@ -7087,63 +7097,63 @@ public void loadCategoriaEmpleado()
 	}
 }
 
-public boolean activarLoadAtributos()
-{
-	Conexion con = new Conexion();
-	Connection c = null;
-	Statement s = null;
-	ResultSet r = null;
-	PreparedStatement p = null;
-	boolean activar = false;
-	int cuenta = 0;
+	public boolean activarLoadAtributos()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
 	
-	try {
-		
-		//Recuperar precios
-		c = con.conectar();
-		
-		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-		s = (Statement) c.createStatement();
-		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM atributos");
-		
-		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
-		while(r.next())
-		{
-			cuenta = r.getInt(1);
-		}
-		
-		if(cuenta > 0)
-		{
-			activar = true;
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	
-	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
-	finally {
 		try {
-			
-			if(c!=null) {
-				c.close();
+		
+			//Recuperar precios
+			c = con.conectar();
+		
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM atributos");
+		
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
 			}
-			
-			if(s!=null) {
-				s.close();
+		
+			if(cuenta > 0)
+			{
+				activar = true;
 			}
-			
-			if(r!=null) {
-				r.close();
-			}
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	}
 	
-	return activar;
-}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+			
+				if(s!=null) {
+					s.close();
+				}
+			
+				if(r!=null) {
+					r.close();
+				}
+			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	
+		return activar;
+	}
 
 	public void loadAtributos()
 	{
@@ -7566,6 +7576,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que se encarga de restar la existencia actual de un producto estandar cuando se le hace una modificacion a este.
 	public void restarExistenciaActual(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
@@ -7601,6 +7612,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que se encarga de restar la existencia actual de una matriz cuando se le hace una modificacion a este.
 	public void restarExistenciaActualMatriz(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
@@ -7637,6 +7649,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que se encarga de restar la existencia actual de un producto kit cuando se le hace una modificacion a este.
 	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
@@ -7672,6 +7685,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que se encarga de sumar la existencia actual de un producto cuando se le hace una modificacion a este.
 	public void sumarExistenciaActual(float cantidadSumar, int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
@@ -7707,6 +7721,7 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que le asigna true al valor de borrado al producto
 	public void borrarProducto(int indiceProducto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;
@@ -7742,6 +7757,151 @@ public boolean activarLoadAtributos()
 		}
 	}
 	
+	//Funcion que le asigna true al valor de borrado del cliente
+	public void borrarCliente(int indiceCliente) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE clientes SET borrado = 1 WHERE idproductos = '"+indiceCliente+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	//Funcion que le asigna true al valor de borrado del proveedor
+	public void borrarProveedor(int indiceProveedor) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE proveedores SET borrado = 1 WHERE idproductos = '"+indiceProveedor+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	//Funcion que le asigna true al valor de borrado del empleado
+	public void borrarEmpleado(int indiceEmpleado) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE empleados SET borrado = 1 WHERE idproductos = '"+indiceEmpleado+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	//Funcion que le asigna true al valor de borrado del rubro
+	public void borrarRubro(int indiceRubro) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE rubros SET borrado = 1 WHERE idproductos = '"+indiceRubro+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	//Funcion que le asigna true al valor de borrado del gasto general
 	public void borrarGastoGeneral(int indiceGasto) {
 		Conexion con = new Conexion();
 		Connection cSQL = null;

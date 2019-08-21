@@ -2,6 +2,7 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -43,6 +44,7 @@ public class ControllerNuevoCliente implements Initializable {
 	@FXML private DatePicker datepicker_cumpleCliente;
 /**FUNCIONES AGREGAR CLIENTE**/
 	
+	//Funcion abre y cierra la ventana principal para poder actualizar los datos
 	public void reload(Stage stage) {
     	
    		try {
@@ -68,6 +70,7 @@ public class ControllerNuevoCliente implements Initializable {
 			}
 	}
 	
+	//Funcion para determinar si el caracter presionado sobre un textfield es un numero
 	public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
@@ -85,6 +88,7 @@ public class ControllerNuevoCliente implements Initializable {
     	reload(stage);
     }
 	
+    //Función que determina si es posible guardar un cliente.
 	public void clienteActivarGuardar(KeyEvent event) {
 		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
 				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
@@ -95,6 +99,8 @@ public class ControllerNuevoCliente implements Initializable {
 		}
 	}
 	
+	//Un datepicker no funciona de la misma manera que un textfield, entonces para determinar si un datepicker es diferente de null
+	//se tiene que utilizar una funcion diferente.
 	public void clienteActivarGuardarDatePicker(ActionEvent event) {
 		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
 				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
@@ -121,5 +127,15 @@ public class ControllerNuevoCliente implements Initializable {
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+	
+	public void modifyOpen(Cliente cliente) {
+		textfield_codigoCliente.setText(cliente.getCodigo());
+		textfield_nombreCliente.setText(cliente.getNombre());
+		textfield_telefonoCliente.setText(cliente.getTelefono());
+		textfield_rncCliente.setText(cliente.getRnc());
+		textfield_tipoCliente.setText(cliente.getTipoCliente());
+		//Transforma una variable tipo Date a LocalDate.
+		datepicker_cumpleCliente.setValue(cliente.getCumpleanos().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+	}
 	
 }

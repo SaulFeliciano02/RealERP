@@ -1876,6 +1876,33 @@ public class Controller implements Initializable{
 		}
     }
     
+    public void pressed_eliminarCliente(ActionEvent event) {
+    	Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + cliente.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(cliente!=null) {
+    			if(cliente.getDeuda() > 0) {
+    				Alert deudaAlert = new Alert(AlertType.WARNING);
+    				deudaAlert.setContentText("El cliente aun tiene deudas pendientes");
+    				deudaAlert.show();
+    			}
+    			else if(cliente.getCredito() > 0) {
+    				Alert creditoAlert = new Alert(AlertType.WARNING);
+    				creditoAlert.setContentText("El cliente aun posee credito.");
+    				creditoAlert.show();
+    			}
+    			else {
+    				int indice = Controladora.getInstance().getMisClientes().indexOf(cliente);
+    				Controladora.getInstance().getMisClientes().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarCliente(indice+1);
+    				fillClientList(null);
+    			}  			
+        	}
+    	}
+    }
+    
     public void pressed_nuevoProveedor(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProveedor.fxml"));
@@ -1923,6 +1950,21 @@ public class Controller implements Initializable{
 		}
     }
     
+    public void pressed_eliminarProveedor(ActionEvent event) {
+    	Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar a" + proveedor.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(proveedor!=null) {
+    			int indice = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+    			Controladora.getInstance().getMisProveedores().get(indice).setBorrado(true);
+    			Controladora.getInstance().borrarProveedor(indice+1);
+    			fillProveedorList(null);;	
+        	}
+    	}
+    }
+    
     public void pressed_nuevoEmpleado(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoEmpleado.fxml"));
@@ -1968,6 +2010,21 @@ public class Controller implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    public void pressed_eliminarEmpleado(ActionEvent event) {
+    	Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar a" + empleado.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(empleado!=null) {
+    			int indice = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+    			Controladora.getInstance().getMisEmpleados().get(indice).setBorrado(true);
+    			Controladora.getInstance().borrarEmpleado(indice+1);
+    			fillProveedorList(null);;	
+        	}
+    	}
     }
     
     public void pressed_nuevaFactura(ActionEvent event){
@@ -2177,13 +2234,49 @@ public class Controller implements Initializable{
     }
     
     public void eliminarRubro(ActionEvent event) {
-    	int index = tableview_rubro.getSelectionModel().getSelectedIndex();
-    	tableview_rubro.getItems().remove(index);
+    	Rubro rubro = tableview_rubro.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + rubro.getNombreRubro() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(rubro!=null) {
+    			if(Controladora.getInstance().isRubroInProduct(rubro)) {
+    				Alert rubroTaken = new Alert(AlertType.CONFIRMATION);
+    				rubroTaken.setContentText("Este rubro es parte de un producto.");
+    				rubroTaken.show();
+    			}
+    			else {
+    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
+    				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarRubro(indice+1);
+    				fillRubroList(null);
+    			}
+    				
+        	}
+    	}
     }
     
     public void eliminarAtributo(ActionEvent event) {
-    	int index = tableView_Atributos.getSelectionModel().getSelectedIndex();
-    	tableView_Atributos.getItems().remove(index);
+    	/**Atributos atributo = tableView_atributos.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + atributo.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(rubro!=null) {
+    			if(Controladora.getInstance().isRubroInProduct(rubro)) {
+    				Alert rubroTaken = new Alert(AlertType.CONFIRMATION);
+    				rubroTaken.setContentText("Este rubro es parte de un producto.");
+    				rubroTaken.show();
+    			}
+    			else {
+    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
+    				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarRubro(indice+1);
+    				fillRubroList(null);
+    			}
+    				
+        	}
+    	}**/
     }
 
     
