@@ -211,6 +211,9 @@ public class Controller implements Initializable{
     @FXML private Button button_exportarInventario;
     @FXML private ImageView imageview_image;
     
+    @FXML private AnchorPane titledPane_nuevaPeticion;
+    @FXML private TitledPane titledpane_busquedaProductosPeticiones;
+    
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
     @FXML private TextField textfield_registrar_atributo;
@@ -2840,4 +2843,19 @@ public class Controller implements Initializable{
     	vbox_transaccionesporDia.setVisible(true);
     }
     
+    public void abrir_titledpaneNuevaPeticion(ActionEvent event) {
+    	titledPane_nuevaPeticion.setVisible(true);
+    }
+    
+    public void cerrar_titledpaneNuevaPeticion(ActionEvent event) {
+    	titledPane_nuevaPeticion.setVisible(false);
+    }
+    
+    public void abrir_titledpane_busquedaProductosPeticiones(ActionEvent event) {
+    	titledpane_busquedaProductosPeticiones.setVisible(true);
+    }
+    
+    public void cerrar_titledpane_busquedaProductosPeticiones(ActionEvent event) {
+    	titledpane_busquedaProductosPeticiones.setVisible(false);
+    }
 }
