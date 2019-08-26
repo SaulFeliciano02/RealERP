@@ -293,7 +293,7 @@
                                                                                     <HBox alignment="BOTTOM_RIGHT" prefHeight="42.0" prefWidth="630.0" VBox.vgrow="NEVER">
                                                                                        <children>
                                                                                           <ComboBox fx:id="combobox_productBuscar" prefWidth="150.0" promptText="Buscar por:" />
-                                                                                          <TextField fx:id="textfield_productBuscar" prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
+                                                                                          <TextField fx:id="textfield_productBuscar" onKeyTyped="#buscarProductos" prefHeight="31.0" prefWidth="244.0" promptText="Búsqueda" />
                                                                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                              <effect>
                                                                                                 <ImageInput>
@@ -829,16 +829,16 @@
                                                                                     </Button>
                                                                                  </children>
                                                                               </HBox>
-                                                                              <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                              <TableView fx:id="tableview_peticionList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                 <columns>
-                                                                                  <TableColumn prefWidth="75.0" text="Código" />
-                                                                                  <TableColumn prefWidth="75.0" text="Proveedor" />
-                                                                                    <TableColumn prefWidth="75.0" text="Producto" />
-                                                                                    <TableColumn prefWidth="75.0" text="Cantidad" />
-                                                                                    <TableColumn prefWidth="75.0" text="Monto" />
-                                                                                    <TableColumn prefWidth="75.0" text="Método de pago" />
-                                                                                    <TableColumn prefWidth="75.0" text="Estado" />
-                                                                                    <TableColumn prefWidth="75.0" text="Fecha" />
+                                                                                  <TableColumn fx:id="tablecolumn_peticionCodigo" prefWidth="75.0" text="Código" />
+                                                                                  <TableColumn fx:id="tablecolumn_peticionProveedor" prefWidth="75.0" text="Proveedor" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionProducto" prefWidth="75.0" text="Producto" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionCantidad" prefWidth="75.0" text="Cantidad" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionMonto" prefWidth="75.0" text="Monto" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionMetodo" prefWidth="75.0" text="Método de pago" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionEstado" prefWidth="75.0" text="Estado" />
+                                                                                    <TableColumn fx:id="tablecolumn_peticionFecha" prefWidth="75.0" text="Fecha" />
                                                                                 </columns>
                                                                                  <VBox.margin>
                                                                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -885,7 +885,7 @@
                                                                                           </Label>
                                                                                           <HBox prefHeight="33.0" prefWidth="250.0">
                                                                                              <children>
-                                                                                                <TextField prefHeight="26.0" prefWidth="207.0">
+                                                                                                <TextField fx:id="textfield_peticionProducto" editable="false" prefHeight="26.0" prefWidth="207.0">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
@@ -905,7 +905,7 @@
                                                                                                 <Insets left="10.0" />
                                                                                              </VBox.margin>
                                                                                           </Label>
-                                                                                          <ComboBox disable="true" prefHeight="26.0" prefWidth="202.0">
+                                                                                          <ComboBox fx:id="combobox_peticionProveedor" disable="true" prefHeight="26.0" prefWidth="202.0">
                                                                                              <VBox.margin>
                                                                                                 <Insets bottom="10.0" left="10.0" />
                                                                                              </VBox.margin>
@@ -915,7 +915,7 @@
                                                                                                 <Insets left="10.0" />
                                                                                              </VBox.margin>
                                                                                           </Label>
-                                                                                          <Spinner disable="true" prefHeight="26.0" prefWidth="106.0">
+                                                                                          <Spinner fx:id="spinner_peticionCantidad" disable="true" onMouseClicked="#peticionCalcularMonto" prefHeight="26.0" prefWidth="106.0">
                                                                                              <VBox.margin>
                                                                                                 <Insets bottom="10.0" left="5.0" />
                                                                                              </VBox.margin>
@@ -927,7 +927,7 @@
                                                                                           </Label>
                                                                                           <AnchorPane prefHeight="31.0" prefWidth="286.0">
                                                                                              <children>
-                                                                                                <TextField alignment="CENTER_RIGHT" disable="true" editable="false" layoutY="1.0" prefHeight="26.0" prefWidth="134.0" promptText="0.0" />
+                                                                                                <TextField fx:id="textfield_peticionMonto" alignment="CENTER_RIGHT" disable="true" editable="false" layoutY="1.0" prefHeight="26.0" prefWidth="134.0" promptText="0.0" />
                                                                                                 <Label layoutX="137.0" layoutY="5.0" text="RD$" />
                                                                                              </children>
                                                                                              <VBox.margin>
@@ -939,7 +939,7 @@
                                                                                                 <Insets left="10.0" />
                                                                                              </VBox.margin>
                                                                                           </Label>
-                                                                                          <ComboBox disable="true" prefWidth="150.0">
+                                                                                          <ComboBox fx:id="combobox_peticionEstado" disable="true" prefWidth="150.0">
                                                                                              <VBox.margin>
                                                                                                 <Insets bottom="10.0" left="10.0" />
                                                                                              </VBox.margin>
@@ -949,19 +949,19 @@
                                                                                                 <Insets bottom="5.0" left="10.0" />
                                                                                              </VBox.margin>
                                                                                           </Label>
-                                                                                          <HBox disable="true" prefHeight="28.0" prefWidth="286.0">
+                                                                                          <HBox prefHeight="28.0" prefWidth="286.0">
                                                                                              <children>
-                                                                                                <RadioButton mnemonicParsing="false" text="Efectivo">
+                                                                                                <RadioButton fx:id="radiobutton_peticionEfectivo" disable="true" mnemonicParsing="false" onAction="#peticionTipoDePago" text="Efectivo">
                                                                                                    <toggleGroup>
                                                                                                       <ToggleGroup fx:id="metodoPagoPeticion" />
                                                                                                    </toggleGroup>
                                                                                                 </RadioButton>
-                                                                                                <RadioButton mnemonicParsing="false" text="Crédito" toggleGroup="$metodoPagoPeticion">
+                                                                                                <RadioButton fx:id="radiobutton_peticionCredito" disable="true" mnemonicParsing="false" text="Crédito" toggleGroup="$metodoPagoPeticion">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
                                                                                                 </RadioButton>
-                                                                                                <RadioButton mnemonicParsing="false" text="Tarjeta" toggleGroup="$metodoPagoPeticion">
+                                                                                                <RadioButton fx:id="radiobutton_peticionTarjeta" disable="true" mnemonicParsing="false" text="Tarjeta" toggleGroup="$metodoPagoPeticion">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
@@ -973,7 +973,7 @@
                                                                                           </HBox>
                                                                                           <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
                                                                                              <children>
-                                                                                                <Button mnemonicParsing="false" text="Guardar" />
+                                                                                                <Button mnemonicParsing="false" onAction="#guardarPeticion" text="Guardar" />
                                                                                                 <Button mnemonicParsing="false" onAction="#cerrar_titledpaneNuevaPeticion" text="Cerrar">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="10.0" />
@@ -999,20 +999,19 @@
                                                                                  <children>
                                                                                     <HBox layoutX="253.0" layoutY="180.0" prefHeight="560.0" prefWidth="940.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
-                                                                                          <TableView fx:id="tableview_productList1" onMousePressed="#activarInfoAdicionalProducto" prefHeight="345.6" prefWidth="630.4" HBox.hgrow="ALWAYS">
+                                                                                          <TableView fx:id="tableview_peticionProducto" onMousePressed="#tableview_peticionProductosClicked" prefHeight="345.6" prefWidth="630.4" HBox.hgrow="ALWAYS">
                                                                                              <columns>
-                                                                                                <TableColumn fx:id="tablecolumn_productCodigo1" prefWidth="75.0" text="Codigo" />
-                                                                                                <TableColumn fx:id="tablecolumn_productNombre1" prefWidth="75.0" text="Nombre" />
-                                                                                                <TableColumn fx:id="tablecolumn_productExistenciaInicial1" prefWidth="75.0" text="Existencia Inicial" />
-                                                                                                <TableColumn fx:id="tablecolumn_productExistenciaActual1" prefWidth="75.0" text="Existencia Actual" />
-                                                                                                <TableColumn fx:id="tablecolumn_productExistenciaMinima1" prefWidth="75.0" text="Existencia Minima" />
-                                                                                                <TableColumn fx:id="tablecolumn_productExistenciaMaxima1" prefWidth="75.0" text="Existencia Maxima" />
-                                                                                                <TableColumn fx:id="tablecolumn_productTipo1" prefWidth="75.0" text="Tipo" />
-                                                                                                <TableColumn fx:id="tablecolumn_productRubro1" prefWidth="75.0" text="Rubro" />
-                                                                                                <TableColumn fx:id="tablecolumn_productProveedor1" prefWidth="75.0" text="Proveedor" />
-                                                                                                <TableColumn fx:id="tablecolumn_productPrecio1" prefWidth="75.0" text="Precio" />
-                                                                                                <TableColumn fx:id="tablecolumn_productCosto1" prefWidth="75.0" text="Costo Total" />
-                                                                                                <TableColumn fx:id="tablecolumn_productDescripcion1" prefWidth="75.0" text="Descripcion" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoCodigo" prefWidth="75.0" text="Codigo" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoNombre" prefWidth="75.0" text="Nombre" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoExistenciaInicial" prefWidth="75.0" text="Existencia Inicial" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoExistenciaActual" prefWidth="75.0" text="Existencia Actual" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoExistenciaMinima" prefWidth="75.0" text="Existencia Minima" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoExistenciaMaxima" prefWidth="75.0" text="Existencia Maxima" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoTipo" prefWidth="75.0" text="Tipo" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoRubro" prefWidth="75.0" text="Rubro" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoPrecio" prefWidth="75.0" text="Precio" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoDescripcion" prefWidth="75.0" text="Descripcion" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProductoCosto" prefWidth="75.0" text="Costo Total" />
                                                                                              </columns>
                                                                                              <columnResizePolicy>
                                                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1030,8 +1029,8 @@
                                                                                                    <children>
                                                                                                       <HBox alignment="CENTER" prefHeight="45.0" prefWidth="281.0">
                                                                                                          <children>
-                                                                                                            <ComboBox prefHeight="26.0" prefWidth="133.0" promptText="Buscar por:" />
-                                                                                                            <TextField prefHeight="26.0" prefWidth="142.0" />
+                                                                                                            <ComboBox fx:id="combobox_peticionProducto" prefHeight="26.0" prefWidth="133.0" promptText="Buscar por:" />
+                                                                                                            <TextField fx:id="textfield_peticionProductoBuscar" onKeyTyped="#buscarProductos" prefHeight="26.0" prefWidth="142.0" />
                                                                                                          </children>
                                                                                                          <VBox.margin>
                                                                                                             <Insets top="20.0" />
@@ -1039,13 +1038,13 @@
                                                                                                       </HBox>
                                                                                                    </children>
                                                                                                 </VBox>
-                                                                                                <Button fx:id="button_clienteSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" text="Seleccionar">
+                                                                                                <Button fx:id="button_peticionProductoSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#peticionSelectProducto" text="Seleccionar">
                                                                                                    <font>
                                                                                                       <Font size="20.0" />
                                                                                                    </font>
                                                                                                 </Button>
                                                                                                 <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrar_titledpane_busquedaProductosPeticiones" text="Cerrar" />
-                                                                                                <TextField fx:id="textfield_clienteSeleccionado" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="202.0" />
+                                                                                                <TextField fx:id="textfield_peticionProductoSeleccionado" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="202.0" />
                                                                                              </children>
                                                                                           </AnchorPane>
                                                                                        </children>
