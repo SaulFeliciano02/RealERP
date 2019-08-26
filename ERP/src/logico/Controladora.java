@@ -107,6 +107,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Longitud> misLongitudes;
 	private ArrayList<Masa> misMasas;
 	private ArrayList<Volumen> misVolumenes;
+	private ArrayList<Peticion> misPeticiones;
 	private float deudaTotal;
 	private float gananciaVentasPagadas;
 	private float ingresosVentasPagadas;
@@ -145,6 +146,7 @@ public class Controladora implements Serializable{
 		this.misCostosIndirectos = new ArrayList<>();
 		this.misFacturas = new ArrayList<>();
 		this.misCantKitsUtilizados = new ArrayList<>();
+		this.misPeticiones = new ArrayList<>();
 		this.setMisFacturasValorFiscal(new ArrayList<>());
 		
 		misClientes.add(cliente1);
@@ -205,6 +207,9 @@ public class Controladora implements Serializable{
 		this.miEmpresa = null;
 	}
 	
+	public ArrayList<Peticion> getMisPeticiones(){
+		return misPeticiones;
+	}
 	
 	public void setMiEmpresa(Empresa miEmpresa) {
 		this.miEmpresa = miEmpresa;
@@ -6732,6 +6737,25 @@ public boolean activarLoadPartida()
 		while(i<getMisProveedores().size() && !encontrado)
 		{
 			if(getMisProveedores().get(i).getNombre().equalsIgnoreCase(nombre))
+			{
+				p = getMisProveedores().get(i);
+				encontrado = true;
+			}
+		
+			i++;
+		}
+	
+		return p;
+	}
+	
+	public Proveedores buscarProveedorCodigo(String codigo) {
+		Proveedores p = null;
+		int i = 0;
+		boolean encontrado = false;
+	
+		while(i<Controladora.getInstance().getMisProveedores().size() && !encontrado)
+		{
+			if(Controladora.getInstance().getMisProveedores().get(i).getCodigo().equalsIgnoreCase(codigo) && !Controladora.getInstance().getMisProveedores().get(i).isBorrado())
 			{
 				p = getMisProveedores().get(i);
 				encontrado = true;

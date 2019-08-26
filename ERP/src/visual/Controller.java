@@ -78,6 +78,7 @@ import logico.Factura;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
+import logico.Peticion;
 import logico.Producto;
 import logico.Promocion;
 import logico.Proveedores;
@@ -213,6 +214,46 @@ public class Controller implements Initializable{
     
     @FXML private AnchorPane titledPane_nuevaPeticion;
     @FXML private TitledPane titledpane_busquedaProductosPeticiones;
+    
+    //PETICIONES
+    
+    @FXML private TableColumn<Peticion, String> tablecolumn_peticionCodigo;
+    @FXML private TableColumn<Peticion, String> tablecolumn_peticionProveedor;
+    @FXML private TableColumn<Peticion, String> tablecolumn_peticionProducto;
+    @FXML private TableColumn<Peticion, Integer> tablecolumn_peticionCantidad;
+    @FXML private TableColumn<Peticion, Float> tablecolumn_peticionMonto;
+    @FXML private TableColumn<Peticion, String> tablecolumn_peticionMetodo;
+    @FXML private TableColumn<Peticion, String> tablecolumn_peticionEstado;
+    @FXML private TableColumn<Peticion, LocalDate> tablecolumn_peticionFecha;
+    @FXML private TableView<Peticion> tableview_peticionList;
+    
+    @FXML private TextField textfield_peticionProducto;
+    @FXML private ComboBox<String> combobox_peticionProveedor;
+    @FXML private Spinner<Integer> spinner_peticionCantidad;
+    @FXML private TextField textfield_peticionMonto;
+    @FXML private ComboBox<String> combobox_peticionEstado;
+    @FXML private RadioButton radiobutton_peticionEfectivo;
+    @FXML private RadioButton radiobutton_peticionCredito;
+    @FXML private RadioButton radiobutton_peticionTarjeta;
+    
+    @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoCodigo;
+    @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoNombre;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoExistenciaInicial;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoExistenciaActual;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoExistenciaMinima;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoExistenciaMaxima;
+    @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoTipo;
+    @FXML private TableColumn<Producto, Rubro> tablecolumn_peticionProductoRubro;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoPrecio;
+    @FXML private TableColumn<Producto, Float> tablecolumn_peticionProductoCosto;
+    @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoDescripcion;
+    @FXML private TableView<Producto> tableview_peticionProducto;
+    
+    @FXML private ComboBox<String> combobox_peticionProducto;
+    @FXML private TextField textfield_peticionProductoBuscar;
+    @FXML private TextField textfield_peticionProductoSeleccionado;
+    @FXML private Button button_peticionProductoSeleccionar;
+    
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -2156,18 +2197,35 @@ public class Controller implements Initializable{
     }
     
     public void buscarProductos(KeyEvent event) {
+    	TextField textfield = (TextField) event.getSource();
     	ArrayList<Producto> productos = new ArrayList<>();
-    	if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
-    		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase() + event.getCharacter(), combobox_productBuscar.getSelectionModel().getSelectedItem());
+    	if(textfield.equals(textfield_productBuscar)) {
+    		if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    			productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase() + event.getCharacter(), combobox_productBuscar.getSelectionModel().getSelectedItem());
+    		}
+    		else {
+    			productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getSelectionModel().getSelectedItem());
+    		}
+    		if(productos.size() == 0) {
+    			fillProductList(null);
+    		}
+    		else {
+    			fillProductList(productos);
+    		}
     	}
-    	else {
-    		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getSelectionModel().getSelectedItem());
-    	}
-    	if(productos.size() == 0) {
-    		fillProductList(null);
-    	}
-    	else {
-    		fillProductList(productos);
+    	else if(textfield.equals(textfield_peticionProductoBuscar)) {
+    		if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
+    			productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase() + event.getCharacter(), combobox_peticionProducto.getSelectionModel().getSelectedItem());
+    		}
+    		else {
+    			productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase(), combobox_peticionProducto.getSelectionModel().getSelectedItem());
+    		}
+    		if(productos.size() == 0) {
+    			fillPeticionProductos(null);
+    		}
+    		else {
+    			fillPeticionProductos(productos);
+    		}
     	}
     }
     
@@ -2364,6 +2422,119 @@ public class Controller implements Initializable{
     	
    
     }
+    
+    /**FUNCIONES DE LAS PETICIONES**/
+    
+    public void tableview_peticionProductosClicked(MouseEvent event) {
+    	Producto producto = tableview_peticionProducto.getSelectionModel().getSelectedItem();
+    	textfield_peticionProductoSeleccionado.setText(producto.getNombre());
+    	button_peticionProductoSeleccionar.setDisable(false);
+    }
+    
+    public void peticionSelectProducto(ActionEvent event) {
+    	textfield_peticionProducto.setText(textfield_peticionProductoSeleccionado.getText());
+    	combobox_peticionProveedor.setDisable(false);
+    	spinner_peticionCantidad.setDisable(false);
+    	textfield_peticionMonto.setDisable(false);
+    	combobox_peticionEstado.setDisable(false);
+    	radiobutton_peticionEfectivo.setDisable(false);
+    	radiobutton_peticionCredito.setDisable(false);
+    	radiobutton_peticionTarjeta.setDisable(false);
+    	cerrar_titledpane_busquedaProductosPeticiones(event);
+    }
+    
+    public void peticionTipoDePago(ActionEvent event) {
+    	if(event.getSource().equals(radiobutton_peticionEfectivo)) {
+    		radiobutton_peticionCredito.setSelected(false);
+    		radiobutton_peticionTarjeta.setSelected(false);
+    	}
+    	else if(event.getSource().equals(radiobutton_peticionCredito)) {
+    		radiobutton_peticionEfectivo.setSelected(false);
+    		radiobutton_peticionTarjeta.setSelected(false);
+    	}
+    	else if(event.getSource().equals(radiobutton_peticionTarjeta)) {
+    		radiobutton_peticionEfectivo.setSelected(false);
+    		radiobutton_peticionCredito.setSelected(false);
+    	}
+    }
+    
+    //Calcula el precio a pagar tomando en cuenta la cantidad del producto que se pide
+    public void peticionCalcularMonto(MouseEvent event) {
+    	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
+    	textfield_peticionMonto.setText(Float.toString(producto.getCosto()*spinner_peticionCantidad.getValue()));
+    }
+    
+    public void guardarPeticion(ActionEvent event) {
+    	boolean canRegister = true;
+    	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
+    	Alert a = new Alert(AlertType.WARNING);
+    	if(combobox_peticionProveedor.getValue().equalsIgnoreCase("")) {
+    		a.setContentText("Falta ingresar los datos del proveedor");
+    		a.show();
+    		canRegister = false;
+    	}
+    	if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar estandar = (Estandar) producto;
+    		float cantidadMaxima = estandar.getExistenciaMaxima() - estandar.getExistenciaActual();
+    		if(spinner_peticionCantidad.getValue() > cantidadMaxima) {
+    			a.setContentText("Al cumplirse esta peticion, se estaria sobrepasando la existencia maxima del producto");
+    			a.show();
+    			canRegister = false;
+    		}
+    	}
+    	if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+    		Kit kit = (Kit) producto;
+    		float cantidadMaxima = kit.getExistenciaMaxima() - kit.getExistenciaActual();
+    		if(spinner_peticionCantidad.getValue() > cantidadMaxima) {
+    			a.setContentText("Al cumplirse esta peticion, se estaria sobrepasando la existencia maxima del producto");
+    			a.show();
+    			canRegister = false;
+    		}
+    	}
+
+    	
+    	
+    	if(canRegister) {
+    		String codigo = "00000" + Controladora.getInstance().getMisPeticiones().size()+1;
+        	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(combobox_peticionProveedor.getValue());
+        	
+        	int cantidad = spinner_peticionCantidad.getValue();
+        	float monto = Float.parseFloat(textfield_peticionMonto.getText());
+        	String metodoPago = "";
+        	if(radiobutton_peticionEfectivo.isSelected()) {
+        		metodoPago = "Efectivo";
+        	}
+        	else if(radiobutton_peticionCredito.isSelected()) {
+        		metodoPago = "Credito";
+        	}
+        	else if(radiobutton_peticionTarjeta.isSelected()) {
+        		metodoPago = "Tarjeta";
+        	}
+        	String estado = combobox_peticionEstado.getValue();
+        	LocalDate fecha = LocalDate.now();
+        	Peticion peticion = new Peticion(codigo, proveedor, producto, cantidad, monto, metodoPago, estado, fecha);
+        	Controladora.getInstance().getMisPeticiones().add(peticion);
+        	
+        	textfield_peticionProducto.setText("");
+        	combobox_peticionProveedor.getSelectionModel().clearSelection();
+        	spinner_peticionCantidad.getValueFactory().setValue(0);
+        	textfield_peticionMonto.setText("");
+        	combobox_peticionEstado.getSelectionModel().clearSelection();
+        	radiobutton_peticionEfectivo.setSelected(true);
+        	radiobutton_peticionCredito.setSelected(false);
+        	radiobutton_peticionTarjeta.setSelected(false);
+        	
+        	combobox_peticionProveedor.setDisable(true);
+        	spinner_peticionCantidad.setDisable(true);
+        	textfield_peticionMonto.setDisable(true);
+        	combobox_peticionEstado.setDisable(true);
+        	radiobutton_peticionEfectivo.setDisable(true);
+        	radiobutton_peticionCredito.setDisable(true);
+        	radiobutton_peticionTarjeta.setDisable(true);
+        	
+        	fillPeticion();
+    	}
+    }
 
 	
 
@@ -2420,6 +2591,9 @@ public class Controller implements Initializable{
     	
     	//Seteando reportes
     	fillReporteTotalTransacciones();
+    	
+    	//Seteando peticiones
+    	setPeticiones();
     }
     
     public void fillReporteTotalTransacciones()
@@ -2883,6 +3057,76 @@ public class Controller implements Initializable{
     	textfield_facturaTotalPagado.setText(Float.toString(factura.getMontoTotal()));
     }
     
+    public void fillPeticion() {
+    	ObservableList<Peticion> data = FXCollections.observableArrayList();
+    	for(Peticion peticion : Controladora.getInstance().getMisPeticiones()) {
+    		data.add(peticion);
+    	}
+    	tablecolumn_peticionCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_peticionProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorCodigo"));
+    	tablecolumn_peticionProducto.setCellValueFactory(new PropertyValueFactory<>("productoNombre"));
+    	tablecolumn_peticionCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    	tablecolumn_peticionMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
+    	tablecolumn_peticionMetodo.setCellValueFactory(new PropertyValueFactory<>("metodoPago"));
+    	tablecolumn_peticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+    	tablecolumn_peticionFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    	
+    	tableview_peticionList.setItems(data);
+    	tableview_peticionList.refresh();
+    }
+    
+    public void fillPeticionProductos(ArrayList<Producto> p) {
+    	ObservableList<Producto> data = FXCollections.observableArrayList();
+    	if(p == null) {
+    		for(Producto productos : Controladora.getInstance().getMisProductos()) {
+    			if(!productos.isBorrado()) {
+    				data.add(productos);
+    			}
+    		}
+    		
+    	}
+    	else {
+    		data.addAll(p);
+    	}
+    	tablecolumn_peticionProductoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_peticionProductoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	tablecolumn_peticionProductoExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
+    	tablecolumn_peticionProductoExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    	tablecolumn_peticionProductoExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
+    	tablecolumn_peticionProductoExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
+    	tablecolumn_peticionProductoTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
+    	tablecolumn_peticionProductoRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
+    	tablecolumn_peticionProductoPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    	tablecolumn_peticionProductoCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
+    	tablecolumn_peticionProductoDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
+    	tableview_peticionProducto.setItems(data);
+    	tableview_peticionProducto.refresh();
+    }
+    
+    
+    public void setPeticiones() {
+    	ObservableList<String> combobox_data = FXCollections.observableArrayList();
+    	combobox_data.addAll("Codigo", "Nombre", "Proveedor", "Rubro");
+    	combobox_peticionProducto.setItems(combobox_data);
+    	
+    	combobox_data = FXCollections.observableArrayList();
+    	for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
+    		if(!p.isBorrado()) {
+    			combobox_data.add(p.getCodigo());
+    		}
+    	}
+    	combobox_peticionProveedor.setItems(combobox_data);
+    	
+    	combobox_data = FXCollections.observableArrayList();
+    	combobox_data.addAll("Aceptada", "Declinada", "Pendiente");
+    	combobox_peticionEstado.setItems(combobox_data);
+    	combobox_peticionEstado.getSelectionModel().select("Pendiente");
+    	
+    	//Spinner
+    	SpinnerValueFactory<Integer> cantidad = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 9999999, 0);
+    	spinner_peticionCantidad.setValueFactory(cantidad);
+    }
+    
     public void setDatePickersConfiguracion() {
 		/*datepicker_empresaFechaInicio.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
@@ -2944,11 +3188,17 @@ public class Controller implements Initializable{
     	titledPane_nuevaPeticion.setVisible(false);
     }
     
+    //Abre el titledpane de productos en el area de peticiones
     public void abrir_titledpane_busquedaProductosPeticiones(ActionEvent event) {
+    	fillPeticionProductos(null);
     	titledpane_busquedaProductosPeticiones.setVisible(true);
     }
     
+    //Cierra el titledpane de productos en el area de peticiones
     public void cerrar_titledpane_busquedaProductosPeticiones(ActionEvent event) {
+    	tableview_peticionProducto.getSelectionModel().clearSelection();
+    	textfield_peticionProductoSeleccionado.clear();
+    	button_peticionProductoSeleccionar.setDisable(true);
     	titledpane_busquedaProductosPeticiones.setVisible(false);
     }
 }
