@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
       <AnchorPane layoutX="254.0" layoutY="52.0" prefHeight="616.0" prefWidth="1084.0">
          <children>
@@ -41,7 +41,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </ListView>
-                              <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos" >
+                              <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -286,7 +286,7 @@
                                                                         <Font size="15.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
+                                                                  <TextField fx:id="textfield_descuento" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
@@ -321,7 +321,7 @@
                                                                         <Font name="System Bold" size="15.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
+                                                                  <TextField fx:id="textfield_penalizacion" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
@@ -343,7 +343,7 @@
                                                                         <Font name="System Bold" size="15.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
+                                                                  <TextField fx:id="textfield_pagorecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
                                                                      <HBox.margin>
                                                                         <Insets left="33.0" />
                                                                      </HBox.margin>
@@ -365,7 +365,7 @@
                                                                         <Font name="System Bold" size="15.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
+                                                                  <TextField fx:id="textfield_balancependiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>

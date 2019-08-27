@@ -101,6 +101,10 @@ public class Main extends Application{
 				try {
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
+					if(Controladora.getInstance().activarLoadCliente())
+					{
+						Controladora.getInstance().loadCliente();
+					}
 					if(Controladora.getInstance().activarLoadGastosGenerales())
 					{
 						Controladora.getInstance().loadGastosGenerales();
@@ -174,6 +178,10 @@ public class Main extends Application{
 					if(Controladora.getInstance().activarLoadImagenProducto())
 					{
 						Controladora.getInstance().loadImagenProducto();
+					}
+					if(Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
+					{
+						Controladora.getInstance().loadFacturaCreditoCliente();
 					}
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;
