@@ -112,6 +112,11 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TitledPane titledpane_busquedaProductos;
 	    @FXML private VBox vbox_facturarProducto;
 	    @FXML private VBox vbox_facturaCredito; 
+	    
+	    @FXML private TextField textfield_balancependiente;
+	    @FXML private TextField textfield_descuento;
+	    @FXML private TextField textfield_penalizacion;
+	    @FXML private TextField textfield_pagorecibido;
 
 	public void reload(Stage stage) {
     	
@@ -152,6 +157,10 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     	if(source.equals(textfield_totalRecibido) || source.equals(textfield_totalAPagar)) {
     		calcularCambio(event);
+    	}
+    	if(source.equals(textfield_pagorecibido) || source.equals(textfield_totalAPagar))
+    	{
+    		calcularDeuda(event);
     	}
     	
     }
@@ -221,8 +230,15 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     	
     	float montoTotal = Float.parseFloat(textfield_totalAPagar.getText());
-    	float montoRecibido = Float.parseFloat(textfield_totalRecibido.getText());
-    	float montoCambio = Float.parseFloat(textfield_totalCambio.getText());
+    	float montoRecibido = 0;
+    	float montoCambio = 0;
+    	
+    	if(radiobutton_facturaEfectivo.isSelected())
+    	{
+    		montoRecibido = Float.parseFloat(textfield_totalRecibido.getText());
+        	montoCambio = Float.parseFloat(textfield_totalCambio.getText());
+    	}
+    	
     	String tipoPago = "";
     	int cantcopias = spinner_cantcopias.getValue();
     	
@@ -234,8 +250,6 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     	else if(radiobutton_facturaCredito.isSelected()) {
     		tipoPago = radiobutton_facturaCredito.getText();
-    		montoRecibido = 0;
-    		montoCambio = 0;
     	}
     	ArrayList<String> alreadyUsed = new ArrayList<>();
     	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
@@ -323,10 +337,50 @@ public class ControllerNuevaFactura implements Initializable{
     		tipoFactura = "02";
     	}
     	
-    	Factura factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura, cantcopias);
-    	Controladora.getInstance().getMisFacturas().add(factura);
+    	Factura factura;
     	
-    	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
+    	if(radiobutton_facturaCredito.isSelected()) {
+    		cliente.setDeuda(cliente.getDeuda() + montoTotal);
+    		Controladora.getInstance().guardarClienteDeudaSQL(cliente);
+    		String estado = "Pendiente";
+    		float adeudado = Float.parseFloat(textfield_balancependiente.getText());
+    		int plazoPagoDias = 0;
+    		if(radiobutton_15Dias.isSelected())
+    		{
+    			plazoPagoDias = 15;
+    		}
+    		else if(radiobutton_30Dias.isSelected())
+    		{
+    			plazoPagoDias = 30;
+    		}
+    		else if(radiobutton_60Dias.isSelected())
+    		{
+    			plazoPagoDias = 60;
+    		}
+    		else if(radiobutton_90Dias.isSelected())
+    		{
+    			plazoPagoDias = 90;
+    		}
+    		float porcientoDescuento = Float.parseFloat(textfield_descuento.getText());
+    		LocalDate fechaLimiteDescuento = datepicker_fechaDePago.getValue();
+    		float porcientoPenalizacion = Float.parseFloat(textfield_penalizacion.getText());
+    		montoRecibido = Float.parseFloat(textfield_pagorecibido.getText());
+    		
+    		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, 0, cliente, tipoFactura, cantcopias, estado, adeudado, plazoPagoDias, porcientoDescuento, fechaLimiteDescuento, porcientoPenalizacion);
+    		
+    		Controladora.getInstance().getMisFacturas().add(factura);
+        	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
+        	Controladora.getInstance().guardarFacturaCreditoClienteSQL(factura);
+    	}
+    	
+    	else
+    	{
+    		String estado = "Saldado";
+    		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura, cantcopias, estado);
+    		Controladora.getInstance().getMisFacturas().add(factura);
+        	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
+    	}
+    	
     	
     	for(CantProductosUtilizados c : prodFacturados) {
     		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
@@ -340,11 +394,6 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     	for(ServicioUtilizado s : serviciosFacturados) {
     		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicio(), factura);
-    	}
-    	
-    	if(radiobutton_facturaCredito.isSelected()) {
-    		cliente.setDeuda(cliente.getDeuda() + montoTotal);
-    		Controladora.getInstance().guardarClienteDeudaSQL(cliente);
     	}
     	
     	listview_productosFacturados.getItems().clear();
@@ -400,6 +449,38 @@ public class ControllerNuevaFactura implements Initializable{
     		}
     		
     	}
+    }
+    
+    public void calcularDeuda(KeyEvent event)
+    {
+    	float recibido = 0;
+    	float total = 0;
+    	Alert a = new Alert(AlertType.NONE); 
+    	a.setAlertType(AlertType.ERROR);
+    	if(event != null) {
+    		if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+    			recibido = Float.parseFloat(textfield_pagorecibido.getText());
+    			total = Float.parseFloat(textfield_totalAPagar.getText());
+    		}
+    		else if(!event.getCode().equals(KeyCode.BACK_SPACE) && event.getSource().equals(textfield_pagorecibido)) {
+    			recibido = Float.parseFloat(textfield_pagorecibido.getText() + event.getCharacter());
+    			total = Float.parseFloat(textfield_totalAPagar.getText());
+    		}
+    	}
+    	else {
+    		recibido = Float.parseFloat(textfield_pagorecibido.getText());
+			total = Float.parseFloat(textfield_totalAPagar.getText());
+    	}
+    	
+    	float deuda = Math.abs(recibido - total);
+    	
+    	if(deuda <= total) {
+    		textfield_balancependiente.setText(Float.toString(deuda));
+    	}
+    	else {
+    		textfield_balancependiente.setText(Float.toString(0));
+    	}
+    	
     }
     
     public void calcularCambio(KeyEvent event) {
@@ -640,6 +721,7 @@ public class ControllerNuevaFactura implements Initializable{
     		precio += Float.parseFloat(Controladora.getInstance().findFacturaCosto(items));	
     	}
     	textfield_totalAPagar.setText(Float.toString(precio));
+    	textfield_balancependiente.setText(Float.toString(precio));
     	calcularCambio(null);
     }
     

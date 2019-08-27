@@ -23,11 +23,11 @@ public class Controladora implements Serializable{
 	
 	Date date = null;
 	Rubro armas = new Rubro("00001", "Armas");
-	Cliente cliente1 = new Cliente("000001", "Marcos", "312312", "Activo", null, "2312313");
+	/*Cliente cliente1 = new Cliente("000001", "Marcos", "312312", "Activo", null, "2312313");
 	Cliente cliente2 = new Cliente("000002", "Saul", "312312", "Activo", null, "2312313");
 	Cliente cliente3 = new Cliente("000003", "Yorman", "312312", "Activo", null, "2312313");
 	Cliente cliente4 = new Cliente("000004", "Sarah", "312312", "Activo", null, "2312313");
-	Cliente cliente5 = new Cliente("000005", "Michael", "312312", "Activo", null, "2312313");
+	Cliente cliente5 = new Cliente("000005", "Michael", "312312", "Activo", null, "2312313");*/
 	Proveedores proveedor1 = new Proveedores("000001", "Jose", "21312313", "Su casa", "", "", null, "");
 	Proveedores proveedor2 = new Proveedores("000002", "Marcos", "21312313", "Su casa", "", "", null, "");
 	Proveedores proveedor3 = new Proveedores("000003", "Maria", "21312313", "Su casa", "", "", null, "");
@@ -149,11 +149,11 @@ public class Controladora implements Serializable{
 		this.misPeticiones = new ArrayList<>();
 		this.setMisFacturasValorFiscal(new ArrayList<>());
 		
-		misClientes.add(cliente1);
+		/*misClientes.add(cliente1);
 		misClientes.add(cliente2);
 		misClientes.add(cliente3);
 		misClientes.add(cliente4);
-		misClientes.add(cliente5);
+		misClientes.add(cliente5);*/
 		
 		/**misProveedores.add(proveedor1);
 		misProveedores.add(proveedor2);
@@ -362,7 +362,7 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO clientes (codigo, telefono, cumpleanos, rnc, nombre) VALUES (?, ?, ?, ?, ?, ?)");
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO clientes (codigo, telefono, cumpleanos, rnc, nombre) VALUES (?, ?, ?, ?, ?)");
 			p.setString(1, cliente.getCodigo());
 			p.setString(2, cliente.getTelefono());
 			p.setDate(3, cliente.getCumpleanos());
@@ -1100,7 +1100,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1110,10 +1110,11 @@ public class Controladora implements Serializable{
 				p.setTime(7, java.sql.Time.valueOf(factura.getHora()));
 				p.setString(8, tipoFactura);
 				p.setInt(9, factura.getCantcopias());
+				p.setString(10, factura.getEstado());
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
@@ -1122,6 +1123,7 @@ public class Controladora implements Serializable{
 				p.setTime(6, java.sql.Time.valueOf(factura.getHora()));
 				p.setString(7, tipoFactura);
 				p.setInt(8, factura.getCantcopias());
+				p.setString(9, factura.getEstado());
 			}
 			
 			
@@ -8025,6 +8027,7 @@ public void loadCategoriaEmpleado()
 		Servicio serv = null;
 		ArrayList<ServicioUtilizado> serviciosFact = new ArrayList<>();
 		int cantcopias = 0;
+		String estado = null;
 		
 		try {
 			
@@ -8048,6 +8051,7 @@ public void loadCategoriaEmpleado()
 				hora = r.getTime(8);
 				tipoFactura = r.getString(9);
 				cantcopias = r.getInt(10);
+				estado = r.getString(11);
 				
 				if(idcliente>0)
 				{
@@ -8149,7 +8153,7 @@ public void loadCategoriaEmpleado()
 					serviciosFact.add(servutil);
 				}
 				
-				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias);
+				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias, estado);
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
@@ -8521,6 +8525,186 @@ public void loadCategoriaEmpleado()
 		}
 		
 		return cantidad;
+	}
+
+	public void guardarFacturaCreditoClienteSQL(Factura factura) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO facturacreditocliente (factura, adeudado, plazopagodias, porcientodescuento, fechalimitedescuento, porcientopenalizacion) VALUES (?, ?, ?, ?, ?, ?)");
+			p.setInt(1, getMisFacturas().indexOf(factura)+1);
+			p.setFloat(2, factura.getAdeudado());
+			p.setInt(3, factura.getPlazoPagoDias());
+			p.setFloat(4, factura.getPorcientoDescuento());
+			p.setDate(5, (java.sql.Date.valueOf(factura.getFechaLimiteDescuento())));
+			p.setFloat(6, factura.getPorcientoPenalizacion());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+		
+	}
+	
+	
+	public boolean activarLoadFacturaCreditoClienteSQL()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM facturacreditocliente");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadFacturaCreditoCliente()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		int id = 0;
+		int idFactura = 0;
+		float adeudado = 0;
+		int plazopagodias = 0;
+		float porcientodescuento = 0;
+		Date fechalimitedescuento = null;
+		float porcientopenalizacion = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM facturacreditocliente");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				id = r.getInt(1);
+				idFactura = r.getInt(2);
+				adeudado = r.getFloat(3);
+				plazopagodias = r.getInt(4);
+				porcientodescuento = r.getFloat(5);
+				fechalimitedescuento = r.getDate(6);
+				porcientopenalizacion = r.getFloat(7);
+				
+				Factura fac = getMisFacturas().get(idFactura-1);
+				fac.setAdeudado(adeudado);
+				fac.setPlazoPagoDias(plazopagodias);
+				fac.setPorcientoDescuento(porcientodescuento);
+				fac.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				fac.setPorcientoPenalizacion(porcientopenalizacion);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 	
 }

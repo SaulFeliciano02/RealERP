@@ -22,9 +22,14 @@ public class Factura {
 	private String tipoFactura;
 	private int cantcopias;
 	private float adeudado;
+	private String estado;
+	private int plazoPagoDias;
+	private float porcientoDescuento;
+	private LocalDate fechaLimiteDescuento;
+	private float porcientoPenalizacion;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
-			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias) {
+			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias, String estado) {
 		super();
 		this.prodFacturados = prodFacturados;
 		this.kitFacturados = kitFacturados;
@@ -38,6 +43,50 @@ public class Factura {
 		this.hora = LocalTime.now();
 		this.cantcopias = cantcopias;
 		this.setTipoFactura(tipoFactura);
+		this.setEstado(estado);
+		if(cliente != null) {
+			this.clienteCodigo = cliente.getCodigo();
+		}
+		else {
+			this.clienteCodigo = "No Cliente";
+		}
+		this.facturados = new ArrayList<>();
+		for(CantProductosUtilizados c : prodFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados(c.getUnidad(), c.getCantidad(), c.getNombre(), c.getPrecioUnitario(), c.getValor());
+			facturados.add(all);
+		}
+		for(CantKitsUtilizados k : kitFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados(k.getUnidad(), k.getCantidad(), k.getNombre(), k.getPrecioUnitario(), k.getValor());
+			facturados.add(all);
+		}
+		for(ServicioUtilizado s : serviciosFacturados) {
+			CantBienesYServiciosUtilizados all = new CantBienesYServiciosUtilizados("", 1, s.getNombre(), s.getPrecioUnitario(), s.getValor());
+			facturados.add(all);
+		}
+		
+	}
+	
+	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
+			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias, String estado, float adeudado, int plazoPagoDias, float porcientoDescuento, LocalDate fechaLimiteDescuento, float porcientoPenalizacion) {
+		super();
+		this.prodFacturados = prodFacturados;
+		this.kitFacturados = kitFacturados;
+		this.serviciosFacturados = serviciosFacturados;
+		this.montoTotal = montoTotal;
+		this.tipoPago = tipoPago;
+		this.montoRecibido = montoRecibido;
+		this.cambio = cambio;
+		this.miCliente = cliente;
+		this.fecha = LocalDate.now();
+		this.hora = LocalTime.now();
+		this.cantcopias = cantcopias;
+		this.setTipoFactura(tipoFactura);
+		this.setEstado(estado);
+		this.adeudado = adeudado;
+		this.plazoPagoDias = plazoPagoDias;
+		this.setPorcientoDescuento(porcientoDescuento);
+		this.setFechaLimiteDescuento(fechaLimiteDescuento);
+		this.porcientoPenalizacion = porcientoPenalizacion;
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
 		}
@@ -191,6 +240,46 @@ public class Factura {
 		}
 		
 		return ingreso;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public int getPlazoPagoDias() {
+		return plazoPagoDias;
+	}
+
+	public void setPlazoPagoDias(int plazoPagoDias) {
+		this.plazoPagoDias = plazoPagoDias;
+	}
+
+	public float getPorcientoDescuento() {
+		return porcientoDescuento;
+	}
+
+	public void setPorcientoDescuento(float porcientoDescuento) {
+		this.porcientoDescuento = porcientoDescuento;
+	}
+
+	public LocalDate getFechaLimiteDescuento() {
+		return fechaLimiteDescuento;
+	}
+
+	public void setFechaLimiteDescuento(LocalDate fechaLimiteDescuento) {
+		this.fechaLimiteDescuento = fechaLimiteDescuento;
+	}
+
+	public float getPorcientoPenalizacion() {
+		return porcientoPenalizacion;
+	}
+
+	public void setPorcientoPenalizacion(float porcientoPenalizacion) {
+		this.porcientoPenalizacion = porcientoPenalizacion;
 	}
 	
 	
