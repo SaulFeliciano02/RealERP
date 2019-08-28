@@ -481,6 +481,75 @@ public class Controladora implements Serializable{
 		
 	}
 	
+	public void guardarNuevoPagoDeuda(Factura fac)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		float nuevaDeuda = 0;
+		int index = misFacturas.indexOf(fac)+1;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO pagosfacturacreditocliente (factura, montopagado, fechadelpago) VALUES (?, ?, ?)");
+			p.setInt(1, misFacturas.indexOf(fac)+1);
+			p.setFloat(2, fac.getMontoDelUltimoPago());
+			p.setDate(3, (java.sql.Date.valueOf(fac.getFechaDelUltimoPago())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p.close();
+			
+			nuevaDeuda = fac.getAdeudado();
+			
+			p = (PreparedStatement) c.prepareStatement("UPDATE facturacreditocliente SET adeudado = '"+nuevaDeuda+"' WHERE factura = '"+index+"'");
+			
+			p.executeUpdate();
+			
+			p.close();
+			
+			if(nuevaDeuda <= 0)
+			{
+				String estado = "Saldada";
+				
+				p = (PreparedStatement) c.prepareStatement("UPDATE facturas SET estado = '"+estado+"' WHERE idfacturas = '"+index+"'");
+				
+				p.executeUpdate();
+			}
+			
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
 	public void guardarUsuarioSQL(Usuario usu)
 	{
 		Conexion con = new Conexion();
@@ -8222,6 +8291,8 @@ public void loadCategoriaEmpleado()
 		Connection c7 = null;
 		Connection c8 = null;
 		Connection c9 = null;
+		Connection c10 = null;
+		Connection c11 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -8231,6 +8302,8 @@ public void loadCategoriaEmpleado()
 		Statement s7 = null;
 		Statement s8 = null;
 		Statement s9 = null;
+		Statement s10 = null;
+		Statement s11 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
@@ -8240,6 +8313,8 @@ public void loadCategoriaEmpleado()
 		ResultSet r7 = null;
 		ResultSet r8 = null;
 		ResultSet r9 = null;
+		ResultSet r10 = null;
+		ResultSet r11 = null;
 		PreparedStatement p = null;
 		int idfactura = 0;
 		int idcliente = 0;
@@ -8276,6 +8351,13 @@ public void loadCategoriaEmpleado()
 		int cantcopias = 0;
 		String estado = null;
 		String codigo = null;
+		float adeudado = 0;
+		int plazopagodias = 0;
+		float porcientodescuento = 0;
+		Date fechalimitedescuento = null;
+		float porcientopenalizacion = 0;
+		float montopagado = 0;
+		Date fechaDelPago = null;
 		
 		try {
 			
@@ -8402,11 +8484,43 @@ public void loadCategoriaEmpleado()
 					serviciosFact.add(servutil);
 				}
 				
+				c10 = con.conectar();
+				s10 = (Statement) c10.createStatement();
+				r10 = s10.executeQuery("SELECT * FROM facturacreditocliente WHERE factura = '"+idfactura+"'");
+				
+				while(r10.next())
+				{
+					adeudado = r10.getFloat(3);
+					plazopagodias = r10.getInt(4);
+					porcientodescuento = r10.getFloat(5);
+					fechalimitedescuento = r10.getDate(6);
+					porcientopenalizacion = r10.getFloat(7);
+						
+				}
+				
+				c11 = con.conectar();
+				s11 = (Statement) c11.createStatement();
+				r11 = s11.executeQuery("SELECT * FROM pagosfacturacreditocliente WHERE factura = '"+idfactura+"'");
+				
+				while(r11.next())
+				{
+					montopagado = r11.getFloat(3);
+					fechaDelPago = r11.getDate(4);
+						
+				}
+				
 				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias, estado);
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
 				fact.setCodigo(codigo);
+				fact.setAdeudado(adeudado);
+				fact.setPlazoPagoDias(plazopagodias);
+				fact.setPorcientoDescuento(porcientodescuento);
+				fact.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				fact.setPorcientoPenalizacion(porcientopenalizacion);
+				fact.setMontoDelUltimoPago(montopagado);
+				fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
 				getMisFacturas().add(fact);
 				cantProdFact.clear();
 				cantKitFact.clear();
