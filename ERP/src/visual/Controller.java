@@ -99,6 +99,7 @@ public class Controller implements Initializable{
 	/**VARIABLES DE LA PANTALLA PRINCIPAL**/
 	@FXML private Pane mainPane;
     @FXML private HBox box_Principal;
+    @FXML private Label label_bienvenido;
 
     @FXML private Button selected_Gastos;
     @FXML private Button selected_Principal;
@@ -2645,6 +2646,7 @@ public class Controller implements Initializable{
     	fillCargoUsuario();
     	fillUsuario();
     	
+    	label_bienvenido.setText("Bienvenido, " + Controladora.getInstance().getUsuarioLogueado().getUsuario());
     }
     
 	public void fillCargoUsuario()

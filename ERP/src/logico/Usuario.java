@@ -14,14 +14,19 @@ public class Usuario {
 	public Usuario(String usuario, Empleado empleado, boolean usuarioActivo, String contrasena, boolean contrasenaActiva,
 			Cargo cargo) {
 		super();
-		this.setUsuario(usuario);
+		this.usuario = usuario;
 		this.empleado = empleado;
 		this.usuarioActivo = usuarioActivo;
 		this.contrasena = contrasena;
 		this.contrasenaActiva = contrasenaActiva;
 		this.cargo = cargo;
-		this.empleadoNombre = empleado.getNombre();
-		this.cargoNombre = cargo.getNombre();
+		try {
+			this.empleadoNombre = empleado.getNombre();
+			this.cargoNombre = cargo.getNombre();
+		}catch(NullPointerException e) {
+			
+		}
+		
 	}
 
 	

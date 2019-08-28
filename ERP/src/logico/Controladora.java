@@ -221,10 +221,25 @@ public class Controladora implements Serializable{
 		this.misGastosGenerales = new ArrayList<>();
 		this.misCategoriasEmpleado = new ArrayList<>();
 		this.misManosDeObras = new ArrayList<>();
+		this.usuarioLogueado = null;
 		
 		this.miEmpresa = null;
 	}
 	
+	
+	
+	public Usuario getUsuarioLogueado() {
+		return usuarioLogueado;
+	}
+
+
+
+	public void setUsuarioLogueado(Usuario usuarioLogueado) {
+		this.usuarioLogueado = usuarioLogueado;
+	}
+
+
+
 	public ArrayList<Peticion> getMisPeticiones(){
 		return misPeticiones;
 	}
@@ -3595,6 +3610,34 @@ public class Controladora implements Serializable{
 			}
 		}
 		return costoManoObra;
+	}
+	
+	public boolean validarUsuario(String usuario, String password) {
+		boolean check = false;
+		for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+			if(u.getUsuario() == usuario && u.getContrasena() == password) {
+				check = true;
+			}
+		}
+		return check;
+	}
+	
+	public Usuario buscarUsuario(String usuario, String password) {
+		Usuario result = null;
+		
+		if(usuario.equals("root") && password.equals("root")) {
+			System.out.println(usuario + ": " + password);
+			result = new Usuario("root", null, true, "root", true, null);
+		}
+		else {
+			for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+				if(u.getUsuario().equals(usuario) && u.getContrasena().equals(password)) {
+					result = u;
+				}
+			}
+		}
+		
+		return result;
 	}
 	
 	public boolean activarloadMatriz()

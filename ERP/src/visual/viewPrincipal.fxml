@@ -241,7 +241,7 @@
                                  <children>
                                     <StackPane alignment="BOTTOM_RIGHT" prefHeight="74.0" prefWidth="140.0">
                                        <children>
-                                          <Label text="Bienvenido, Usuario " />
+                                          <Label fx:id="label_bienvenido" text="Bienvenido, Usuario " />
                                        </children>
                                     </StackPane>
                                  </children>
