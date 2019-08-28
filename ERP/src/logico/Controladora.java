@@ -8375,7 +8375,7 @@ public void loadCategoriaEmpleado()
 		int idestandarrelacionado = 0;
 		float cantidad = 0;
 		String nombre = null;
-		Estandar est = null;
+		Producto est = null;
 		ArrayList<CantProductosUtilizados> cantProdFact = new ArrayList<>();
 		int idKitFacturado = 0;
 		int idCantKitUtil = 0;
@@ -8456,7 +8456,7 @@ public void loadCategoriaEmpleado()
 						while(r4.next())
 						{
 							nombre = r4.getString(1);
-							est = (Estandar) buscarProducto(nombre);
+							est = buscarProducto(nombre);
 						}
 						c4.close();
 						s4.close();
