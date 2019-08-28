@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -3014,7 +3014,7 @@
                                                                                     <VBox prefHeight="63.0" prefWidth="210.0">
                                                                                        <children>
                                                                                           <Label text="Usuario" />
-                                                                                          <TextField />
+                                                                                          <TextField fx:id="textfield_usuario" />
                                                                                        </children>
                                                                                        <padding>
                                                                                           <Insets left="10.0" />
@@ -3025,7 +3025,7 @@
                                                                                           <Label text="Empleado" />
                                                                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                                                                              <children>
-                                                                                                <TextField />
+                                                                                                <TextField fx:id="textfield_empleadoUsuario" />
                                                                                                 <Button mnemonicParsing="false" onAction="#habilitarBusquedaEmpleadoUsuario" prefHeight="26.0" prefWidth="83.0" text="Buscar" />
                                                                                              </children>
                                                                                           </HBox>
@@ -3044,7 +3044,7 @@
                                                                                     <VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="202.0">
                                                                                        <children>
                                                                                           <Label text="Cargo" />
-                                                                                          <ComboBox prefHeight="26.0" prefWidth="185.0" promptText="Seleccione" />
+                                                                                          <ComboBox fx:id="combobox_cargoUsuario" prefHeight="26.0" prefWidth="185.0" promptText="Seleccione" />
                                                                                        </children>
                                                                                        <HBox.margin>
                                                                                           <Insets left="10.0" />
@@ -3053,7 +3053,7 @@
                                                                                     <VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="233.0">
                                                                                        <children>
                                                                                           <Label text="Contraseña" />
-                                                                                          <TextField prefHeight="26.0" prefWidth="148.0" />
+                                                                                          <TextField fx:id="textfield_passwordUsuario" prefHeight="26.0" prefWidth="148.0" />
                                                                                        </children>
                                                                                        <HBox.margin>
                                                                                           <Insets left="20.0" />
@@ -3063,7 +3063,7 @@
                                                                               </HBox>
                                                                               <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="492.0">
                                                                                  <children>
-                                                                                    <Button mnemonicParsing="false" text="Guardar" />
+                                                                                    <Button fx:id="button_guardarUsuario" mnemonicParsing="false" text="Guardar" />
                                                                                  </children>
                                                                                  <VBox.margin>
                                                                                     <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
