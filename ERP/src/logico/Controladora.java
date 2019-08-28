@@ -1245,7 +1245,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1256,10 +1256,11 @@ public class Controladora implements Serializable{
 				p.setString(8, tipoFactura);
 				p.setInt(9, factura.getCantcopias());
 				p.setString(10, factura.getEstado());
+				p.setString(11, factura.getCodigo());
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
@@ -1269,6 +1270,7 @@ public class Controladora implements Serializable{
 				p.setString(7, tipoFactura);
 				p.setInt(8, factura.getCantcopias());
 				p.setString(9, factura.getEstado());
+				p.setString(10, factura.getCodigo());
 			}
 			
 			
@@ -7906,6 +7908,20 @@ public void loadCategoriaEmpleado()
 		}
 	}
 	
+	public Factura buscarFactura(String codigo)
+	{
+		Factura f = null;
+		
+		for (Factura fac : misFacturas) {
+			if(fac.getCodigo().equalsIgnoreCase(codigo))
+			{
+				f = fac;
+			}
+		}
+		
+		return f;
+	}
+	
 	//Funcion que se encarga de restar la existencia actual de un producto kit cuando se le hace una modificacion a este.
 	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
@@ -8259,6 +8275,7 @@ public void loadCategoriaEmpleado()
 		ArrayList<ServicioUtilizado> serviciosFact = new ArrayList<>();
 		int cantcopias = 0;
 		String estado = null;
+		String codigo = null;
 		
 		try {
 			
@@ -8283,6 +8300,7 @@ public void loadCategoriaEmpleado()
 				tipoFactura = r.getString(9);
 				cantcopias = r.getInt(10);
 				estado = r.getString(11);
+				codigo = r.getString(12);
 				
 				if(idcliente>0)
 				{
@@ -8388,6 +8406,7 @@ public void loadCategoriaEmpleado()
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
+				fact.setCodigo(codigo);
 				getMisFacturas().add(fact);
 				cantProdFact.clear();
 				cantKitFact.clear();

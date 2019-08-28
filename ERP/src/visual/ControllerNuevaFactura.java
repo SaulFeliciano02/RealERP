@@ -254,13 +254,18 @@ public class ControllerNuevaFactura implements Initializable{
         				factura = f;
         			}
         			balanceOriginal += factura.getMontoTotal();
+        			
+        			if(f.getEstado().equalsIgnoreCase("Pendiente"))
+        			{
+        				listview_clienteDeuda.getItems().add(f.getCodigo() + " Pendiente: " + f.getAdeudado() + "$");
+        			}
         		}
         		
         	}
         	if(factura != null) {
         		textfield_fechaSolicitud.setText(factura.getFecha().toString());
         		textfield_balanceOriginal.setText(Float.toString(balanceOriginal));
-        		textfield_ultimoPago.setText(cliente.getUltimaActualizacionDeuda().toString());
+        		//textfield_ultimoPago.setText(cliente.getUltimaActualizacionDeuda().toString());
         		textfield_creditoBalancePendiente.setText(Float.toString(cliente.getDeuda()));
         	}
         	

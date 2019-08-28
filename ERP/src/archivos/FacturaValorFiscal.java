@@ -126,10 +126,12 @@ public class FacturaValorFiscal {
 					}
 					
 					p2.add("NCF: B01" + ceros + Controladora.getInstance().getMisFacturas().size());
+					factura.setCodigo("B01" + ceros + Controladora.getInstance().getMisFacturas().size());
 				}
 				else
 				{
 					p2.add("NCF: B01" + Controladora.getInstance().getMisFacturas().size());
+					factura.setCodigo("B01" + Controladora.getInstance().getMisFacturas().size());
 				}
 				
 				document.add(p2);

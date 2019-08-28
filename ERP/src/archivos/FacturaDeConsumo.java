@@ -80,10 +80,12 @@ public class FacturaDeConsumo {
 				}
 				
 				p2.add("NCF: B02" + ceros + Controladora.getInstance().getMisFacturas().size());
+				factura.setCodigo("B02" + ceros + Controladora.getInstance().getMisFacturas().size());
 			}
 			else
 			{
 				p2.add("NCF: B02" + Controladora.getInstance().getMisFacturas().size());
+				factura.setCodigo("B02" + Controladora.getInstance().getMisFacturas().size());
 			}
 			
 			document.add(p2);

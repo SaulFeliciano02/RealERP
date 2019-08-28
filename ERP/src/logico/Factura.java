@@ -27,6 +27,7 @@ public class Factura {
 	private float porcientoDescuento;
 	private LocalDate fechaLimiteDescuento;
 	private float porcientoPenalizacion;
+	private String codigo;
 	
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
 			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias, String estado) {
@@ -280,6 +281,14 @@ public class Factura {
 
 	public void setPorcientoPenalizacion(float porcientoPenalizacion) {
 		this.porcientoPenalizacion = porcientoPenalizacion;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 	
