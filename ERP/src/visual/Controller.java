@@ -64,6 +64,7 @@ import logico.Atributos;
 import logico.CantBienesYServiciosUtilizados;
 import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
+import logico.Cargo;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
 import logico.Combinaciones;
@@ -86,6 +87,7 @@ import logico.Rubro;
 import logico.Servicio;
 import logico.ServicioUtilizado;
 import logico.UnidadMedida;
+import logico.Usuario;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -369,6 +371,12 @@ public class Controller implements Initializable{
     @FXML private DatePicker datepicker_empresaFechaFinal;
     
     @FXML private Button button_empresaGuardar;
+    
+    @FXML private TextField textfield_usuario;
+    @FXML private TextField textfield_empleadoUsuario;
+    @FXML private ComboBox<String> combobox_cargoUsuario = new ComboBox<String>();
+    @FXML private TextField textfield_passwordUsuario;
+    @FXML private Button button_guardarUsuario;
     
     
     //Historial
@@ -2068,6 +2076,26 @@ public class Controller implements Initializable{
     	}
     }
     
+    public void pressed_guardarUsuario(ActionEvent event)
+    {
+    	if(!textfield_usuario.getText().equals("") && !textfield_empleadoUsuario.getText().equals("") && !textfield_passwordUsuario.getText().equals("") && combobox_cargoUsuario.getSelectionModel().getSelectedIndex()>0)
+    	{
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Confirmar creación del usuario" + textfield_usuario, ButtonType.YES, ButtonType.NO);
+        	alert.showAndWait();
+        	
+        	if (alert.getResult() == ButtonType.YES) {
+        		Empleado emp = Controladora.getInstance().buscarEmpleado(textfield_empleadoUsuario.getText());
+        		String contrasena = textfield_passwordUsuario.getText();
+        		String usuario = textfield_usuario.getText();
+        		Cargo cargo = Controladora.getInstance().buscarCargo(combobox_cargoUsuario.getSelectionModel().getSelectedItem());
+        		Usuario usu = new Usuario(usuario, emp, true, contrasena, true, cargo);
+        		Controladora.getInstance().getMisUsuarios().add(usu);
+        		
+        	}
+        }
+    	
+    }
+    
     public void pressed_nuevaFactura(ActionEvent event){
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaFactura.fxml"));
@@ -2594,6 +2622,25 @@ public class Controller implements Initializable{
     	
     	//Seteando peticiones
     	setPeticiones();
+    	
+    	fillCargoUsuario();
+    	
+    }
+    
+	public void fillCargoUsuario()
+    {
+		ObservableList<String> combobox_data = FXCollections.observableArrayList();
+    	combobox_data.addAll("Nombre");
+    	combobox_cargoUsuario.setItems(combobox_data);
+    	
+    	combobox_data = FXCollections.observableArrayList();
+    	
+    	for (Cargo cargo : Controladora.getInstance().getMisCargos()) {
+    		combobox_data.add(cargo.getNombre());
+		}
+    	
+    	combobox_cargoUsuario.setItems(combobox_data);
+    	
     }
     
     public void fillReporteTotalTransacciones()
@@ -2997,6 +3044,8 @@ public class Controller implements Initializable{
     
     public void habilitarNuevoUsuario(ActionEvent event) {
     	pane_nuevoUsuario.setDisable(false);
+    	
+    	//fillCargoUsuario();
     }
     
     public void habilitarBusquedaEmpleadoUsuario(ActionEvent event) {

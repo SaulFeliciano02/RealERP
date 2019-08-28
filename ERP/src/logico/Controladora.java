@@ -72,12 +72,17 @@ public class Controladora implements Serializable{
 	ArrayList<Proveedores> provsec = new ArrayList<>();
 	Moneda dola = new Moneda(50, "dolar");
 	Precio pre = new Precio(1500f, "caro", true);
+	Cargo cargo1 = new Cargo("Administrador", true, true, true, true, true, true, true, true, true, true);
+	Cargo cargo2 = new Cargo("Cajero", false, false, true, true, true, false, false, false, false, false);
+	
+	Usuario usuarioLogueado = null;
 	//UnidadMedida lb = new UnidadMedida("Libra", "Lb");
 	//Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
 	
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Proveedores> misProveedores;
+	private ArrayList<Cargo> misCargos;
 	
 	private ArrayList<DescuentosAutomaticos> misDescuentos;
 	private ArrayList<Promocion> misPromociones;
@@ -108,6 +113,7 @@ public class Controladora implements Serializable{
 	private ArrayList<Masa> misMasas;
 	private ArrayList<Volumen> misVolumenes;
 	private ArrayList<Peticion> misPeticiones;
+	private ArrayList<Usuario> misUsuarios;
 	private float deudaTotal;
 	private float gananciaVentasPagadas;
 	private float ingresosVentasPagadas;
@@ -148,6 +154,8 @@ public class Controladora implements Serializable{
 		this.misCantKitsUtilizados = new ArrayList<>();
 		this.misPeticiones = new ArrayList<>();
 		this.setMisFacturasValorFiscal(new ArrayList<>());
+		this.misCargos = new ArrayList<>();
+		this.misUsuarios = new ArrayList<>();
 		
 		/*misClientes.add(cliente1);
 		misClientes.add(cliente2);
@@ -194,6 +202,16 @@ public class Controladora implements Serializable{
 		misUnidadMedida.add(sq_milimetros);
 		misUnidadMedida.add(sq_centimetros);
 		misUnidadMedida.add(sq_metros);
+		
+		
+		misCargos.add(cargo1);
+		misCargos.add(cargo2);
+		
+		if(activarLoadCargosUsuariosDefaultSQL())
+		{
+			guardarCargosUsuariosSQL(cargo1);
+			guardarCargosUsuariosSQL(cargo2);
+		}
 		
 		//misRubros.add(armas);
 		//misProductos.add(pro);
@@ -368,6 +386,133 @@ public class Controladora implements Serializable{
 			p.setDate(3, cliente.getCumpleanos());
 			p.setString(4, cliente.getRnc());
 			p.setString(5, cliente.getNombre());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
+	public void guardarCargosUsuariosSQL(Cargo defaul)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO cargos (nombre) VALUES (?)");
+			p.setString(1, defaul.getNombre());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p.close();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO permisoscargos (cargo, manejodeproductos, infoproductos, facturarcompra, infofactura, facturaporcredito, manejopromociones, accesomodulorrhh, accesomodulogastos, accesomodulohistorial, accesomoduloconfiguracion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			p.setInt(1, misCargos.indexOf(defaul)+1);
+			p.setBoolean(2, defaul.isManejodeproductos());
+			p.setBoolean(3, defaul.isInfoproductos());
+			p.setBoolean(4, defaul.isFacturarcompra());
+			p.setBoolean(5, defaul.isInfofactura());
+			p.setBoolean(6, defaul.isFacturaporcredito());
+			p.setBoolean(7, defaul.isManejopromociones());
+			p.setBoolean(8, defaul.isAccesomodulorrhh());
+			p.setBoolean(9, defaul.isAccesomodulogastos());
+			p.setBoolean(10, defaul.isAccesomodulohistorial());
+			p.setBoolean(11, defaul.isAccesomoduloconfiguracion());
+			
+			p.executeUpdate();
+			
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+	}
+	
+	public void guardarUsuarioSQL(Usuario usu)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuarios (usuario, empleado) VALUES (?, ?)");
+			p.setString(1, usu.getUsuario());
+			p.setInt(2, misEmpleados.indexOf(usu.getEmpleado())-1);
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p.close();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuariocontrasena (usuario, contrasena) VALUES (?, ?)");
+			p.setString(1, usu.getUsuario());
+			p.setString(2, usu.getContrasena());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p.close();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuariocargo (usuario, cargo) VALUES (?, ?)");
+			p.setString(1, usu.getUsuario());
+			p.setInt(2, misCargos.indexOf(usu.getCargo())+1);
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -3047,6 +3192,34 @@ public class Controladora implements Serializable{
 		return searchRubro;
 	}
 	
+	public Empleado buscarEmpleado(String codigo)
+	{
+		Empleado emp = null;
+		
+		for (Empleado empleado : misEmpleados) {
+			if(empleado.getCodigo().equalsIgnoreCase(codigo))
+			{
+				emp = empleado;
+			}
+		}
+		
+		return emp;
+	}
+	
+	public Cargo buscarCargo(String nombre)
+	{
+		Cargo cargo = null;
+				
+		for (Cargo car : misCargos) {
+			if(car.getNombre().equalsIgnoreCase(nombre))
+			{
+				cargo = car;
+			}
+		}
+		
+		return cargo;
+	}
+	
 	public void sendUnidadesIntoDatabase() {
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -3796,6 +3969,64 @@ public class Controladora implements Serializable{
 			}
 			
 			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarLoadCargosUsuariosDefaultSQL()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM cargos");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta == 0)
 			{
 				activar = true;
 			}
@@ -8705,6 +8936,22 @@ public void loadCategoriaEmpleado()
 				e2.printStackTrace();
 			}
 		}
+	}
+
+	public ArrayList<Cargo> getMisCargos() {
+		return misCargos;
+	}
+
+	public void setMisCargos(ArrayList<Cargo> misCargos) {
+		this.misCargos = misCargos;
+	}
+
+	public ArrayList<Usuario> getMisUsuarios() {
+		return misUsuarios;
+	}
+
+	public void setMisUsuarios(ArrayList<Usuario> misUsuarios) {
+		this.misUsuarios = misUsuarios;
 	}
 	
 }

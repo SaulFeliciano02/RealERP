@@ -30,6 +30,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -47,6 +48,7 @@ public class Main extends Application{
 	@FXML private PasswordField passwordfield_login;
 	@FXML private Label message;
 	@FXML private ProgressBar loading_progress;
+	@FXML private TextField textfield_usuario;
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -74,16 +76,18 @@ public class Main extends Application{
 	public void access_clicked(ActionEvent event) {
 		
 		float count=0;
-		if (!passwordfield_login.getText().equals("")) {
+		if (passwordfield_login.getText().equals("")) {
 			message.setText("¡Tu contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
 			loading_progress.setProgress(0);
 			
-		} else {
-			
-	    	/**ABRIENDO viewPrincipal.fxml**/
+		} 
+		
+		else if(passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root"))
+		{
+			/**ABRIENDO viewPrincipal.fxml**/
 			message.setText("Tu contraseña ha sido confirmada");
 			message.setTextFill(Color.rgb(21, 117, 84));
 			
@@ -199,6 +203,125 @@ public class Main extends Application{
 					e.printStackTrace();
 				} 
 		}
+		
+		//else {
+			
+	    	/**ABRIENDO viewPrincipal.fxml**/
+			/*message.setText("Tu contraseña ha sido confirmada");
+			message.setTextFill(Color.rgb(21, 117, 84));
+			
+			loading_progress.setVisible(true);
+			
+			Timeline timeline = new Timeline();
+
+			KeyValue keyValue = new KeyValue(loading_progress.progressProperty(), 1);
+			KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);
+			timeline.getKeyFrames().add(keyFrame);
+
+			timeline.play();
+			Stage loginStage = (Stage) button_acceder.getScene().getWindow();
+			loginStage.close();
+				try {
+					//Controladora.getInstance().sendUnidadesIntoDatabase();
+					//Controladora.getInstance().loadProductos();
+					if(Controladora.getInstance().activarLoadCliente())
+					{
+						Controladora.getInstance().loadCliente();
+					}
+					if(Controladora.getInstance().activarLoadGastosGenerales())
+					{
+						Controladora.getInstance().loadGastosGenerales();
+					}
+					if(Controladora.getInstance().activarRecuperarRubros())
+					{
+						Controladora.getInstance().recuperarRubros();
+					}
+					if(Controladora.getInstance().activarLoadProveedores())
+					{
+						Controladora.getInstance().loadProveedores();
+					}
+					if(Controladora.getInstance().activarLoadCategoriaEmpleado())
+					{
+						Controladora.getInstance().loadCategoriaEmpleado();
+					}
+					if(Controladora.getInstance().activarLoadEmpleados())
+					{
+						Controladora.getInstance().loadEmpleados();
+					}
+					if(Controladora.getInstance().activarLoadPrecio())
+					{
+						Controladora.getInstance().loadPrecio();
+					}
+					if(Controladora.getInstance().activarLoadProductos())
+					{
+						Controladora.getInstance().loadProductos();
+					}
+					if(Controladora.getInstance().activarLoadPartida())
+					{
+						Controladora.getInstance().loadPartida();
+					}
+					if(Controladora.getInstance().activarLoadGrupoAtributo())
+					{
+						Controladora.getInstance().loadGrupoAtributo();
+					}
+					if(Controladora.getInstance().activarLoadAtributos())
+					{
+						Controladora.getInstance().loadAtributos();
+					}
+					if(Controladora.getInstance().activarloadMatriz())
+					{
+						Controladora.getInstance().loadMatriz();
+					}
+					if(Controladora.getInstance().activarLoadKit())
+					{
+						Controladora.getInstance().loadKit();
+					}
+					if(Controladora.getInstance().activarLoadServicios())
+					{
+						Controladora.getInstance().loadServicios();
+					}
+					if(Controladora.getInstance().activarLoadManoDeObra())
+					{
+						Controladora.getInstance().loadManoDeObra();
+					}
+					if(Controladora.getInstance().activarLoadCostoIndirecto())
+					{
+						Controladora.getInstance().loadCostoIndirecto();
+					}
+					if(Controladora.getInstance().activarLoadPromedioGananciaAnual())
+					{
+						Controladora.getInstance().loadPromedioGananciaAnual();
+					}
+					Controladora.getInstance().loadFactura();
+					Controladora.getInstance().loadPromocion();
+					if(Controladora.getInstance().activarLoadInfoEmpresa())
+					{
+						Controladora.getInstance().loadInfoEmpresa();
+					}
+					if(Controladora.getInstance().activarLoadImagenProducto())
+					{
+						Controladora.getInstance().loadImagenProducto();
+					}
+					if(Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
+					{
+						Controladora.getInstance().loadFacturaCreditoCliente();
+					}
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
+						Parent root1;
+						root1 = (Parent) fxmlLoader.load();
+						Stage stage = new Stage();
+						stage.setTitle("Centro Pymes");
+						stage.setScene(new Scene(root1)); 
+						stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+						stage.setMaximized(true);
+
+						stage.showAndWait();
+						
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+		}*/
 		passwordfield_login.clear();
 		
 	}
@@ -206,14 +329,17 @@ public class Main extends Application{
 	@FXML
 	public void onEnter(ActionEvent event){
 		float count=0;
-		if (!passwordfield_login.getText().equals("")) {
+		if (passwordfield_login.getText().equals("")) {
 			message.setText("¡Tu contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
 			loading_progress.setProgress(0);
 			
-		} else {
+		} 
+		
+		else if(passwordfield_login.getText().equals("root") && textfield_usuario.getText().equalsIgnoreCase("root"))
+		{
 			
 	    	/**ABRIENDO viewPrincipal.fxml**/
 			message.setText("Tu contraseña ha sido confirmada");
@@ -233,6 +359,10 @@ public class Main extends Application{
 				try {
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
+					if(Controladora.getInstance().activarLoadCliente())
+					{
+						Controladora.getInstance().loadCliente();
+					}
 					if(Controladora.getInstance().activarLoadGastosGenerales())
 					{
 						Controladora.getInstance().loadGastosGenerales();
