@@ -28,7 +28,25 @@ public class Factura {
 	private LocalDate fechaLimiteDescuento;
 	private float porcientoPenalizacion;
 	private String codigo;
+	private float montoDelUltimoPago;
+	private LocalDate fechaDelUltimoPago;
 	
+	public float getMontoDelUltimoPago() {
+		return montoDelUltimoPago;
+	}
+
+	public void setMontoDelUltimoPago(float montoDelUltimoPago) {
+		this.montoDelUltimoPago = montoDelUltimoPago;
+	}
+
+	public LocalDate getFechaDelUltimoPago() {
+		return fechaDelUltimoPago;
+	}
+
+	public void setFechaDelUltimoPago(LocalDate fechaDelUltimoPago) {
+		this.fechaDelUltimoPago = fechaDelUltimoPago;
+	}
+
 	public Factura(ArrayList<CantProductosUtilizados> prodFacturados, ArrayList<CantKitsUtilizados> kitFacturados, ArrayList<ServicioUtilizado> serviciosFacturados, float montoTotal, String tipoPago,
 			float montoRecibido, float cambio, Cliente cliente, String tipoFactura, int cantcopias, String estado) {
 		super();
@@ -45,6 +63,22 @@ public class Factura {
 		this.cantcopias = cantcopias;
 		this.setTipoFactura(tipoFactura);
 		this.setEstado(estado);
+		if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
+		{
+			int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
+			int i;
+			String ceros = "";
+			for(i = digitos; i < 8; i++)
+			{
+				ceros += "0";
+			}
+			
+			setCodigo("B" + tipoFactura + ceros + Controladora.getInstance().getMisFacturas().size());
+		}
+		else
+		{
+			setCodigo("B" + tipoFactura + Controladora.getInstance().getMisFacturas().size());
+		}
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
 		}
@@ -88,6 +122,24 @@ public class Factura {
 		this.setPorcientoDescuento(porcientoDescuento);
 		this.setFechaLimiteDescuento(fechaLimiteDescuento);
 		this.porcientoPenalizacion = porcientoPenalizacion;
+		this.montoDelUltimoPago = montoRecibido;
+		this.fechaDelUltimoPago = fecha;
+		if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
+		{
+			int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
+			int i;
+			String ceros = "";
+			for(i = digitos; i < 8; i++)
+			{
+				ceros += "0";
+			}
+			
+			setCodigo("B" + tipoFactura + ceros + Controladora.getInstance().getMisFacturas().size());
+		}
+		else
+		{
+			setCodigo("B" + tipoFactura + Controladora.getInstance().getMisFacturas().size());
+		}
 		if(cliente != null) {
 			this.clienteCodigo = cliente.getCodigo();
 		}

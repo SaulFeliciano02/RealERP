@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
       <AnchorPane layoutX="254.0" layoutY="52.0" prefHeight="616.0" prefWidth="1084.0">
          <children>
@@ -643,7 +643,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Crédito:" />
-                                          <TextField fx:id="textfield_clienteCreditoCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteCreditoCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
                                              <HBox.margin>
                                                 <Insets left="12.0" />
                                              </HBox.margin>
@@ -661,7 +661,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Deuda:" />
-                                          <TextField fx:id="textfield_clienteDeudaCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteDeudaCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
                                              <HBox.margin>
                                                 <Insets left="16.0" />
                                              </HBox.margin>
@@ -697,7 +697,7 @@
                                  </VBox.margin>
                               </Label>
                               <ListView fx:id="listview_clienteDeuda" prefHeight="358.0" prefWidth="349.0" />
-                              <Button mnemonicParsing="false" text="Seleccionar">
+                              <Button fx:id="button_seleccionarFacturaDeuda" mnemonicParsing="false" onAction="#rellenarCamposFacturaDeuda" text="Seleccionar">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
@@ -752,7 +752,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
                                        <children>
                                           <Label text="Monto del último pago:" />
-                                          <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                          <TextField fx:id="textfield_montoDelUltimoPago" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                              <HBox.margin>
                                                 <Insets left="10.0" />
                                              </HBox.margin>
@@ -865,7 +865,7 @@
                                     </Spinner>
                                  </children>
                               </HBox>
-                              <Button mnemonicParsing="false" text="Imprimir factura">
+                              <Button fx:id="button_imprimirFacturaCredito" mnemonicParsing="false" onAction="#actualizarDeudaFactura" text="Imprimir factura">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

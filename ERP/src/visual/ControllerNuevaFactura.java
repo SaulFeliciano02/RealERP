@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
@@ -136,7 +137,9 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TextField textfield_creditoRecibido;
 	    @FXML private TextField textfield_creditoCambio;
 	    @FXML private TextField textfield_nuevoBalance;
-	    
+	    @FXML private Button button_seleccionarFacturaDeuda;
+	    @FXML private TextField textfield_montoDelUltimoPago;
+	    @FXML private CheckBox checkbox_facturaValorFiscal1;
 	    
 
 	public void reload(Stage stage) {
@@ -219,12 +222,80 @@ public class ControllerNuevaFactura implements Initializable{
     	fillClientList(null);
     }
     
+    public void rellenarCamposFacturaDeuda(ActionEvent event)
+    {
+    	Factura fac = null;
+    	
+    	String codigo = listview_clienteDeuda.getSelectionModel().getSelectedItem().substring(0, listview_clienteDeuda.getSelectionModel().getSelectedItem().indexOf(" "));
+    	
+    	fac = Controladora.getInstance().buscarFactura(codigo);
+    	
+    	textfield_fechaSolicitud.setText(fac.getFecha().toString());
+    	textfield_balanceOriginal.setText(Float.toString(fac.getMontoTotal()));
+    	if(fac.getMontoDelUltimoPago() > 0)
+    	{
+    		textfield_montoDelUltimoPago.setText(Float.toString(fac.getMontoDelUltimoPago()));
+        	textfield_ultimoPago.setText(fac.getFechaDelUltimoPago().toString());
+    	}
+    	else
+    	{
+    		textfield_montoDelUltimoPago.setText("0.0");
+        	textfield_ultimoPago.setText("0.0");
+    	}
+    	textfield_creditoBalancePendiente.setText(Float.toString(fac.getAdeudado()));
+    	
+    }
+    
+    public void actualizarDeudaFactura(ActionEvent event)
+    {
+    	Factura fac = Controladora.getInstance().buscarFactura(listview_clienteDeuda.getSelectionModel().getSelectedItem().substring(0, listview_clienteDeuda.getSelectionModel().getSelectedItem().indexOf(" ")));
+    	
+    	fac.setMontoDelUltimoPago(Float.parseFloat(textfield_creditoRecibido.getText()));
+    	fac.setFechaDelUltimoPago(LocalDate.now());
+    	fac.setAdeudado(Float.parseFloat(textfield_creditoBalancePendiente.getText()) - Float.parseFloat(textfield_creditoRecibido.getText()));
+    	
+    	Controladora.getInstance().guardarNuevoPagoDeuda(fac);
+    	
+    	Alert a = new Alert(AlertType.CONFIRMATION, "Confirmar pago", ButtonType.YES, ButtonType.NO);
+    	a.showAndWait();
+    	
+    	if(a.getResult() == ButtonType.YES)
+    	{
+    		cleanFieldsPagoFacturaCreditoCliente();
+    	}
+    	
+    }
+    
     public void selectingCliente(MouseEvent event) {
     	if(!tableview_clienteList.getSelectionModel().isEmpty()) {
     		Cliente cliente = tableview_clienteList.getSelectionModel().getSelectedItem();
     		textfield_clienteSeleccionado.setText(cliente.getCodigo());
     		button_clienteSeleccionar.setDisable(false);
     	}
+    }
+    
+    public void cleanFieldsPagoFacturaCreditoCliente()
+    {
+    	textfield_clienteNombreCredito.setText("");
+    	textfield_clienteRNCCredito.setText("");
+    	textfield_clienteCreditoCredito.setText("");
+    	textfield_clienteDeudaCredito.setText("");
+    	textfield_buscarClienteFacturaCredito.setText("");
+    	for (int i = 0; i < listview_clienteDeuda.getItems().size(); i++) {
+    		listview_clienteDeuda.getItems().remove(i);
+		}
+    	textfield_fechaSolicitud.setText("");
+    	textfield_balanceOriginal.setText("");
+    	textfield_montoDelUltimoPago.setText("");
+    	textfield_ultimoPago.setText("");
+    	textfield_creditoBalancePendiente.setText("");
+    	textfield_creditoRecibido.setText("");
+    	textfield_creditoCambio.setText("");
+    	textfield_nuevoBalance.setText("");
+    	checkbox_facturaValorFiscal1.setSelected(false);
+    	
+    	Alert a = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
+    	a.showAndWait();
     }
     
     public void clienteSelect(ActionEvent event) {
@@ -263,10 +334,10 @@ public class ControllerNuevaFactura implements Initializable{
         		
         	}
         	if(factura != null) {
-        		textfield_fechaSolicitud.setText(factura.getFecha().toString());
-        		textfield_balanceOriginal.setText(Float.toString(balanceOriginal));
+        		//textfield_fechaSolicitud.setText(factura.getFecha().toString());
+        		//textfield_balanceOriginal.setText(Float.toString(balanceOriginal));
         		//textfield_ultimoPago.setText(cliente.getUltimaActualizacionDeuda().toString());
-        		textfield_creditoBalancePendiente.setText(Float.toString(cliente.getDeuda()));
+        		//textfield_creditoBalancePendiente.setText(Float.toString(cliente.getDeuda()));
         	}
         	
         	
@@ -289,6 +360,12 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void guardarFactura(ActionEvent event) {
+    	Alert a2 = new Alert(AlertType.CONFIRMATION, "Confirmar compra", ButtonType.YES, ButtonType.NO);
+    	a2.showAndWait();
+    	
+    	if(a2.getResult() == ButtonType.YES)
+    	{
+    		
     	Cliente cliente = null;
     	for(Cliente c : Controladora.getInstance().getMisClientes()) {
     		if(c.getCodigo().equalsIgnoreCase(textfield_buscarClienteFactura.getText())) {
@@ -498,6 +575,9 @@ public class ControllerNuevaFactura implements Initializable{
     	radiobutton_facturaTarjeta.setSelected(false);
     	
     	tipoPago(null);
+    	Alert a = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
+    	a.showAndWait();
+    	}
     }
     
     public void tableViewFacturaClicked(MouseEvent event) {
