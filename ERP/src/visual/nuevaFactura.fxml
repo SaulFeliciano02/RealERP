@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
       <AnchorPane layoutX="254.0" layoutY="52.0" prefHeight="616.0" prefWidth="1084.0">
          <children>
@@ -581,7 +581,7 @@
                                                 <Font size="17.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="textfield_buscarClienteFactura1" editable="false" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
+                                          <TextField fx:id="textfield_buscarClienteFacturaCredito" editable="false" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
                                              <HBox.margin>
                                                 <Insets left="10.0" />
                                              </HBox.margin>
@@ -591,7 +591,7 @@
                                           <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <Button fx:id="button_buscarClienteFactura1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="39.0" prefWidth="105.0" text="Buscar">
+                                    <Button fx:id="button_buscarClienteFacturaCredito" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="39.0" prefWidth="105.0" text="Buscar">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -617,7 +617,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Nombre:" />
-                                          <TextField fx:id="textfield_clienteNombre1" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                          <TextField fx:id="textfield_clienteNombreCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
                                              <HBox.margin>
                                                 <Insets left="5.0" />
                                              </HBox.margin>
@@ -630,7 +630,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="RNC:" />
-                                          <TextField fx:id="textfield_clienteRNC1" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                          <TextField fx:id="textfield_clienteRNCCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
                                              <HBox.margin>
                                                 <Insets left="30.0" />
                                              </HBox.margin>
@@ -643,7 +643,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Crédito:" />
-                                          <TextField fx:id="textfield_clienteCredito1" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteCreditoCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
                                              <HBox.margin>
                                                 <Insets left="12.0" />
                                              </HBox.margin>
@@ -661,7 +661,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
                                        <children>
                                           <Label text="Deuda:" />
-                                          <TextField fx:id="textfield_clienteDeuda1" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                          <TextField fx:id="textfield_clienteDeudaCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
                                              <HBox.margin>
                                                 <Insets left="16.0" />
                                              </HBox.margin>
@@ -696,7 +696,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <ListView prefHeight="358.0" prefWidth="349.0" />
+                              <ListView fx:id="listview_clienteDeuda" prefHeight="358.0" prefWidth="349.0" />
                               <Button mnemonicParsing="false" text="Seleccionar">
                                  <font>
                                     <Font size="17.0" />
@@ -725,7 +725,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
                                        <children>
                                           <Label text="Fecha de solicitud:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="120.0">
+                                          <TextField fx:id="textfield_fechaSolicitud" editable="false" prefHeight="26.0" prefWidth="120.0">
                                              <HBox.margin>
                                                 <Insets left="30.0" />
                                              </HBox.margin>
@@ -738,7 +738,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
                                        <children>
                                           <Label text="Balance original:" />
-                                          <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                          <TextField fx:id="textfield_balanceOriginal" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                              <HBox.margin>
                                                 <Insets left="42.0" />
                                              </HBox.margin>
@@ -766,7 +766,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
                                        <children>
                                           <Label text="Fecha del último pago:" />
-                                          <TextField editable="false" prefHeight="26.0" prefWidth="120.0">
+                                          <TextField fx:id="textfield_ultimoPago" editable="false" prefHeight="26.0" prefWidth="120.0">
                                              <HBox.margin>
                                                 <Insets left="16.0" />
                                              </HBox.margin>
@@ -783,7 +783,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                          <TextField fx:id="textfield_creditoBalancePendiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                              <HBox.margin>
                                                 <Insets left="10.0" />
                                              </HBox.margin>
@@ -803,7 +803,7 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                    <TextField fx:id="textfield_creditoRecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -821,7 +821,7 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                    <TextField fx:id="textfield_creditoCambio" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                        <HBox.margin>
                                           <Insets left="18.0" />
                                        </HBox.margin>
@@ -836,7 +836,7 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                    <TextField fx:id="textfield_nuevoBalance" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>

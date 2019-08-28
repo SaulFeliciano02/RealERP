@@ -117,6 +117,27 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private TextField textfield_descuento;
 	    @FXML private TextField textfield_penalizacion;
 	    @FXML private TextField textfield_pagorecibido;
+	    
+	    @FXML private Button button_buscarClienteFacturaCredito;
+	    
+	    @FXML private TextField textfield_buscarClienteFacturaCredito;
+	    @FXML private TextField textfield_clienteNombreCredito;
+	    @FXML private TextField textfield_clienteRNCCredito;
+	    @FXML private TextField textfield_clienteCreditoCredito;
+	    @FXML private TextField textfield_clienteDeudaCredito;
+	    
+	    @FXML private ListView<String> listview_clienteDeuda;
+	    
+	    @FXML private TextField textfield_fechaSolicitud;
+	    @FXML private TextField textfield_balanceOriginal;
+	    @FXML private TextField textfield_ultimoPago;
+	    @FXML private TextField textfield_creditoBalancePendiente;
+	    
+	    @FXML private TextField textfield_creditoRecibido;
+	    @FXML private TextField textfield_creditoCambio;
+	    @FXML private TextField textfield_nuevoBalance;
+	    
+	    
 
 	public void reload(Stage stage) {
     	
@@ -155,7 +176,7 @@ public class ControllerNuevaFactura implements Initializable{
     			event.consume();
     		}
     	}
-    	if(source.equals(textfield_totalRecibido) || source.equals(textfield_totalAPagar)) {
+    	if(source.equals(textfield_totalRecibido) || source.equals(textfield_totalAPagar) || source.equals(textfield_creditoCambio) || source.equals(textfield_creditoRecibido)) {
     		calcularCambio(event);
     	}
     	if(source.equals(textfield_pagorecibido) || source.equals(textfield_totalAPagar))
@@ -207,12 +228,53 @@ public class ControllerNuevaFactura implements Initializable{
     }
     
     public void clienteSelect(ActionEvent event) {
-    	textfield_buscarClienteFactura.setText(textfield_clienteSeleccionado.getText());
+    	
     	Cliente cliente = Controladora.getInstance().buscarCliente(textfield_clienteSeleccionado.getText());
-    	textfield_clienteNombre.setText(cliente.getNombre());
-    	textfield_clienteRNC.setText(cliente.getRnc());
-    	textfield_clienteCredito.setText(Float.toString(cliente.getCredito()));
-    	textfield_clienteDeuda.setText(Float.toString(cliente.getDeuda()));
+    	if(vbox_facturaCredito.isVisible()) {
+    		textfield_buscarClienteFacturaCredito.setText(textfield_clienteSeleccionado.getText());
+        	textfield_clienteNombreCredito.setText(cliente.getNombre());
+        	textfield_clienteRNCCredito.setText(cliente.getRnc());
+        	textfield_clienteCreditoCredito.setText(Float.toString(cliente.getCredito()));
+        	textfield_clienteDeudaCredito.setText(Float.toString(cliente.getDeuda()));
+        	
+        	/**ObservableList<String> facturaData = FXCollections.observableArrayList();
+        	for(Factura factura : Controladora.getInstance().getMisFacturas()) {
+        		if(factura.getClienteCodigo().equalsIgnoreCase(cliente.getCodigo())) {
+        			facturaData.add(")
+        		}
+        	}**/
+        	Factura factura = null;
+        	float balanceOriginal = 0;
+        	for(Factura f : Controladora.getInstance().getMisFacturas()) {
+        		if(f.getClienteCodigo().equalsIgnoreCase(cliente.getCodigo())) {
+        			if(factura == null) {
+        				factura = f;
+        			}
+        			if(factura.getFecha().isAfter(f.getFecha())) {
+        				factura = f;
+        			}
+        			balanceOriginal += factura.getMontoTotal();
+        		}
+        		
+        	}
+        	if(factura != null) {
+        		textfield_fechaSolicitud.setText(factura.getFecha().toString());
+        		textfield_balanceOriginal.setText(Float.toString(balanceOriginal));
+        		textfield_ultimoPago.setText(cliente.getUltimaActualizacionDeuda().toString());
+        		textfield_creditoBalancePendiente.setText(Float.toString(cliente.getDeuda()));
+        	}
+        	
+        	
+        	
+    	}
+    	else if(vbox_facturarProducto.isVisible()) {
+    		textfield_buscarClienteFactura.setText(textfield_clienteSeleccionado.getText());
+    		textfield_clienteNombre.setText(cliente.getNombre());
+    		textfield_clienteRNC.setText(cliente.getRnc());
+    		textfield_clienteCredito.setText(Float.toString(cliente.getCredito()));
+    		textfield_clienteDeuda.setText(Float.toString(cliente.getDeuda()));
+    	}
+    	
     	cerrarBusquedaCliente(event);
     }
     
@@ -340,11 +402,13 @@ public class ControllerNuevaFactura implements Initializable{
     	Factura factura;
     	
     	if(radiobutton_facturaCredito.isSelected()) {
-    		cliente.setDeuda(cliente.getDeuda() + montoTotal);
-    		Controladora.getInstance().guardarClienteDeudaSQL(cliente);
+    		
     		String estado = "Pendiente";
     		float adeudado = Float.parseFloat(textfield_balancependiente.getText());
     		int plazoPagoDias = 0;
+    		cliente.setDeuda(cliente.getDeuda() + adeudado);
+    		cliente.setUltimaActualizacionDeuda(LocalDate.now());
+    		Controladora.getInstance().guardarClienteDeudaSQL(cliente);
     		if(radiobutton_15Dias.isSelected())
     		{
     			plazoPagoDias = 15;
@@ -403,6 +467,13 @@ public class ControllerNuevaFactura implements Initializable{
     	textfield_totalCambio.setText("");
     	spinner_cantcopias.getValueFactory().setValue(1);
     	
+    	textfield_descuento.setText("");
+    	datepicker_fechaDePago.setValue(null);
+    	textfield_penalizacion.setText("");
+    	textfield_pagorecibido.setText("");
+    	textfield_balancependiente.setText("");
+    	
+    	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
     	if(checkbox_facturaValorFiscal.isSelected())
     	{
@@ -412,6 +483,16 @@ public class ControllerNuevaFactura implements Initializable{
     	{
     		FacturaDeConsumo.CrearFactura(factura);
     	}
+    	checkbox_facturaValorFiscal.setSelected(false);
+    	radiobutton_15Dias.setSelected(false);
+    	radiobutton_30Dias.setSelected(false);
+    	radiobutton_60Dias.setSelected(false);
+    	radiobutton_90Dias.setSelected(false);
+    	radiobutton_facturaEfectivo.setSelected(true);
+    	radiobutton_facturaCredito.setSelected(false);
+    	radiobutton_facturaTarjeta.setSelected(false);
+    	
+    	tipoPago(null);
     }
     
     public void tableViewFacturaClicked(MouseEvent event) {
@@ -483,34 +564,67 @@ public class ControllerNuevaFactura implements Initializable{
     	
     }
     
+    
     public void calcularCambio(KeyEvent event) {
     	float recibido = 0;
     	float total = 0;
     	Alert a = new Alert(AlertType.NONE); 
-    	a.setAlertType(AlertType.ERROR);
-    	if(event != null) {
-    		if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+    	if(vbox_facturarProducto.isVisible()){
+    		if(event != null) {
+    			if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+    				recibido = Float.parseFloat(textfield_totalRecibido.getText());
+    				total = Float.parseFloat(textfield_totalAPagar.getText());
+    			}
+    			else if(!event.getCode().equals(KeyCode.BACK_SPACE) && event.getSource().equals(textfield_totalRecibido)) {
+    				recibido = Float.parseFloat(textfield_totalRecibido.getText() + event.getCharacter());
+    				total = Float.parseFloat(textfield_totalAPagar.getText());
+    			}
+    		}
+    		else {
     			recibido = Float.parseFloat(textfield_totalRecibido.getText());
     			total = Float.parseFloat(textfield_totalAPagar.getText());
     		}
-    		else if(!event.getCode().equals(KeyCode.BACK_SPACE) && event.getSource().equals(textfield_totalRecibido)) {
-    			recibido = Float.parseFloat(textfield_totalRecibido.getText() + event.getCharacter());
-    			total = Float.parseFloat(textfield_totalAPagar.getText());
+    	}
+    	else if(vbox_facturaCredito.isVisible()) {
+    		if(event != null) {
+    			if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+    				recibido = Float.parseFloat(textfield_creditoRecibido.getText());
+    				total = Float.parseFloat(textfield_creditoBalancePendiente.getText());
+    			}
+    			else if(!event.getCode().equals(KeyCode.BACK_SPACE) && event.getSource().equals(textfield_creditoRecibido)) {
+    				recibido = Float.parseFloat(textfield_creditoRecibido.getText() + event.getCharacter());
+    				total = Float.parseFloat(textfield_creditoBalancePendiente.getText());
+    			}
+    		}
+    		else {
+    			recibido = Float.parseFloat(textfield_creditoRecibido.getText());
+    			total = Float.parseFloat(textfield_creditoBalancePendiente.getText());
     		}
     	}
-    	else {
-    		recibido = Float.parseFloat(textfield_totalRecibido.getText());
-			total = Float.parseFloat(textfield_totalAPagar.getText());
-    	}
+    	a.setAlertType(AlertType.ERROR);
+    	
     	
     	float cambio = recibido - total;
     	if(cambio < 0) {
-    		textfield_totalCambio.setStyle("-fx-text-inner-color: red;");
-    		textfield_totalCambio.setText(Float.toString(cambio));
+    		if(vbox_facturarProducto.isVisible()) {
+    			textfield_totalCambio.setStyle("-fx-text-inner-color: red;");
+    			textfield_totalCambio.setText(Float.toString(cambio));
+    		}
+    		else if(vbox_facturaCredito.isVisible()) {
+    			textfield_creditoCambio.setText("0");
+    		}
+    		float nuevoBalance = total - recibido;
+    		textfield_nuevoBalance.setText(Float.toString(nuevoBalance));
     	}
     	else {
-    		textfield_totalCambio.setStyle("-fx-text-inner-color: black;");
-    		textfield_totalCambio.setText(Float.toString(cambio));
+    		if(vbox_facturarProducto.isVisible()) {
+    			textfield_totalCambio.setStyle("-fx-text-inner-color: black;");
+    			textfield_totalCambio.setText(Float.toString(cambio));
+    		}
+    		else if(vbox_facturaCredito.isVisible()) {
+    			textfield_creditoCambio.setText(Float.toString(cambio));
+    		}
+    		textfield_nuevoBalance.setText("0");
     	}
     }
     
@@ -806,6 +920,9 @@ public class ControllerNuevaFactura implements Initializable{
 		setDatePickers();
 		
 		setSpinnersConfiguracion();
+		
+		vbox_facturarProducto.setVisible(true);
+		vbox_facturaCredito.setVisible(false);
 	}
 	
 	public void fillProductos(ArrayList<Producto> producto) {
