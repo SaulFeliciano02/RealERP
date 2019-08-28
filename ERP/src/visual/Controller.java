@@ -378,6 +378,24 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_passwordUsuario;
     @FXML private Button button_guardarUsuario;
     
+    @FXML private TableColumn<Usuario, String> tablecolumn_usuarioUsuario;
+    @FXML private TableColumn<Usuario, String> tablecolumn_usuarioNombre;
+    @FXML private TableColumn<Usuario, String> tablecolumn_usuarioCargo;
+    @FXML private TableColumn<Usuario, String> tablecolumn_usuarioUltimaVez;
+    @FXML private TableView<Usuario> tableview_usuarioList;
+    
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoCodigo;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoNombre;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoTelefono;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoDireccion;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoCorreo;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoRNC;
+    @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoTipo;
+    @FXML private TableColumn<Empleado, Float> tablecolumn_usuarioEmpleadoSueldo;
+    @FXML private TableView<Empleado> tableview_usuarioEmpleadoList;
+    
+    @FXML private Button button_seleccionarEmpleadoUsuario;
+    
     
     //Historial
     @FXML private VBox vbox_totalTransacciones;
@@ -2576,7 +2594,7 @@ public class Controller implements Initializable{
     	fillProveedorList(null);
     	
     	//Seteando los empleados
-    	fillEmpleadoList(null);
+    	fillEmpleadoList(null, "");
     	
     	//Seteando los rubros
     	fillRubroList(null);
@@ -2623,7 +2641,9 @@ public class Controller implements Initializable{
     	//Seteando peticiones
     	setPeticiones();
     	
+    	//Seteando usuarios
     	fillCargoUsuario();
+    	fillUsuario();
     	
     }
     
@@ -2770,7 +2790,7 @@ public class Controller implements Initializable{
     	tableview_proveedoresList.refresh();
     }
     
-    public void fillEmpleadoList(ArrayList<Empleado> e) {
+    public void fillEmpleadoList(ArrayList<Empleado> e, String belongsTo) {
     	ObservableList<Empleado> data = FXCollections.observableArrayList();
     	if(e == null) {
     		data.addAll(Controladora.getInstance().getMisEmpleados());
@@ -2778,16 +2798,31 @@ public class Controller implements Initializable{
     	else {
     		data.addAll(e);
     	}
-    	tablecolumn_empleadoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-    	tablecolumn_empleadoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tablecolumn_empleadoTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-    	tablecolumn_empleadoDireccion.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
-    	tablecolumn_empleadoCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-    	tablecolumn_empleadoRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
-    	tablecolumn_empleadoTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-    	tablecolumn_empleadoSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
-    	tableview_empleadoList.setItems(data);
-    	tableview_empleadoList.refresh();
+    	if(belongsTo.equalsIgnoreCase("")) {
+    		tablecolumn_empleadoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_empleadoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_empleadoTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    		tablecolumn_empleadoDireccion.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    		tablecolumn_empleadoCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    		tablecolumn_empleadoRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    		tablecolumn_empleadoTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    		tablecolumn_empleadoSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    		tableview_empleadoList.setItems(data);
+    		tableview_empleadoList.refresh();
+    	}
+    	else if(belongsTo.equalsIgnoreCase("Usuario")) {
+    		tablecolumn_usuarioEmpleadoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_usuarioEmpleadoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_usuarioEmpleadoTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    		tablecolumn_usuarioEmpleadoDireccion.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    		tablecolumn_usuarioEmpleadoCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    		tablecolumn_usuarioEmpleadoRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    		tablecolumn_usuarioEmpleadoTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    		tablecolumn_usuarioEmpleadoSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    		tableview_usuarioEmpleadoList.setItems(data);
+    		tableview_usuarioEmpleadoList.refresh();
+    	}
+    	
     }
     
     public void fillCategoriaEmpleado() {
@@ -3049,10 +3084,25 @@ public class Controller implements Initializable{
     }
     
     public void habilitarBusquedaEmpleadoUsuario(ActionEvent event) {
+    	fillEmpleadoList(null, "Usuario");
     	titledpane_busquedaEmpleadoUsuario.setVisible(true);
     }
     
+    public void empleadoUsuarioHabilitarSeleccion(MouseEvent event) {
+    	if(!tableview_usuarioEmpleadoList.getSelectionModel().isEmpty()) {
+    		button_seleccionarEmpleadoUsuario.setDisable(false);
+    	}
+    }
+    
+    public void seleccionarEmpleadoUsuario(ActionEvent event) {
+    	Empleado empleado = tableview_usuarioEmpleadoList.getSelectionModel().getSelectedItem();
+    	textfield_empleadoUsuario.setText(empleado.getNombre());
+    	cerrarBusquedaEmpleadoUsuario(null);
+    }
+    
     public void cerrarBusquedaEmpleadoUsuario(ActionEvent event) {
+    	button_seleccionarEmpleadoUsuario.setDisable(true);
+    	tableview_usuarioEmpleadoList.getSelectionModel().clearSelection();
     	titledpane_busquedaEmpleadoUsuario.setVisible(false);
     }
     
@@ -3105,6 +3155,21 @@ public class Controller implements Initializable{
     	
     	textfield_facturaTotalPagado.setText(Float.toString(factura.getMontoTotal()));
     }
+    
+    public void fillUsuario() {
+    	ObservableList<Usuario> data = FXCollections.observableArrayList();
+    	for(Usuario usuario : Controladora.getInstance().getMisUsuarios()) {
+    		if(!usuario.isUsuarioActivo()) {
+    			data.add(usuario);
+    		}
+    	}
+    	tablecolumn_usuarioUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
+    	tablecolumn_usuarioNombre.setCellValueFactory(new PropertyValueFactory<>("empleadoNombre"));
+    	tablecolumn_usuarioCargo.setCellValueFactory(new PropertyValueFactory<>("cargoNombre"));
+    	tableview_usuarioList.setItems(data);
+    	tableview_usuarioList.refresh();
+    }
+    
     
     public void fillPeticion() {
     	ObservableList<Peticion> data = FXCollections.observableArrayList();

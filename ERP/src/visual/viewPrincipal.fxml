@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -2979,12 +2979,12 @@
                                                                   </Button>
                                                                </children>
                                                             </HBox>
-                                                            <TableView prefHeight="297.0" prefWidth="610.0" VBox.vgrow="ALWAYS">
+                                                            <TableView fx:id="tableview_usuarioList" prefHeight="297.0" prefWidth="610.0" VBox.vgrow="ALWAYS">
                                                               <columns>
-                                                                <TableColumn prefWidth="75.0" text="Usuario" />
-                                                                <TableColumn prefWidth="75.0" text="Nombre" />
-                                                                  <TableColumn prefWidth="75.0" text="Cargo" />
-                                                                  <TableColumn prefWidth="75.0" text="Última vez accedido" />
+                                                                <TableColumn fx:id="tablecolumn_usuarioUsuario" prefWidth="75.0" text="Usuario" />
+                                                                <TableColumn fx:id="tablecolumn_usuarioNombre" prefWidth="75.0" text="Nombre" />
+                                                                  <TableColumn fx:id="tablecolumn_usuarioCargo" prefWidth="75.0" text="Cargo" />
+                                                                  <TableColumn fx:id="tablecolumn_usuarioUltimaVez" prefWidth="75.0" text="Última vez accedido" />
                                                               </columns>
                                                                <VBox.margin>
                                                                   <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
@@ -3086,16 +3086,16 @@
                                                                <children>
                                                                   <HBox prefHeight="329.6" prefWidth="464.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                      <children>
-                                                                        <TableView fx:id="tableview_empleadoList1" editable="true" prefHeight="290.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
+                                                                        <TableView fx:id="tableview_usuarioEmpleadoList" editable="true" onMouseClicked="#empleadoUsuarioHabilitarSeleccion" prefHeight="290.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
                                                                            <columns>
-                                                                              <TableColumn fx:id="tablecolumn_empleadoCodigo1" prefWidth="75.0" text="Codigo" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoNombre1" prefWidth="75.0" text="Nombre" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoTelefono1" prefWidth="75.0" text="Telefono" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoDireccion1" prefWidth="75.0" text="Direccion" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoCorreo1" prefWidth="75.0" text="Correo" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoRNC1" prefWidth="75.0" text="RNC" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoTipo1" prefWidth="75.0" text="Tipo" />
-                                                                              <TableColumn fx:id="tablecolumn_empleadoSueldo1" prefWidth="75.0" text="Sueldo" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoCodigo" prefWidth="75.0" text="Codigo" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoNombre" prefWidth="75.0" text="Nombre" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoTelefono" prefWidth="75.0" text="Telefono" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoDireccion" prefWidth="75.0" text="Direccion" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoCorreo" prefWidth="75.0" text="Correo" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoRNC" prefWidth="75.0" text="RNC" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoTipo" prefWidth="75.0" text="Tipo" />
+                                                                              <TableColumn fx:id="tablecolumn_usuarioEmpleadoSueldo" prefWidth="75.0" text="Sueldo" />
                                                                            </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -3117,7 +3117,7 @@
                                                                               </HBox>
                                                                               <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                                                                                  <children>
-                                                                                    <Button mnemonicParsing="false" text="Seleccionar">
+                                                                                    <Button fx:id="button_seleccionarEmpleadoUsuario" disable="true" mnemonicParsing="false" onAction="#seleccionarEmpleadoUsuario" text="Seleccionar">
                                                                                        <font>
                                                                                           <Font size="20.0" />
                                                                                        </font>

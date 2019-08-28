@@ -8,6 +8,8 @@ public class Usuario {
 	private boolean contrasenaActiva;
 	private Cargo cargo;
 	private String usuario;
+	private String empleadoNombre;
+	private String cargoNombre;
 	
 	public Usuario(String usuario, Empleado empleado, boolean usuarioActivo, String contrasena, boolean contrasenaActiva,
 			Cargo cargo) {
@@ -18,7 +20,33 @@ public class Usuario {
 		this.contrasena = contrasena;
 		this.contrasenaActiva = contrasenaActiva;
 		this.cargo = cargo;
+		this.empleadoNombre = empleado.getNombre();
+		this.cargoNombre = cargo.getNombre();
 	}
+
+	
+	
+	public String getCargoNombre() {
+		return cargoNombre;
+	}
+
+
+
+	public void setCargoNombre(String cargoNombre) {
+		this.cargoNombre = cargoNombre;
+	}
+
+
+
+	public String getEmpleadoNombre() {
+		return empleadoNombre;
+	}
+
+
+	public void setEmpleadoNombre(String empleadoNombre) {
+		this.empleadoNombre = empleadoNombre;
+	}
+
 
 	public Empleado getEmpleado() {
 		return empleado;
