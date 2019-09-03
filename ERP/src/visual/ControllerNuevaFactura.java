@@ -29,6 +29,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -139,6 +140,9 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private Button button_seleccionarFacturaDeuda;
 	    @FXML private TextField textfield_montoDelUltimoPago;
 	    @FXML private CheckBox checkbox_facturaValorFiscal1;
+	    
+	    @FXML private Tab tab_facturarProducto;
+	    @FXML private Tab tab_facturarCredito;
 	    
 
 	public void reload(Stage stage) {
@@ -300,7 +304,7 @@ public class ControllerNuevaFactura implements Initializable{
     public void clienteSelect(ActionEvent event) {
     	
     	Cliente cliente = Controladora.getInstance().buscarCliente(textfield_clienteSeleccionado.getText());
-    	if(vbox_facturaCredito.isVisible()) {
+    	if(tab_facturarCredito.isSelected()) {
     		textfield_buscarClienteFacturaCredito.setText(textfield_clienteSeleccionado.getText());
         	textfield_clienteNombreCredito.setText(cliente.getNombre());
         	textfield_clienteRNCCredito.setText(cliente.getRnc());
@@ -342,7 +346,7 @@ public class ControllerNuevaFactura implements Initializable{
         	
         	
     	}
-    	else if(vbox_facturarProducto.isVisible()) {
+    	else if(tab_facturarProducto.isSelected()) {
     		textfield_buscarClienteFactura.setText(textfield_clienteSeleccionado.getText());
     		textfield_clienteNombre.setText(cliente.getNombre());
     		textfield_clienteRNC.setText(cliente.getRnc());
@@ -653,7 +657,7 @@ public class ControllerNuevaFactura implements Initializable{
     	float recibido = 0;
     	float total = 0;
     	Alert a = new Alert(AlertType.NONE); 
-    	if(vbox_facturarProducto.isVisible()){
+    	if(tab_facturarProducto.isSelected()){
     		if(event != null) {
     			if(event.getCode().equals(KeyCode.BACK_SPACE)) {
     				recibido = Float.parseFloat(textfield_totalRecibido.getText());
@@ -669,7 +673,7 @@ public class ControllerNuevaFactura implements Initializable{
     			total = Float.parseFloat(textfield_totalAPagar.getText());
     		}
     	}
-    	else if(vbox_facturaCredito.isVisible()) {
+    	else if(tab_facturarCredito.isSelected()) {
     		if(event != null) {
     			if(event.getCode().equals(KeyCode.BACK_SPACE)) {
     				recibido = Float.parseFloat(textfield_creditoRecibido.getText());
@@ -690,22 +694,22 @@ public class ControllerNuevaFactura implements Initializable{
     	
     	float cambio = recibido - total;
     	if(cambio < 0) {
-    		if(vbox_facturarProducto.isVisible()) {
+    		if(tab_facturarProducto.isSelected()) {
     			textfield_totalCambio.setStyle("-fx-text-inner-color: red;");
     			textfield_totalCambio.setText(Float.toString(cambio));
     		}
-    		else if(vbox_facturaCredito.isVisible()) {
+    		else if(tab_facturarCredito.isSelected()) {
     			textfield_creditoCambio.setText("0");
     		}
     		float nuevoBalance = total - recibido;
     		textfield_nuevoBalance.setText(Float.toString(nuevoBalance));
     	}
     	else {
-    		if(vbox_facturarProducto.isVisible()) {
+    		if(tab_facturarProducto.isSelected()) {
     			textfield_totalCambio.setStyle("-fx-text-inner-color: black;");
     			textfield_totalCambio.setText(Float.toString(cambio));
     		}
-    		else if(vbox_facturaCredito.isVisible()) {
+    		else if(tab_facturarCredito.isSelected()) {
     			textfield_creditoCambio.setText(Float.toString(cambio));
     		}
     		textfield_nuevoBalance.setText("0");

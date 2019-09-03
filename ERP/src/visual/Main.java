@@ -88,6 +88,7 @@ public class Main extends Application{
 		else if((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) ||
 				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
 		{
+			System.out.println("wawawa");
 			Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(textfield_usuario.getText(), passwordfield_login.getText()));
 			/**ABRIENDO viewPrincipal.fxml**/
 			message.setText("Tu contraseña ha sido confirmada");

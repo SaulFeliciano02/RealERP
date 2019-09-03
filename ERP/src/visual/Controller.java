@@ -2583,6 +2583,64 @@ public class Controller implements Initializable{
         	fillPeticion();
     	}
     }
+    
+    public void guardarUsuario(ActionEvent event) {
+    	Alert a = new Alert(AlertType.WARNING);
+    	boolean canRegister = true;
+    	
+    	String usuarioNombre = "";
+    	String codigoEmpleado = "";
+    	String cargoNombre = "";
+    	String password = "";
+    	try {
+    		usuarioNombre = textfield_usuario.getText();
+    		codigoEmpleado = textfield_empleadoUsuario.getText();
+    		cargoNombre = combobox_cargoUsuario.getValue();
+    		password = textfield_passwordUsuario.getText();
+    	}catch(NullPointerException e) {
+    		
+    	}
+    	
+    	if(usuarioNombre.equalsIgnoreCase("")) {
+    		a.setContentText("Seleccione el nombre del usuario");
+    		a.show();
+    		canRegister = false;
+    	}
+    	else if(codigoEmpleado.equalsIgnoreCase("")) {
+    		a.setContentText("Seleccione el código del empleado correspondiente al usuario");
+    		a.show();
+    		canRegister = false;
+    	}
+    	else if(cargoNombre.equalsIgnoreCase("Seleccione")) {
+    		a.setContentText("Seleccione el cargo correspondiente al usuario");
+    		a.show();
+    		canRegister = false;
+    	}
+    	else if(password.equalsIgnoreCase("")) {
+    		a.setContentText("Seleccione la contraseña correspondiente al usuario");
+    		a.show();
+    		canRegister = false;
+    	}
+    	
+    	if(canRegister) {
+    		Empleado empleado = Controladora.getInstance().buscarEmpleado(codigoEmpleado);
+    		Cargo cargo = Controladora.getInstance().buscarCargo(cargoNombre);
+    		Usuario usuario = new Usuario(usuarioNombre, empleado, true, password, true, cargo);
+    	
+    		Controladora.getInstance().getMisUsuarios().add(usuario);
+    		Controladora.getInstance().guardarUsuarioSQL(usuario);
+    		
+    		combobox_cargoUsuario.setValue("Seleccione");
+    		textfield_usuario.setText("");
+    		textfield_empleadoUsuario.setText("");
+    		textfield_passwordUsuario.setText("");
+    		
+    		pane_nuevoUsuario.setDisable(true);
+    		fillEmpleadoList(null, "Usuario");
+    		fillUsuario();
+    	}
+    	
+    }
 
 	
 
@@ -3099,7 +3157,7 @@ public class Controller implements Initializable{
     
     public void seleccionarEmpleadoUsuario(ActionEvent event) {
     	Empleado empleado = tableview_usuarioEmpleadoList.getSelectionModel().getSelectedItem();
-    	textfield_empleadoUsuario.setText(empleado.getNombre());
+    	textfield_empleadoUsuario.setText(empleado.getCodigo());
     	cerrarBusquedaEmpleadoUsuario(null);
     }
     
