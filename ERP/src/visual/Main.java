@@ -77,7 +77,7 @@ public class Main extends Application{
 		
 		float count=0;
 		if (passwordfield_login.getText().equals("")) {
-			message.setText("¡Tu contraseña es incorrecta!");
+			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
@@ -332,7 +332,7 @@ public class Main extends Application{
 	public void onEnter(ActionEvent event){
 		float count=0;
 		if (passwordfield_login.getText().equals("")) {
-			message.setText("¡Tu contraseña es incorrecta!");
+			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
