@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="365.0" prefWidth="430.0" style="-fx-background-image: url('file:src/visual/images/background/login_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Main">
+<AnchorPane prefHeight="365.0" prefWidth="430.0" style="-fx-background-image: url('file:src/visual/images/background/login_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Main">
    <children>
       <VBox alignment="CENTER" prefHeight="335.0" prefWidth="428.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -60,7 +60,7 @@
                   </Text>
                   <Button fx:id="button_acceder" layoutX="182.0" layoutY="156.0" mnemonicParsing="false" onAction="#access_clicked" prefHeight="26.0" prefWidth="101.0" style="-fx-background-image: url('file:src/visual/images/misc/access.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                   <Button fx:id="button_salir" layoutX="365.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="50.0" style="-fx-background-image: url('file:src/visual/images/misc/exit.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
-                  <Label fx:id="message" layoutX="134.0" layoutY="132.0" />
+                  <Label fx:id="message" layoutX="100.0" layoutY="132.0" />
                   <ProgressBar fx:id="loading_progress" layoutX="134.0" layoutY="179.0" prefHeight="18.0" prefWidth="195.0" progress="0.0" visible="false" />
                </children>
             </AnchorPane>

@@ -256,7 +256,8 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_peticionProductoBuscar;
     @FXML private TextField textfield_peticionProductoSeleccionado;
     @FXML private Button button_peticionProductoSeleccionar;
-    
+    @FXML private TitledPane titledpane_infoAdicionalPeticion;
+    @FXML private TitledPane titledpane_busquedaProveedorPeticiones;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -2640,7 +2641,7 @@ public class Controller implements Initializable{
     	fillReporteTotalTransacciones();
     	
     	//Seteando peticiones
-    	setPeticiones();
+    	//setPeticiones();
     	
     	//Seteando usuarios
     	fillCargoUsuario();
@@ -3231,7 +3232,7 @@ public class Controller implements Initializable{
     			combobox_data.add(p.getCodigo());
     		}
     	}
-    	combobox_peticionProveedor.setItems(combobox_data);
+    	//combobox_peticionProveedor.setItems(combobox_data);
     	
     	combobox_data = FXCollections.observableArrayList();
     	combobox_data.addAll("Aceptada", "Declinada", "Pendiente");
@@ -3316,5 +3317,22 @@ public class Controller implements Initializable{
     	textfield_peticionProductoSeleccionado.clear();
     	button_peticionProductoSeleccionar.setDisable(true);
     	titledpane_busquedaProductosPeticiones.setVisible(false);
+    }
+    //Abre el titledpane de info adicional en el area de peticiones
+    public void abrir_infoAdicionalPeticiones(ActionEvent event) {
+    	titledpane_infoAdicionalPeticion.setVisible(true);
+    }
+  //Cierra el titledpane de info adicional en el area de peticiones
+    public void cerrar_infoAdicionalPeticiones(ActionEvent event) {
+    	titledpane_infoAdicionalPeticion.setVisible(false);
+    }
+    
+    //Abre el titledpane de proveedores en el area de peticiones
+    public void abrir_infoBusquedaProveedoresPeticiones(ActionEvent event) {
+    	titledpane_busquedaProveedorPeticiones.setVisible(true);
+    }
+  //Cierra el titledpane de proveedores en el area de peticiones
+    public void cerrar_infoBusquedaProveedoresPeticiones(ActionEvent event) {
+    	titledpane_busquedaProveedorPeticiones.setVisible(false);
     }
 }

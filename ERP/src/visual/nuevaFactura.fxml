@@ -9,6 +9,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,873 +23,1132 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
+<AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
-      <AnchorPane layoutX="254.0" layoutY="52.0" prefHeight="616.0" prefWidth="1084.0">
+      <AnchorPane layoutX="244.0" layoutY="16.0" prefHeight="682.0" prefWidth="1094.0">
          <children>
-            <VBox fx:id="vbox_facturarProducto" layoutX="-23.0" prefHeight="590.0" prefWidth="1086.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox prefHeight="590.0" prefWidth="1084.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <VBox prefHeight="570.0" prefWidth="385.0">
+            <TabPane layoutY="-7.0" prefHeight="682.0" prefWidth="1094.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
+              <tabs>
+                <Tab text="Facturar productos">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label text="Productos a facturar">
-                                 <font>
-                                    <Font name="System Bold" size="25.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="listview_productosFacturadosMain" prefHeight="458.0" prefWidth="355.0" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </ListView>
-                              <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="606.0" prefWidth="354.0">
-                           <children>
-                              <VBox prefHeight="65.0" prefWidth="331.0" style="-fx-border-color: LIGHTGRAY;">
+                              <VBox fx:id="vbox_facturarProducto" prefHeight="652.0" prefWidth="1094.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="237.0">
+                                    <HBox prefHeight="585.0" prefWidth="1094.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Label text="Cliente:" />
-                                          <TextField fx:id="textfield_buscarClienteFactura" disable="true" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Button fx:id="button_buscarClienteFactura" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="26.0" prefWidth="68.0" text="Buscar">
-                                             <HBox.margin>
-                                                <Insets left="2.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <CheckBox fx:id="checkbox_clienteFactura" mnemonicParsing="false" onAction="#habilitarClienteFactura" text="Habilitar">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </CheckBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="85.0" />
-                                 </VBox.margin>
-                              </VBox>
-                              <VBox prefHeight="216.0" prefWidth="327.0" style="-fx-border-color: LIGHTGRAY;">
-                                 <children>
-                                    <Label text="Datos del cliente">
-                                       <font>
-                                          <Font name="System Bold" size="17.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="5.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Nombre:" />
-                                          <TextField fx:id="textfield_clienteNombre" editable="false" prefHeight="26.0" prefWidth="230.0">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="RNC:" />
-                                          <TextField fx:id="textfield_clienteRNC" editable="false" prefHeight="26.0" prefWidth="230.0">
-                                             <HBox.margin>
-                                                <Insets left="30.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Crédito:" />
-                                          <TextField fx:id="textfield_clienteCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
-                                             <HBox.margin>
-                                                <Insets left="12.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$">
-                                             <HBox.margin>
-                                                <Insets left="2.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Deuda:" />
-                                          <TextField fx:id="textfield_clienteDeuda" editable="false" prefHeight="26.0" prefWidth="218.0">
-                                             <HBox.margin>
-                                                <Insets left="16.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$">
-                                             <HBox.margin>
-                                                <Insets left="2.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="5.0" right="15.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="650.0" prefWidth="386.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="523.0">
-                                 <children>
-                                    <Label text="Total a pagar:">
-                                       <font>
-                                          <Font name="System Bold" size="25.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="textfield_totalAPagar" alignment="CENTER_RIGHT" editable="false" prefHeight="29.0" prefWidth="114.0" promptText="0.0">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </TextField>
-                                    <Label text="RD$" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="85.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <VBox prefHeight="180.0" prefWidth="386.0">
-                                 <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: LIGHTGRAY;">
-                                       <children>
-                                          <Label text="Tipo de pago">
-                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="10.0" top="5.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <HBox prefHeight="21.0" prefWidth="306.0">
+                                          <VBox prefHeight="570.0" prefWidth="362.0">
                                              <children>
-                                                <RadioButton fx:id="radiobutton_facturaEfectivo" mnemonicParsing="false" onAction="#tipoPago" selected="true" text="Efectivo">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="tipoPago" />
-                                                   </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="radiobutton_facturaTarjeta" mnemonicParsing="false" onAction="#tipoPago" text="Tarjeta" toggleGroup="$tipoPago">
-                                                   <HBox.margin>
-                                                      <Insets left="10.0" />
-                                                   </HBox.margin>
-                                                </RadioButton>
-                                                <RadioButton fx:id="radiobutton_facturaCredito" disable="true" mnemonicParsing="false" onAction="#tipoPago" text="Crédito" toggleGroup="$tipoPago">
-                                                   <HBox.margin>
-                                                      <Insets left="10.0" />
-                                                   </HBox.margin>
-                                                </RadioButton>
+                                                <Label text="Productos a facturar">
+                                                   <font>
+                                                      <Font name="System Bold" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                                <ListView fx:id="listview_productosFacturadosMain" prefHeight="400.0" prefWidth="346.0" VBox.vgrow="ALWAYS">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" />
+                                                   </VBox.margin>
+                                                </ListView>
+                                                <Button mnemonicParsing="false" onAction="#abrirBusquedaProductos" text="Buscar Productos">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox prefHeight="606.0" prefWidth="354.0">
+                                             <children>
+                                                <VBox prefHeight="65.0" prefWidth="331.0" style="-fx-border-color: LIGHTGRAY;">
+                                                   <children>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="237.0">
+                                                         <children>
+                                                            <Label text="Cliente:" />
+                                                            <TextField fx:id="textfield_buscarClienteFactura" disable="true" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
+                                                               <HBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Button fx:id="button_buscarClienteFactura" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="26.0" prefWidth="68.0" text="Buscar">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                            </Button>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <CheckBox fx:id="checkbox_clienteFactura" mnemonicParsing="false" onAction="#habilitarClienteFactura" text="Habilitar">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </CheckBox>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="85.0" />
+                                                   </VBox.margin>
+                                                </VBox>
+                                                <VBox prefHeight="216.0" prefWidth="327.0" style="-fx-border-color: LIGHTGRAY;">
+                                                   <children>
+                                                      <Label text="Datos del cliente">
+                                                         <font>
+                                                            <Font name="System Bold" size="17.0" />
+                                                         </font>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Nombre:" />
+                                                            <TextField fx:id="textfield_clienteNombre" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="RNC:" />
+                                                            <TextField fx:id="textfield_clienteRNC" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="30.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Crédito:" />
+                                                            <TextField fx:id="textfield_clienteCredito" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="12.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Deuda:" />
+                                                            <TextField fx:id="textfield_clienteDeuda" editable="false" prefHeight="26.0" prefWidth="218.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="16.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </VBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="15.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" prefHeight="650.0" prefWidth="386.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="0.0" prefWidth="523.0">
+                                                   <children>
+                                                      <Label text="Total a pagar:">
+                                                         <font>
+                                                            <Font name="System Bold" size="25.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="textfield_totalAPagar" alignment="CENTER_RIGHT" editable="false" prefHeight="29.0" prefWidth="114.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="50.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <VBox prefHeight="180.0" prefWidth="386.0">
+                                                   <children>
+                                                      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: LIGHTGRAY;">
+                                                         <children>
+                                                            <Label text="Tipo de pago">
+                                                               <VBox.margin>
+                                                                  <Insets bottom="5.0" left="10.0" top="5.0" />
+                                                               </VBox.margin>
+                                                            </Label>
+                                                            <HBox prefHeight="21.0" prefWidth="306.0">
+                                                               <children>
+                                                                  <RadioButton fx:id="radiobutton_facturaEfectivo" mnemonicParsing="false" onAction="#tipoPago" selected="true" text="Efectivo">
+                                                                     <toggleGroup>
+                                                                        <ToggleGroup fx:id="tipoPago" />
+                                                                     </toggleGroup>
+                                                                  </RadioButton>
+                                                                  <RadioButton fx:id="radiobutton_facturaTarjeta" mnemonicParsing="false" onAction="#tipoPago" text="Tarjeta" toggleGroup="$tipoPago">
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
+                                                                  </RadioButton>
+                                                                  <RadioButton fx:id="radiobutton_facturaCredito" disable="true" mnemonicParsing="false" onAction="#tipoPago" text="Crédito" toggleGroup="$tipoPago">
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
+                                                                  </RadioButton>
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="15.0" left="10.0" />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox prefHeight="158.0" prefWidth="445.0">
+                                                         <children>
+                                                            <AnchorPane prefHeight="162.0" prefWidth="349.0">
+                                                               <children>
+                                                                  <AnchorPane fx:id="paneCredito" layoutY="11.0" prefHeight="291.0" prefWidth="346.0" style="-fx-border-color: LIGHTGRAY;" visible="false" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
+                                                                     <children>
+                                                                        <VBox layoutX="6.0" layoutY="6.0" prefHeight="261.0" prefWidth="336.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                                                           <children>
+                                                                              <Label text="Período de pago:">
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" />
+                                                                                 </VBox.margin>
+                                                                                 <font>
+                                                                                    <Font name="System Bold" size="18.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <HBox prefHeight="35.0" prefWidth="347.0">
+                                                                                 <children>
+                                                                                    <RadioButton fx:id="radiobutton_15Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="15 días">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" top="10.0" />
+                                                                                       </HBox.margin>
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                       <toggleGroup>
+                                                                                          <ToggleGroup fx:id="periodoPago" />
+                                                                                       </toggleGroup>
+                                                                                    </RadioButton>
+                                                                                    <RadioButton fx:id="radiobutton_30Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="30 días" toggleGroup="$periodoPago">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" top="10.0" />
+                                                                                       </HBox.margin>
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                    </RadioButton>
+                                                                                    <RadioButton fx:id="radiobutton_60Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="60 días" toggleGroup="$periodoPago">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" top="10.0" />
+                                                                                       </HBox.margin>
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                    </RadioButton>
+                                                                                    <RadioButton fx:id="radiobutton_90Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="90 días" toggleGroup="$periodoPago">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" top="10.0" />
+                                                                                       </HBox.margin>
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                    </RadioButton>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="337.0">
+                                                                                 <children>
+                                                                                    <Label text="Descuento:">
+                                                                                       <font>
+                                                                                          <Font size="15.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                    <TextField fx:id="textfield_descuento" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="5.0" />
+                                                                                       </HBox.margin>
+                                                                                    </TextField>
+                                                                                    <Label text="\%">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="2.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                              <Label text="Fecha límite del descuento:">
+                                                                                 <font>
+                                                                                    <Font size="15.0" />
+                                                                                 </font>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" right="10.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                              </Label>
+                                                                              <DatePicker fx:id="datepicker_fechaDePago" editable="false">
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                              </DatePicker>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
+                                                                                 <children>
+                                                                                    <Label text="Penalización:">
+                                                                                       <font>
+                                                                                          <Font name="System Bold" size="15.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                    <TextField fx:id="textfield_penalizacion" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="5.0" />
+                                                                                       </HBox.margin>
+                                                                                    </TextField>
+                                                                                    <Label text="\%">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="2.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="5.0" left="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
+                                                                                 <children>
+                                                                                    <Label text="Pago Recibido:">
+                                                                                       <font>
+                                                                                          <Font name="System Bold" size="15.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                    <TextField fx:id="textfield_pagorecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="33.0" />
+                                                                                       </HBox.margin>
+                                                                                    </TextField>
+                                                                                    <Label text="RD$">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="2.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
+                                                                                 <children>
+                                                                                    <Label text="Balance pendiente:">
+                                                                                       <font>
+                                                                                          <Font name="System Bold" size="15.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                    <TextField fx:id="textfield_balancependiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="5.0" />
+                                                                                       </HBox.margin>
+                                                                                    </TextField>
+                                                                                    <Label text="RD$">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="2.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="5.0" left="10.0" top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                           </children>
+                                                                        </VBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <AnchorPane fx:id="paneEfectivo" layoutY="14.0" prefHeight="114.0" prefWidth="359.0" style="-fx-border-color: LIGHTGRAY;" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+                                                                     <children>
+                                                                        <VBox layoutX="3.0" layoutY="3.0" prefHeight="160.0" prefWidth="355.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                                                           <children>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="303.0">
+                                                                                 <children>
+                                                                                    <Label text="Recibido:">
+                                                                                       <font>
+                                                                                          <Font size="25.0" />
+                                                                                       </font>
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                    <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="170.0">
+                                                                                       <children>
+                                                                                          <TextField fx:id="textfield_totalRecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="16.0" prefWidth="118.0" promptText="0.0">
+                                                                                             <HBox.margin>
+                                                                                                <Insets />
+                                                                                             </HBox.margin>
+                                                                                          </TextField>
+                                                                                          <Label text="RD$">
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="2.0" />
+                                                                                             </HBox.margin>
+                                                                                          </Label>
+                                                                                       </children>
+                                                                                       <HBox.margin>
+                                                                                          <Insets />
+                                                                                       </HBox.margin>
+                                                                                    </HBox>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="303.0">
+                                                                                 <children>
+                                                                                    <Label text="Cambio:">
+                                                                                       <font>
+                                                                                          <Font size="25.0" />
+                                                                                       </font>
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                    <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="180.0">
+                                                                                       <children>
+                                                                                          <TextField fx:id="textfield_totalCambio" alignment="CENTER_RIGHT" editable="false" prefHeight="16.0" prefWidth="118.0" promptText="0.0">
+                                                                                             <HBox.margin>
+                                                                                                <Insets />
+                                                                                             </HBox.margin>
+                                                                                          </TextField>
+                                                                                          <Label text="RD$">
+                                                                                             <HBox.margin>
+                                                                                                <Insets left="2.0" />
+                                                                                             </HBox.margin>
+                                                                                          </Label>
+                                                                                       </children>
+                                                                                       <HBox.margin>
+                                                                                          <Insets />
+                                                                                       </HBox.margin>
+                                                                                    </HBox>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="10.0" top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </HBox>
+                                                                           </children>
+                                                                        </VBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <AnchorPane fx:id="paneTarjeta" layoutY="11.0" prefHeight="219.0" prefWidth="384.0" style="-fx-border-color: LIGHTGRAY;" visible="false" AnchorPane.bottomAnchor="-11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
+                                                                     <children>
+                                                                        <VBox layoutX="92.0" layoutY="14.0" prefHeight="214.4" prefWidth="384.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <children>
+                                                                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                                                                 <children>
+                                                                                    <Label text="Banco:" />
+                                                                                    <TextField prefHeight="26.0" prefWidth="286.0" />
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" right="10.0" top="5.0" />
+                                                                                 </VBox.margin>
+                                                                              </VBox>
+                                                                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                                                                 <children>
+                                                                                    <Label text="Tipo de tarjeta:" />
+                                                                                    <ComboBox prefHeight="26.0" prefWidth="186.0" promptText="Seleccione" />
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </VBox>
+                                                                              <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0">
+                                                                                 <children>
+                                                                                    <Label text="Últimos 3 dígitos:" />
+                                                                                    <TextField prefHeight="26.0" prefWidth="137.0" />
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </VBox>
+                                                                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                                                                 <children>
+                                                                                    <Label text="Código de autorización:" />
+                                                                                    <TextField prefHeight="26.0" prefWidth="190.0">
+                                                                                       <VBox.margin>
+                                                                                          <Insets />
+                                                                                       </VBox.margin>
+                                                                                    </TextField>
+                                                                                 </children>
+                                                                                 <VBox.margin>
+                                                                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                                 </VBox.margin>
+                                                                              </VBox>
+                                                                           </children>
+                                                                        </VBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets />
+                                                               </VBox.margin>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </VBox>
+                                                <CheckBox fx:id="checkbox_facturaValorFiscal" mnemonicParsing="false" prefWidth="201.0" text="Facturar con Valor Fiscal">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="363.0">
+                                                   <children>
+                                                      <Label text="Cantidad de copias:" />
+                                                      <Spinner fx:id="spinner_cantcopias" prefHeight="26.0" prefWidth="77.0">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </Spinner>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="422.0">
+                                                   <children>
+                                                      <Button fx:id="guardarFactura" mnemonicParsing="false" onAction="#guardarFactura" text="Imprimir factura">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" top="15.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Facturar pago de crédito">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox fx:id="vbox_facturaCredito" prefHeight="676.0" prefWidth="1084.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <VBox prefHeight="606.0" prefWidth="354.0">
+                                             <children>
+                                                <VBox prefHeight="62.0" prefWidth="354.0" style="-fx-border-color: LIGHTGRAY;">
+                                                   <children>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="237.0">
+                                                         <children>
+                                                            <Label text="Cliente:">
+                                                               <font>
+                                                                  <Font size="17.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <TextField fx:id="textfield_buscarClienteFacturaCredito" editable="false" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
+                                                               <HBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <Button fx:id="button_buscarClienteFacturaCredito" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="39.0" prefWidth="105.0" text="Buscar">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </VBox>
+                                                <VBox prefHeight="216.0" prefWidth="327.0" style="-fx-border-color: LIGHTGRAY;">
+                                                   <children>
+                                                      <Label text="Datos del cliente">
+                                                         <font>
+                                                            <Font name="System Bold" size="17.0" />
+                                                         </font>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Nombre:" />
+                                                            <TextField fx:id="textfield_clienteNombreCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="RNC:" />
+                                                            <TextField fx:id="textfield_clienteRNCCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="30.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Crédito:" />
+                                                            <TextField fx:id="textfield_clienteCreditoCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="12.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
+                                                         <children>
+                                                            <Label text="Deuda:" />
+                                                            <TextField fx:id="textfield_clienteDeudaCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="16.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </VBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox prefHeight="655.0" prefWidth="346.0">
+                                             <children>
+                                                <Label text="Deudas pendientes del cliente">
+                                                   <font>
+                                                      <Font name="System Bold" size="17.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <ListView fx:id="listview_clienteDeuda" prefHeight="358.0" prefWidth="349.0" />
+                                                <Button fx:id="button_seleccionarFacturaDeuda" mnemonicParsing="false" onAction="#rellenarCamposFacturaDeuda" text="Seleccionar">
+                                                   <font>
+                                                      <Font size="17.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox prefHeight="676.0" prefWidth="345.0">
+                                             <children>
+                                                <VBox prefHeight="145.0" prefWidth="345.0" style="-fx-border-color: lightgray;">
+                                                   <children>
+                                                      <Label text="Información de deuda">
+                                                         <font>
+                                                            <Font name="System Bold" size="18.0" />
+                                                         </font>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
+                                                         <children>
+                                                            <Label text="Fecha de solicitud:" />
+                                                            <TextField fx:id="textfield_fechaSolicitud" editable="false" prefHeight="26.0" prefWidth="120.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="30.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
+                                                         <children>
+                                                            <Label text="Balance original:" />
+                                                            <TextField fx:id="textfield_balanceOriginal" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="42.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$" />
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
+                                                         <children>
+                                                            <Label text="Monto del último pago:" />
+                                                            <TextField fx:id="textfield_montoDelUltimoPago" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$" />
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
+                                                         <children>
+                                                            <Label text="Fecha del último pago:" />
+                                                            <TextField fx:id="textfield_ultimoPago" editable="false" prefHeight="26.0" prefWidth="120.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="16.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
+                                                         <children>
+                                                            <Label text="Balance pendiente:">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <TextField fx:id="textfield_creditoBalancePendiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Label text="RD$" />
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Recibido:">
+                                                         <font>
+                                                            <Font name="System Bold" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="textfield_creditoRecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" top="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Cambio:">
+                                                         <font>
+                                                            <Font name="System Bold" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="textfield_creditoCambio" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="18.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Nuevo balance pendiente:">
+                                                         <font>
+                                                            <Font size="17.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="textfield_nuevoBalance" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <CheckBox fx:id="checkbox_facturaValorFiscal1" mnemonicParsing="false" prefWidth="201.0" text="Facturar con Valor Fiscal">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="40.0" />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="363.0">
+                                                   <children>
+                                                      <Label text="Cantidad de copias:" />
+                                                      <Spinner fx:id="spinner_cantcopias1" prefHeight="26.0" prefWidth="77.0">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </Spinner>
+                                                   </children>
+                                                </HBox>
+                                                <Button fx:id="button_imprimirFacturaCredito" mnemonicParsing="false" onAction="#actualizarDeudaFactura" text="Imprimir factura">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                                <HBox alignment="BOTTOM_RIGHT" prefHeight="66.0" prefWidth="318.0">
+                                                   <children>
+                                                      <Button mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Facturas de peticiones">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="395.0" layoutY="276.0" prefHeight="652.0" prefWidth="1094.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox prefHeight="652.0" prefWidth="344.0">
+                                       <children>
+                                          <VBox prefHeight="62.0" prefWidth="354.0" style="-fx-border-color: LIGHTGRAY;">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="237.0">
+                                                   <children>
+                                                      <Label text="Código de petición:">
+                                                         <font>
+                                                            <Font size="17.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="textfield_buscarClienteFacturaCredito1" editable="false" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#abrirBusquedaPeticion" prefHeight="39.0" prefWidth="105.0" text="Buscar">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="145.0" prefWidth="345.0" style="-fx-border-color: lightgray;">
+                                             <children>
+                                                <Label text="Información de petición">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Producto solicitado:" />
+                                                      <TextField fx:id="textfield_fechaSolicitud1" editable="false" prefHeight="26.0" prefWidth="150.0">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Proveedor:" />
+                                                      <TextField fx:id="textfield_balanceOriginal1" editable="false" prefHeight="26.0" prefWidth="150.0">
+                                                         <HBox.margin>
+                                                            <Insets left="70.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="5.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Cantidad solicitada:" />
+                                                      <TextField fx:id="textfield_montoDelUltimoPago1" editable="false" prefHeight="26.0" prefWidth="98.0">
+                                                         <HBox.margin>
+                                                            <Insets left="13.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Monto total:" />
+                                                      <TextField fx:id="textfield_creditoBalancePendiente1" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="60.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
+                                                   <children>
+                                                      <Label text="Monto adeudado:" />
+                                                      <TextField fx:id="textfield_creditoBalancePendiente11" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="23.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="5.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
                                              </children>
                                              <VBox.margin>
-                                                <Insets bottom="15.0" left="10.0" />
+                                                <Insets top="20.0" />
                                              </VBox.margin>
+                                          </VBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="631.0" prefWidth="438.0">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                       <children>
+                                          <VBox prefHeight="270.0" prefWidth="418.0" style="-fx-border-color: LIGHTGRAY;">
+                                             <children>
+                                                <Label text="Digitalización de facturas de peticiones">
+                                                   <font>
+                                                      <Font name="System Bold" size="17.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
+                                                   <children>
+                                                      <Label text="NCF:" />
+                                                      <TextField prefHeight="26.0" prefWidth="223.0">
+                                                         <HBox.margin>
+                                                            <Insets left="70.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
+                                                   <children>
+                                                      <Label text="Fecha factura:" />
+                                                      <DatePicker>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </DatePicker>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Label text="Tipo de pago:">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
+                                                   <children>
+                                                      <RadioButton mnemonicParsing="false" text="Efectivo">
+                                                         <toggleGroup>
+                                                            <ToggleGroup fx:id="tipoPagoPeticion" />
+                                                         </toggleGroup>
+                                                      </RadioButton>
+                                                      <RadioButton mnemonicParsing="false" text="Tarjeta" toggleGroup="$tipoPagoPeticion">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </RadioButton>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
+                                                   <children>
+                                                      <Label text="Total pagado:" />
+                                                      <TextField alignment="CENTER_RIGHT" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="92.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$">
+                                                         <HBox.margin>
+                                                            <Insets left="2.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
+                                                   <children>
+                                                      <Label text="Total adeudado a la fecha:" />
+                                                      <TextField alignment="CENTER_RIGHT" promptText="0.0">
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Label text="RD$">
+                                                         <HBox.margin>
+                                                            <Insets left="2.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </VBox>
+                                          <HBox alignment="BOTTOM_RIGHT" prefHeight="54.0" prefWidth="390.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" text="Guardar">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="158.0" prefWidth="445.0">
-                                       <children>
-                                          <AnchorPane prefHeight="162.0" prefWidth="349.0">
-                                             <children>
-                                                <AnchorPane fx:id="paneCredito" layoutY="11.0" prefHeight="291.0" prefWidth="346.0" style="-fx-border-color: LIGHTGRAY;" visible="false" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
-                                                   <children>
-                                                      <VBox layoutX="6.0" layoutY="6.0" prefHeight="261.0" prefWidth="336.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                                         <children>
-                                                            <Label text="Período de pago:">
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" />
-                                                               </VBox.margin>
-                                                               <font>
-                                                                  <Font name="System Bold" size="18.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <HBox prefHeight="35.0" prefWidth="347.0">
-                                                               <children>
-                                                                  <RadioButton fx:id="radiobutton_15Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="15 días">
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" top="10.0" />
-                                                                     </HBox.margin>
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                     <toggleGroup>
-                                                                        <ToggleGroup fx:id="periodoPago" />
-                                                                     </toggleGroup>
-                                                                  </RadioButton>
-                                                                  <RadioButton fx:id="radiobutton_30Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="30 días" toggleGroup="$periodoPago">
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" top="10.0" />
-                                                                     </HBox.margin>
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                  </RadioButton>
-                                                                  <RadioButton fx:id="radiobutton_60Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="60 días" toggleGroup="$periodoPago">
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" top="10.0" />
-                                                                     </HBox.margin>
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                  </RadioButton>
-                                                                  <RadioButton fx:id="radiobutton_90Dias" mnemonicParsing="false" onAction="#calcularDias" prefHeight="22.0" prefWidth="75.0" text="90 días" toggleGroup="$periodoPago">
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" top="10.0" />
-                                                                     </HBox.margin>
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                  </RadioButton>
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="337.0">
-                                                               <children>
-                                                                  <Label text="Descuento:">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font>
-                                                                  </Label>
-                                                                  <TextField fx:id="textfield_descuento" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
-                                                                     <HBox.margin>
-                                                                        <Insets left="5.0" />
-                                                                     </HBox.margin>
-                                                                  </TextField>
-                                                                  <Label text="\%">
-                                                                     <HBox.margin>
-                                                                        <Insets left="2.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" top="5.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                            <Label text="Fecha límite del descuento:">
-                                                               <font>
-                                                                  <Font size="15.0" />
-                                                               </font>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" right="10.0" top="5.0" />
-                                                               </VBox.margin>
-                                                            </Label>
-                                                            <DatePicker fx:id="datepicker_fechaDePago" editable="false">
-                                                               <VBox.margin>
-                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                                                               </VBox.margin>
-                                                            </DatePicker>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
-                                                               <children>
-                                                                  <Label text="Penalización:">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                  </Label>
-                                                                  <TextField fx:id="textfield_penalizacion" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="77.0" promptText="0">
-                                                                     <HBox.margin>
-                                                                        <Insets left="5.0" />
-                                                                     </HBox.margin>
-                                                                  </TextField>
-                                                                  <Label text="\%">
-                                                                     <HBox.margin>
-                                                                        <Insets left="2.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets bottom="5.0" left="10.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
-                                                               <children>
-                                                                  <Label text="Pago Recibido:">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                  </Label>
-                                                                  <TextField fx:id="textfield_pagorecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
-                                                                     <HBox.margin>
-                                                                        <Insets left="33.0" />
-                                                                     </HBox.margin>
-                                                                  </TextField>
-                                                                  <Label text="RD$">
-                                                                     <HBox.margin>
-                                                                        <Insets left="2.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" top="5.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="337.0">
-                                                               <children>
-                                                                  <Label text="Balance pendiente:">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                  </Label>
-                                                                  <TextField fx:id="textfield_balancependiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="95.0" promptText="0.0">
-                                                                     <HBox.margin>
-                                                                        <Insets left="5.0" />
-                                                                     </HBox.margin>
-                                                                  </TextField>
-                                                                  <Label text="RD$">
-                                                                     <HBox.margin>
-                                                                        <Insets left="2.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets bottom="5.0" left="10.0" top="10.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </AnchorPane>
-                                                <AnchorPane fx:id="paneEfectivo" layoutY="14.0" prefHeight="114.0" prefWidth="359.0" style="-fx-border-color: LIGHTGRAY;" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
-                                                   <children>
-                                                      <VBox layoutX="3.0" layoutY="3.0" prefHeight="160.0" prefWidth="355.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-                                                         <children>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="303.0">
-                                                               <children>
-                                                                  <Label text="Recibido:">
-                                                                     <font>
-                                                                        <Font size="25.0" />
-                                                                     </font>
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                                  <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="170.0">
-                                                                     <children>
-                                                                        <TextField fx:id="textfield_totalRecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="16.0" prefWidth="118.0" promptText="0.0">
-                                                                           <HBox.margin>
-                                                                              <Insets />
-                                                                           </HBox.margin>
-                                                                        </TextField>
-                                                                        <Label text="RD$">
-                                                                           <HBox.margin>
-                                                                              <Insets left="2.0" />
-                                                                           </HBox.margin>
-                                                                        </Label>
-                                                                     </children>
-                                                                     <HBox.margin>
-                                                                        <Insets />
-                                                                     </HBox.margin>
-                                                                  </HBox>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets top="10.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="303.0">
-                                                               <children>
-                                                                  <Label text="Cambio:">
-                                                                     <font>
-                                                                        <Font size="25.0" />
-                                                                     </font>
-                                                                     <HBox.margin>
-                                                                        <Insets left="10.0" />
-                                                                     </HBox.margin>
-                                                                  </Label>
-                                                                  <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="180.0">
-                                                                     <children>
-                                                                        <TextField fx:id="textfield_totalCambio" alignment="CENTER_RIGHT" editable="false" prefHeight="16.0" prefWidth="118.0" promptText="0.0">
-                                                                           <HBox.margin>
-                                                                              <Insets />
-                                                                           </HBox.margin>
-                                                                        </TextField>
-                                                                        <Label text="RD$">
-                                                                           <HBox.margin>
-                                                                              <Insets left="2.0" />
-                                                                           </HBox.margin>
-                                                                        </Label>
-                                                                     </children>
-                                                                     <HBox.margin>
-                                                                        <Insets />
-                                                                     </HBox.margin>
-                                                                  </HBox>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets bottom="10.0" top="10.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </AnchorPane>
-                                                <AnchorPane fx:id="paneTarjeta" layoutY="11.0" prefHeight="219.0" prefWidth="384.0" style="-fx-border-color: LIGHTGRAY;" visible="false" AnchorPane.bottomAnchor="-11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
-                                                   <children>
-                                                      <VBox layoutX="92.0" layoutY="14.0" prefHeight="214.4" prefWidth="384.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                         <children>
-                                                            <VBox prefHeight="200.0" prefWidth="100.0">
-                                                               <children>
-                                                                  <Label text="Banco:" />
-                                                                  <TextField prefHeight="26.0" prefWidth="286.0" />
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" right="10.0" top="5.0" />
-                                                               </VBox.margin>
-                                                            </VBox>
-                                                            <VBox prefHeight="200.0" prefWidth="100.0">
-                                                               <children>
-                                                                  <Label text="Tipo de tarjeta:" />
-                                                                  <ComboBox prefHeight="26.0" prefWidth="186.0" promptText="Seleccione" />
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" right="10.0" top="10.0" />
-                                                               </VBox.margin>
-                                                            </VBox>
-                                                            <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0">
-                                                               <children>
-                                                                  <Label text="Últimos 3 dígitos:" />
-                                                                  <TextField prefHeight="26.0" prefWidth="137.0" />
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="10.0" right="10.0" top="10.0" />
-                                                               </VBox.margin>
-                                                            </VBox>
-                                                            <VBox prefHeight="200.0" prefWidth="100.0">
-                                                               <children>
-                                                                  <Label text="Código de autorización:" />
-                                                                  <TextField prefHeight="26.0" prefWidth="190.0">
-                                                                     <VBox.margin>
-                                                                        <Insets />
-                                                                     </VBox.margin>
-                                                                  </TextField>
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                               </VBox.margin>
-                                                            </VBox>
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                          </AnchorPane>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                              <CheckBox fx:id="checkbox_facturaValorFiscal" mnemonicParsing="false" prefWidth="201.0" text="Facturar con Valor Fiscal">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </CheckBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="363.0">
-                                 <children>
-                                    <Label text="Cantidad de copias:" />
-                                    <Spinner fx:id="spinner_cantcopias" prefHeight="26.0" prefWidth="77.0">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </Spinner>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="422.0">
-                                 <children>
-                                    <Button fx:id="guardarFactura" mnemonicParsing="false" onAction="#guardarFactura" text="Imprimir factura">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" top="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="BOTTOM_RIGHT" prefHeight="66.0" prefWidth="318.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox fx:id="vbox_facturaCredito" layoutX="246.0" layoutY="103.0" prefHeight="676.0" prefWidth="1084.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <VBox prefHeight="606.0" prefWidth="354.0">
-                           <children>
-                              <VBox prefHeight="62.0" prefWidth="354.0" style="-fx-border-color: LIGHTGRAY;">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="237.0">
-                                       <children>
-                                          <Label text="Cliente:">
-                                             <font>
-                                                <Font size="17.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="textfield_buscarClienteFacturaCredito" editable="false" prefHeight="26.0" prefWidth="143.0" HBox.hgrow="ALWAYS">
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Button fx:id="button_buscarClienteFacturaCredito" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#abrirBusquedaCliente" prefHeight="39.0" prefWidth="105.0" text="Buscar">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                              <VBox prefHeight="216.0" prefWidth="327.0" style="-fx-border-color: LIGHTGRAY;">
-                                 <children>
-                                    <Label text="Datos del cliente">
-                                       <font>
-                                          <Font name="System Bold" size="17.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="5.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Nombre:" />
-                                          <TextField fx:id="textfield_clienteNombreCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="RNC:" />
-                                          <TextField fx:id="textfield_clienteRNCCredito" editable="false" prefHeight="26.0" prefWidth="230.0">
-                                             <HBox.margin>
-                                                <Insets left="30.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Crédito:" />
-                                          <TextField fx:id="textfield_clienteCreditoCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
-                                             <HBox.margin>
-                                                <Insets left="12.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$">
-                                             <HBox.margin>
-                                                <Insets left="2.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="331.0">
-                                       <children>
-                                          <Label text="Deuda:" />
-                                          <TextField fx:id="textfield_clienteDeudaCredito" editable="false" prefHeight="26.0" prefWidth="218.0" promptText="0.0">
-                                             <HBox.margin>
-                                                <Insets left="16.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$">
-                                             <HBox.margin>
-                                                <Insets left="2.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="655.0" prefWidth="346.0">
-                           <children>
-                              <Label text="Deudas pendientes del cliente">
-                                 <font>
-                                    <Font name="System Bold" size="17.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ListView fx:id="listview_clienteDeuda" prefHeight="358.0" prefWidth="349.0" />
-                              <Button fx:id="button_seleccionarFacturaDeuda" mnemonicParsing="false" onAction="#rellenarCamposFacturaDeuda" text="Seleccionar">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="676.0" prefWidth="345.0">
-                           <children>
-                              <VBox prefHeight="145.0" prefWidth="345.0" style="-fx-border-color: lightgray;">
-                                 <children>
-                                    <Label text="Información de deuda">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
-                                       <children>
-                                          <Label text="Fecha de solicitud:" />
-                                          <TextField fx:id="textfield_fechaSolicitud" editable="false" prefHeight="26.0" prefWidth="120.0">
-                                             <HBox.margin>
-                                                <Insets left="30.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
-                                       <children>
-                                          <Label text="Balance original:" />
-                                          <TextField fx:id="textfield_balanceOriginal" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                             <HBox.margin>
-                                                <Insets left="42.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="345.0">
-                                       <children>
-                                          <Label text="Monto del último pago:" />
-                                          <TextField fx:id="textfield_montoDelUltimoPago" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
-                                       <children>
-                                          <Label text="Fecha del último pago:" />
-                                          <TextField fx:id="textfield_ultimoPago" editable="false" prefHeight="26.0" prefWidth="120.0">
-                                             <HBox.margin>
-                                                <Insets left="16.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
-                                       <children>
-                                          <Label text="Balance pendiente:">
-                                             <font>
-                                                <Font name="System Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="textfield_creditoBalancePendiente" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <Label text="RD$" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
-                                 <children>
-                                    <Label text="Recibido:">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="textfield_creditoRecibido" alignment="CENTER_RIGHT" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label text="RD$" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="345.0">
-                                 <children>
-                                    <Label text="Cambio:">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="textfield_creditoCambio" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                       <HBox.margin>
-                                          <Insets left="18.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label text="RD$" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="345.0">
-                                 <children>
-                                    <Label text="Nuevo balance pendiente:">
-                                       <font>
-                                          <Font size="17.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="textfield_nuevoBalance" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="98.0" promptText="0.0">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label text="RD$" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <CheckBox fx:id="checkbox_facturaValorFiscal1" mnemonicParsing="false" prefWidth="201.0" text="Facturar con Valor Fiscal">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="40.0" />
-                                 </VBox.margin>
-                              </CheckBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="363.0">
-                                 <children>
-                                    <Label text="Cantidad de copias:" />
-                                    <Spinner fx:id="spinner_cantcopias1" prefHeight="26.0" prefWidth="77.0">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </Spinner>
-                                 </children>
-                              </HBox>
-                              <Button fx:id="button_imprimirFacturaCredito" mnemonicParsing="false" onAction="#actualizarDeudaFactura" text="Imprimir factura">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <HBox alignment="BOTTOM_RIGHT" prefHeight="66.0" prefWidth="318.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
                                  </children>
                               </HBox>
                            </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <TitledPane fx:id="titledpane_busquedaProductos" animated="false" collapsible="false" layoutX="8.0" layoutY="14.0" prefHeight="592.0" prefWidth="1084.0" text="Búsqueda de productos" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <TitledPane fx:id="titledpane_busquedaProductos" animated="false" collapsible="false" layoutX="8.0" layoutY="14.0" prefHeight="682.4" prefWidth="1094.4" text="Búsqueda de productos" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="834.0">
                      <children>
@@ -982,7 +1243,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane fx:id="titledpane_busquedaClientesFactura" animated="false" collapsible="false" prefHeight="586.4" prefWidth="942.4" text="Búsqueda de Clientes" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TitledPane fx:id="titledpane_busquedaClientesFactura" animated="false" collapsible="false" prefHeight="682.4" prefWidth="1094.4" text="Búsqueda de Clientes" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -1037,6 +1298,60 @@
                   </AnchorPane>
               </content>
             </TitledPane>
+            <TitledPane fx:id="titledpane_busquedaPeticiones" animated="false" collapsible="false" prefHeight="682.4" prefWidth="1094.4" text="Búsqueda de peticiones" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="185.0" layoutY="250.0" prefHeight="656.0" prefWidth="1092.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="tableview_peticionList" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="tablecolumn_peticionCodigo" prefWidth="75.0" text="Código" />
+                                    <TableColumn fx:id="tablecolumn_peticionProveedor" prefWidth="75.0" text="Proveedor" />
+                                    <TableColumn fx:id="tablecolumn_peticionProducto" prefWidth="75.0" text="Producto" />
+                                    <TableColumn fx:id="tablecolumn_peticionCantidad" prefWidth="75.0" text="Cantidad" />
+                                    <TableColumn fx:id="tablecolumn_peticionMonto" prefWidth="75.0" text="Monto" />
+                                    <TableColumn fx:id="tablecolumn_peticionMetodo" prefWidth="75.0" text="Método de pago" />
+                                    <TableColumn fx:id="tablecolumn_peticionEstado" prefWidth="75.0" text="Estado" />
+                                    <TableColumn fx:id="tablecolumn_peticionFecha" prefWidth="75.0" text="Fecha" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </TableView>
+                              <AnchorPane prefHeight="520.0" prefWidth="238.0">
+                                 <children>
+                                    <VBox layoutX="136.0" layoutY="78.0" prefHeight="520.0" prefWidth="280.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="45.0" prefWidth="281.0">
+                                             <children>
+                                                <ComboBox prefHeight="26.0" prefWidth="133.0" promptText="Buscar por:" />
+                                                <TextField prefHeight="26.0" prefWidth="154.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="20.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Button disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" text="Seleccionar">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrarBusquedaPeticion" text="Cerrar" />
+                                    <TextField editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="191.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="18.0" prefWidth="200.0">
@@ -1051,15 +1366,5 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </AnchorPane>
-      <HBox alignment="CENTER_LEFT" layoutX="243.0" layoutY="7.0" prefHeight="46.0" prefWidth="367.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#facturaProducto" text="Facturar productos" />
-            <Button mnemonicParsing="false" onAction="#facturaCredito" text="Facturar pago de crédito">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
    </children>
 </AnchorPane>

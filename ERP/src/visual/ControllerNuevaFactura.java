@@ -62,6 +62,7 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private Button button_buscarClienteFactura;
 	    @FXML private CheckBox checkbox_clienteFactura;
 	    @FXML private TitledPane titledpane_busquedaClientesFactura;
+	    @FXML private TitledPane titledpane_busquedaPeticiones;
 	    
 	    @FXML private TextField textfield_facturaCantidad;
 	    @FXML private TextField textfield_productoBusqueda;
@@ -111,8 +112,6 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private Spinner<Integer> spinner_cantcopias;
 	    
 	    @FXML private TitledPane titledpane_busquedaProductos;
-	    @FXML private VBox vbox_facturarProducto;
-	    @FXML private VBox vbox_facturaCredito; 
 	    
 	    @FXML private TextField textfield_balancependiente;
 	    @FXML private TextField textfield_descuento;
@@ -1005,9 +1004,6 @@ public class ControllerNuevaFactura implements Initializable{
 		setDatePickers();
 		
 		setSpinnersConfiguracion();
-		
-		vbox_facturarProducto.setVisible(true);
-		vbox_facturaCredito.setVisible(false);
 	}
 	
 	public void fillProductos(ArrayList<Producto> producto) {
@@ -1230,14 +1226,12 @@ public class ControllerNuevaFactura implements Initializable{
 		
 	}
 	
-	public void facturaProducto(ActionEvent event) {
-		vbox_facturarProducto.setVisible(true);
-		vbox_facturaCredito.setVisible(false);
+	public void abrirBusquedaPeticion(ActionEvent event) {
+		titledpane_busquedaPeticiones.setVisible(true);
 	}
 	
-	public void facturaCredito(ActionEvent event) {
-		vbox_facturarProducto.setVisible(false);
-		vbox_facturaCredito.setVisible(true);
+	public void cerrarBusquedaPeticion(ActionEvent event) {
+		titledpane_busquedaPeticiones.setVisible(false);
 	}
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
@@ -14,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="nuevoClientePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoCliente">
+<Pane fx:id="nuevoClientePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoCliente">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
@@ -68,26 +67,6 @@
                               <TextField layoutX="60.0" layoutY="329.0" prefHeight="31.0" prefWidth="271.0" />
                               <TextField layoutX="60.0" layoutY="248.0" prefHeight="31.0" prefWidth="271.0" />
                               <RadioButton layoutX="70.0" layoutY="457.0" mnemonicParsing="false" text="Utilizar estos datos con cada comprobante de venta como dominicilio de envío" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Opcional">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="56.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendedor" />
-                              <TextField editable="false" layoutX="56.0" layoutY="85.0" promptText="000001" />
-                              <Button layoutX="243.0" layoutY="85.0" mnemonicParsing="false" text="Seleccionar" />
-                              <Text layoutX="56.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de precios" />
-                              <Text layoutX="372.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Límite de deuda en Cuenta Corriente" />
-                              <TextField alignment="CENTER_RIGHT" layoutX="373.0" layoutY="201.0" prefHeight="31.0" prefWidth="241.0" promptText="0.00" />
-                              <Text layoutX="704.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descuento" />
-                              <TextField alignment="CENTER_RIGHT" layoutX="704.0" layoutY="201.0" promptText="0.00" />
-                              <RadioButton layoutX="56.0" layoutY="336.0" mnemonicParsing="false" text="Permitir pago con tarjeta de crédito" />
-                              <RadioButton layoutX="56.0" layoutY="374.0" mnemonicParsing="false" text="Permitir facturar a Cuenta Corriente" />
-                              <RadioButton layoutX="56.0" layoutY="413.0" mnemonicParsing="false" text="Avisar al facturar cuando existan Remitos o Presupuestos pendientes" />
-                              <ComboBox layoutX="56.0" layoutY="201.0" prefHeight="31.0" prefWidth="229.0" />
                            </children>
                         </AnchorPane>
                     </content>
