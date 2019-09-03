@@ -29,7 +29,7 @@
          <children>
             <TabPane layoutY="-7.0" prefHeight="682.0" prefWidth="1094.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
               <tabs>
-                <Tab text="Facturar productos">
+                <Tab fx:id="tab_facturarProducto" text="Facturar productos">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -570,7 +570,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Facturar pago de crédito">
+                <Tab fx:id="tab_facturarCredito" text="Facturar pago de crédito">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

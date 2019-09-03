@@ -578,7 +578,7 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuarios (usuario, empleado) VALUES (?, ?)");
 			p.setString(1, usu.getUsuario());
-			p.setInt(2, misEmpleados.indexOf(usu.getEmpleado())-1);
+			p.setInt(2, misEmpleados.indexOf(usu.getEmpleado())+1);
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -586,7 +586,7 @@ public class Controladora implements Serializable{
 			p.close();
 			
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuariocontrasena (usuario, contrasena) VALUES (?, ?)");
-			p.setString(1, usu.getUsuario());
+			p.setInt(1, Controladora.getInstance().getMisUsuarios().indexOf(usu)+1);
 			p.setString(2, usu.getContrasena());
 			
 			//ejecutar el preparedStatement
@@ -595,7 +595,7 @@ public class Controladora implements Serializable{
 			p.close();
 			
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuariocargo (usuario, cargo) VALUES (?, ?)");
-			p.setString(1, usu.getUsuario());
+			p.setInt(1, Controladora.getInstance().getMisUsuarios().indexOf(usu)+1);
 			p.setInt(2, misCargos.indexOf(usu.getCargo())+1);
 			
 			//ejecutar el preparedStatement
