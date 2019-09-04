@@ -12,6 +12,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.codec.cli.Digest;
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -73,7 +76,7 @@ public class Controladora implements Serializable{
 	Moneda dola = new Moneda(50, "dolar");
 	Precio pre = new Precio(1500f, "caro", true);
 	Cargo cargo1 = new Cargo("Administrador", true, true, true, true, true, true, true, true, true, true);
-	Cargo cargo2 = new Cargo("Cajero", false, false, true, true, true, false, false, false, false, false);
+	Cargo cargo2 = new Cargo("Cajero", false, false, true, false, true, false, false, false, false, false);
 	
 	Usuario usuarioLogueado = null;
 	//UnidadMedida lb = new UnidadMedida("Libra", "Lb");
@@ -3683,11 +3686,92 @@ public class Controladora implements Serializable{
 	
 	public boolean validarUsuario(String usuario, String password) {
 		boolean check = false;
-		for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		PreparedStatement p = null;
+		int cuenta = 0;
+		int cuenta2 = 0;
+		int idUsuario = 0;
+		String passHash = DigestUtils.md5Hex(password);
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM usuarios WHERE usuario = '"+usuario+"' AND activo = 1");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+				
+				c3 = con.conectar();
+				
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM usuarios WHERE usuario = '"+usuario+"' AND activo = 1");
+				
+				while(r3.next())
+				{
+					idUsuario = r3.getInt(1);
+				}
+			}
+			
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT COUNT(*) AS TOTAL FROM usuariocontrasena WHERE usuario = '"+idUsuario+"' AND contrasena = '"+passHash+"' AND activo = 1");
+			
+			while(r2.next())
+			{
+				cuenta2 = r2.getInt(1);
+			}
+			
+			if(cuenta > 0 && cuenta2 > 0)
+			{
+				check = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		/*for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
 			if(u.getUsuario() == usuario && u.getContrasena() == password) {
 				check = true;
 			}
-		}
+		}*/
 		return check;
 	}
 	
@@ -5064,7 +5148,162 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
-
+	
+	public boolean activarLoadUsuarios()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM usuarios");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadUsuarios()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Connection c3 = null;
+		Statement s = null;
+		Statement s2 = null;
+		Statement s3 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		ResultSet r3 = null;
+		PreparedStatement p = null;
+		int idUsuario = 0;
+		String nombreUsuario = null;
+		int empleadoID = 0;
+		boolean usuarioActivo = false;
+		String passwordHash = null;
+		int idCargo = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM usuarios");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idUsuario = r.getInt(1);
+				nombreUsuario = r.getString(2);
+				empleadoID = r.getInt(3);
+				usuarioActivo = r.getBoolean(4);
+				
+				c2 = con.conectar();
+				
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT * FROM usuariocontrasena WHERE usuario = '"+idUsuario+"' AND activo = 1");
+				
+				while(r2.next())
+				{
+					passwordHash = r2.getString(3);
+				}
+				
+				c2.close();
+				
+				c3 = con.conectar();
+				
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM usuariocargo WHERE usuario = '"+idUsuario+"' AND borrado = 0");
+				
+				while(r3.next())
+				{
+					idCargo = r3.getInt(3);
+				}
+				
+				c3.close();
+				
+				Empleado emp = Controladora.getInstance().getMisEmpleados().get(empleadoID-1);
+				Cargo cg = Controladora.getInstance().getMisCargos().get(idCargo-1);
+				
+				Usuario usu = new Usuario(nombreUsuario, emp, usuarioActivo, passwordHash, true, cg);
+				
+				Controladora.getInstance().getMisUsuarios().add(usu);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public boolean activarLoadKit()
 	{
 		Conexion con = new Conexion();
@@ -7314,7 +7553,7 @@ public void loadEmpleados()
 				
 				CategoriaEmpleado categoriaEmp = new CategoriaEmpleado(nombrecategoria, sueldocategoria);
 				
-				Empleado emp = new Empleado(codigo, nombrecategoria, telefono, domicilio, correo, rnc, sueldocategoria, categoriaEmp);
+				Empleado emp = new Empleado(codigo, nombre, telefono, domicilio, correo, rnc, sueldocategoria, categoriaEmp);
 				
 				Controladora.getInstance().getMisEmpleados().add(emp);
 			}

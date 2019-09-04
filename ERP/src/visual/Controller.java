@@ -91,6 +91,8 @@ import logico.Usuario;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.poi.hssf.usermodel.*;
 
 public class Controller implements Initializable{
@@ -217,6 +219,9 @@ public class Controller implements Initializable{
     
     @FXML private AnchorPane titledPane_nuevaPeticion;
     @FXML private TitledPane titledpane_busquedaProductosPeticiones;
+    
+    @FXML private Tab tab_rubros;
+    @FXML private Tab tab_atributos;
     
     //PETICIONES
     
@@ -353,6 +358,7 @@ public class Controller implements Initializable{
     @FXML private TitledPane titledpane_infoadicionalfactura;
     @FXML private Tab tab_promocion;
     @FXML private Button button_nuevaPromocion;
+    @FXML private Button button_eliminarPromocion;
     
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
@@ -620,6 +626,12 @@ public class Controller implements Initializable{
     }
     
     public void productos_pressed(ActionEvent event){
+    	if(Controladora.getInstance().getUsuarioLogueado().getCargo().getNombre().equalsIgnoreCase("Administrador"))
+		{
+			tab_atributos.setDisable(false);
+			tab_rubros.setDisable(false);
+		}
+    	
     	pressed_productos1.setSource(pressed_productos); 
     	
     	nonpressed_principal1.setSource(nonpressed_principal); 
@@ -2623,29 +2635,106 @@ public class Controller implements Initializable{
     	}
     	
     	if(canRegister) {
-    		Empleado empleado = Controladora.getInstance().buscarEmpleado(codigoEmpleado);
-    		Cargo cargo = Controladora.getInstance().buscarCargo(cargoNombre);
-    		Usuario usuario = new Usuario(usuarioNombre, empleado, true, password, true, cargo);
-    	
-    		Controladora.getInstance().getMisUsuarios().add(usuario);
-    		Controladora.getInstance().guardarUsuarioSQL(usuario);
-    		
-    		combobox_cargoUsuario.setValue("Seleccione");
-    		textfield_usuario.setText("");
-    		textfield_empleadoUsuario.setText("");
-    		textfield_passwordUsuario.setText("");
-    		
-    		pane_nuevoUsuario.setDisable(true);
-    		fillEmpleadoList(null, "Usuario");
-    		fillUsuario();
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Confirmar creación del usuario" + " " + textfield_usuario.getText(), ButtonType.YES, ButtonType.NO);
+        	alert.showAndWait();
+        	
+        	if (alert.getResult() == ButtonType.YES) {
+        		Empleado empleado = Controladora.getInstance().buscarEmpleado(codigoEmpleado);
+        		Cargo cargo = Controladora.getInstance().buscarCargo(cargoNombre);
+        		String passhash = DigestUtils.md5Hex(password);
+        		Usuario usuario = new Usuario(usuarioNombre, empleado, true, passhash, true, cargo);
+        	
+        		Controladora.getInstance().getMisUsuarios().add(usuario);
+        		Controladora.getInstance().guardarUsuarioSQL(usuario);
+        		
+        		combobox_cargoUsuario.setValue("Seleccione");
+        		textfield_usuario.setText("");
+        		textfield_empleadoUsuario.setText("");
+        		textfield_passwordUsuario.setText("");
+        		
+        		pane_nuevoUsuario.setDisable(true);
+        		fillEmpleadoList(null, "Usuario");
+        		fillUsuario();
+        		
+        		alert = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
+        		alert.setTitle("Informaciones");
+        		alert.showAndWait();
+        	}
     	}
     	
     }
 
-	
+	public void verifyUserPermissions()
+	{
+		Usuario user = Controladora.getInstance().getUsuarioLogueado();
+		
+		if(!user.getCargo().isManejodeproductos())
+		{
+			button_nuevoProducto.setDisable(true);
+			button_modificarProducto.setDisable(true);
+			button_eliminarProducto.setDisable(true);
+		}
+		
+		if(!user.getCargo().isInfoproductos())
+		{
+			button_abrirInfoAdicional.setDisable(true);
+			button_exportarInventario.setDisable(true);
+		}
+		
+		if(!user.getCargo().isFacturarcompra())
+		{
+			button_nuevaFactura.setDisable(true);
+		}
+		
+		if(!user.getCargo().isInfofactura())
+		{
+			button_facturaInfoAdicional.setDisable(true);
+		}
+		
+		if(!user.getCargo().isManejopromociones())
+		{
+			button_nuevaPromocion.setDisable(true);
+			button_eliminarPromocion.setDisable(true);
+		}
+		
+		if(!user.getCargo().isAccesomodulorrhh())
+		{
+			selected_rh.setDisable(true);
+			button_rh.setDisable(true);
+		}
+		
+		if(!user.getCargo().isAccesomodulogastos())
+		{
+			selected_Gastos.setDisable(true);
+			button_gastos.setDisable(true);
+		}
+		
+		if(!user.getCargo().isAccesomodulohistorial())
+		{
+			selected_historial.setDisable(true);
+			button_historial.setDisable(true);
+		}
+		
+		if(!user.getCargo().isAccesomoduloconfiguracion())
+		{
+			selected_config.setDisable(true);
+			button_config.setDisable(true);
+		}
+		
+		if(user.getCargo().getNombre().equalsIgnoreCase("Cajero"))
+		{
+			selected_admin.setDisable(true);
+			button_admin.setDisable(true);
+			tab_atributos.setDisable(true);
+			tab_rubros.setDisable(true);
+		}
+	}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	
+    	//Seteando la ventana principal por permisos del cargo del usuario
+    	verifyUserPermissions();
     	
     	//Seteando los clientes
     	fillClientList(null);
@@ -3094,7 +3183,7 @@ public class Controller implements Initializable{
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {
-    	if(!tableview_productList.getSelectionModel().isEmpty()) {
+    	if(!tableview_productList.getSelectionModel().isEmpty() && Controladora.getInstance().getUsuarioLogueado().getCargo().isInfoproductos()) {
     		button_abrirInfoAdicional.setDisable(false);
     	}
     }
@@ -3168,7 +3257,7 @@ public class Controller implements Initializable{
     }
     
     public void tableviewFacturaClicked(MouseEvent event) {
-    	if(!tableview_facturaList.getSelectionModel().isEmpty()) {
+    	if(!tableview_facturaList.getSelectionModel().isEmpty() && Controladora.getInstance().getUsuarioLogueado().getCargo().isInfofactura()) {
     		button_facturaInfoAdicional.setDisable(false);
     	}
     	else {

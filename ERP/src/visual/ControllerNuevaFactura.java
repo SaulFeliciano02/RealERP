@@ -196,7 +196,10 @@ public class ControllerNuevaFactura implements Initializable{
     	if(checkbox_clienteFactura.isSelected()) {
     	textfield_buscarClienteFactura.setDisable(false);
     	button_buscarClienteFactura.setDisable(false);
-    	radiobutton_facturaCredito.setDisable(false);
+    	if(Controladora.getInstance().getUsuarioLogueado().getCargo().isFacturaporcredito())
+    	{
+    		radiobutton_facturaCredito.setDisable(false);
+    	}
     	}else {
         	textfield_buscarClienteFactura.setDisable(true);
         	button_buscarClienteFactura.setDisable(true);
@@ -1008,6 +1011,7 @@ public class ControllerNuevaFactura implements Initializable{
 		setDatePickers();
 		
 		setSpinnersConfiguracion();
+		
 	}
 	
 	public void fillProductos(ArrayList<Producto> producto) {
