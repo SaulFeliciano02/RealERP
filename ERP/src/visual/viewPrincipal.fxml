@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -649,7 +649,7 @@
                                                                   </AnchorPane>
                                                                </content>
                                                             </Tab>
-                                                            <Tab text="Rubros">
+                                                            <Tab fx:id="tab_rubros" text="Rubros">
                                                                <content>
                                                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                      <children>
@@ -732,7 +732,7 @@
                                                                   </AnchorPane>
                                                                </content>
                                                             </Tab>
-                                                            <Tab text="Atributos">
+                                                            <Tab fx:id="tab_atributos" text="Atributos">
                                                                <content>
                                                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                      <children>
@@ -1418,7 +1418,7 @@
                                                                            </VBox.margin>
                                                                            <children>
                                                                               <Button fx:id="button_nuevaPromocion" mnemonicParsing="false" onAction="#pressed_nuevaPromocion" text="Nueva promoción" />
-                                                                              <Button mnemonicParsing="false" text="Eliminar promoción">
+                                                                              <Button fx:id="button_eliminarPromocion" mnemonicParsing="false" text="Eliminar promoción">
                                                                                  <HBox.margin>
                                                                                     <Insets left="20.0" />
                                                                                  </HBox.margin>
