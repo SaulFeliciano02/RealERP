@@ -37,6 +37,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -200,6 +201,11 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private ComboBox<String> combobox_productoBusquedaRubro;
     @FXML private Button button_cerrarBusquedaRubro;
     @FXML private Button button_aceptarBusquedaRubro;
+    
+    @FXML private TextField textfield_rubroCodigo;
+    @FXML private TextField textfield_rubroNombre;
+    @FXML private Button button_rubroGuardar;
+    @FXML private Button button_rubroEliminar;
     
     //COMBINACIONES
     @FXML private TextField textfield_busquedaFamilia1;
@@ -2609,6 +2615,7 @@ public class ControllerNuevoProducto implements Initializable {
     public void rubroTableViewClicked(MouseEvent event) {
     	if(!tableview_rubroBuscar.getSelectionModel().isEmpty()) {
     		button_aceptarBusquedaRubro.setDisable(false);
+    		button_rubroEliminar.setDisable(false);
     	}
     }
     
@@ -2617,6 +2624,64 @@ public class ControllerNuevoProducto implements Initializable {
     	button_aceptarBusquedaRubro.setDisable(true);
     	titledpane_productoBuscarRubro.setVisible(false);
     	activarProductoGuardar(null);
+    }
+    
+    public void activarRegistro(ActionEvent event) {
+    	//pane_rubroCreate.setDisable(false);
+    	textfield_rubroCodigo.setDisable(false);
+    	textfield_rubroNombre.setDisable(false);
+    	button_rubroGuardar.setDisable(true);
+    }
+    
+    public void activarGuardarRubro(KeyEvent event) {
+    	if(textfield_rubroCodigo.getLength() > 0 && textfield_rubroNombre.getLength() > 0) {
+    		button_rubroGuardar.setDisable(false);
+    	}
+    	else {
+    		button_rubroGuardar.setDisable(true);
+    	}
+    }
+    
+    public void guardarRubro(ActionEvent event) {
+    	ObservableList<Rubro> data = FXCollections.observableArrayList();
+    	String codigo = textfield_rubroCodigo.getText();
+    	String nombre = textfield_rubroNombre.getText();
+    	Rubro rubro = new Rubro(codigo, nombre);
+    	data.add(rubro);
+    	Controladora.getInstance().getMisRubros().add(rubro);
+    	Controladora.getInstance().guardarRubroSQL(rubro);
+    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    	tableview_rubroBuscar.getItems().add(rubro);
+    	tableview_rubroBuscar.refresh();
+    	textfield_rubroCodigo.setText("");
+    	textfield_rubroNombre.setText("");
+    	textfield_rubroCodigo.setDisable(true);
+    	textfield_rubroNombre.setDisable(true);
+    }
+    
+    
+    public void eliminarRubro(ActionEvent event) {
+    	Rubro rubro = tableview_rubroBuscar.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + rubro.getNombreRubro() + "?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	
+    	if (alert.getResult() == ButtonType.YES) {
+    		if(rubro!=null) {
+    			if(Controladora.getInstance().isRubroInProduct(rubro)) {
+    				Alert rubroTaken = new Alert(AlertType.CONFIRMATION);
+    				rubroTaken.setContentText("Este rubro es parte de un producto.");
+    				rubroTaken.show();
+    			}
+    			else {
+    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
+    				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarRubro(indice+1);
+    				fillRubroList(null);
+    			}
+    				
+        	}
+    	}
     }
     
     //UNIDAD DE MEDIDAS
