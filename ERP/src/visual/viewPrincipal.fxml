@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -915,7 +915,7 @@
                                                                                           </Label>
                                                                                           <HBox prefHeight="33.0" prefWidth="250.0">
                                                                                              <children>
-                                                                                                <TextField editable="false" prefHeight="26.0" prefWidth="207.0">
+                                                                                                <TextField fx:id="textfield_peticionProveedor" editable="false" prefHeight="26.0" prefWidth="207.0">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
@@ -1123,18 +1123,18 @@
                                                                                  <children>
                                                                                     <HBox layoutX="253.0" layoutY="180.0" prefHeight="560.0" prefWidth="940.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
-                                                                                          <TableView fx:id="tableview_proveedoresList1" editable="true" prefHeight="356.0" prefWidth="630.0" HBox.hgrow="ALWAYS">
+                                                                                          <TableView fx:id="tableview_peticionProveedoresList" editable="true" onMouseClicked="#tableview_peticionProveedorClicked" prefHeight="356.0" prefWidth="630.0" HBox.hgrow="ALWAYS">
                                                                                              <columns>
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorCodigo1" prefWidth="75.0" text="Codigo" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorNombre1" prefWidth="75.0" text="Nombre" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorRNC1" prefWidth="75.0" text="RNC" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorRubro1" prefWidth="75.0" text="Rubro" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorTelefono1" prefWidth="75.0" text="Teléfono" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorCodigo" prefWidth="75.0" text="Codigo" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorNombre" prefWidth="75.0" text="Nombre" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorRNC" prefWidth="75.0" text="RNC" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorRubro" prefWidth="75.0" text="Rubro" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorTelefono" prefWidth="75.0" text="Teléfono" />
                                                                                                 <TableColumn prefWidth="75.0" text="Celular" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorSaldo1" prefWidth="75.0" text="Saldo" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorDomicilio1" prefWidth="75.0" text="Dominicilio" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorCorreo1" prefWidth="75.0" text="Correo" />
-                                                                                                <TableColumn fx:id="tablecolumn_proveedorSitioWeb1" prefWidth="75.0" text="SitioWeb" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorSaldo" prefWidth="75.0" text="Saldo" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorDomicilio" prefWidth="75.0" text="Dominicilio" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorCorreo" prefWidth="75.0" text="Correo" />
+                                                                                                <TableColumn fx:id="tablecolumn_peticionProveedorSitioWeb" prefWidth="75.0" text="SitioWeb" />
                                                                                              </columns>
                                                                                              <columnResizePolicy>
                                                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1161,13 +1161,13 @@
                                                                                                       </HBox>
                                                                                                    </children>
                                                                                                 </VBox>
-                                                                                                <Button fx:id="button_peticionProductoSeleccionar1" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#peticionSelectProducto" text="Seleccionar">
+                                                                                                <Button fx:id="button_peticionProveedorSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#peticionSelectProveedor" text="Seleccionar">
                                                                                                    <font>
                                                                                                       <Font size="20.0" />
                                                                                                    </font>
                                                                                                 </Button>
                                                                                                 <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrar_infoBusquedaProveedoresPeticiones" text="Cerrar" />
-                                                                                                <TextField fx:id="textfield_peticionProductoSeleccionado1" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="202.0" />
+                                                                                                <TextField fx:id="textfield_peticionProveedorSeleccionado" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="202.0" />
                                                                                              </children>
                                                                                           </AnchorPane>
                                                                                        </children>
