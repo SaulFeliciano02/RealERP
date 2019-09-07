@@ -237,6 +237,7 @@ public class Controller implements Initializable{
     @FXML private TableView<Peticion> tableview_peticionList;
     
     @FXML private TextField textfield_peticionProducto;
+    @FXML private TextField textfield_peticionProveedor;
     @FXML private ComboBox<String> combobox_peticionProveedor;
     @FXML private Spinner<Integer> spinner_peticionCantidad;
     @FXML private TextField textfield_peticionMonto;
@@ -264,6 +265,20 @@ public class Controller implements Initializable{
     @FXML private Button button_peticionProductoSeleccionar;
     @FXML private TitledPane titledpane_infoAdicionalPeticion;
     @FXML private TitledPane titledpane_busquedaProveedorPeticiones;
+    
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorCodigo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorNombre;
+    @FXML private TableColumn<Proveedores, Rubro> tablecolumn_peticionProveedorRubro;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorDomicilio;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorCorreo;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorTelefono;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorRNC;
+    @FXML private TableColumn<Proveedores, String> tablecolumn_peticionProveedorSitioWeb;
+    @FXML private TableColumn<Proveedores, Float> tablecolumn_peticionProveedorSaldo;
+    @FXML private TableView<Proveedores> tableview_peticionProveedoresList;
+    
+    @FXML private TextField textfield_peticionProveedorSeleccionado;
+    @FXML private Button button_peticionProveedorSeleccionar;
     
     //DESPLIEGUE DE ATRIBUTOS
     @FXML private TextField textfield_register_familia;
@@ -1879,7 +1894,7 @@ public class Controller implements Initializable{
     				Controladora.getInstance().getMisProductosServicio().get(indiceServicio).setBorrado(true);
     			}
         		Controladora.getInstance().borrarProducto(indice+1);
-        		fillProductList(null);
+        		fillProductList(null, "");
         	}
     	}
     	
@@ -2043,7 +2058,7 @@ public class Controller implements Initializable{
     			int indice = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
     			Controladora.getInstance().getMisProveedores().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarProveedor(indice+1);
-    			fillProveedorList(null);;	
+    			fillProveedorList(null, "");	
         	}
     	}
     }
@@ -2105,7 +2120,7 @@ public class Controller implements Initializable{
     			int indice = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
     			Controladora.getInstance().getMisEmpleados().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarEmpleado(indice+1);
-    			fillProveedorList(null);;	
+    			fillEmpleadoList(null, "");	
         	}
     	}
     }
@@ -2269,10 +2284,10 @@ public class Controller implements Initializable{
     			productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getSelectionModel().getSelectedItem());
     		}
     		if(productos.size() == 0) {
-    			fillProductList(null);
+    			fillProductList(null, "");
     		}
     		else {
-    			fillProductList(productos);
+    			fillProductList(productos, "");
     		}
     	}
     	else if(textfield.equals(textfield_peticionProductoBuscar)) {
@@ -2283,10 +2298,10 @@ public class Controller implements Initializable{
     			productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase(), combobox_peticionProducto.getSelectionModel().getSelectedItem());
     		}
     		if(productos.size() == 0) {
-    			fillPeticionProductos(null);
+    			fillProductList(null, "Peticion");
     		}
     		else {
-    			fillPeticionProductos(productos);
+    			fillProductList(productos, "Peticion");
     		}
     	}
     }
@@ -2301,10 +2316,10 @@ public class Controller implements Initializable{
     		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase(), "Nombre");
     	}
     	if(proveedores.size() == 0) {
-    		fillProveedorList(null);
+    		fillProveedorList(null, "");
     	}
     	else {
-    		fillProveedorList(proveedores);
+    		fillProveedorList(proveedores, "");
     	}
     }
     
@@ -2499,7 +2514,7 @@ public class Controller implements Initializable{
     
     public void peticionSelectProducto(ActionEvent event) {
     	textfield_peticionProducto.setText(textfield_peticionProductoSeleccionado.getText());
-    	combobox_peticionProveedor.setDisable(false);
+    	//combobox_peticionProveedor.setDisable(false);
     	spinner_peticionCantidad.setDisable(false);
     	textfield_peticionMonto.setDisable(false);
     	combobox_peticionEstado.setDisable(false);
@@ -2507,6 +2522,17 @@ public class Controller implements Initializable{
     	radiobutton_peticionCredito.setDisable(false);
     	radiobutton_peticionTarjeta.setDisable(false);
     	cerrar_titledpane_busquedaProductosPeticiones(event);
+    }
+    
+    public void tableview_peticionProveedorClicked(MouseEvent event) {
+    	Proveedores proveedor = tableview_peticionProveedoresList.getSelectionModel().getSelectedItem();
+    	textfield_peticionProveedorSeleccionado.setText(proveedor.getCodigo());
+    	button_peticionProveedorSeleccionar.setDisable(false);
+    }
+    
+    public void peticionSelectProveedor(ActionEvent event) {
+    	textfield_peticionProveedor.setText(textfield_peticionProveedorSeleccionado.getText());
+    	cerrar_infoBusquedaProveedoresPeticiones(event);
     }
     
     public void peticionTipoDePago(ActionEvent event) {
@@ -2534,7 +2560,7 @@ public class Controller implements Initializable{
     	boolean canRegister = true;
     	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
     	Alert a = new Alert(AlertType.WARNING);
-    	if(combobox_peticionProveedor.getValue().equalsIgnoreCase("")) {
+    	if(textfield_peticionProveedor.getText().equalsIgnoreCase("")) {
     		a.setContentText("Falta ingresar los datos del proveedor");
     		a.show();
     		canRegister = false;
@@ -2562,7 +2588,7 @@ public class Controller implements Initializable{
     	
     	if(canRegister) {
     		String codigo = "00000" + Controladora.getInstance().getMisPeticiones().size()+1;
-        	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(combobox_peticionProveedor.getValue());
+        	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(textfield_peticionProveedor.getText());
         	
         	int cantidad = spinner_peticionCantidad.getValue();
         	float monto = Float.parseFloat(textfield_peticionMonto.getText());
@@ -2582,7 +2608,7 @@ public class Controller implements Initializable{
         	Controladora.getInstance().getMisPeticiones().add(peticion);
         	
         	textfield_peticionProducto.setText("");
-        	combobox_peticionProveedor.getSelectionModel().clearSelection();
+        	textfield_peticionProveedor.setText("");;
         	spinner_peticionCantidad.getValueFactory().setValue(0);
         	textfield_peticionMonto.setText("");
         	combobox_peticionEstado.getSelectionModel().clearSelection();
@@ -2590,7 +2616,7 @@ public class Controller implements Initializable{
         	radiobutton_peticionCredito.setSelected(false);
         	radiobutton_peticionTarjeta.setSelected(false);
         	
-        	combobox_peticionProveedor.setDisable(true);
+        	textfield_peticionProveedor.setDisable(true);
         	spinner_peticionCantidad.setDisable(true);
         	textfield_peticionMonto.setDisable(true);
         	combobox_peticionEstado.setDisable(true);
@@ -2752,7 +2778,7 @@ public class Controller implements Initializable{
     	fillClientList(null);
     	
     	//Seteando los proveedores
-    	fillProveedorList(null);
+    	fillProveedorList(null, "");
     	
     	//Seteando los empleados
     	fillEmpleadoList(null, "");
@@ -2764,7 +2790,7 @@ public class Controller implements Initializable{
     	ObservableList<String> combobox_data = FXCollections.observableArrayList();
     	combobox_data.addAll("Codigo", "Nombre", "Proveedor", "Rubro");
     	combobox_productBuscar.setItems(combobox_data);
-    	fillProductList(null);
+    	fillProductList(null, "");
     	
     	//Seteando los gastos generales
     	fillGastosGenerales(null);
@@ -2870,7 +2896,7 @@ public class Controller implements Initializable{
     	}
     }
     
-    public void fillProductList(ArrayList<Producto> p) {
+    public void fillProductList(ArrayList<Producto> p, String belongsTo) {
     	ObservableList<Producto> data = FXCollections.observableArrayList();
     	if(p == null) {
     		for(Producto productos : Controladora.getInstance().getMisProductos()) {
@@ -2883,20 +2909,40 @@ public class Controller implements Initializable{
     	else {
     		data.addAll(p);
     	}
-    	tablecolumn_productCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-    	tablecolumn_productNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tablecolumn_productExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
-    	tablecolumn_productExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
-    	tablecolumn_productExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
-    	tablecolumn_productExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
-    	tablecolumn_productTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
-    	tablecolumn_productRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
-    	tablecolumn_productProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));
-    	tablecolumn_productPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-    	tablecolumn_productCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
-    	tablecolumn_productDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
-    	tableview_productList.setItems(data);
-    	tableview_productList.refresh();
+    	if(belongsTo.equalsIgnoreCase("")) {
+    		tablecolumn_productCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_productNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_productExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
+    		tablecolumn_productExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+    		tablecolumn_productExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
+    		tablecolumn_productExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
+    		tablecolumn_productTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
+    		tablecolumn_productRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
+    		tablecolumn_productProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));
+    		tablecolumn_productPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+    		tablecolumn_productCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
+    		tablecolumn_productDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
+    		tableview_productList.setItems(data);
+    		tableview_productList.refresh();
+    	}
+    	else if(belongsTo.equalsIgnoreCase("Peticion")) {
+    		tablecolumn_peticionProductoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        	tablecolumn_peticionProductoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        	tablecolumn_peticionProductoExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
+        	tablecolumn_peticionProductoExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
+        	tablecolumn_peticionProductoExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
+        	tablecolumn_peticionProductoExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
+        	tablecolumn_peticionProductoTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
+        	tablecolumn_peticionProductoRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
+        	tablecolumn_peticionProductoPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        	tablecolumn_peticionProductoCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
+        	tablecolumn_peticionProductoDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
+        	tableview_peticionProducto.setItems(data);
+        	tableview_peticionProducto.refresh();
+        	
+        	setPeticiones();
+    	}
+    	
     }
     
     public void fillAtributesList(ArrayList<Atributos> a) {
@@ -2931,7 +2977,7 @@ public class Controller implements Initializable{
     	tableview_clientesList.refresh();
 	}
     
-    public void fillProveedorList(ArrayList<Proveedores> p) {
+    public void fillProveedorList(ArrayList<Proveedores> p, String belongsTo) {
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
     		data.addAll(Controladora.getInstance().getMisProveedores());
@@ -2946,17 +2992,33 @@ public class Controller implements Initializable{
     	else {
     		data.addAll(p);
     	}
-    	tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-    	tablecolumn_proveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tablecolumn_proveedorRubro.setCellValueFactory(new PropertyValueFactory<>("rubro"));
-    	tablecolumn_proveedorDomicilio.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
-    	tablecolumn_proveedorCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-    	tablecolumn_proveedorTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-    	tablecolumn_proveedorRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
-    	tablecolumn_proveedorSitioWeb.setCellValueFactory(new PropertyValueFactory<>("sitioWeb"));
-    	tablecolumn_proveedorSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
-    	tableview_proveedoresList.setItems(data);
-    	tableview_proveedoresList.refresh();
+    	if(belongsTo.equalsIgnoreCase("")) {
+    		tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_proveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_proveedorRubro.setCellValueFactory(new PropertyValueFactory<>("rubro"));
+    		tablecolumn_proveedorDomicilio.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    		tablecolumn_proveedorCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    		tablecolumn_proveedorTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    		tablecolumn_proveedorRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    		tablecolumn_proveedorSitioWeb.setCellValueFactory(new PropertyValueFactory<>("sitioWeb"));
+    		tablecolumn_proveedorSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
+    		tableview_proveedoresList.setItems(data);
+    		tableview_proveedoresList.refresh();
+    	}
+    	else if(belongsTo.equalsIgnoreCase("Peticion")) {
+    		tablecolumn_peticionProveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_peticionProveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		tablecolumn_peticionProveedorRubro.setCellValueFactory(new PropertyValueFactory<>("rubro"));
+    		tablecolumn_peticionProveedorDomicilio.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
+    		tablecolumn_peticionProveedorCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+    		tablecolumn_peticionProveedorTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    		tablecolumn_peticionProveedorRNC.setCellValueFactory(new PropertyValueFactory<>("rnc"));
+    		tablecolumn_peticionProveedorSitioWeb.setCellValueFactory(new PropertyValueFactory<>("sitioWeb"));
+    		tablecolumn_peticionProveedorSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
+    		tableview_peticionProveedoresList.setItems(data);
+    		tableview_peticionProveedoresList.refresh();
+    	}
+    	
     }
     
     public void fillEmpleadoList(ArrayList<Empleado> e, String belongsTo) {
@@ -3359,33 +3421,7 @@ public class Controller implements Initializable{
     	tableview_peticionList.refresh();
     }
     
-    public void fillPeticionProductos(ArrayList<Producto> p) {
-    	ObservableList<Producto> data = FXCollections.observableArrayList();
-    	if(p == null) {
-    		for(Producto productos : Controladora.getInstance().getMisProductos()) {
-    			if(!productos.isBorrado()) {
-    				data.add(productos);
-    			}
-    		}
-    		
-    	}
-    	else {
-    		data.addAll(p);
-    	}
-    	tablecolumn_peticionProductoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-    	tablecolumn_peticionProductoNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    	tablecolumn_peticionProductoExistenciaInicial.setCellValueFactory(new PropertyValueFactory<>("existenciaInicial"));
-    	tablecolumn_peticionProductoExistenciaActual.setCellValueFactory(new PropertyValueFactory<>("existenciaActual"));
-    	tablecolumn_peticionProductoExistenciaMinima.setCellValueFactory(new PropertyValueFactory<>("existenciaMinima"));
-    	tablecolumn_peticionProductoExistenciaMaxima.setCellValueFactory(new PropertyValueFactory<>("existenciaMaxima"));
-    	tablecolumn_peticionProductoTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
-    	tablecolumn_peticionProductoRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProducto"));
-    	tablecolumn_peticionProductoPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-    	tablecolumn_peticionProductoCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
-    	tablecolumn_peticionProductoDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripionFija"));
-    	tableview_peticionProducto.setItems(data);
-    	tableview_peticionProducto.refresh();
-    }
+ 
     
     
     public void setPeticiones() {
@@ -3474,7 +3510,7 @@ public class Controller implements Initializable{
     
     //Abre el titledpane de productos en el area de peticiones
     public void abrir_titledpane_busquedaProductosPeticiones(ActionEvent event) {
-    	fillPeticionProductos(null);
+    	fillProductList(null, "Peticion");
     	titledpane_busquedaProductosPeticiones.setVisible(true);
     }
     
@@ -3496,10 +3532,12 @@ public class Controller implements Initializable{
     
     //Abre el titledpane de proveedores en el area de peticiones
     public void abrir_infoBusquedaProveedoresPeticiones(ActionEvent event) {
+    	fillProveedorList(null, "Peticion");
     	titledpane_busquedaProveedorPeticiones.setVisible(true);
     }
   //Cierra el titledpane de proveedores en el area de peticiones
     public void cerrar_infoBusquedaProveedoresPeticiones(ActionEvent event) {
+    	tableview_peticionProveedoresList.getSelectionModel().clearSelection();
     	titledpane_busquedaProveedorPeticiones.setVisible(false);
     }
 }
