@@ -361,6 +361,9 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(false);
     		textfield_costoPrecioCompraProducto.setText("0");
     		textfield_costoPrecioCompraProducto.setDisable(true);
+    		textfield_generalProveedor.setText(Controladora.getInstance().getMiEmpresa().getNombre());
+    		textfield_generalProveedor.setDisable(true);
+    		button_productoBuscarProveedor.setDisable(true);
 
     	}
     	else {
@@ -376,6 +379,9 @@ public class ControllerNuevoProducto implements Initializable {
     		
     		textfield_costoPrecioCompraProducto.setText("");
     		textfield_costoPrecioCompraProducto.setDisable(false);
+    		textfield_generalProveedor.setText("");
+    		textfield_generalProveedor.setDisable(false);
+    		button_productoBuscarProveedor.setDisable(false);
     	}
     }
     
@@ -490,10 +496,17 @@ public class ControllerNuevoProducto implements Initializable {
     			rubro = r;
     		}
     	}
-    	for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
-    		if(p.getCodigo().equalsIgnoreCase(textfield_generalProveedor.getText())) {
-    			proveedor = p;
-    		}
+    	
+    	if(checkbox_generalProducible.isSelected())
+		{
+			proveedor = Controladora.getInstance().getMisProveedores().get(0);
+		}
+    	else {
+    		for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
+        		if(p.getCodigo().equalsIgnoreCase(textfield_generalProveedor.getText())) {
+        			proveedor = p;
+        		}
+        	}
     	}
     	
     	//Iniciado del modificar
@@ -1493,6 +1506,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setText("");
     		exMax.setText("");
     		
+    		textfield_generalProveedor.setText("");
     		button_productoBuscarProveedor.setDisable(false);
     		textfield_generalProveedor.setDisable(false);
     	}
@@ -1523,6 +1537,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setText("");
     		exMax.setText("");
     		
+    		textfield_generalProveedor.setText("");
     		button_productoBuscarProveedor.setDisable(false);
     		textfield_generalProveedor.setDisable(false);
     	}
@@ -1553,7 +1568,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setText("0");
     		exMax.setText("0");
     		
-    		textfield_generalProveedor.setText("");
+    		textfield_generalProveedor.setText(Controladora.getInstance().getMiEmpresa().getNombre());
     		textfield_generalProveedor.setDisable(true);
     		button_productoBuscarProveedor.setDisable(true);
     		
@@ -1586,6 +1601,7 @@ public class ControllerNuevoProducto implements Initializable {
     		exMin.setText("");
     		exMax.setText("");
     		
+    		textfield_generalProveedor.setText("");
     		button_productoBuscarProveedor.setDisable(false);
     		textfield_generalProveedor.setDisable(false);
     	}
@@ -2224,11 +2240,13 @@ public class ControllerNuevoProducto implements Initializable {
     					Controladora.getInstance().getMisProductosEstandar().get(j).getExistenciaActual() - Float.parseFloat(textfield_partidaCantidad.getText()));
     			}
     		}**/
+    		DecimalFormat formatter = new DecimalFormat("0.00000");
     		if(estandar.get(0).getUnidadMedida() != null) {
-    			item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
+    			
+    			item_moved = nameOriginal + "[" + "Unidad: " + estandar.get(0).getUnidadMedida().getAbreviatura() + ", disponibles: " + formatter.format(cantidadConvertida) + "]" + " (" + formatter.format(cantidadConvertida*existencia) + ")";
     		}
     		else {
-    			item_moved = nameOriginal + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + cantidadConvertida + "]" + " (" + cantidadConvertida*existencia + ")";
+    			item_moved = nameOriginal + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + formatter.format(cantidadConvertida) + "]" + " (" + formatter.format(cantidadConvertida*existencia) + ")";
     		}
     		
     		//e.getNombre() + "[" + "Unidad: " + e.getUnidadMedida().getAbreviatura() + ", disponibles: " + e.getExistenciaActual() + "]"
@@ -2663,6 +2681,7 @@ public class ControllerNuevoProducto implements Initializable {
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
     		data.addAll(Controladora.getInstance().getMisProveedores());
+    		data.remove(0);
     	}
     	else {
     		data.addAll(p);
@@ -3135,8 +3154,8 @@ public class ControllerNuevoProducto implements Initializable {
 		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
 			listView_atributos2.getItems().remove(i);
 		}
-		for(int i = 0; i < listView_atributos2.getItems().size(); i++) {
-			listView_atributos2.getItems().remove(i);
+		for(int i = 0; i < listView_atributos3.getItems().size(); i++) {
+			listView_atributos3.getItems().remove(i);
 		}
 		for(int i = 0; i < listView_combinaciones.getItems().size(); i++) {
 			listView_combinaciones.getItems().remove(i);
@@ -3148,6 +3167,10 @@ public class ControllerNuevoProducto implements Initializable {
 		combinacionFinal.clear();
 		imageview_imagen.setImage(null);
 		textfield_imagen.setText("");
+		listView_combinaciones.getItems().clear();
+		listView_atributos1.getItems().clear();
+		listView_atributos2.getItems().clear();
+		listView_atributos3.getItems().clear();
 		
 		//Limpiando costos
 		textfield_costoPrecioCompraProducto.setText("");

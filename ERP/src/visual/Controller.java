@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
 import java.sql.Date;
@@ -2458,6 +2459,10 @@ public class Controller implements Initializable{
     		fechaVencimiento = datepicker_empresaFechaVencimiento.getValue();
     		fechaInicio = datepicker_empresaFechaInicio.getValue();
     		fechaFinal = datepicker_empresaFechaFinal.getValue();
+    		if(nombre != null)
+    		{
+    			Controladora.getInstance().actualizarProveedorPorDefecto(nombre);
+    		}
     	}catch(NullPointerException e) {
     		
     	}
@@ -2923,6 +2928,13 @@ public class Controller implements Initializable{
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
     		data.addAll(Controladora.getInstance().getMisProveedores());
+    		if(data.size() > 1)
+    		{
+    			if(data.get(0).getCodigo().equalsIgnoreCase(data.get(1).getCodigo()))
+        		{
+        			data.remove(1);
+        		}
+    		}	
     	}
     	else {
     		data.addAll(p);
@@ -3045,6 +3057,7 @@ public class Controller implements Initializable{
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
     	titledpane_productoInformacionAdicional.setVisible(true);
+    	int i = 0;
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {
@@ -3056,7 +3069,7 @@ public class Controller implements Initializable{
     					data.add(c);
     				}
     				tablecolumn_productoPartidaUtilizado.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    				tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    				tablecolumn_productoPartidaCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadBig"));
     				tablecolumn_productoPartidaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
     				tableview_productoPartidaList.setItems(data);
     				tableview_productoPartidaList.refresh();

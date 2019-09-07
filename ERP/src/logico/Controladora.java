@@ -1,6 +1,7 @@
 package logico;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -77,7 +78,7 @@ public class Controladora implements Serializable{
 	Precio pre = new Precio(1500f, "caro", true);
 	Cargo cargo1 = new Cargo("Administrador", true, true, true, true, true, true, true, true, true, true);
 	Cargo cargo2 = new Cargo("Cajero", false, false, true, false, true, false, false, false, false, false);
-	
+	Proveedores provdefault;
 	Usuario usuarioLogueado = null;
 	//UnidadMedida lb = new UnidadMedida("Libra", "Lb");
 	//Estandar pro = new Estandar(10f, 5f, 20f, date, 150f, false, "01", "pitola", "Esa vaina mata", armas, "no se", prov1, provsec, dola, "Eso no silve", lb, pre, "0f", "pis-0101", 0f, "Mata", "Puesde que no mate");
@@ -216,6 +217,8 @@ public class Controladora implements Serializable{
 			guardarCargosUsuariosSQL(cargo2);
 		}
 		
+		createProveedorDefault();
+		
 		//misRubros.add(armas);
 		//misProductos.add(pro);
 		//misProductosEstandar.add(pro);
@@ -338,6 +341,71 @@ public class Controladora implements Serializable{
 		misClientes.add(c);
 		
 		guardarClienteSQL(c);
+	}
+	
+	public void createProveedorDefault()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		String nombre = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT nombre FROM infoempresa WHERE borrado = 0");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				nombre = r.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		if(emptyProveedores())
+		{
+			if(nombre != null)
+			{
+				provdefault = new Proveedores("00", nombre, "", "", "", "", null, null);
+			}
+			else
+			{
+				provdefault = new Proveedores("00", "Mi Empresa", "", "", "", "", null, null);
+			}
+			
+			getMisProveedores().add(provdefault);
+			guardarProveedorSQL(provdefault);
+		}
 	}
 	
 	public void guardarPromedioGananciaAnualSQL(float monto)
@@ -2098,6 +2166,7 @@ public class Controladora implements Serializable{
 			p.setInt(1, Controladora.getInstance().getMisPartidas().indexOf(partida)+1);
 			p.setInt(2, Controladora.getInstance().getMisCantProductosUtilizados().indexOf(cantproductosutilizados)+1);
 			p.executeUpdate();
+			System.out.println("Size de MisCantProductosUtilizados: " + getMisCantProductosUtilizados().size());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -3784,13 +3853,71 @@ public class Controladora implements Serializable{
 		}
 		else {
 			for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
-				if(u.getUsuario().equals(usuario) && u.getContrasena().equals(password)) {
+				if(u.getUsuario().equalsIgnoreCase(usuario) && u.getContrasena().equals(password)) {
 					result = u;
 				}
 			}
 		}
 		
 		return result;
+	}
+	
+	public boolean emptyProveedores()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM proveedores");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta == 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
 	}
 	
 	public boolean activarloadMatriz()
@@ -7141,16 +7268,19 @@ public boolean activarLoadPartida()
 		Connection c3 = null;
 		Connection c4 = null;
 		Connection c5 = null;
+		Connection c6 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
 		Statement s4 = null;
 		Statement s5 = null;
+		Statement s6 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
 		ResultSet r4 = null;
 		ResultSet r5 = null;
+		ResultSet r6 = null;
 		PreparedStatement p = null;
 		int i;
 		int idProducto = 0;
@@ -7167,6 +7297,8 @@ public boolean activarLoadPartida()
 		Estandar est = null;
 		ArrayList<Producto> productosPartida = new ArrayList<>();
 		Partida partidaRecuperada = new Partida();
+		int idProductorelacionado = 0;
+		//BigDecimal cantidadLong = 0;
 	
 		for (i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++)
 		{
@@ -7212,21 +7344,29 @@ public boolean activarLoadPartida()
 								cantproductoutilizadoid2 = r2.getInt(1);
 								idestandarrelacionado = r2.getInt(2);
 								cantidad = r2.getFloat(3);
-							
+								
+								c6 = con.conectar();
+								s6 = (Statement) c6.createStatement();
+								r6 = s6.executeQuery("SELECT producto FROM estandar WHERE idestandar = '"+idestandarrelacionado+"'");
+								while(r6.next())
+								{
+									idProductorelacionado = r6.getInt(1);
+								}
+								
 								c3 = con.conectar();
 								s3 = (Statement) c3.createStatement();
-								r3 = s3.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+								r3 = s3.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idProductorelacionado+"'");
 								while(r3.next())
 								{
 									nombre = r3.getString(1);
 									est = (Estandar) buscarProducto(nombre);
 									productosPartida.add(est);
 								}
-							
+								//cantidadLong = BigDecimal.valueOf(cantidad);
 								CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
 								Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
 								partidaRecuperada.agregarProductoUtilizado(cpu);
-								System.out.println("La clase de cantproductosutilizados: " + cpu.getProducto() + " " + cpu.getCantidad());
+								System.out.println("La clase de cantproductosutilizados: " + cpu.getProducto().getNombre() + " " + cpu.getCantidad());
 							
 							}
 					
@@ -7266,6 +7406,10 @@ public boolean activarLoadPartida()
 					if(c5!=null) {
 						c5.close();
 					}
+					
+					if(c6!=null) {
+						c6.close();
+					}
 				
 					if(s!=null) {
 						s.close();
@@ -7286,6 +7430,10 @@ public boolean activarLoadPartida()
 					if(s5!=null) {
 						s5.close();
 					}
+					
+					if(s6!=null) {
+						s6.close();
+					}
 				
 					if(r!=null) {
 						r.close();
@@ -7305,6 +7453,10 @@ public boolean activarLoadPartida()
 				
 					if(r5!=null) {
 						r5.close();
+					}
+					
+					if(r6!=null) {
+						r6.close();
 					}
 				
 				} catch (Exception e2) {
@@ -8780,6 +8932,8 @@ public void loadCategoriaEmpleado()
 						
 				}
 				
+				c10.close();
+				
 				c11 = con.conectar();
 				s11 = (Statement) c11.createStatement();
 				r11 = s11.executeQuery("SELECT * FROM pagosfacturacreditocliente WHERE factura = '"+idfactura+"'");
@@ -9367,6 +9521,53 @@ public void loadCategoriaEmpleado()
 
 	public void setMisUsuarios(ArrayList<Usuario> misUsuarios) {
 		this.misUsuarios = misUsuarios;
+	}
+
+
+
+	public void actualizarProveedorPorDefecto(String nombre) {
+		
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("UPDATE proveedores SET nombre = '"+nombre+"' WHERE idproveedores = 1");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+		
 	}
 	
 }
