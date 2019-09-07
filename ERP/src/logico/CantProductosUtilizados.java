@@ -1,5 +1,8 @@
 package logico;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class CantProductosUtilizados{
 	
 	private Producto producto;
@@ -9,6 +12,7 @@ public class CantProductosUtilizados{
 	private String nombre;
 	private float precioUnitario;
 	private float valor;
+	private String cantidadBig;
 	
 	public CantProductosUtilizados(Producto producto, float cantidad) {
 		super();
@@ -24,7 +28,8 @@ public class CantProductosUtilizados{
 		this.nombre = producto.getNombre();
 		this.precioUnitario = producto.getPrecio();
 		this.valor = cantidad * producto.getPrecio();
-		
+		DecimalFormat formatter = new DecimalFormat("0.00000");
+		this.cantidadBig = formatter.format(cantidad);
 	}
 
 	
@@ -76,6 +81,16 @@ public class CantProductosUtilizados{
 
 	public float getValor() {
 		return valor;
+	}
+
+
+	public String getCantidadBig() {
+		return cantidadBig;
+	}
+
+
+	public void setCantidadBig(String cantidadBig) {
+		this.cantidadBig = cantidadBig;
 	}
 	
 	

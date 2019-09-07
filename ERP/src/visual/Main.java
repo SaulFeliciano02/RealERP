@@ -112,6 +112,10 @@ public class Main extends Application{
 				try {
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
+					if(Controladora.getInstance().activarLoadInfoEmpresa())
+					{
+						Controladora.getInstance().loadInfoEmpresa();
+					}
 					if(Controladora.getInstance().activarLoadCliente())
 					{
 						Controladora.getInstance().loadCliente();
@@ -182,10 +186,6 @@ public class Main extends Application{
 					}
 					Controladora.getInstance().loadFactura();
 					Controladora.getInstance().loadPromocion();
-					if(Controladora.getInstance().activarLoadInfoEmpresa())
-					{
-						Controladora.getInstance().loadInfoEmpresa();
-					}
 					if(Controladora.getInstance().activarLoadImagenProducto())
 					{
 						Controladora.getInstance().loadImagenProducto();
@@ -373,6 +373,10 @@ public class Main extends Application{
 				try {
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
+					if(Controladora.getInstance().activarLoadInfoEmpresa())
+					{
+						Controladora.getInstance().loadInfoEmpresa();
+					}
 					if(Controladora.getInstance().activarLoadCliente())
 					{
 						Controladora.getInstance().loadCliente();
@@ -443,10 +447,6 @@ public class Main extends Application{
 					}
 					Controladora.getInstance().loadFactura();
 					Controladora.getInstance().loadPromocion();
-					if(Controladora.getInstance().activarLoadInfoEmpresa())
-					{
-						Controladora.getInstance().loadInfoEmpresa();
-					}
 					if(Controladora.getInstance().activarLoadImagenProducto())
 					{
 						Controladora.getInstance().loadImagenProducto();
