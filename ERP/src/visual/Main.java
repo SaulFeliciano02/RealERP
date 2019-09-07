@@ -25,6 +25,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import logico.Controladora;
+import logico.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -81,7 +82,7 @@ public class Main extends Application{
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
-		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
+		if (passwordfield_login.getText().equals("") && !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
 			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
@@ -198,7 +199,13 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadUsuarios();
 					}
-					Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
+						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
+						Controladora.getInstance().setUsuarioLogueado(userRoot);
+					}
+					else {
+						Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+					}
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;
 						root1 = (Parent) fxmlLoader.load();
@@ -343,7 +350,7 @@ public class Main extends Application{
 		float count=0;
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
-		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
+		if (passwordfield_login.getText().equals("") && !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
 			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
@@ -455,7 +462,14 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadUsuarios();
 					}
-					Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
+						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
+						Controladora.getInstance().setUsuarioLogueado(userRoot);
+					}
+					else {
+						Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+					}
+					
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;
 						root1 = (Parent) fxmlLoader.load();

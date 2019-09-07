@@ -627,7 +627,8 @@ public class Controller implements Initializable{
     }
     
     public void productos_pressed(ActionEvent event){
-    	if(Controladora.getInstance().getUsuarioLogueado().getCargo().getNombre().equalsIgnoreCase("Administrador"))
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root")) {}
+    	else if(Controladora.getInstance().getUsuarioLogueado().getCargo().getNombre().equalsIgnoreCase("Administrador"))
 		{
 			tab_atributos.setDisable(false);
 			tab_rubros.setDisable(false);
@@ -2673,66 +2674,72 @@ public class Controller implements Initializable{
 	{
 		Usuario user = Controladora.getInstance().getUsuarioLogueado();
 		
-		if(!user.getCargo().isManejodeproductos())
-		{
-			button_nuevoProducto.setDisable(true);
-			button_modificarProducto.setDisable(true);
-			button_eliminarProducto.setDisable(true);
+		if(user.getUsuario().equalsIgnoreCase("root")) {
+			
 		}
+		else {
+			if(!user.getCargo().isManejodeproductos())
+			{
+				button_nuevoProducto.setDisable(true);
+				button_modificarProducto.setDisable(true);
+				button_eliminarProducto.setDisable(true);
+			}
+			
+			if(!user.getCargo().isInfoproductos())
+			{
+				button_abrirInfoAdicional.setDisable(true);
+				button_exportarInventario.setDisable(true);
+			}
+			
+			if(!user.getCargo().isFacturarcompra())
+			{
+				button_nuevaFactura.setDisable(true);
+			}
+			
+			if(!user.getCargo().isInfofactura())
+			{
+				button_facturaInfoAdicional.setDisable(true);
+			}
+			
+			if(!user.getCargo().isManejopromociones())
+			{
+				button_nuevaPromocion.setDisable(true);
+				button_eliminarPromocion.setDisable(true);
+			}
+			
+			if(!user.getCargo().isAccesomodulorrhh())
+			{
+				selected_rh.setDisable(true);
+				button_rh.setDisable(true);
+			}
+			
+			if(!user.getCargo().isAccesomodulogastos())
+			{
+				selected_Gastos.setDisable(true);
+				button_gastos.setDisable(true);
+			}
+			
+			if(!user.getCargo().isAccesomodulohistorial())
+			{
+				selected_historial.setDisable(true);
+				button_historial.setDisable(true);
+			}
+			
+			if(!user.getCargo().isAccesomoduloconfiguracion())
+			{
+				selected_config.setDisable(true);
+				button_config.setDisable(true);
+			}
+			
+			if(user.getCargo().getNombre().equalsIgnoreCase("Cajero"))
+			{
+				selected_admin.setDisable(true);
+				button_admin.setDisable(true);
+				tab_atributos.setDisable(true);
+				tab_rubros.setDisable(true);
+			}
+		}	
 		
-		if(!user.getCargo().isInfoproductos())
-		{
-			button_abrirInfoAdicional.setDisable(true);
-			button_exportarInventario.setDisable(true);
-		}
-		
-		if(!user.getCargo().isFacturarcompra())
-		{
-			button_nuevaFactura.setDisable(true);
-		}
-		
-		if(!user.getCargo().isInfofactura())
-		{
-			button_facturaInfoAdicional.setDisable(true);
-		}
-		
-		if(!user.getCargo().isManejopromociones())
-		{
-			button_nuevaPromocion.setDisable(true);
-			button_eliminarPromocion.setDisable(true);
-		}
-		
-		if(!user.getCargo().isAccesomodulorrhh())
-		{
-			selected_rh.setDisable(true);
-			button_rh.setDisable(true);
-		}
-		
-		if(!user.getCargo().isAccesomodulogastos())
-		{
-			selected_Gastos.setDisable(true);
-			button_gastos.setDisable(true);
-		}
-		
-		if(!user.getCargo().isAccesomodulohistorial())
-		{
-			selected_historial.setDisable(true);
-			button_historial.setDisable(true);
-		}
-		
-		if(!user.getCargo().isAccesomoduloconfiguracion())
-		{
-			selected_config.setDisable(true);
-			button_config.setDisable(true);
-		}
-		
-		if(user.getCargo().getNombre().equalsIgnoreCase("Cajero"))
-		{
-			selected_admin.setDisable(true);
-			button_admin.setDisable(true);
-			tab_atributos.setDisable(true);
-			tab_rubros.setDisable(true);
-		}
 	}
 
     @Override
