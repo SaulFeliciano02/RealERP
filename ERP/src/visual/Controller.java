@@ -3510,7 +3510,20 @@ public class Controller implements Initializable{
     
     //Abre el titledpane de productos en el area de peticiones
     public void abrir_titledpane_busquedaProductosPeticiones(ActionEvent event) {
-    	fillProductList(null, "Peticion");
+    	ArrayList<Producto> productos = new ArrayList<>();
+    	for (Estandar prod : Controladora.getInstance().getMisProductosEstandar()) {
+			if(!prod.isBorrado() && !prod.isFabricado())
+			{
+				productos.add(prod);
+			}
+		}
+    	for (Kit kit : Controladora.getInstance().getMisProductosKit()) {
+    		if(!kit.isBorrado())
+    		{
+    			productos.add(kit);
+    		}
+		}
+    	fillProductList(productos, "Peticion");
     	titledpane_busquedaProductosPeticiones.setVisible(true);
     }
     
@@ -3532,7 +3545,12 @@ public class Controller implements Initializable{
     
     //Abre el titledpane de proveedores en el area de peticiones
     public void abrir_infoBusquedaProveedoresPeticiones(ActionEvent event) {
-    	fillProveedorList(null, "Peticion");
+    	ArrayList<Proveedores> prov = Controladora.getInstance().getMisProveedores();
+    	if(prov.get(0).getCodigo().equalsIgnoreCase("00"))
+    	{
+    		prov.remove(0);
+    	}
+    	fillProveedorList(prov, "Peticion");
     	titledpane_busquedaProveedorPeticiones.setVisible(true);
     }
   //Cierra el titledpane de proveedores en el area de peticiones
