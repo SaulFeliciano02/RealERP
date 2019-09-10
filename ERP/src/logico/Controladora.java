@@ -1451,7 +1451,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo, usuariofacturador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1477,6 +1477,7 @@ public class Controladora implements Serializable{
 				p.setInt(8, factura.getCantcopias());
 				p.setString(9, factura.getEstado());
 				p.setString(10, factura.getCodigo());
+				p.setInt(11, getMisUsuarios().indexOf(factura.getUsuarioFacturador())+1);
 			}
 			
 			
@@ -3802,6 +3803,16 @@ public class Controladora implements Serializable{
 			}
 		}
 		return costoManoObra;
+	}
+	
+	public Peticion buscarPeticion(String codigo) {
+		Peticion result = null;
+		for(Peticion peticion : Controladora.getInstance().getMisPeticiones()) {
+			if(peticion.getCodigo().equalsIgnoreCase(codigo)) {
+				result = peticion;
+			}
+		}
+		return result;
 	}
 	
 	public boolean validarUsuario(String usuario, String password) {
@@ -8644,6 +8655,42 @@ public void loadCategoriaEmpleado()
 		}
 	}
 	
+	//Funcion que se encarga de sumar la existencia actual de un producto kit cuando se le hace una modificacion a este.
+		public void sumarExistenciaActualKit(float cantidadSumar, int indiceProducto) {
+			Conexion con = new Conexion();
+			Connection cSQL = null;
+			Statement sSQL = null;
+			ResultSet r = null;
+			PreparedStatement p = null;
+			try {
+				cSQL = con.conectar();
+				sSQL = (Statement) cSQL.createStatement();
+				p = (PreparedStatement)
+						cSQL.prepareStatement("UPDATE kit SET exisactual = '"+cantidadSumar+"' WHERE idkit = '"+indiceProducto+"'");
+				p.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if(cSQL!=null) {
+						cSQL.close();
+					}
+					
+					if(sSQL!=null) {
+						sSQL.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+				}
+				catch(Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+	
 	//Funcion que se encarga de sumar la existencia actual de un producto cuando se le hace una modificacion a este.
 	public void sumarExistenciaActual(float cantidadSumar, int indiceProducto) {
 		Conexion con = new Conexion();
@@ -8679,6 +8726,81 @@ public void loadCategoriaEmpleado()
 			}
 		}
 	}
+	
+	//Funcion que se encarga de modificar datos de una petición.
+	public void modificarEstadoPeticion(String estado, String metodo, String codigo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE peticiones SET estado = '"+estado+"' WHERE codigo = '"+codigo+"'");
+			p.executeUpdate();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE peticiones SET metodopago = '"+metodo+"' WHERE codigo = '"+codigo+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+						sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	//Funcion que se encarga de sumar la existencia actual de un producto cuando se le hace una modificacion a este.
+		public void modificarProveedorSaldo(float saldo, int indiceProveedor) {
+			Conexion con = new Conexion();
+			Connection cSQL = null;
+			Statement sSQL = null;
+			ResultSet r = null;
+			PreparedStatement p = null;
+			try {
+				cSQL = con.conectar();
+				sSQL = (Statement) cSQL.createStatement();
+				p = (PreparedStatement)
+						cSQL.prepareStatement("UPDATE proveedores SET saldo = '"+saldo+"' WHERE idproveedores = '"+indiceProveedor+"'");
+				p.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if(cSQL!=null) {
+						cSQL.close();
+					}
+					
+					if(sSQL!=null) {
+							sSQL.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+				}
+				catch(Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
 	
 	//Funcion que le asigna true al valor de borrado al producto
 	public void borrarProducto(int indiceProducto) {
@@ -8910,6 +9032,7 @@ public void loadCategoriaEmpleado()
 		Connection c9 = null;
 		Connection c10 = null;
 		Connection c11 = null;
+		Connection c12 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -8921,6 +9044,7 @@ public void loadCategoriaEmpleado()
 		Statement s9 = null;
 		Statement s10 = null;
 		Statement s11 = null;
+		Statement s12 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
@@ -8932,6 +9056,7 @@ public void loadCategoriaEmpleado()
 		ResultSet r9 = null;
 		ResultSet r10 = null;
 		ResultSet r11 = null;
+		ResultSet r12 = null;
 		PreparedStatement p = null;
 		int idfactura = 0;
 		int idcliente = 0;
@@ -8975,7 +9100,8 @@ public void loadCategoriaEmpleado()
 		float porcientopenalizacion = 0;
 		float montopagado = 0;
 		Date fechaDelPago = null;
-		
+		int idProductoDelEstandar = 0;
+		int idUsuario = 0;
 		try {
 			
 			//Recuperar precios
@@ -9000,7 +9126,7 @@ public void loadCategoriaEmpleado()
 				cantcopias = r.getInt(10);
 				estado = r.getString(11);
 				codigo = r.getString(12);
-				
+				idUsuario = r.getInt(13);
 				if(idcliente>0)
 				{
 					cli = Controladora.getInstance().getMisClientes().get(idcliente-1);
@@ -9024,9 +9150,20 @@ public void loadCategoriaEmpleado()
 						idestandarrelacionado = r3.getInt(2);
 						cantidad = r3.getFloat(3);
 						
+						c12 = con.conectar();
+						s12 = (Statement) c12.createStatement();
+						r12 = s12.executeQuery("SELECT producto FROM estandar WHERE idestandar = '"+idestandarrelacionado+"'");
+						while(r12.next())
+						{
+							idProductoDelEstandar = r12.getInt(1);
+						}
+
+						c12.close();
+
+						
 						c4 = con.conectar();
 						s4 = (Statement) c4.createStatement();
-						r4 = s4.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+						r4 = s4.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idProductoDelEstandar+"'");
 						while(r4.next())
 						{
 							nombre = r4.getString(1);
@@ -9136,10 +9273,19 @@ public void loadCategoriaEmpleado()
 				fact.setAdeudado(adeudado);
 				fact.setPlazoPagoDias(plazopagodias);
 				fact.setPorcientoDescuento(porcientodescuento);
-				fact.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				Usuario usu = Controladora.getInstance().getMisUsuarios().get(idUsuario-1);
+				fact.setUsuarioFacturador(usu);
+
+				if(fechalimitedescuento != null)
+				{
+					fact.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				}
 				fact.setPorcientoPenalizacion(porcientopenalizacion);
 				fact.setMontoDelUltimoPago(montopagado);
-				fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
+				if(fechaDelPago != null)
+				{
+					fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
+				}
 				getMisFacturas().add(fact);
 				cantProdFact.clear();
 				cantKitFact.clear();

@@ -30,6 +30,17 @@ public class Factura {
 	private String codigo;
 	private float montoDelUltimoPago;
 	private LocalDate fechaDelUltimoPago;
+	private Usuario usuarioFacturador;
+	private String nombreUsuarioFact;
+	
+	public Usuario getUsuarioFacturador() {
+		return usuarioFacturador;
+	}
+
+	public void setUsuarioFacturador(Usuario usuarioFacturador) {
+		this.usuarioFacturador = usuarioFacturador;
+		this.setNombreUsuarioFact(usuarioFacturador.getUsuario());
+	}
 	
 	public float getMontoDelUltimoPago() {
 		return montoDelUltimoPago;
@@ -343,5 +354,11 @@ public class Factura {
 		this.codigo = codigo;
 	}
 	
-	
+	public String getNombreUsuarioFact() {
+		return nombreUsuarioFact;
+	}
+
+	public void setNombreUsuarioFact(String nombreUsuarioFact) {
+		this.nombreUsuarioFact = nombreUsuarioFact;
+	}
 }

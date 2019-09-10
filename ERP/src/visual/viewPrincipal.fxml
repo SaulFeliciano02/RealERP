@@ -829,7 +829,7 @@
                                                                                     </Button>
                                                                                  </children>
                                                                               </HBox>
-                                                                              <TableView fx:id="tableview_peticionList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                              <TableView fx:id="tableview_peticionList" onMouseClicked="#activarAdministrarPeticion" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                 <columns>
                                                                                   <TableColumn fx:id="tablecolumn_peticionCodigo" prefWidth="75.0" text="Código" />
                                                                                   <TableColumn fx:id="tablecolumn_peticionProveedor" prefWidth="75.0" text="Proveedor" />
@@ -854,7 +854,7 @@
                                                                                           <Insets left="10.0" />
                                                                                        </HBox.margin>
                                                                                     </Button>
-                                                                                    <Button mnemonicParsing="false" text="Administrar petición">
+                                                                                    <Button fx:id="button_peticionAdministrar" disable="true" mnemonicParsing="false" onAction="#openAdministrarPeticion" text="Administrar petición">
                                                                                        <HBox.margin>
                                                                                           <Insets left="10.0" />
                                                                                        </HBox.margin>
@@ -898,7 +898,7 @@
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
                                                                                                 </TextField>
-                                                                                                <Button mnemonicParsing="false" onAction="#abrir_titledpane_busquedaProductosPeticiones" prefHeight="26.0" prefWidth="71.0" text="Buscar">
+                                                                                                <Button fx:id="button_peticionBuscarProducto" mnemonicParsing="false" onAction="#abrir_titledpane_busquedaProductosPeticiones" prefHeight="26.0" prefWidth="71.0" text="Buscar">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="5.0" right="5.0" />
                                                                                                    </HBox.margin>
@@ -920,7 +920,7 @@
                                                                                                       <Insets left="10.0" />
                                                                                                    </HBox.margin>
                                                                                                 </TextField>
-                                                                                                <Button mnemonicParsing="false" onAction="#abrir_infoBusquedaProveedoresPeticiones" prefHeight="26.0" prefWidth="71.0" text="Buscar">
+                                                                                                <Button fx:id="button_peticionBuscarProveedor" mnemonicParsing="false" onAction="#abrir_infoBusquedaProveedoresPeticiones" prefHeight="26.0" prefWidth="71.0" text="Buscar">
                                                                                                    <HBox.margin>
                                                                                                       <Insets left="5.0" right="5.0" />
                                                                                                    </HBox.margin>

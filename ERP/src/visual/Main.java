@@ -185,6 +185,10 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadPromedioGananciaAnual();
 					}
+					if(Controladora.getInstance().activarLoadUsuarios())
+					{
+						Controladora.getInstance().loadUsuarios();
+					}
 					Controladora.getInstance().loadFactura();
 					Controladora.getInstance().loadPromocion();
 					if(Controladora.getInstance().activarLoadImagenProducto())
@@ -194,10 +198,6 @@ public class Main extends Application{
 					if(Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
 					{
 						Controladora.getInstance().loadFacturaCreditoCliente();
-					}
-					if(Controladora.getInstance().activarLoadUsuarios())
-					{
-						Controladora.getInstance().loadUsuarios();
 					}
 					if(Controladora.getInstance().activarLoadPeticiones())
 					{
@@ -456,15 +456,15 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadPromedioGananciaAnual();
 					}
+					if(Controladora.getInstance().activarLoadUsuarios())
+					{
+						Controladora.getInstance().loadUsuarios();
+					}
 					Controladora.getInstance().loadFactura();
 					Controladora.getInstance().loadPromocion();
 					if(Controladora.getInstance().activarLoadImagenProducto())
 					{
 						Controladora.getInstance().loadImagenProducto();
-					}
-					if(Controladora.getInstance().activarLoadUsuarios())
-					{
-						Controladora.getInstance().loadUsuarios();
 					}
 					if(Controladora.getInstance().activarLoadPeticiones())
 					{
