@@ -123,8 +123,16 @@ public class Controladora implements Serializable{
 	private float ingresosVentasPagadas;
 	private float ingresosVentasPorPagar;
 	private float ingresoTotal;
-	private float gananciaTotal;
+	private float gananciasTotal;
 	
+	public float getGananciasTotal() {
+		return gananciasTotal;
+	}
+
+	public void setGananciasTotal(float gananciasTotal) {
+		this.gananciasTotal = gananciasTotal;
+	}
+
 	private Empresa miEmpresa;
 	
 	private float ventaPromedioMensual;
@@ -1463,10 +1471,11 @@ public class Controladora implements Serializable{
 				p.setInt(9, factura.getCantcopias());
 				p.setString(10, factura.getEstado());
 				p.setString(11, factura.getCodigo());
+				p.setInt(12, getMisUsuarios().indexOf(factura.getUsuarioFacturador())+1);
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo, usuariofacturador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
@@ -9114,6 +9123,9 @@ public void loadCategoriaEmpleado()
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
 			{
+				cantProdFact = new ArrayList<>();
+				cantKitFact = new ArrayList<>();
+				serviciosFact = new ArrayList<>();
 				idfactura = r.getInt(1);
 				idcliente = r.getInt(2);
 				montoTotal = r.getFloat(3);
@@ -9173,6 +9185,7 @@ public void loadCategoriaEmpleado()
 						s4.close();
 						r4.close();
 						CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
+						System.out.println("CantProductosUtilizados: " + cpu.getNombre() + " " + cpu.getCantidad());
 						cantProdFact.add(cpu);
 						Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
 					}
@@ -9213,6 +9226,7 @@ public void loadCategoriaEmpleado()
 							System.out.println(nombrekit);
 							kit = (Kit) buscarProducto(nombrekit);
 							CantKitsUtilizados cku = new CantKitsUtilizados(kit, cantidad);
+							System.out.println("CantKitsUtilizados: " + cku.getNombre() + " " + cku.getCantidad());
 							cantKitFact.add(cku);
 							Controladora.getInstance().getMisCantKitsUtilizados().add(cku);
 							c7.close();
@@ -9235,6 +9249,7 @@ public void loadCategoriaEmpleado()
 						
 					serv = Controladora.getInstance().getMisProductosServicio().get(idServ-1);
 					ServicioUtilizado servutil = new ServicioUtilizado(serv); 
+					System.out.println("ServicioUtilizado: " + servutil.getNombre());
 					serviciosFact.add(servutil);
 				}
 				
@@ -9266,6 +9281,9 @@ public void loadCategoriaEmpleado()
 				}
 				
 				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias, estado);
+				System.out.println("cantProdFact size: " + cantProdFact.size());
+				System.out.println("cantKitFact size: " + cantKitFact.size());
+				System.out.println("serviciosFact size: " + serviciosFact.size());
 				//LocalDateTime fh = LocalDateTime.of(LocalDate.parse(fecha.toString()), LocalTime.parse(hora.toString())); 
 				fact.setFecha(LocalDate.parse(fecha.toString()));
 				fact.setHora(LocalTime.parse(hora.toString()));
@@ -9287,9 +9305,9 @@ public void loadCategoriaEmpleado()
 					fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
 				}
 				getMisFacturas().add(fact);
-				cantProdFact.clear();
+				/*cantProdFact.clear();
 				cantKitFact.clear();
-				serviciosFact.clear();
+				serviciosFact.clear();*/
 				for(CantProductosUtilizados cant : fact.getProdFacturados()) {
 					System.out.println("El nombre del producto es: " + cant.getNombre());
 				}
@@ -9391,6 +9409,10 @@ public void loadCategoriaEmpleado()
 				}
 			}
 			
+			for (Factura fac : misFacturas) {
+				
+				System.out.println("cantProdFact size2: " + fac.getProdFacturados().size());
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -9570,9 +9592,11 @@ public void loadCategoriaEmpleado()
 		
 		if(misFacturas.size() > 0)
 		{
+			System.out.println("Entró a ganancia ventas pagadas porque misFacturas.size() es mayor a 0");
 			for (Factura fac : misFacturas) {
 				gananciaVentasPagadas += fac.calcularGanancia();
 			}
+			System.out.println("Ganancias pagadas: " + getGananciaVentasPagadas());
 		}
 	}
 	
@@ -9627,7 +9651,11 @@ public void loadCategoriaEmpleado()
 	
 	public void calcularGanaciaTotal()
 	{
+		gananciasTotal = 0;
 		
+		for (Factura fac : misFacturas) {
+			gananciasTotal += fac.calcularGananciaIncluyendoDeuda();
+		}
 	}
 
 	public float getIngresoTotal() {
@@ -9897,6 +9925,20 @@ public void loadCategoriaEmpleado()
 		}
 		
 		
+	}
+	
+	public float calculoGananciasTotalReporte()
+	{
+		gananciasTotal = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				gananciasTotal += fac.calcularGananciaIncluyendoDeuda();
+			}
+		}
+		
+		return gananciasTotal;
 	}
 	
 }
