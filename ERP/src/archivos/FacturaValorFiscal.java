@@ -67,7 +67,7 @@ public class FacturaValorFiscal {
 		
 		document.open();
 		
-		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11;
+		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18;
 		List list, list2;
 		float itbis = 0;
 		float subtotal = 0;
@@ -268,7 +268,37 @@ public class FacturaValorFiscal {
 	            p11.add(new Chunk(glue));
 	            p11.add("TOTAL:  " + Math.round(subtotal + descuentototal + itbistotal));
 	            document.add(p11);
-	            
+	            if(factura.getCantcopias() > 1)
+	            {
+	            	p12 = new Paragraph();
+		            p12.add(new Chunk(glue));
+		            p12.add("");
+		            document.add(p12);
+		            p13 = new Paragraph();
+		            p13.add(new Chunk(glue));
+		            p13.add("");
+		            document.add(p13);
+		            p14 = new Paragraph();
+		            p14.add(new Chunk(glue));
+		            p14.add("");
+		            document.add(p14);
+		            p15 = new Paragraph();
+		            p15.add(new Chunk(glue));
+		            p15.add("");
+		            document.add(p15);
+		            p16 = new Paragraph();
+		            p16.add(new Chunk(glue));
+		            p16.add("Copias: ");
+		            document.add(p16);
+		            p17 = new Paragraph();
+		            p17.add(new Chunk(glue));
+		            p17.add("Original: cliente");
+		            document.add(p17);
+		            p18 = new Paragraph();
+		            p18.add(new Chunk(glue));
+		            p18.add("Copia: vendedor");
+		            document.add(p18);
+	            }
 		        document.close();
 		        writer.close();
 		        

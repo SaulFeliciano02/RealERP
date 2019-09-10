@@ -235,7 +235,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Peticion, String> tablecolumn_peticionEstado;
     @FXML private TableColumn<Peticion, LocalDate> tablecolumn_peticionFecha;
     @FXML private TableView<Peticion> tableview_peticionList;
+    @FXML private Button button_peticionAdministrar;
+    private boolean administrarPeticion = false;
     
+    @FXML private Button button_peticionBuscarProducto;
+    @FXML private Button button_peticionBuscarProveedor;
     @FXML private TextField textfield_peticionProducto;
     @FXML private TextField textfield_peticionProveedor;
     @FXML private ComboBox<String> combobox_peticionProveedor;
@@ -2556,6 +2560,44 @@ public class Controller implements Initializable{
     	textfield_peticionMonto.setText(Float.toString(producto.getCosto()*spinner_peticionCantidad.getValue()));
     }
     
+    public void activarAdministrarPeticion(MouseEvent event) {
+    	if(!tableview_peticionList.getSelectionModel().isEmpty()) {
+    		button_peticionAdministrar.setDisable(false);
+    	}
+    }
+    
+    public void openAdministrarPeticion(ActionEvent event) {
+    	Alert a = new Alert(AlertType.WARNING);
+    	Peticion peticion = tableview_peticionList.getSelectionModel().getSelectedItem();
+    	if(peticion.getEstado().equalsIgnoreCase("Aceptada")) {
+    		a.setContentText("Esta peticion ya ha sido aceptada");
+    		a.show();
+    	}
+    	else if(peticion.getEstado().equalsIgnoreCase("Declinada")) {
+    		a.setContentText("Esta peticion ya ha sido declinada");
+    		a.show();
+    	}
+    	else {
+    		textfield_peticionProducto.setText(peticion.getProductoNombre());
+    		textfield_peticionProveedor.setText(peticion.getProveedorCodigo());
+    		spinner_peticionCantidad.getValueFactory().setValue(peticion.getCantidad());
+    		textfield_peticionMonto.setText(Float.toString(peticion.getMonto()));
+    		combobox_peticionEstado.setValue(peticion.getEstado());
+    	
+    		radiobutton_peticionEfectivo.setDisable(false);
+    		radiobutton_peticionCredito.setDisable(false);
+    		radiobutton_peticionTarjeta.setDisable(false);
+    		combobox_peticionEstado.setDisable(false);
+    	
+    		button_peticionBuscarProducto.setDisable(true);
+    		button_peticionBuscarProveedor.setDisable(true);
+    		administrarPeticion = true;
+    	
+    		abrir_titledpaneNuevaPeticion(event);
+    	}
+    	
+    }
+    
     public void guardarPeticion(ActionEvent event) {
     	boolean canRegister = true;
     	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
@@ -2587,43 +2629,105 @@ public class Controller implements Initializable{
     	
     	
     	if(canRegister) {
-    		String codigo = "00000" + Controladora.getInstance().getMisPeticiones().size()+1;
-        	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(textfield_peticionProveedor.getText());
-        	
-        	int cantidad = spinner_peticionCantidad.getValue();
-        	float monto = Float.parseFloat(textfield_peticionMonto.getText());
-        	String metodoPago = "";
-        	if(radiobutton_peticionEfectivo.isSelected()) {
-        		metodoPago = "Efectivo";
-        	}
-        	else if(radiobutton_peticionCredito.isSelected()) {
-        		metodoPago = "Credito";
-        	}
-        	else if(radiobutton_peticionTarjeta.isSelected()) {
-        		metodoPago = "Tarjeta";
-        	}
-        	String estado = combobox_peticionEstado.getValue();
-        	LocalDate fecha = LocalDate.now();
-        	Peticion peticion = new Peticion(codigo, proveedor, producto, cantidad, monto, metodoPago, estado, fecha);
-        	Controladora.getInstance().getMisPeticiones().add(peticion);
-        	
-        	textfield_peticionProducto.setText("");
-        	textfield_peticionProveedor.setText("");;
-        	spinner_peticionCantidad.getValueFactory().setValue(0);
-        	textfield_peticionMonto.setText("");
-        	combobox_peticionEstado.getSelectionModel().clearSelection();
-        	radiobutton_peticionEfectivo.setSelected(true);
-        	radiobutton_peticionCredito.setSelected(false);
-        	radiobutton_peticionTarjeta.setSelected(false);
-        	
-        	textfield_peticionProveedor.setDisable(true);
-        	spinner_peticionCantidad.setDisable(true);
-        	textfield_peticionMonto.setDisable(true);
-        	combobox_peticionEstado.setDisable(true);
-        	radiobutton_peticionEfectivo.setDisable(true);
-        	radiobutton_peticionCredito.setDisable(true);
-        	radiobutton_peticionTarjeta.setDisable(true);
-        	
+    		String metodoPago = "";
+    		if(administrarPeticion) {
+    			if(radiobutton_peticionEfectivo.isSelected()) {
+            		metodoPago = "Efectivo";
+            	}
+            	else if(radiobutton_peticionCredito.isSelected()) {
+            		metodoPago = "Credito";
+            	}
+            	else if(radiobutton_peticionTarjeta.isSelected()) {
+            		metodoPago = "Tarjeta";
+            	}
+    			if(combobox_peticionEstado.getValue().equalsIgnoreCase("Aceptada")) {
+    				Producto productoSuma = tableview_peticionList.getSelectionModel().getSelectedItem().getProducto();
+    				int indiceProducto = Controladora.getInstance().getMisProductos().indexOf(productoSuma);
+    				if(productoSuma.getTipoProducto().equalsIgnoreCase("Estandar") || productoSuma.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    					Estandar productoSumaEstandar = (Estandar) productoSuma;
+    					int indiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoSumaEstandar);
+    					Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).setExistenciaActual(
+    							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual() + spinner_peticionCantidad.getValue());
+    					Controladora.getInstance().sumarExistenciaActual(
+    							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual(), indiceProductoEstandar+1);
+    				}
+    				else if(productoSuma.getTipoProducto().equalsIgnoreCase("Kit")) {
+    					Kit productoSumakit = (Kit) productoSuma;
+    					int indiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(productoSumakit);
+    					Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).setExistenciaActual(
+    						Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual() + spinner_peticionCantidad.getValue());
+    					Controladora.getInstance().sumarExistenciaActualKit(
+    							Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual(), indiceProductoKit);
+    				}
+    				Peticion peticionModificar = tableview_peticionList.getSelectionModel().getSelectedItem();
+    				int indicePeticion = Controladora.getInstance().getMisPeticiones().indexOf(peticionModificar);
+    				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setEstado("Aceptada");
+    				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setMetodoPago(metodoPago);
+    				Controladora.getInstance().modificarEstadoPeticion("Aceptada", metodoPago, peticionModificar.getCodigo());
+    				
+    				Proveedores proveedor = peticionModificar.getProveedor();
+    				int indiceProveedor = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+    				Controladora.getInstance().getMisProveedores().get(indiceProveedor).setSaldo(
+    						Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo() + peticionModificar.getMonto());
+    				Controladora.getInstance().modificarProveedorSaldo(Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo(), indiceProveedor+1);
+    			}
+    			else if(combobox_peticionEstado.getValue().equalsIgnoreCase("Rechazada")) {
+    				Alert alert = new Alert(AlertType.CONFIRMATION, "Desea declinar esta petición?", ButtonType.YES, ButtonType.NO);
+    		    	alert.showAndWait();
+    		    	if(alert.getResult() == ButtonType.YES) {
+    		    		Peticion peticionModificar = tableview_peticionList.getSelectionModel().getSelectedItem();
+        				int indicePeticion = Controladora.getInstance().getMisPeticiones().indexOf(peticionModificar);
+        				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setEstado("Declinada");
+        				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setMetodoPago(metodoPago);
+        				Controladora.getInstance().modificarEstadoPeticion("Declinada", metodoPago, peticionModificar.getCodigo());
+    		    	}
+    			}
+    			fillProductList(null, "");
+    			fillProveedorList(null, "");
+    			fillProveedorList(null, "Peticion");
+    			cerrar_titledpaneNuevaPeticion(event);
+    			administrarPeticion = false;
+    			
+    		}
+    		else {
+    			String codigo = "00000" + Controladora.getInstance().getMisPeticiones().size()+1;
+            	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(textfield_peticionProveedor.getText());
+            	
+            	int cantidad = spinner_peticionCantidad.getValue();
+            	float monto = Float.parseFloat(textfield_peticionMonto.getText());
+            	
+            	if(radiobutton_peticionEfectivo.isSelected()) {
+            		metodoPago = "Efectivo";
+            	}
+            	else if(radiobutton_peticionCredito.isSelected()) {
+            		metodoPago = "Credito";
+            	}
+            	else if(radiobutton_peticionTarjeta.isSelected()) {
+            		metodoPago = "Tarjeta";
+            	}
+            	String estado = combobox_peticionEstado.getValue();
+            	LocalDate fecha = LocalDate.now();
+            	Peticion peticion = new Peticion(codigo, proveedor, producto, cantidad, monto, metodoPago, estado, fecha);
+            	Controladora.getInstance().getMisPeticiones().add(peticion);
+            	Controladora.getInstance().guardarPeticionSQL(peticion);
+            	
+            	textfield_peticionProducto.setText("");
+            	textfield_peticionProveedor.setText("");;
+            	spinner_peticionCantidad.getValueFactory().setValue(0);
+            	textfield_peticionMonto.setText("");
+            	combobox_peticionEstado.getSelectionModel().clearSelection();
+            	radiobutton_peticionEfectivo.setSelected(true);
+            	radiobutton_peticionCredito.setSelected(false);
+            	radiobutton_peticionTarjeta.setSelected(false);
+            	
+            	textfield_peticionProveedor.setDisable(true);
+            	spinner_peticionCantidad.setDisable(true);
+            	textfield_peticionMonto.setDisable(true);
+            	combobox_peticionEstado.setDisable(true);
+            	radiobutton_peticionEfectivo.setDisable(true);
+            	radiobutton_peticionCredito.setDisable(true);
+            	radiobutton_peticionTarjeta.setDisable(true);
+    		}        	
         	fillPeticion();
     	}
     }
@@ -2826,7 +2930,8 @@ public class Controller implements Initializable{
     	fillReporteTotalTransacciones();
     	
     	//Seteando peticiones
-    	//setPeticiones();
+    	setPeticiones();
+    	fillPeticion();
     	
     	//Seteando usuarios
     	fillCargoUsuario();
@@ -2981,6 +3086,10 @@ public class Controller implements Initializable{
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
     		data.addAll(Controladora.getInstance().getMisProveedores());
+    		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
+    		{
+    			data.remove(0);
+    		}
     		if(data.size() > 1)
     		{
     			if(data.get(0).getCodigo().equalsIgnoreCase(data.get(1).getCodigo()))
@@ -3265,7 +3374,8 @@ public class Controller implements Initializable{
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {
-    	if(!tableview_productList.getSelectionModel().isEmpty() && Controladora.getInstance().getUsuarioLogueado().getCargo().isInfoproductos()) {
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root")) {}
+    	else if(!tableview_productList.getSelectionModel().isEmpty() && Controladora.getInstance().getUsuarioLogueado().getCargo().isInfoproductos()) {
     		button_abrirInfoAdicional.setDisable(false);
     	}
     }
@@ -3283,7 +3393,7 @@ public class Controller implements Initializable{
     	tablecolumn_facturaTotalPagar.setCellValueFactory(new PropertyValueFactory<>("montoTotal"));
     	tablecolumn_facturaRecibido.setCellValueFactory(new PropertyValueFactory<>("montoRecibido"));
     	tablecolumn_facturaCambio.setCellValueFactory(new PropertyValueFactory<>("cambio"));
-    	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("clienteCodigo"));
+    	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("nombreUsuarioFact"));
     	tableview_facturaList.setItems(data);
     	tableview_facturaList.refresh();
     }
@@ -3506,6 +3616,18 @@ public class Controller implements Initializable{
     
     public void cerrar_titledpaneNuevaPeticion(ActionEvent event) {
     	titledPane_nuevaPeticion.setVisible(false);
+    	if(button_peticionBuscarProducto.isDisable() && button_peticionBuscarProveedor.isDisable()){
+    		textfield_peticionProducto.setText("");
+        	textfield_peticionProveedor.setText("");;
+        	spinner_peticionCantidad.getValueFactory().setValue(0);
+        	textfield_peticionMonto.setText("");
+        	combobox_peticionEstado.getSelectionModel().clearSelection();
+        	radiobutton_peticionEfectivo.setSelected(true);
+        	radiobutton_peticionCredito.setSelected(false);
+        	radiobutton_peticionTarjeta.setSelected(false);
+        	button_peticionBuscarProducto.setDisable(false);
+        	button_peticionBuscarProveedor.setDisable(false);
+    	}
     }
     
     //Abre el titledpane de productos en el area de peticiones
