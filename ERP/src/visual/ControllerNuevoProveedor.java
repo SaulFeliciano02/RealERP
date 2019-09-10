@@ -94,6 +94,7 @@ public class ControllerNuevoProveedor implements Initializable{
 		boolean isEmpty = false;
 		boolean validRegister = true;
 		Alert a = new Alert(AlertType.NONE); 
+		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
 		String nombrerubro = textfield_rubroProveedor.getText();
 		Rubro rubro = null;
 		String codigo = textfield_codigoProveedor.getText();
@@ -127,6 +128,7 @@ public class ControllerNuevoProveedor implements Initializable{
 		if(validRegister) {
 			Proveedores proveedor = new Proveedores(codigo, nombre, telefono, direccion, correo, rnc, rubro, sitioweb);
 			Controladora.getInstance().addProveedor(proveedor);
+			success.showAndWait();
 			textfield_codigoProveedor.setText("");
 			textfield_nombreProveedor.setText("");
 			textfield_telefonoProveedor.setText("");

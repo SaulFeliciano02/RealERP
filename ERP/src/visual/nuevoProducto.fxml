@@ -535,7 +535,7 @@
                                           <HBox prefHeight="51.0" prefWidth="230.0">
                                              <children>
                                                 <Label text="Cantidad:" />
-                                                <TextField fx:id="textfield_cantidadComb" prefHeight="26.0" prefWidth="129.0">
+                                                <TextField fx:id="textfield_cantidadComb" onKeyTyped="#numericFieldPressed" prefHeight="26.0" prefWidth="129.0">
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
                                                    </HBox.margin>

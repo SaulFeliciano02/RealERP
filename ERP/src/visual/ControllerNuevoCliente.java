@@ -15,10 +15,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -113,6 +115,8 @@ public class ControllerNuevoCliente implements Initializable {
 	
 	/**AQUI ESTA EL ASUNTO DE LAS TABLEVIEW**/
 	public void guardarCliente(ActionEvent event) {
+		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
+		success.showAndWait();
 		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
 				(java.sql.Date.valueOf(datepicker_cumpleCliente.getValue())), textfield_rncCliente.getText());
 		textfield_codigoCliente.setText("");

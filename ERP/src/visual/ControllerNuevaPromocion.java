@@ -170,6 +170,7 @@ public class ControllerNuevaPromocion implements Initializable{
     public void guardarPromocion(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	a.setAlertType(AlertType.ERROR);
+    	Alert success = new Alert(AlertType.INFORMATION, "La promoción ha sido guardada exitosamente.");
     	boolean canRegister = true;
     	String nombre = textfield_promocionNombre.getText();
     	int porciento = Integer.parseInt(textfield_promocionPorCiento.getText());
@@ -243,6 +244,7 @@ public class ControllerNuevaPromocion implements Initializable{
         	for(Producto p : promocion.getProductos()) {
         		Controladora.getInstance().guardarPromoProductoSQL(p, promocion);
         	}
+        	success.showAndWait();
         	
         	listview_promocionSeleccionados.getItems().clear();
         	listview_promocionSeleccionados.refresh();
