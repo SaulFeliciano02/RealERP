@@ -187,6 +187,38 @@ public class FacturaDeConsumo {
             p11.add(new Chunk(glue));
             p11.add("TOTAL:  " + Math.round(subtotal + descuentototal + itbistotal));
             document.add(p11);
+            if(factura.getCantcopias() > 1)
+            {
+            	Paragraph p12 = new Paragraph();
+                p12.add(new Chunk(glue));
+                p12.add("");
+                document.add(p12);
+                Paragraph p13 = new Paragraph();
+                p13.add(new Chunk(glue));
+                p13.add("");
+                document.add(p13);
+                Paragraph p14 = new Paragraph();
+                p14.add(new Chunk(glue));
+                p14.add("");
+                document.add(p14);
+                Paragraph p15 = new Paragraph();
+                p15.add(new Chunk(glue));
+                p15.add("");
+                document.add(p15);
+                Paragraph p16 = new Paragraph();
+                p16.add(new Chunk(glue));
+                p16.add("Copias: ");
+                document.add(p16);
+                Paragraph p17 = new Paragraph();
+                p17.add(new Chunk(glue));
+                p17.add("Original: cliente");
+                document.add(p17);
+                Paragraph p18 = new Paragraph();
+                p18.add(new Chunk(glue));
+                p18.add("Copia: vendedor");
+                document.add(p18);
+            }
+            
             
 	        document.close();
 	        writer.close();

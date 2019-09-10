@@ -519,7 +519,7 @@ public class ControllerNuevaFactura implements Initializable{
     		montoRecibido = Float.parseFloat(textfield_pagorecibido.getText());
     		
     		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, 0, cliente, tipoFactura, cantcopias, estado, adeudado, plazoPagoDias, porcientoDescuento, fechaLimiteDescuento, porcientoPenalizacion);
-    		
+    		factura.setUsuarioFacturador(Controladora.getInstance().getUsuarioLogueado());
     		Controladora.getInstance().getMisFacturas().add(factura);
         	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
         	Controladora.getInstance().guardarFacturaCreditoClienteSQL(factura);
@@ -529,6 +529,7 @@ public class ControllerNuevaFactura implements Initializable{
     	{
     		String estado = "Saldado";
     		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, montoCambio, cliente, tipoFactura, cantcopias, estado);
+    		factura.setUsuarioFacturador(Controladora.getInstance().getUsuarioLogueado());
     		Controladora.getInstance().getMisFacturas().add(factura);
         	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
     	}

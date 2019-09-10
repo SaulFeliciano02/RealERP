@@ -1451,7 +1451,7 @@ public class Controladora implements Serializable{
 			
 			if(factura.getMiCliente() != null) {
 				p =(PreparedStatement)
-						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO facturas (cliente, montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo, usuariofacturador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(1, Controladora.getInstance().getMisClientes().indexOf(factura.getMiCliente())+1);
 				p.setFloat(2, factura.getMontoTotal());
 				p.setString(3, factura.getTipoPago());
@@ -1463,10 +1463,11 @@ public class Controladora implements Serializable{
 				p.setInt(9, factura.getCantcopias());
 				p.setString(10, factura.getEstado());
 				p.setString(11, factura.getCodigo());
+				p.setInt(12, getMisUsuarios().indexOf(factura.getUsuarioFacturador())+1);
 			}
 			else {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO facturas (montototal, tipopago, montorecibido, cambio, fecha, hora, tipofactura, cantcopias, estado, codigo, usuariofacturador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				p.setFloat(1, factura.getMontoTotal());
 				p.setString(2, factura.getTipoPago());
 				p.setFloat(3, factura.getMontoRecibido());
@@ -1477,6 +1478,7 @@ public class Controladora implements Serializable{
 				p.setInt(8, factura.getCantcopias());
 				p.setString(9, factura.getEstado());
 				p.setString(10, factura.getCodigo());
+				p.setInt(11, getMisUsuarios().indexOf(factura.getUsuarioFacturador())+1);
 			}
 			
 			
@@ -8910,6 +8912,7 @@ public void loadCategoriaEmpleado()
 		Connection c9 = null;
 		Connection c10 = null;
 		Connection c11 = null;
+		Connection c12 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -8921,6 +8924,7 @@ public void loadCategoriaEmpleado()
 		Statement s9 = null;
 		Statement s10 = null;
 		Statement s11 = null;
+		Statement s12 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
@@ -8932,6 +8936,7 @@ public void loadCategoriaEmpleado()
 		ResultSet r9 = null;
 		ResultSet r10 = null;
 		ResultSet r11 = null;
+		ResultSet r12 = null;
 		PreparedStatement p = null;
 		int idfactura = 0;
 		int idcliente = 0;
@@ -8975,6 +8980,8 @@ public void loadCategoriaEmpleado()
 		float porcientopenalizacion = 0;
 		float montopagado = 0;
 		Date fechaDelPago = null;
+		int idProductoDelEstandar = 0;
+		int idUsuario = 0;
 		
 		try {
 			
@@ -9000,6 +9007,7 @@ public void loadCategoriaEmpleado()
 				cantcopias = r.getInt(10);
 				estado = r.getString(11);
 				codigo = r.getString(12);
+				idUsuario = r.getInt(13);
 				
 				if(idcliente>0)
 				{
@@ -9024,9 +9032,19 @@ public void loadCategoriaEmpleado()
 						idestandarrelacionado = r3.getInt(2);
 						cantidad = r3.getFloat(3);
 						
+						c12 = con.conectar();
+						s12 = (Statement) c12.createStatement();
+						r12 = s12.executeQuery("SELECT producto FROM estandar WHERE idestandar = '"+idestandarrelacionado+"'");
+						while(r12.next())
+						{
+							idProductoDelEstandar = r12.getInt(1);
+						}
+						
+						c12.close();
+						
 						c4 = con.conectar();
 						s4 = (Statement) c4.createStatement();
-						r4 = s4.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idestandarrelacionado+"'");
+						r4 = s4.executeQuery("SELECT nombre FROM productos WHERE idproductos = '"+idProductoDelEstandar+"'");
 						while(r4.next())
 						{
 							nombre = r4.getString(1);
@@ -9136,10 +9154,22 @@ public void loadCategoriaEmpleado()
 				fact.setAdeudado(adeudado);
 				fact.setPlazoPagoDias(plazopagodias);
 				fact.setPorcientoDescuento(porcientodescuento);
-				fact.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				Usuario usu = Controladora.getInstance().getMisUsuarios().get(idUsuario-1);
+				fact.setUsuarioFacturador(usu);
+				
+				if(fechalimitedescuento != null)
+				{
+					fact.setFechaLimiteDescuento(LocalDate.parse(fechalimitedescuento.toString()));
+				}
+				
 				fact.setPorcientoPenalizacion(porcientopenalizacion);
 				fact.setMontoDelUltimoPago(montopagado);
-				fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
+				
+				if(fechaDelPago != null)
+				{
+					fact.setFechaDelUltimoPago(LocalDate.parse(fechaDelPago.toString()));
+				}
+				
 				getMisFacturas().add(fact);
 				cantProdFact.clear();
 				cantKitFact.clear();

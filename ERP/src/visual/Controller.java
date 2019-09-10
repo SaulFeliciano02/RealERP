@@ -2981,6 +2981,10 @@ public class Controller implements Initializable{
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
     		data.addAll(Controladora.getInstance().getMisProveedores());
+    		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
+    		{
+    			data.remove(0);
+    		}
     		if(data.size() > 1)
     		{
     			if(data.get(0).getCodigo().equalsIgnoreCase(data.get(1).getCodigo()))
@@ -3283,7 +3287,7 @@ public class Controller implements Initializable{
     	tablecolumn_facturaTotalPagar.setCellValueFactory(new PropertyValueFactory<>("montoTotal"));
     	tablecolumn_facturaRecibido.setCellValueFactory(new PropertyValueFactory<>("montoRecibido"));
     	tablecolumn_facturaCambio.setCellValueFactory(new PropertyValueFactory<>("cambio"));
-    	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("clienteCodigo"));
+    	tablecolumn_facturaCliente.setCellValueFactory(new PropertyValueFactory<>("nombreUsuarioFact"));
     	tableview_facturaList.setItems(data);
     	tableview_facturaList.refresh();
     }
