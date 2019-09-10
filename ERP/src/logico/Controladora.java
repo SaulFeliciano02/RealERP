@@ -504,6 +504,57 @@ public class Controladora implements Serializable{
 		
 	}
 	
+	public void guardarPeticionSQL(Peticion pet)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO peticiones (codigo, idproveedor, idproducto, cantidad, monto, metodopago, estado, fecha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			p.setString(1, pet.getCodigo());
+			p.setInt(2, getMisProveedores().indexOf(pet.getProveedor())+1);
+			p.setInt(3, getMisProductos().indexOf(pet.getProducto())+1);
+			p.setFloat(4, pet.getCantidad());
+			p.setFloat(5, pet.getMonto());
+			p.setString(6, pet.getMetodoPago());
+			p.setString(7, pet.getEstado());
+			p.setDate(8, (java.sql.Date.valueOf(pet.getFecha())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
 	public void guardarCargosUsuariosSQL(Cargo defaul)
 	{
 		Conexion con = new Conexion();
@@ -4596,6 +4647,64 @@ public class Controladora implements Serializable{
 		return activar;
 	}
 	
+	public boolean activarLoadPeticiones()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM peticiones");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
 	public boolean activarLoadCostoIndirecto()
 	{
 		Conexion con = new Conexion();
@@ -5246,6 +5355,80 @@ public class Controladora implements Serializable{
 				Cliente cli = new Cliente(codigo, nombre, telefono, null, (java.sql.Date) cumpleanos, rnc);
 				
 				Controladora.getInstance().getMisClientes().add(cli);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void loadPeticiones()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		String codigo = null;
+		int idProv = 0;
+		Proveedores prov = null;
+		int idProducto = 0;
+		Producto prod = null;
+		int cantidad = 0;
+		float monto = 0;
+		String metodoP = null;
+		String estado = null;
+		Date fecha = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM peticiones");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				codigo = r.getString(2);
+				idProv = r.getInt(3);
+				idProducto = r.getInt(4);
+				cantidad = r.getInt(5);
+				monto = r.getFloat(6);
+				metodoP = r.getString(7);
+				estado = r.getString(8);
+				fecha = r.getDate(9);
+				
+				prov = getMisProveedores().get(idProv-1);
+				prod = getMisProductos().get(idProducto-1);
+				Peticion pet = new Peticion(codigo, prov, prod, cantidad, monto, metodoP, estado, LocalDate.parse(fecha.toString()));
+				
+				Controladora.getInstance().getMisPeticiones().add(pet);
 				
 			}
 			
