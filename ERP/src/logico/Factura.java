@@ -32,6 +32,7 @@ public class Factura {
 	private LocalDate fechaDelUltimoPago;
 	private Usuario usuarioFacturador;
 	private String nombreUsuarioFact;
+	private ArrayList<Float> pagosDeuda;
 	
 	public Usuario getUsuarioFacturador() {
 		return usuarioFacturador;
@@ -74,6 +75,7 @@ public class Factura {
 		this.cantcopias = cantcopias;
 		this.setTipoFactura(tipoFactura);
 		this.setEstado(estado);
+		this.adeudado = 0;
 		if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
 		{
 			int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
@@ -268,12 +270,18 @@ public class Factura {
 		
 		if(adeudado == 0)
 		{
+			System.out.println("Entró a calcularGanancia en la clase factura porque adeudado es igual a 0");
+			System.out.println("size of CantProductosUtilizados: " + getProdFacturados().size());
+			System.out.println("size of CantKitsUtilizados: " + getKitFacturados().size());
+			System.out.println("size of ServicioUtilizado: " + getServiciosFacturados().size());
 			for (CantProductosUtilizados fac : prodFacturados) {
-				ganancia += fac.getProducto().getPrecio() - fac.getProducto().getCosto();
+				ganancia += (fac.getProducto().getPrecio() - fac.getProducto().getCosto()) * fac.getCantidad();
+				System.out.println("Precio: " + fac.getProducto().getPrecio() + " Costo: " + fac.getProducto().getCosto() + " Cantidad: " + fac.getCantidad());
 			}
 			
 			for (CantKitsUtilizados fac : kitFacturados) {
-				ganancia += fac.getKit().getPrecio() - fac.getKit().getCosto();
+				ganancia += (fac.getKit().getPrecio() - fac.getKit().getCosto()) * fac.getCantidad();
+				System.out.println("Precio: " + fac.getKit().getPrecio() + " Costo: " + fac.getKit().getCosto() + " Cantidad: " + fac.getCantidad());
 			}
 			
 			for (ServicioUtilizado fac : serviciosFacturados) {
@@ -281,6 +289,30 @@ public class Factura {
 			}
 		}
 		
+		System.out.println("Ganancia pagada de esta factura: " + ganancia);
+		
+		return ganancia;
+	}
+	
+	public float calcularGananciaIncluyendoDeuda()
+	{
+		float ganancia = 0;
+		System.out.println("Entró a calcularGananciaIncluyendoDeuda en la clase factura");
+		for (CantProductosUtilizados fac : prodFacturados) {
+			ganancia += (fac.getProducto().getPrecio() - fac.getProducto().getCosto()) * fac.getCantidad();
+			System.out.println("Precio: " + fac.getProducto().getPrecio() + " Costo: " + fac.getProducto().getCosto() + " Cantidad: " + fac.getCantidad());
+		}
+			
+		for (CantKitsUtilizados fac : kitFacturados) {
+			ganancia += (fac.getKit().getPrecio() - fac.getKit().getCosto()) * fac.getCantidad();
+			System.out.println("Precio: " + fac.getKit().getPrecio() + " Costo: " + fac.getKit().getCosto() + " Cantidad: " + fac.getCantidad());
+		}
+			
+		for (ServicioUtilizado fac : serviciosFacturados) {
+			ganancia += fac.getServicio().getPrecio() - fac.getServicio().getCosto();
+		}
+		
+		System.out.println("Ganancia de esta factura: " + ganancia);
 		return ganancia;
 	}
 
@@ -360,5 +392,13 @@ public class Factura {
 
 	public void setNombreUsuarioFact(String nombreUsuarioFact) {
 		this.nombreUsuarioFact = nombreUsuarioFact;
+	}
+
+	public ArrayList<Float> getPagosDeuda() {
+		return pagosDeuda;
+	}
+
+	public void setPagosDeuda(ArrayList<Float> pagosDeuda) {
+		this.pagosDeuda = pagosDeuda;
 	}
 }

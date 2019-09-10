@@ -2926,9 +2926,6 @@ public class Controller implements Initializable{
     		text_negocioName.setText(Controladora.getInstance().getMiEmpresa().getNombre());
     	}
     	
-    	//Seteando reportes
-    	fillReporteTotalTransacciones();
-    	
     	//Seteando peticiones
     	setPeticiones();
     	fillPeticion();
@@ -2936,6 +2933,9 @@ public class Controller implements Initializable{
     	//Seteando usuarios
     	fillCargoUsuario();
     	fillUsuario();
+    	
+    	//Seteando reportes
+    	fillReporteTotalTransacciones();
     	
     	label_bienvenido.setText("Bienvenido, " + Controladora.getInstance().getUsuarioLogueado().getUsuario());
     }
@@ -2976,6 +2976,9 @@ public class Controller implements Initializable{
     	
     	Controladora.getInstance().calcularIngresoTotal();
     	textfield_totalIngresos.setText("" + Controladora.getInstance().getIngresoTotal());
+    	
+    	Controladora.getInstance().calcularGanaciaTotal();
+    	textfield_TotalGanancias.setText("" + Controladora.getInstance().getGananciasTotal());
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
@@ -3098,8 +3101,19 @@ public class Controller implements Initializable{
         		}
     		}	
     	}
-    	else {
+    	else {	
     		data.addAll(p);
+    		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
+    		{
+    			data.remove(0);
+    		}
+    		if(data.size() > 1)
+    		{
+    			if(data.get(0).getCodigo().equalsIgnoreCase(data.get(1).getCodigo()))
+        		{
+        			data.remove(1);
+        		}
+    		}
     	}
     	if(belongsTo.equalsIgnoreCase("")) {
     		tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
