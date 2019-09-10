@@ -138,6 +138,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		boolean validRegister = true;
 		Alert a = new Alert(AlertType.NONE); 
 		a.setAlertType(AlertType.ERROR);
+		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
 		String codigo = textfield_empleadoCodigo.getText();
 		String nombre = textfield_empleadoNombre.getText();
 		String telefono = textfield_empleadoTelefono.getText();
@@ -174,6 +175,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 		}
 		if(validRegister) {
 			Empleado empleado = new Empleado(codigo, nombre, telefono, direccion, correo, rnc, saldo, categoria);
+			success.showAndWait();
 			Controladora.getInstance().addEmpleado(empleado);
 			textfield_empleadoCodigo.setText("");
 			textfield_empleadoNombre.setText("");
