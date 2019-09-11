@@ -4936,6 +4936,7 @@ public class Controladora implements Serializable{
 				
 				//getMisProductos().get(idProducto-1).getCostosIndirectos().add(costoInd);
 				
+				c2.close();
 			}
 			
 			
@@ -6448,6 +6449,8 @@ public boolean activarLoadServicios()
 					System.out.println(serv.getRubroProducto());
 					listado = null;
 				}	
+				
+				c2.close();
 			}
 		
 		} catch (SQLException e) {
@@ -9229,6 +9232,7 @@ public void loadCategoriaEmpleado()
 				cantKitFact = new ArrayList<>();
 				serviciosFact = new ArrayList<>();
 				pagosDeuda = new ArrayList<>();
+				adeudado = 0;
 				idfactura = r.getInt(1);
 				idcliente = r.getInt(2);
 				montoTotal = r.getFloat(3);
@@ -9392,6 +9396,7 @@ public void loadCategoriaEmpleado()
 				fact.setHora(LocalTime.parse(hora.toString()));
 				fact.setCodigo(codigo);
 				fact.setAdeudado(adeudado);
+				System.out.println("adeudado: " + fact.getAdeudado());
 				fact.setPlazoPagoDias(plazopagodias);
 				fact.setPorcientoDescuento(porcientodescuento);
 				if(pagosDeuda.size() == 0)
