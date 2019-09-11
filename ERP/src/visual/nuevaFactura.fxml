@@ -1030,7 +1030,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </HBox.margin>
                                        <children>
-                                          <VBox prefHeight="270.0" prefWidth="418.0" style="-fx-border-color: LIGHTGRAY;">
+                                          <VBox prefHeight="245.0" prefWidth="418.0" style="-fx-border-color: LIGHTGRAY;">
                                              <children>
                                                 <Label text="Digitalización de facturas de peticiones">
                                                    <font>
@@ -1103,24 +1103,6 @@
                                                       </Label>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets left="10.0" top="10.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="709.0">
-                                                   <children>
-                                                      <Label text="Total adeudado a la fecha:" />
-                                                      <TextField alignment="CENTER_RIGHT" promptText="0.0">
-                                                         <HBox.margin>
-                                                            <Insets left="10.0" />
-                                                         </HBox.margin>
-                                                      </TextField>
-                                                      <Label text="RD$">
-                                                         <HBox.margin>
-                                                            <Insets left="2.0" />
-                                                         </HBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" top="10.0" />
                                                    </VBox.margin>
                                                 </HBox>
@@ -1170,7 +1152,7 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Button fx:id="button_sendProducto" mnemonicParsing="false" onAction="#sendProducto" text="-&gt;">
+                                    <Button fx:id="button_sendProducto" mnemonicParsing="false" onAction="#sendProducto" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/derecha.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </VBox.margin>
@@ -1186,7 +1168,7 @@
                                           <Insets top="5.0" />
                                        </VBox.margin>
                                     </ComboBox>
-                                    <Button fx:id="button_returnProducto" mnemonicParsing="false" onAction="#returnProducto" text="&lt;-">
+                                    <Button fx:id="button_returnProducto" mnemonicParsing="false" onAction="#returnProducto" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/izquierda.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </VBox.margin>

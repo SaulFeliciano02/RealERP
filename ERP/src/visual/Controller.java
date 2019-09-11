@@ -1230,7 +1230,6 @@ public class Controller implements Initializable{
     	tableView_atributos.refresh();
     	textfield_registrar_atributo.setText("");
     	textfield_register_familia.setText("");
-    	//pane_rubroCreate.setDisable(true);
     	button_agregar_atributo.setDisable(true);
     }
     
@@ -2332,11 +2331,13 @@ public class Controller implements Initializable{
     //FUNCIONES PARA CREAR RUBROS
     
     public void activarRegistro(ActionEvent event) {
-    	//pane_rubroCreate.setDisable(false);
-    	textfield_rubroCodigo.setDisable(false);
-    	textfield_rubroNombre.setDisable(false);
-    	button_rubroGuardar.setDisable(true);
+    	pane_rubroCreate.setVisible(true);
     }
+    
+    public void cerrarRegistro(ActionEvent event) {
+    	pane_rubroCreate.setVisible(false);
+    }
+    
     
     public void activarGuardarRubro(KeyEvent event) {
     	if(textfield_rubroCodigo.getLength() > 0 && textfield_rubroNombre.getLength() > 0) {
@@ -2794,7 +2795,7 @@ public class Controller implements Initializable{
         		textfield_empleadoUsuario.setText("");
         		textfield_passwordUsuario.setText("");
         		
-        		pane_nuevoUsuario.setDisable(true);
+        		pane_nuevoUsuario.setVisible(false);
         		fillEmpleadoList(null, "Usuario");
         		fillUsuario();
         		
@@ -3447,9 +3448,13 @@ public class Controller implements Initializable{
     
     
     public void habilitarNuevoUsuario(ActionEvent event) {
-    	pane_nuevoUsuario.setDisable(false);
+    	pane_nuevoUsuario.setVisible(true);
     	
     	//fillCargoUsuario();
+    }
+    
+    public void cerrarNuevoUsuario(ActionEvent event) {
+    	pane_nuevoUsuario.setVisible(false);
     }
     
     public void habilitarBusquedaEmpleadoUsuario(ActionEvent event) {
