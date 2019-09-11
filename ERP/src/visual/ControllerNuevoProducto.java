@@ -59,6 +59,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -132,6 +133,7 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_generalUnidad;
 	@FXML private Button button_BuscarUnidadMedida;
 	@FXML private TextField precioCompraProducto;
+	@FXML private AnchorPane pane_nuevorubro;
 	
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
@@ -2651,10 +2653,11 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void activarRegistro(ActionEvent event) {
-    	//pane_rubroCreate.setDisable(false);
-    	textfield_rubroCodigo.setDisable(false);
-    	textfield_rubroNombre.setDisable(false);
-    	button_rubroGuardar.setDisable(true);
+    	pane_nuevorubro.setVisible(true);
+    }
+    
+    public void cerrarRegistro(ActionEvent event) {
+    	pane_nuevorubro.setVisible(false);
     }
     
     public void activarGuardarRubro(KeyEvent event) {

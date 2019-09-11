@@ -81,12 +81,12 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="button_promocionSend" mnemonicParsing="false" onAction="#sendPromocion" text="-&gt;">
+                              <Button fx:id="button_promocionSend" mnemonicParsing="false" onAction="#sendPromocion" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/derecha.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
                                  <VBox.margin>
                                     <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="button_promocionReturn" mnemonicParsing="false" onAction="#returnPromocion" text="&lt;-">
+                              <Button fx:id="button_promocionReturn" mnemonicParsing="false" onAction="#returnPromocion" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/izquierda.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
                                  <VBox.margin>
                                     <Insets bottom="40.0" left="10.0" right="10.0" top="40.0" />
                                  </VBox.margin>

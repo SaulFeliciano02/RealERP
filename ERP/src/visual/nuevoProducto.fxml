@@ -82,11 +82,10 @@
                                              </effect>
                                           </Button>
                                           <ComboBox fx:id="combobox_productoBusquedaProveedor" layoutX="467.0" layoutY="16.0" prefHeight="26.0" prefWidth="103.0" promptText="Codigo" />
-                                          <Button fx:id="button_nuevoProveedor" layoutX="22.0" layoutY="468.0" mnemonicParsing="false" text="Nuevo Proveedor" />
-                                          <Button fx:id="button_modificarProveedor" layoutX="207.0" layoutY="468.0" mnemonicParsing="false" text="Modificar Proveedor" />
-                                          <Button fx:id="button_eliminarProveedor" layoutX="395.0" layoutY="468.0" mnemonicParsing="false" text="Eliminar Proveedor" />
+                                          <Button fx:id="button_nuevoProveedor" layoutX="14.0" layoutY="417.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_nuevo.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
+                                          <Button fx:id="button_eliminarProveedor" layoutX="256.0" layoutY="417.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_delete.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                                           <Button fx:id="button_cerrarBusquedaProveedor" layoutX="810.0" layoutY="468.0" mnemonicParsing="false" onAction="#cerrarBusquedaProveedor" text="Cerrar" />
-                                          <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" onMouseClicked="#proveedorTableViewClicked" prefHeight="408.0" prefWidth="892.0">
+                                          <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" onMouseClicked="#proveedorTableViewClicked" prefHeight="356.0" prefWidth="892.0">
                                             <columns>
                                                 <TableColumn fx:id="tablecolumn_proveedorCodigo" prefWidth="75.0" text="Código" />
                                                 <TableColumn fx:id="tablecolumn_proveedorNombre" prefWidth="75.0" text="Nombre" />
@@ -108,17 +107,16 @@
                                     </AnchorPane>
                                 </content>
                               </TitledPane>
-                              <TitledPane fx:id="titledpane_productoBuscarRubro" collapsible="false" disable="true" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros" visible="false">
+                              <TitledPane fx:id="titledpane_productoBuscarRubro" collapsible="false" layoutX="6.0" prefHeight="549.0" prefWidth="919.0" text="Busqueda de rubros" visible="false">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <Button layoutX="14.0" layoutY="352.0" mnemonicParsing="false" onAction="#activarRegistro" text="Nuevo Rubro" />
-                                          <Button layoutX="120.0" layoutY="352.0" mnemonicParsing="false" text="Modificar Rubro" />
-                                          <Button fx:id="button_rubroEliminar" layoutX="240.0" layoutY="352.0" mnemonicParsing="false" onAction="#eliminarRubro" text="Eliminar Rubro" />
+                                          <Button layoutX="14.0" layoutY="384.0" mnemonicParsing="false" onAction="#activarRegistro" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_add.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
+                                          <Button fx:id="button_rubroEliminar" layoutX="240.0" layoutY="384.0" mnemonicParsing="false" onAction="#eliminarRubro" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_delete.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                                           <TextField fx:id="textfield_productoBusquedaRubro" layoutX="680.0" layoutY="14.0" onKeyTyped="#buscarRubros" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
                                           <ComboBox fx:id="combobox_productoBusquedaRubro" layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
                                           <Button fx:id="button_cerrarBusquedaRubro" layoutX="810.0" layoutY="469.0" mnemonicParsing="false" onAction="#cerrarBusquedaRubro" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
-                                          <TableView fx:id="tableview_rubroBuscar" layoutX="12.0" layoutY="48.0" onMouseClicked="#rubroTableViewClicked" prefHeight="292.0" prefWidth="894.0">
+                                          <TableView fx:id="tableview_rubroBuscar" layoutX="12.0" layoutY="48.0" onMouseClicked="#rubroTableViewClicked" prefHeight="320.0" prefWidth="894.0">
                                              <columns>
                                                 <TableColumn fx:id="tablecolumn_rubroCodigo" prefWidth="75.0" text="Codigo" />
                                                 <TableColumn fx:id="tablecolumn_rubroNombre" prefWidth="75.0" text="Nombre" />
@@ -127,21 +125,61 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <Pane layoutX="14.0" layoutY="382.0" prefHeight="134.0" prefWidth="505.0" style="-fx-background-color: TRANSPARENT; -fx-border-color: LIGHTGRAY;">
-                                             <children>
-                                                <Text disable="true" layoutX="14.0" layoutY="47.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
-                                                <Text disable="true" layoutX="202.0" layoutY="47.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-                                                <TextField fx:id="textfield_rubroCodigo" disable="true" layoutX="14.0" layoutY="52.0" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="159.0" />
-                                                <TextField fx:id="textfield_rubroNombre" disable="true" layoutX="202.0" layoutY="53.0" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="270.0" />
-                                                <Button fx:id="button_rubroGuardar" disable="true" layoutX="413.0" layoutY="95.0" mnemonicParsing="false" onAction="#guardarRubro" text="Guardar" />
-                                                <Text disable="true" layoutX="14.0" layoutY="20.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar nuevo rubro">
-                                                   <font>
-                                                      <Font size="15.0" />
-                                                   </font>
-                                                </Text>
-                                             </children>
-                                          </Pane>
                                           <Button fx:id="button_aceptarBusquedaRubro" disable="true" layoutX="740.0" layoutY="470.0" mnemonicParsing="false" onAction="#returnRubroSearch" text="Aceptar" />
+                                          <AnchorPane fx:id="pane_nuevorubro" layoutX="20.0" layoutY="47.0" prefHeight="231.0" prefWidth="282.0" visible="false">
+                                             <children>
+                                                <VBox layoutX="41.0" layoutY="7.0" prefHeight="231.2" prefWidth="282.4" style="-fx-border-color: lightgray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER" prefHeight="34.0" prefWidth="282.0" style="-fx-background-color: gray;">
+                                                         <children>
+                                                            <Label text="Nuevo rubro" textFill="WHITE">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Código">
+                                                         <VBox.margin>
+                                                            <Insets bottom="3.0" left="10.0" right="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </Text>
+                                                      <TextField fx:id="textfield_rubroCodigo" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="159.0">
+                                                         <VBox.margin>
+                                                            <Insets left="10.0" right="10.0" />
+                                                         </VBox.margin>
+                                                      </TextField>
+                                                      <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
+                                                         <VBox.margin>
+                                                            <Insets bottom="3.0" left="10.0" right="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </Text>
+                                                      <TextField fx:id="textfield_rubroNombre" onKeyTyped="#activarGuardarRubro" prefHeight="31.0" prefWidth="270.0">
+                                                         <VBox.margin>
+                                                            <Insets left="10.0" right="10.0" />
+                                                         </VBox.margin>
+                                                      </TextField>
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="281.0">
+                                                         <children>
+                                                            <Button fx:id="button_rubroGuardar" mnemonicParsing="false" onAction="#guardarRubro" text="Guardar">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#cerrarRegistro" text="Cerrar">
+                                                               <HBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </HBox.margin>
+                                                            </Button>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -181,19 +219,17 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="551.0" prefWidth="932.0">
                            <children>
-                              <Text layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Partida" />
                               <ScrollPane layoutX="43.0" layoutY="57.0" prefHeight="430.0" prefWidth="322.0">
                                  <content>
                                     <ListView fx:id="listview_partida" onMouseClicked="#listview_PartidaClicked" prefHeight="431.0" prefWidth="322.0" />
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="button_partidaSendTo" disable="true" layoutX="448.0" layoutY="116.0" mnemonicParsing="false" onAction="#movePartida" text="-&gt;" />
-                              <Button fx:id="button_partidaSendBack" disable="true" layoutX="448.0" layoutY="407.0" mnemonicParsing="false" onAction="#movePartidaSelect" text="&lt;-" />
+                              <Button fx:id="button_partidaSendTo" disable="true" layoutX="435.0" layoutY="116.0" mnemonicParsing="false" onAction="#movePartida" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/derecha.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
+                              <Button fx:id="button_partidaSendBack" disable="true" layoutX="448.0" layoutY="407.0" mnemonicParsing="false" onAction="#movePartidaSelect" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/izquierda.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                               <Text layoutX="424.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad" />
                               <TextField fx:id="textfield_partidaCantidad" alignment="CENTER_RIGHT" disable="true" layoutX="424.0" layoutY="212.0" onKeyTyped="#floatFieldPressed" prefHeight="31.0" prefWidth="77.0" promptText="0" />
                               <ListView fx:id="listview_partidaSelect" layoutX="578.0" layoutY="51.0" onMouseClicked="#listview_partidaSelectClicked" prefHeight="431.0" prefWidth="322.0" />
-                              <TextField layoutX="138.0" layoutY="25.0" prefHeight="31.0" prefWidth="176.0" promptText="Búsqueda" />
-                              <Button layoutX="322.0" layoutY="25.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="41.0" text="B" />
+                              <TextField layoutX="138.0" layoutY="25.0" prefHeight="31.0" prefWidth="222.0" promptText="Búsqueda" />
                               <Text layoutX="391.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversión unidad-medida" />
                               <ComboBox fx:id="combobox_ConversorUnidad" layoutX="388.0" layoutY="294.0" prefWidth="150.0" />
                            </children>
@@ -204,7 +240,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pane fx:id="pane_costosDirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
+                              <Pane fx:id="pane_costosDirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" visible="false" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
                                  <children>
                                     <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos directos">
                                        <font>
@@ -224,12 +260,12 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                               </Pane>
-                              <Pane fx:id="pane_costosIndirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" visible="false" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
+                              <Pane fx:id="pane_costosIndirectos" layoutX="17.0" layoutY="113.0" prefHeight="428.0" prefWidth="525.0" style="-fx-border-color: GRAY;" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="398.0" AnchorPane.topAnchor="113.0">
                                  <children>
                                     <ListView fx:id="listview_GastosGeneralesIndirectos" layoutX="14.0" layoutY="107.0" onMouseClicked="#activarPasarDerCostoIndirecto" prefHeight="299.0" prefWidth="198.0" />
                                     <TextField layoutX="14.0" layoutY="80.0" prefHeight="26.0" prefWidth="197.0" promptText="Búsqueda" />
-                                    <Button fx:id="button_DerCostoIndirecto" disable="true" layoutX="232.0" layoutY="176.0" mnemonicParsing="false" onAction="#pasarDerCostoIndirecto" text="-&gt;" />
-                                    <Button fx:id="button_IzqCostoIndirecto" disable="true" layoutX="232.0" layoutY="278.0" mnemonicParsing="false" onAction="#pasarIzqCostoIndirecto" text="&lt;-" />
+                                    <Button fx:id="button_DerCostoIndirecto" disable="true" layoutX="232.0" layoutY="176.0" mnemonicParsing="false" onAction="#pasarDerCostoIndirecto" prefHeight="33.0" prefWidth="44.0" style="-fx-background-image: url('file:src/visual/images/misc/derecha.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
+                                    <Button fx:id="button_IzqCostoIndirecto" disable="true" layoutX="232.0" layoutY="278.0" mnemonicParsing="false" onAction="#pasarIzqCostoIndirecto" prefHeight="33.0" prefWidth="44.0" style="-fx-background-image: url('file:src/visual/images/misc/izquierda.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                                     <ListView fx:id="listview_CostosSelecIndirectos" layoutX="286.0" layoutY="111.0" onMouseClicked="#activarPasarIzqCostoIndirecto" prefHeight="249.0" prefWidth="200.0" />
                                     <Text layoutX="14.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Costos generales" />
                                     <Text layoutX="286.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccionados" />
@@ -289,9 +325,12 @@
                                     <Text layoutX="445.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
                                     <Text layoutX="317.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font name="System Bold" size="15.0" />
                                        </font></Text>
-                                    <TextField fx:id="textfield_preciosPrecio" alignment="CENTER_RIGHT" layoutX="317.0" layoutY="332.0" onKeyTyped="#numericFieldPressed" prefHeight="26.0" prefWidth="162.0" />
+                                    <TextField fx:id="textfield_preciosPrecio" alignment="CENTER_RIGHT" layoutX="317.0" layoutY="332.0" onKeyTyped="#numericFieldPressed" prefHeight="26.0" prefWidth="162.0">
+                                       <font>
+                                          <Font name="System Bold" size="17.0" />
+                                       </font></TextField>
                                     <TextField fx:id="textfield_preciosImpuestos" alignment="CENTER_RIGHT" disable="true" layoutX="600.0" layoutY="56.0" onKeyTyped="#numericFieldPressed" prefHeight="0.0" prefWidth="103.0" promptText="0" />
                                     <Text layoutX="598.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impuestos">
                                        <font>
@@ -300,7 +339,7 @@
                                     <CheckBox fx:id="checkbox_Impuestos" layoutX="602.0" layoutY="88.0" mnemonicParsing="false" onAction="#habilitarImpuestos" prefHeight="26.0" prefWidth="98.0" text="Habilitar" />
                                     <Text layoutX="705.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
                                     <Text layoutX="239.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                                    <Text layoutX="479.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
+                                    <Text layoutX="479.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -340,8 +379,7 @@
                                 </columns>
                               </TableView>
                               <Button layoutX="817.0" layoutY="407.0" mnemonicParsing="false" text="Agregar" />
-                              <Button layoutX="724.0" layoutY="407.0" mnemonicParsing="false" text="Modificar" />
-                              <Button layoutX="629.0" layoutY="407.0" mnemonicParsing="false" text="Eliminar" />
+                              <Button layoutX="729.0" layoutY="407.0" mnemonicParsing="false" text="Eliminar" />
                            </children>
                         </AnchorPane>
                      </content>
