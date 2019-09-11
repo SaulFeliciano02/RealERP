@@ -2464,6 +2464,24 @@ public class Controller implements Initializable{
     	}
     }
     
+    public void fillEmpresa()
+    {
+    	if(Controladora.getInstance().getMiEmpresa() != null)
+    	{
+    		Empresa emp  = Controladora.getInstance().getMiEmpresa();
+    		textfield_empresaNombre.setText(emp.getNombre());
+    		textfield_empresaRNC.setText(emp.getRnc());
+    		textarea_empresaDomicilio.setText(emp.getDomicilio());
+    		textfield_empresaTelefono.setText(emp.getTelefono());
+    		spinner_empresaValorFiscalMin.getValueFactory().setValue(emp.getValorFiscalInferior());
+    		spinner_empresaValorFiscalMax.getValueFactory().setValue(emp.getValorFiscalMayor());
+    		datepicker_empresaFechaSolicitada.setValue(emp.getFechaSecSolicitada());
+    		datepicker_empresaFechaVencimiento.setValue(emp.getFechasecvencimiento());
+    		datepicker_empresaFechaInicio.setValue(emp.getFechaInicio());
+    		datepicker_empresaFechaFinal.setValue(emp.getFechaFinal());
+    	}
+    }
+    
     public void guardarEmpresa(ActionEvent event) {
     	String nombre = "";
     	String rnc = "";
@@ -2945,6 +2963,9 @@ public class Controller implements Initializable{
     	
     	//Seteando reportes
     	fillReporteTotalTransacciones();
+    	
+    	//Seteando info empresa
+    	fillEmpresa();
     	
     	//Obtener fecha actual y traducir dias y meses
     	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
