@@ -53,6 +53,7 @@ import logico.Controladora;
 import logico.Estandar;
 import logico.Factura;
 import logico.Kit;
+import logico.Peticion;
 import logico.Producto;
 import logico.Promocion;
 import logico.Servicio;
@@ -140,6 +141,32 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private Button button_seleccionarFacturaDeuda;
 	    @FXML private TextField textfield_montoDelUltimoPago;
 	    @FXML private CheckBox checkbox_facturaValorFiscal1;
+	    
+	    @FXML private TableColumn<Peticion, String> tablecolumn_facturaPeticionCodigo;
+	    @FXML private TableColumn<Peticion, String> tablecolumn_facturaPeticionProveedor;
+	    @FXML private TableColumn<Peticion, String> tablecolumn_facturaPeticionProducto;
+	    @FXML private TableColumn<Peticion, Integer> tablecolumn_facturaPeticionCantidad;
+	    @FXML private TableColumn<Peticion, Float> tablecolumn_facturaPeticionMonto;
+	    @FXML private TableColumn<Peticion, String> tablecolumn_facturaPeticionMetodo;
+	    @FXML private TableColumn<Peticion, String> tablecolumn_facturaPeticionEstado;
+	    @FXML private TableColumn<Peticion, LocalDate> tablecolumn_facturaPeticionFecha;
+	    @FXML private TableView<Peticion> tableview_facturaPeticionList;
+
+	    @FXML private TextField textfield_facturaPeticionSeleccionada;
+	    @FXML private Button button_facturaPeticionSeleccionar;
+
+	    @FXML private TextField textfield_buscarPeticionFactura;
+	    @FXML private TextField textfield_facturaPeticionProducto;
+	    @FXML private TextField textfield_facturaPeticionProveedor;
+	    @FXML private TextField textfield_facturaPeticionCantidad;
+	    @FXML private TextField textfield_facturaPeticionMonto;
+	    @FXML private TextField textfield_facturaPeticionMontoAdeudado;
+	    
+	    @FXML private TextField textfield_peticionFacturaNCF;
+	    @FXML private DatePicker datepicker_peticionFacturaFecha;
+	    @FXML private RadioButton radiobutton_peticionFacturaEfectivo;
+	    @FXML private RadioButton radiobutton_peticionFacturaTarjeta;
+	    @FXML private TextField textfield_peticionFacturaTotalPagado;
 	    
 	    @FXML private Tab tab_facturarProducto;
 	    @FXML private Tab tab_facturarCredito;
@@ -448,6 +475,7 @@ public class ControllerNuevaFactura implements Initializable{
     				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1;
     				float cantidadRestar = estandar.getExistenciaActual() - cantidad;
     				
+    				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
     				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
@@ -552,6 +580,7 @@ public class ControllerNuevaFactura implements Initializable{
     		Controladora.getInstance().guardarServiciosFacturadosSQL(s.getServicio(), factura);
     	}
     	
+    	fillProductos(null);
     	listview_productosFacturados.getItems().clear();
     	listview_productosFacturados.refresh();
     	textfield_totalAPagar.setText("");
@@ -1173,6 +1202,84 @@ public class ControllerNuevaFactura implements Initializable{
     	tableview_clienteList.refresh();
 	}
 	
+	public void fillPeticion() {
+    	ObservableList<Peticion> data = FXCollections.observableArrayList();
+    	for(Peticion peticion : Controladora.getInstance().getMisPeticiones()) {
+    		if(peticion.getMetodoPago().equalsIgnoreCase("Credito")) {
+    			data.add(peticion);
+    		}
+	    }
+	   	tablecolumn_facturaPeticionCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+	   	tablecolumn_facturaPeticionProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorCodigo"));
+	   	tablecolumn_facturaPeticionProducto.setCellValueFactory(new PropertyValueFactory<>("productoNombre"));
+	   	tablecolumn_facturaPeticionCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+    	tablecolumn_facturaPeticionMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
+    	tablecolumn_facturaPeticionMetodo.setCellValueFactory(new PropertyValueFactory<>("metodoPago"));
+	    tablecolumn_facturaPeticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+	   	tablecolumn_facturaPeticionFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+
+	   	tableview_facturaPeticionList.setItems(data);
+	   	tableview_facturaPeticionList.refresh();
+	}
+
+	public void pressed_tableviewFacturaPeticionList(MouseEvent event) {
+		Peticion peticion = tableview_facturaPeticionList.getSelectionModel().getSelectedItem();
+		button_facturaPeticionSeleccionar.setDisable(false);
+		textfield_facturaPeticionSeleccionada.setText(peticion.getCodigo());
+	}
+
+	public void selectPeticion(ActionEvent event) {
+		Peticion peticion = tableview_facturaPeticionList.getSelectionModel().getSelectedItem();
+		textfield_buscarPeticionFactura.setText(peticion.getCodigo());
+		textfield_facturaPeticionProducto.setText(peticion.getProductoNombre());
+		textfield_facturaPeticionProveedor.setText(peticion.getProveedorCodigo());
+		textfield_facturaPeticionCantidad.setText(Float.toString(peticion.getCantidad()));
+		textfield_facturaPeticionMonto.setText(Float.toString(peticion.getMonto()));
+		textfield_facturaPeticionMontoAdeudado.setText(Float.toString(peticion.getAdeudado()));
+
+		cerrarBusquedaPeticion(event);
+	}
+	
+	public void checkEfectivoTarjeta(ActionEvent event) {
+		if(radiobutton_peticionFacturaEfectivo.isSelected()) {
+			radiobutton_peticionFacturaTarjeta.setSelected(false);
+		}
+		else if(radiobutton_peticionFacturaTarjeta.isSelected()) {
+			radiobutton_peticionFacturaEfectivo.setSelected(false);
+		}
+	}
+	
+	public void guardarFacturaPeticion(ActionEvent event) {
+		boolean canRegister = true;
+		if(datepicker_peticionFacturaFecha.equals(null) || textfield_peticionFacturaTotalPagado.getText().equalsIgnoreCase("") || 
+				textfield_peticionFacturaNCF.getText().equalsIgnoreCase("") || textfield_buscarPeticionFactura.getText().equalsIgnoreCase("")) {
+			Alert a = new Alert(AlertType.WARNING, "Faltan datos para completar la factura");
+			a.showAndWait();
+			canRegister = false;
+		}
+		if(canRegister) {
+			Peticion peticion = Controladora.getInstance().buscarPeticion(textfield_buscarPeticionFactura.getText());
+			float monto = Float.parseFloat(textfield_peticionFacturaTotalPagado.getText());
+			Controladora.getInstance().guardarPagoPeticionesCreditoSQL(peticion, monto);
+			Controladora.getInstance().pagarDeudaPeticion(peticion, monto);
+			
+			textfield_buscarPeticionFactura.setText("");
+			textfield_facturaPeticionProducto.setText("");
+			textfield_facturaPeticionProveedor.setText("");
+			textfield_facturaPeticionCantidad.setText("");
+			textfield_facturaPeticionMonto.setText("");
+			textfield_facturaPeticionMontoAdeudado.setText("");
+			textfield_peticionFacturaTotalPagado.setText("");
+			textfield_peticionFacturaNCF.setText("");
+			datepicker_peticionFacturaFecha.setValue(null);
+			
+			radiobutton_peticionFacturaEfectivo.setSelected(false);
+			radiobutton_peticionFacturaTarjeta.setSelected(false);
+
+		}
+	}
+
+	
 	public void setDatePickers() {
 		datepicker_fechaDePago.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
@@ -1180,6 +1287,15 @@ public class ControllerNuevaFactura implements Initializable{
 	            LocalDate today = LocalDate.now();
 
 	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+		
+		datepicker_peticionFacturaFecha.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) > 0 );
 	        }
 	    });
 	}
@@ -1239,10 +1355,14 @@ public class ControllerNuevaFactura implements Initializable{
 	}
 	
 	public void abrirBusquedaPeticion(ActionEvent event) {
+		fillPeticion();
 		titledpane_busquedaPeticiones.setVisible(true);
 	}
 	
 	public void cerrarBusquedaPeticion(ActionEvent event) {
+		tableview_facturaPeticionList.getSelectionModel().clearSelection();
+		textfield_facturaPeticionSeleccionada.setText("");
+		button_facturaPeticionSeleccionar.setDisable(true);
 		titledpane_busquedaPeticiones.setVisible(false);
 	}
 
