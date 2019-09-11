@@ -10080,6 +10080,51 @@ public void loadCategoriaEmpleado()
 		
 	}
 	
+public void pagarDeudaPeticion(Peticion peticion, float monto) {
+		
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("UPDATE peticionescredito SET adeudado = '"+(peticion.getAdeudado() - monto)+"' WHERE peticion = '"+(Controladora.getInstance().getMisPeticiones().indexOf(peticion)+1)+"'");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+		
+	}
+	
 	public float calculoGananciasTotalReporte()
 	{
 		gananciasTotal = 0;
