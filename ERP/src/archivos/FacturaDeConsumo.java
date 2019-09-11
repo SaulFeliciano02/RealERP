@@ -172,7 +172,7 @@ public class FacturaDeConsumo {
 	        
             p8 = new Paragraph();
             p8.add(new Chunk(glue));
-            p8.add("SUBTOTAL:  " + subtotal);
+            p8.add("SUBTOTAL:  " + (subtotal - itbistotal));
             document.add(p8);
             p9 = new Paragraph();
             p9.add(new Chunk(glue));
@@ -185,7 +185,7 @@ public class FacturaDeConsumo {
             document.add(p10);
             p11 = new Paragraph();
             p11.add(new Chunk(glue));
-            p11.add("TOTAL:  " + Math.round(subtotal + descuentototal + itbistotal));
+            p11.add("TOTAL:  " + Math.round(subtotal));
             document.add(p11);
             if(factura.getCantcopias() > 1)
             {
