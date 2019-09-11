@@ -124,6 +124,16 @@ public class Controladora implements Serializable{
 	private float ingresosVentasPorPagar;
 	private float ingresoTotal;
 	private float gananciasTotal;
+	private float pagosDeudasClientesTotal;
+	private float egresosPagos;
+	
+	public float getPagosDeudasClientesTotal() {
+		return pagosDeudasClientesTotal;
+	}
+
+	public void setPagosDeudasClientesTotal(float pagosDeudasClientesTotal) {
+		this.pagosDeudasClientesTotal = pagosDeudasClientesTotal;
+	}
 	
 	public float getGananciasTotal() {
 		return gananciasTotal;
@@ -532,6 +542,97 @@ public class Controladora implements Serializable{
 			p.setString(6, pet.getMetodoPago());
 			p.setString(7, pet.getEstado());
 			p.setDate(8, (java.sql.Date.valueOf(pet.getFecha())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
+	public void guardarPeticionesCreditoSQL(Peticion pet)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO peticionescredito (peticion, adeudado) VALUES (?, ?)");
+			p.setInt(1, misPeticiones.indexOf(pet)+1);
+			p.setFloat(2, pet.getAdeudado());
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
+	public void guardarPagoPeticionesCreditoSQL(Peticion pet, float monto)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO pagopeticionescredito (peticion, montopagado, fechadelpago) VALUES (?, ?, ?)");
+			p.setInt(1, misPeticiones.indexOf(pet)+1);
+			p.setFloat(2, monto);
+			p.setDate(3, (java.sql.Date.valueOf(LocalDate.now())));
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -9111,6 +9212,7 @@ public void loadCategoriaEmpleado()
 		Date fechaDelPago = null;
 		int idProductoDelEstandar = 0;
 		int idUsuario = 0;
+		ArrayList<Float> pagosDeuda = new ArrayList<>();
 		try {
 			
 			//Recuperar precios
@@ -9126,6 +9228,7 @@ public void loadCategoriaEmpleado()
 				cantProdFact = new ArrayList<>();
 				cantKitFact = new ArrayList<>();
 				serviciosFact = new ArrayList<>();
+				pagosDeuda = new ArrayList<>();
 				idfactura = r.getInt(1);
 				idcliente = r.getInt(2);
 				montoTotal = r.getFloat(3);
@@ -9277,7 +9380,7 @@ public void loadCategoriaEmpleado()
 				{
 					montopagado = r11.getFloat(3);
 					fechaDelPago = r11.getDate(4);
-						
+					pagosDeuda.add(montopagado);
 				}
 				
 				Factura fact = new Factura(cantProdFact, cantKitFact, serviciosFact, montoTotal, tipoPago, montoRecibido, cambio, cli, tipoFactura, cantcopias, estado);
@@ -9291,6 +9394,14 @@ public void loadCategoriaEmpleado()
 				fact.setAdeudado(adeudado);
 				fact.setPlazoPagoDias(plazopagodias);
 				fact.setPorcientoDescuento(porcientodescuento);
+				if(pagosDeuda.size() == 0)
+				{
+					System.out.println("pagos deuda está vacio");
+				}
+				for (Float f : pagosDeuda) {
+					System.out.println("Valor del pago deuda: " + f);
+				}
+				fact.setPagosDeuda(pagosDeuda);
 				Usuario usu = Controladora.getInstance().getMisUsuarios().get(idUsuario-1);
 				fact.setUsuarioFacturador(usu);
 
@@ -9600,6 +9711,40 @@ public void loadCategoriaEmpleado()
 		}
 	}
 	
+	public int calcularCantidadVentasPagadas()
+	{
+		int cantidad = 0;
+		
+		if(misFacturas.size() > 0)
+		{
+			for (Factura fac : misFacturas) {
+				if(fac.getAdeudado() == 0)
+				{
+					cantidad++;
+				}
+			}
+		}
+		
+		return cantidad;
+	}
+	
+	public int calcularCantidadPeticionesPagadas()
+	{
+		int cantidad = 0;
+		
+		if(misPeticiones.size() > 0)
+		{
+			for (Peticion pet : misPeticiones) {
+				if(pet.getAdeudado() == 0)
+				{
+					cantidad++;
+				}
+			}
+		}
+		
+		return cantidad;
+	}
+	
 	public void calcularIngresosVentasPagadas()
 	{
 		ingresosVentasPagadas = 0;
@@ -9655,6 +9800,14 @@ public void loadCategoriaEmpleado()
 		
 		for (Factura fac : misFacturas) {
 			gananciasTotal += fac.calcularGananciaIncluyendoDeuda();
+		}
+	}
+	
+	public void calcularPagosDeudasClientesTotal()
+	{
+		pagosDeudasClientesTotal = 0;
+		for (Factura fac : misFacturas) {
+			pagosDeudasClientesTotal += fac.calcularPagos();
 		}
 	}
 
@@ -9939,6 +10092,28 @@ public void loadCategoriaEmpleado()
 		}
 		
 		return gananciasTotal;
+	}
+	
+	public float calculoEgresosPagos()
+	{
+		egresosPagos = 0;
+		
+		if(misPeticiones.size() > 0)
+		{
+			for (Peticion p : misPeticiones) {
+				egresosPagos += p.getMonto();
+			}
+		}
+		
+		return egresosPagos;
+	}
+
+	public float getEgresosPagos() {
+		return egresosPagos;
+	}
+
+	public void setEgresosPagos(float egresosPagos) {
+		this.egresosPagos = egresosPagos;
 	}
 	
 }

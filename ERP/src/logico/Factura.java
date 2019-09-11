@@ -76,6 +76,7 @@ public class Factura {
 		this.setTipoFactura(tipoFactura);
 		this.setEstado(estado);
 		this.adeudado = 0;
+		this.pagosDeuda = new ArrayList<>();
 		if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
 		{
 			int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
@@ -137,6 +138,7 @@ public class Factura {
 		this.porcientoPenalizacion = porcientoPenalizacion;
 		this.montoDelUltimoPago = montoRecibido;
 		this.fechaDelUltimoPago = fecha;
+		this.pagosDeuda = new ArrayList<>();
 		if (String.valueOf(Controladora.getInstance().getMisFacturas().size()).length() < 8)
 		{
 			int digitos = String.valueOf(Controladora.getInstance().getMisFacturas().size()).length();
@@ -400,5 +402,16 @@ public class Factura {
 
 	public void setPagosDeuda(ArrayList<Float> pagosDeuda) {
 		this.pagosDeuda = pagosDeuda;
+	}
+
+	public float calcularPagos() {
+		
+		float pagosTotal = 0;
+		
+		for (Float pag : pagosDeuda) {
+			pagosTotal += pag;
+		}
+		
+		return pagosTotal;
 	}
 }

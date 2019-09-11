@@ -259,7 +259,7 @@ public class ControllerNuevaFactura implements Initializable{
     	fac.setMontoDelUltimoPago(Float.parseFloat(textfield_creditoRecibido.getText()));
     	fac.setFechaDelUltimoPago(LocalDate.now());
     	fac.setAdeudado(Float.parseFloat(textfield_creditoBalancePendiente.getText()) - Float.parseFloat(textfield_creditoRecibido.getText()));
-    	
+    	fac.getPagosDeuda().add(Float.parseFloat(textfield_creditoRecibido.getText()));
     	Controladora.getInstance().guardarNuevoPagoDeuda(fac);
     	
     	Alert a = new Alert(AlertType.CONFIRMATION, "Confirmar pago", ButtonType.YES, ButtonType.NO);
@@ -519,11 +519,13 @@ public class ControllerNuevaFactura implements Initializable{
     		montoRecibido = Float.parseFloat(textfield_pagorecibido.getText());
     		
     		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, 0, cliente, tipoFactura, cantcopias, estado, adeudado, plazoPagoDias, porcientoDescuento, fechaLimiteDescuento, porcientoPenalizacion);
-    		
+    		factura.setMontoDelUltimoPago(Float.parseFloat(textfield_pagorecibido.getText()));
+    		factura.getPagosDeuda().add(Float.parseFloat(textfield_pagorecibido.getText()));
     		factura.setUsuarioFacturador(Controladora.getInstance().getUsuarioLogueado());
     		Controladora.getInstance().getMisFacturas().add(factura);
         	Controladora.getInstance().guardarFacturaSQL(factura, tipoFactura);
         	Controladora.getInstance().guardarFacturaCreditoClienteSQL(factura);
+        	Controladora.getInstance().guardarNuevoPagoDeuda(factura);
     	}
     	
     	else
