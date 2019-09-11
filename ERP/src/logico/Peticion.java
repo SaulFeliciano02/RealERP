@@ -1,6 +1,7 @@
 package logico;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Peticion {
 	private String codigo;
@@ -14,6 +15,8 @@ public class Peticion {
 	
 	private String proveedorCodigo;
 	private String productoNombre;
+	private ArrayList<Float> pagosMonto;
+	private float adeudado;
 	
 	public Peticion(String codigo, Proveedores proveedor, Producto producto, int cantidad, float monto,
 			String metodoPago, String estado, LocalDate fecha) {
@@ -28,6 +31,7 @@ public class Peticion {
 		this.fecha = fecha;
 		this.proveedorCodigo = proveedor.getCodigo();
 		this.productoNombre = producto.getNombre();
+		this.adeudado = 0;
 	}
 
 	public String getCodigo() {
@@ -108,6 +112,22 @@ public class Peticion {
 
 	public void setProductoNombre(String productoNombre) {
 		this.productoNombre = productoNombre;
+	}
+
+	public ArrayList<Float> getPagosMonto() {
+		return pagosMonto;
+	}
+
+	public void setPagosMonto(ArrayList<Float> pagosMonto) {
+		this.pagosMonto = pagosMonto;
+	}
+
+	public float getAdeudado() {
+		return adeudado;
+	}
+
+	public void setAdeudado(float adeudado) {
+		this.adeudado = adeudado;
 	}
 	
 	

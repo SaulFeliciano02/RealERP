@@ -437,6 +437,8 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_DeudaVentasPorCobrar;
     @FXML private TextField textfield_totalIngresos;
     @FXML private TextField textfield_TotalGanancias;
+    @FXML private TextField textfield_cantidadComprasPagadas;
+    @FXML private TextField textfield_egresosPagos;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -2710,6 +2712,10 @@ public class Controller implements Initializable{
             	Peticion peticion = new Peticion(codigo, proveedor, producto, cantidad, monto, metodoPago, estado, fecha);
             	Controladora.getInstance().getMisPeticiones().add(peticion);
             	Controladora.getInstance().guardarPeticionSQL(peticion);
+            	if(radiobutton_peticionCredito.isSelected()) {
+            		peticion.setAdeudado(monto);
+            		Controladora.getInstance().guardarPeticionesCreditoSQL(peticion);
+            	}
             	
             	textfield_peticionProducto.setText("");
             	textfield_peticionProveedor.setText("");;
@@ -2958,7 +2964,7 @@ public class Controller implements Initializable{
     
     public void fillReporteTotalTransacciones()
     {
-    	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().getMisFacturas().size());
+    	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().calcularCantidadVentasPagadas());
     	
     	Controladora.getInstance().calcularIngresosVentasPagadas();
     	textfield_IngresosVentasPagadas.setText("" + Controladora.getInstance().getIngresosVentasPagadas());
@@ -2979,6 +2985,13 @@ public class Controller implements Initializable{
     	
     	Controladora.getInstance().calcularGanaciaTotal();
     	textfield_TotalGanancias.setText("" + Controladora.getInstance().getGananciasTotal());
+    	
+    	Controladora.getInstance().calcularPagosDeudasClientesTotal();
+    	textfield_PagosVentasPorCobrar.setText("" + Controladora.getInstance().getPagosDeudasClientesTotal());
+    	
+    	textfield_cantidadComprasPagadas.setText("" + Controladora.getInstance().calcularCantidadPeticionesPagadas());
+    	
+    	textfield_egresosPagos.setText("" + Controladora.getInstance().calculoEgresosPagos());
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
