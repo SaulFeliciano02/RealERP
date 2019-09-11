@@ -442,6 +442,9 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_cantidadComprasPagadas;
     @FXML private TextField textfield_egresosPagos;
     
+    @FXML private VBox pane_cuentasPorPagar;
+    @FXML private VBox pane_cuentasPorCobrar;
+    
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
     @FXML private AnchorPane bodyPane;
@@ -3805,5 +3808,15 @@ public class Controller implements Initializable{
     public void cerrar_infoBusquedaProveedoresPeticiones(ActionEvent event) {
     	tableview_peticionProveedoresList.getSelectionModel().clearSelection();
     	titledpane_busquedaProveedorPeticiones.setVisible(false);
+    }
+    
+    public void abrirCuentasPorPagar(ActionEvent event) {
+    	pane_cuentasPorPagar.setVisible(true);
+    	pane_cuentasPorCobrar.setVisible(false);
+    }
+    
+    public void abrirCuentasPorCobrar(ActionEvent event) {
+    	pane_cuentasPorPagar.setVisible(false);
+    	pane_cuentasPorCobrar.setVisible(true);
     }
 }
