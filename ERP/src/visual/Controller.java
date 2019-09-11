@@ -12,12 +12,14 @@ import java.nio.file.FileAlreadyExistsException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -2944,7 +2946,78 @@ public class Controller implements Initializable{
     	//Seteando reportes
     	fillReporteTotalTransacciones();
     	
-    	label_bienvenido.setText("Bienvenido, " + Controladora.getInstance().getUsuarioLogueado().getUsuario());
+    	//Obtener fecha actual y traducir dias y meses
+    	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+    	java.util.Date currentTime = localCalendar.getTime();
+    	DateFormatSymbols letras = new DateFormatSymbols();
+    	
+    	String dia = letras.getWeekdays()[localCalendar.get(Calendar.DAY_OF_WEEK)];
+    	switch (dia) {
+    	  case "Monday":
+    		  dia = "lunes";
+    	    break;
+    	  case "Tuesday":
+    		  dia = "martes";
+    	    break;
+    	  case "Wednesday":
+    		  dia = "miércoles";
+    	    break;
+    	  case "Thursday":
+    		  dia = "jueves";
+    	    break;
+    	  case "Friday":
+    		  dia = "viernes";
+    	    break;
+    	  case "Saturday":
+    		  dia = "sábado";
+    	    break;
+    	  case "Sunday":
+    		  dia = "domingo";
+    	    break;
+    	}
+    	
+    	String mes = letras.getMonths()[localCalendar.get(Calendar.MONTH)];
+    	switch (mes) {
+    	  case "January":
+    	    mes = "enero";
+    	    break;
+    	  case "February":
+    		  mes = "febrero";
+    	    break;
+    	  case "March":
+    		  mes = "marzo";
+    	    break;
+    	  case "April":
+    		  mes = "abril";
+    	    break;
+    	  case "May":
+    		  mes = "mayo";
+    	    break;
+    	  case "June":
+    		  mes = "junio";
+    	    break;
+    	  case "July":
+    		  mes = "julio";
+    	    break;
+    	  case "August":
+    		  mes = "agosto";
+    	    break;
+    	  case "September":
+    		  mes = "septiembre";
+    	    break;
+    	  case "October":
+    		  mes = "octubre";
+    	    break;
+    	  case "November":
+    		  mes = "noviembre";
+    	    break;
+    	  case "December":
+    		  mes = "diciembre";
+    	    break;
+    	}
+    	
+    	label_bienvenido.setText("Bienvenido, " + Controladora.getInstance().getUsuarioLogueado().getUsuario() + ". Hoy es " + dia 
+    	+ ", "+ localCalendar.get(Calendar.DAY_OF_MONTH) + " de " + mes + " de " + localCalendar.get(Calendar.YEAR));
     }
     
 	public void fillCargoUsuario()
