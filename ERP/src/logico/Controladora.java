@@ -16,6 +16,7 @@ import java.util.Date;
 import org.apache.commons.codec.cli.Digest;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -126,6 +127,9 @@ public class Controladora implements Serializable{
 	private float gananciasTotal;
 	private float pagosDeudasClientesTotal;
 	private float egresosPagos;
+	private float egresosPorPagar;
+	private float montoPagoPeticionesPorPagarTotal;
+	private float deudaPeticionesTotal;
 	
 	public float getPagosDeudasClientesTotal() {
 		return pagosDeudasClientesTotal;
@@ -426,6 +430,14 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public float getDeudaPeticionesTotal() {
+		return deudaPeticionesTotal;
+	}
+
+	public void setDeudaPeticionesTotal(float deudaPeticionesTotal) {
+		this.deudaPeticionesTotal = deudaPeticionesTotal;
+	}
+
 	public void guardarPromedioGananciaAnualSQL(float monto)
 	{
 		Conexion con = new Conexion();
@@ -618,7 +630,7 @@ public class Controladora implements Serializable{
 		}
 	}
 	
-	public void guardarPagoPeticionesCreditoSQL(Peticion pet, float monto)
+	public void guardarPagoPeticionesCreditoSQL(Peticion pet, float monto, String tipoPago)
 	{
 		Conexion con = new Conexion();
 		Connection c = null;
@@ -629,10 +641,11 @@ public class Controladora implements Serializable{
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("INSERT INTO pagopeticionescredito (peticion, montopagado, fechadelpago) VALUES (?, ?, ?)");
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO pagopeticionescredito (peticion, montopagado, fechadelpago, tipodepago) VALUES (?, ?, ?, ?)");
 			p.setInt(1, misPeticiones.indexOf(pet)+1);
 			p.setFloat(2, monto);
 			p.setDate(3, (java.sql.Date.valueOf(LocalDate.now())));
+			p.setString(4, tipoPago);
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -5581,6 +5594,240 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public boolean activarLoadPeticionesCredito()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM peticionescredito");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadPeticionesCredito()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		int idPeticion = 0;
+		float montoAdeudado = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM peticionescredito");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idPeticion = r.getInt(2);
+				montoAdeudado = r.getFloat(3);
+				
+				Controladora.getInstance().getMisPeticiones().get(idPeticion-1).setAdeudado(montoAdeudado);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean activarLoadPagoPeticionesCredito()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM pagopeticionescredito");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadPagoPeticionesCredito()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		int idPeticion = 0;
+		float montoPagado = 0;
+		Date fecha = null;
+		String tipoPago = null;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM pagopeticionescredito");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idPeticion = r.getInt(2);
+				montoPagado = r.getFloat(3);
+				fecha = r.getDate(4);
+				tipoPago = r.getString(5);
+				
+				Pago pag = new Pago(montoPagado, tipoPago, LocalDate.parse(fecha.toString()));
+				
+				Controladora.getInstance().getMisPeticiones().get(idPeticion-1).getPagosCredito().add(pag);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	public boolean activarLoadUsuarios()
 	{
 		Conexion con = new Conexion();
@@ -10096,7 +10343,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		try {
 			c = con.conectar();
 			
-			p = (PreparedStatement) c.prepareStatement("UPDATE peticionescredito SET adeudado = '"+(peticion.getAdeudado() - monto)+"' WHERE peticion = '"+(Controladora.getInstance().getMisPeticiones().indexOf(peticion)+1)+"'");
+			p = (PreparedStatement) c.prepareStatement("UPDATE peticionescredito SET adeudado = '"+peticion.getAdeudado()+"' WHERE peticion = '"+(Controladora.getInstance().getMisPeticiones().indexOf(peticion)+1)+"'");
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -10151,7 +10398,10 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		if(misPeticiones.size() > 0)
 		{
 			for (Peticion p : misPeticiones) {
-				egresosPagos += p.getMonto();
+				if(p.getAdeudado() == 0)
+				{
+					egresosPagos += p.getMonto();
+				}
 			}
 		}
 		
@@ -10165,6 +10415,88 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	public void setEgresosPagos(float egresosPagos) {
 		this.egresosPagos = egresosPagos;
 	}
+	
+	public int calcularCantidadPeticionesPorPagar()
+    {
+    	int cantidad = 0;
+    	
+    	if(getMisPeticiones().size() > 0)
+    	{
+    		for (Peticion pet : getMisPeticiones()) {
+				if(pet.getAdeudado() > 0)
+				{
+					cantidad++;
+				}
+			}
+    	}
+    	
+    	return cantidad;
+    }
+	
+	public float calcularEgresosPeticionesPorPagar()
+	{
+		setEgresosPorPagar(0);
+		
+		if(misPeticiones.size() > 0)
+		{
+			for (Peticion p : misPeticiones) {
+				if(p.getAdeudado() > 0)
+				{
+					egresosPorPagar += p.getMonto();
+				}
+			}
+		}
+		
+		return egresosPorPagar;
+	}
+
+	public float getEgresosPorPagar() {
+		return egresosPorPagar;
+	}
+
+	public void setEgresosPorPagar(float egresosPorPagar) {
+		this.egresosPorPagar = egresosPorPagar;
+	}
+	
+	public float calcularMontoPagosPeticionesPorPagarTotal()
+	{
+		setMontoPagoPeticionesPorPagarTotal(0);
+		
+		if(getMisPeticiones().size() > 0)
+		{
+			for (Peticion pet : misPeticiones) {
+				montoPagoPeticionesPorPagarTotal += pet.calcularPagosPeticion();
+			}
+		}
+		
+		return montoPagoPeticionesPorPagarTotal;
+	}
+
+	public float getMontoPagoPeticionesPorPagarTotal() {
+		return montoPagoPeticionesPorPagarTotal;
+	}
+
+	public void setMontoPagoPeticionesPorPagarTotal(float montoPagoPeticionesPorPagarTotal) {
+		this.montoPagoPeticionesPorPagarTotal = montoPagoPeticionesPorPagarTotal;
+	}
+	
+	public float calcularDeudaPeticionesTotal()
+	{
+		deudaPeticionesTotal = 0;
+		
+		if(misPeticiones.size() > 0)
+		{
+			for (Peticion pet : misPeticiones) {
+				if(pet.getAdeudado() > 0)
+				{
+					deudaPeticionesTotal += pet.getAdeudado();
+				}
+			}
+		}
+		
+		return deudaPeticionesTotal;
+	}
+	
 	
 }
 

@@ -12,10 +12,9 @@ public class Peticion {
 	private String metodoPago;
 	private String estado;
 	private LocalDate fecha;
-	
+	private ArrayList<Pago> pagosCredito;
 	private String proveedorCodigo;
 	private String productoNombre;
-	private ArrayList<Float> pagosMonto;
 	private float adeudado;
 	
 	public Peticion(String codigo, Proveedores proveedor, Producto producto, int cantidad, float monto,
@@ -32,6 +31,7 @@ public class Peticion {
 		this.proveedorCodigo = proveedor.getCodigo();
 		this.productoNombre = producto.getNombre();
 		this.adeudado = 0;
+		this.pagosCredito = new ArrayList<>();
 	}
 
 	public String getCodigo() {
@@ -114,14 +114,6 @@ public class Peticion {
 		this.productoNombre = productoNombre;
 	}
 
-	public ArrayList<Float> getPagosMonto() {
-		return pagosMonto;
-	}
-
-	public void setPagosMonto(ArrayList<Float> pagosMonto) {
-		this.pagosMonto = pagosMonto;
-	}
-
 	public float getAdeudado() {
 		return adeudado;
 	}
@@ -129,11 +121,27 @@ public class Peticion {
 	public void setAdeudado(float adeudado) {
 		this.adeudado = adeudado;
 	}
-	
-	
-	
-	
-	
-	
 
+	public ArrayList<Pago> getPagosCredito() {
+		return pagosCredito;
+	}
+
+	public void setPagosCredito(ArrayList<Pago> pagosCredito) {
+		this.pagosCredito = pagosCredito;
+	}
+	
+	public float calcularPagosPeticion()
+	{
+		float monto = 0;
+		
+		if(pagosCredito.size() > 0)
+		{
+			for (Pago pago : pagosCredito) {
+				monto += pago.getMonto();
+			}
+		}
+		
+		return monto;
+	}
+	
 }

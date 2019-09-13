@@ -203,6 +203,14 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadPeticiones();
 					}
+					if(Controladora.getInstance().activarLoadPeticionesCredito())
+					{
+						Controladora.getInstance().loadPeticionesCredito();
+					}
+					if(Controladora.getInstance().activarLoadPagoPeticionesCredito())
+					{
+						Controladora.getInstance().loadPagoPeticionesCredito();
+					}
 					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
 						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
@@ -469,6 +477,14 @@ public class Main extends Application{
 					if(Controladora.getInstance().activarLoadPeticiones())
 					{
 						Controladora.getInstance().loadPeticiones();
+					}
+					if(Controladora.getInstance().activarLoadPeticionesCredito())
+					{
+						Controladora.getInstance().loadPeticionesCredito();
+					}
+					if(Controladora.getInstance().activarLoadPagoPeticionesCredito())
+					{
+						Controladora.getInstance().loadPagoPeticionesCredito();
 					}
 					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
 						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
