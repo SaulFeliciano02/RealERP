@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -441,6 +442,10 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_TotalGanancias;
     @FXML private TextField textfield_cantidadComprasPagadas;
     @FXML private TextField textfield_egresosPagos;
+    @FXML private TextField textfield_cantidadComprasPorPagar;
+    @FXML private TextField textfield_egresosPeticionesPorPagar;
+    @FXML private TextField textField_pagosPeticionesPorPagar;
+    @FXML private TextField textField_deudaPeticionesPorPagar;
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
@@ -3062,34 +3067,44 @@ public class Controller implements Initializable{
     
     public void fillReporteTotalTransacciones()
     {
+    	DecimalFormat df = new DecimalFormat("#.00");
+    	
     	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().calcularCantidadVentasPagadas());
     	
     	Controladora.getInstance().calcularIngresosVentasPagadas();
-    	textfield_IngresosVentasPagadas.setText("" + Controladora.getInstance().getIngresosVentasPagadas());
+    	textfield_IngresosVentasPagadas.setText("" + df.format(Controladora.getInstance().getIngresosVentasPagadas()));
     	
     	Controladora.getInstance().calcularGananciaVentasPagadas();
-    	textfield_GananciaVentasPagadas.setText("" + Controladora.getInstance().getGananciaVentasPagadas());
+    	textfield_GananciaVentasPagadas.setText("" + df.format(Controladora.getInstance().getGananciaVentasPagadas()));
     	
     	textfield_CantidadVentasPorCobrar.setText("" + Controladora.getInstance().cantidadVentasPorCobrar());
     	
     	Controladora.getInstance().calcularIngresosVentasPorPagar();
-    	textfield_IngresosVentasPorCobrar.setText("" + Controladora.getInstance().getIngresosVentasPorPagar());
+    	textfield_IngresosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getIngresosVentasPorPagar()));
     	
     	Controladora.getInstance().calcularDeudafacturas();
-    	textfield_DeudaVentasPorCobrar.setText("" + Controladora.getInstance().getDeudaTotal());
+    	textfield_DeudaVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getDeudaTotal()));
     	
     	Controladora.getInstance().calcularIngresoTotal();
-    	textfield_totalIngresos.setText("" + Controladora.getInstance().getIngresoTotal());
+    	textfield_totalIngresos.setText("" + df.format(Controladora.getInstance().getIngresoTotal()));
     	
     	Controladora.getInstance().calcularGanaciaTotal();
-    	textfield_TotalGanancias.setText("" + Controladora.getInstance().getGananciasTotal());
+    	textfield_TotalGanancias.setText("" + df.format(Controladora.getInstance().getGananciasTotal()));
     	
     	Controladora.getInstance().calcularPagosDeudasClientesTotal();
-    	textfield_PagosVentasPorCobrar.setText("" + Controladora.getInstance().getPagosDeudasClientesTotal());
+    	textfield_PagosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getPagosDeudasClientesTotal()));
     	
     	textfield_cantidadComprasPagadas.setText("" + Controladora.getInstance().calcularCantidadPeticionesPagadas());
     	
-    	textfield_egresosPagos.setText("" + Controladora.getInstance().calculoEgresosPagos());
+    	textfield_egresosPagos.setText("" + df.format(Controladora.getInstance().calculoEgresosPagos()));
+    	
+    	textfield_cantidadComprasPorPagar.setText("" + Controladora.getInstance().calcularCantidadPeticionesPorPagar());
+    	
+    	textfield_egresosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularEgresosPeticionesPorPagar()));
+    	
+    	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal()));
+    	
+    	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal()));
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
@@ -3819,4 +3834,7 @@ public class Controller implements Initializable{
     	pane_cuentasPorPagar.setVisible(false);
     	pane_cuentasPorCobrar.setVisible(true);
     }
+    
+    
+    
 }

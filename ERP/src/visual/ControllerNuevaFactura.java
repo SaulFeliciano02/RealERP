@@ -1251,8 +1251,7 @@ public class ControllerNuevaFactura implements Initializable{
 	
 	public void guardarFacturaPeticion(ActionEvent event) {
 		boolean canRegister = true;
-		if(datepicker_peticionFacturaFecha.equals(null) || textfield_peticionFacturaTotalPagado.getText().equalsIgnoreCase("") || 
-				textfield_peticionFacturaNCF.getText().equalsIgnoreCase("") || textfield_buscarPeticionFactura.getText().equalsIgnoreCase("")) {
+		if(datepicker_peticionFacturaFecha.equals(null) || textfield_peticionFacturaTotalPagado.getText().equalsIgnoreCase("") || textfield_buscarPeticionFactura.getText().equalsIgnoreCase("")) {
 			Alert a = new Alert(AlertType.WARNING, "Faltan datos para completar la factura");
 			a.showAndWait();
 			canRegister = false;
@@ -1260,7 +1259,17 @@ public class ControllerNuevaFactura implements Initializable{
 		if(canRegister) {
 			Peticion peticion = Controladora.getInstance().buscarPeticion(textfield_buscarPeticionFactura.getText());
 			float monto = Float.parseFloat(textfield_peticionFacturaTotalPagado.getText());
-			Controladora.getInstance().guardarPagoPeticionesCreditoSQL(peticion, monto);
+			String tipoPago = null;
+			if(radiobutton_peticionFacturaEfectivo.isSelected())
+			{
+				tipoPago = "Efectivo";
+			}
+			else if(radiobutton_peticionFacturaTarjeta.isSelected())
+			{
+				tipoPago = "Tarjeta";
+			}
+			peticion.setAdeudado(peticion.getAdeudado() - monto);
+			Controladora.getInstance().guardarPagoPeticionesCreditoSQL(peticion, monto, tipoPago);
 			Controladora.getInstance().pagarDeudaPeticion(peticion, monto);
 			
 			textfield_buscarPeticionFactura.setText("");
