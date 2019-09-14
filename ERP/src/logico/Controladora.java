@@ -3195,72 +3195,46 @@ public class Controladora implements Serializable{
 	/**FUNCION PARA BUSCAR UN PRODUCTO**/
 	
 	public ArrayList<Producto> searchProducts(String buscador, String tipoBusqueda) {
-		int j = 0;
 		ArrayList<Producto> searchProducto = new ArrayList<>();
-		for(int i = 0; i < misProductos.size(); i++) {
-			int boolCount = 0;
-			j = 0;
-			/**Con motivo de no repetir la misma funcion varias veces, se penso hacerlo un switch**/
-			switch(tipoBusqueda) {
-				case "Codigo":
-					for(int k = 0; k < misProductos.get(i).getCodigo().length(); k++) {
-						if(j < buscador.length()) {
-							if(misProductos.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
+		switch(tipoBusqueda) {
+			case "Codigo":
+				for(Producto producto : Controladora.getInstance().getMisProductos()) {
+					if(producto.getCodigo().toLowerCase().contains(buscador)) {
+						searchProducto.add(producto);
+					}		
+				}
+				break;
+			case "Nombre":
+				for(Producto producto : Controladora.getInstance().getMisProductos()) {
+					if(producto.getNombre().toLowerCase().contains(buscador)) {
+						searchProducto.add(producto);
 					}
-					break;
-				case "Nombre":
-					for(int k = 0; k < misProductos.get(i).getNombre().length(); k++) {
-						if(j < buscador.length()) {
-							if(misProductos.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
-					}	
-					break;
-				case "Descripcion":
-					for(int k = 0; k < misProductos.get(i).getDescripcion().length(); k++) {
-						if(j < buscador.length()) {
-							if(misProductos.get(i).getDescripcion().toLowerCase().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
+				}
+				break;
+			case "Descripcion":
+				for(Producto producto : Controladora.getInstance().getMisProductos()) {
+					if(producto.getDescripcion().toLowerCase().contains(buscador)) {
+						searchProducto.add(producto);
 					}
-					break;
-				case "Proveedor":
-					for(int k = 0; k < misProductos.get(i).getProveedorPrinClass().getCodigo().length(); k++) {
-						if(j < buscador.length()) {
-							if(misProductos.get(i).getProveedorPrinClass().getCodigo().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
+				}					
+				break;
+			case "Proveedor":
+				for(Producto producto : Controladora.getInstance().getMisProductos()) {
+					if(producto.getProveedorPrinClass().getCodigo().toLowerCase().contains(buscador)) {
+						searchProducto.add(producto);
+					}
+				}
+				break;
+			case "Rubro":
+				for(Producto producto : Controladora.getInstance().getMisProductos()) {
+					if(producto.getRubroProductoClass().getCodigo().toLowerCase().contains(buscador)) {
+						searchProducto.add(producto);
 					}
 					
-					break;
-				case "Rubro":
-					for(int k = 0; k < misProductos.get(i).getRubroProductoClass().getNombreRubro().length(); k++) {
-						if(j < buscador.length()) {
-							if(misProductos.get(i).getRubroProductoClass().getCodigo().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
-					}	
-					break;
-			}
-			if(boolCount == buscador.length()) {
-				if(!Controladora.getInstance().misProductos.get(i).isBorrado()) {
-					searchProducto.add(misProductos.get(i));
 				}
-				
-			}
+				break;
 		}
+		
 		return searchProducto;
 	}
 	
@@ -3351,46 +3325,29 @@ public class Controladora implements Serializable{
 /**FUNCION PARA BUSCAR PROVEEDOR**/
 	
 	public ArrayList<Proveedores> searchProveedores(String buscador, String tipoBusqueda){
-		int j = 0;
 		ArrayList<Proveedores> searchProveedor = new ArrayList<>();
-		for(int i = 0; i < misProveedores.size(); i++) {
-			int boolCount = 0;
-			j = 0;
-			switch(tipoBusqueda) {
+		switch(tipoBusqueda) {
 			case "Codigo":
-				for(int k = 0; k < misProveedores.get(i).getCodigo().length(); k++) {
-					if(j < buscador.length()) {
-						if(misProveedores.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
-					}
-					j++;
+				for(Proveedores proveedor : Controladora.getInstance().getMisProveedores()) {
+					if(proveedor.getCodigo().toLowerCase().contains(buscador)) {
+						searchProveedor.add(proveedor);
+					}				
 				}
 				break;
 			case "Nombre":
-				for(int k = 0; k < misProveedores.get(i).getNombre().length(); k++) {
-					if(j < buscador.length()) {
-						if(misProveedores.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Proveedores proveedor : Controladora.getInstance().getMisProveedores()) {
+					if(proveedor.getNombre().toLowerCase().contains(buscador)) {
+						searchProveedor.add(proveedor);
 					}
-					j++;
 				}
 				break;
 			case "Rubro":
-				for(int k = 0; k < misProveedores.get(i).getRubro().getNombreRubro().length(); k++) {
-					if(j < buscador.length()) {
-						if(misProveedores.get(i).getRubro().getNombreRubro().toLowerCase().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Proveedores proveedor : Controladora.getInstance().getMisProveedores()) {
+					if(proveedor.getRubro().getNombreRubro().toLowerCase().contains(buscador)) {
+						searchProveedor.add(proveedor);
 					}
-					j++;
 				}
 				break;
-			}
-			if(boolCount == buscador.length()) {
-				searchProveedor.add(misProveedores.get(i));
-			}
 		}
 		return searchProveedor;
 	}
@@ -3398,36 +3355,22 @@ public class Controladora implements Serializable{
 /**FUNCION PARA BUSCAR CLIENTES**/
 	
 	public ArrayList<Cliente> searchClientes(String buscador, String tipoBusqueda){
-		int j = 0;
 		ArrayList<Cliente> searchCliente = new ArrayList<>();
-		for(int i = 0; i < misClientes.size(); i++) {
-			int boolCount = 0;
-			j = 0;
-			switch(tipoBusqueda) {
-				case "Codigo":
-					for(int k = 0; k < misClientes.get(i).getCodigo().length(); k++) {
-						if(j < buscador.length()) {
-							if(misClientes.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
-					}				
-					break;
-				case "Nombre":
-					for(int k = 0; k < misClientes.get(i).getNombre().length(); k++) {
-						if(j < buscador.length()) {
-							if(misClientes.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
-								boolCount++;
-							}
-						}
-						j++;
+		switch(tipoBusqueda) {
+			case "Codigo":
+				for(Cliente cliente : Controladora.getInstance().getMisClientes()) {
+					if(cliente.getCodigo().toLowerCase().contains(buscador)) {
+						searchCliente.add(cliente);
 					}
-					break;
+				}			
+				break;
+			case "Nombre":
+				for(Cliente cliente : Controladora.getInstance().getMisClientes()) {
+					if(cliente.getNombre().toLowerCase().contains(buscador)) {
+						searchCliente.add(cliente);
+					}
 				}
-			if(boolCount == buscador.length()) {
-				searchCliente.add(misClientes.get(i));
-			}
+				break;
 		}
 		return searchCliente;
 	}
@@ -3435,37 +3378,23 @@ public class Controladora implements Serializable{
 /**FUNCION PARA BUSCAR EMPLEADOS**/
 	
 	public ArrayList<Empleado> searchEmpleados(String buscador, String tipoBusqueda){
-		int j = 0;
 		ArrayList<Empleado> searchEmpleado = new ArrayList<>();
-		for(int i = 0; i < misEmpleados.size(); i++) {
-			int boolCount = 0;
-			j = 0;
-			switch(tipoBusqueda) {
+		switch(tipoBusqueda) {
 			case "Codigo":
-				for(int k = 0; k < misEmpleados.get(i).getCodigo().length(); k++) {
-					if(j < buscador.length()) {
-					if(misEmpleados.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
+					if(empleado.getCodigo().toLowerCase().contains(buscador)) {
+						searchEmpleado.add(empleado);
 					}
-					j++;
 				}
 				break;
 			case "Nombre":
-				for(int k = 0; k < misEmpleados.get(i).getNombre().length(); k++) {
-					if(j < buscador.length()) {
-						if(misEmpleados.get(i).getNombre().toLowerCase().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
+					if(empleado.getNombre().toLowerCase().contains(buscador)) {
+						searchEmpleado.add(empleado);
 					}
-					j++;
 				}
 				break;
-			}		
-			if(boolCount == buscador.length()) {
-				searchEmpleado.add(misEmpleados.get(i));
-			}
-		}
+		}		
 		return searchEmpleado;
 	}
 	
@@ -3491,38 +3420,35 @@ public class Controladora implements Serializable{
 	
 	/**FUNCION PARA BUSCAR RUBROS**/
 	public ArrayList<Rubro> searchRubro(String buscador, String tipoBusqueda){
-		int j = 0;
 		ArrayList<Rubro> searchRubro = new ArrayList<>();
-		for(int i = 0; i < misRubros.size(); i++) {
-			int boolCount = 0;
-			j = 0;
-			switch(tipoBusqueda) {
+		switch(tipoBusqueda) {
 			case "Codigo":
-				for(int k = 0; k < misRubros.get(i).getCodigo().length(); k++) {
-					if(j < buscador.length()) {
-					if(misRubros.get(i).getCodigo().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Rubro rubro : Controladora.getInstance().getMisRubros()) {
+					if(rubro.getCodigo().toLowerCase().contains(buscador)) {
+						searchRubro.add(rubro);
 					}
-					j++;
 				}
 				break;
 			case "Nombre":
-				for(int k = 0; k < misRubros.get(i).getNombreRubro().length(); k++) {
-					if(j < buscador.length()) {
-						if(misRubros.get(i).getNombreRubro().toLowerCase().charAt(k) == buscador.charAt(j)) {
-							boolCount++;
-						}
+				for(Rubro rubro : Controladora.getInstance().getMisRubros()) {
+					if(rubro.getNombreRubro().toLowerCase().contains(buscador)) {
+						searchRubro.add(rubro);
 					}
-					j++;
 				}
 				break;
 			}		
-			if(boolCount == buscador.length()) {
-				searchRubro.add(misRubros.get(i));
+		return searchRubro;
+	}
+	
+	public ArrayList<Usuario> searchUsuarios(String username){
+		ArrayList<Usuario> searchUsuario = new ArrayList<>();
+		System.out.println(username);
+		for(Usuario usuario : Controladora.getInstance().getMisUsuarios()) {
+			if(usuario.getUsuario().toLowerCase().contains(username)) {
+				searchUsuario.add(usuario);
 			}
 		}
-		return searchRubro;
+		return searchUsuario;
 	}
 	
 	public Empleado buscarEmpleado(String codigo)

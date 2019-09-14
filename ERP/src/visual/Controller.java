@@ -46,6 +46,7 @@ import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -310,6 +311,7 @@ public class Controller implements Initializable{
     @FXML private Button button_modificarCliente;
     @FXML private Button button_eliminarCliente;
     @FXML private TextField textfield_clienteBusqueda;
+    @FXML private ComboBox<String> combobox_buscarCliente;
     
     //DESPLIEGUE DE PROVEEDOR
     @FXML private Button button_nuevoProveedor;
@@ -326,6 +328,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Proveedores, Float> tablecolumn_proveedorSaldo;
     @FXML private TableView<Proveedores> tableview_proveedoresList;
     @FXML private TextField textfield_proveedorBusqueda;
+    @FXML private ComboBox<String> combobox_buscarProveedor;
     
     //DESPLIEGUE DE Empleado
     @FXML private TableColumn<Empleado, String> tablecolumn_empleadoCodigo;
@@ -408,6 +411,7 @@ public class Controller implements Initializable{
     @FXML private ComboBox<String> combobox_cargoUsuario = new ComboBox<String>();
     @FXML private TextField textfield_passwordUsuario;
     @FXML private Button button_guardarUsuario;
+    @FXML private TextField textfield_buscarUsuario;
     
     @FXML private TableColumn<Usuario, String> tablecolumn_usuarioUsuario;
     @FXML private TableColumn<Usuario, String> tablecolumn_usuarioNombre;
@@ -2272,14 +2276,12 @@ public class Controller implements Initializable{
     //Busqueda de clientes
     public void buscarClientes(KeyEvent event) {
     	ArrayList<Cliente> clientes = new ArrayList<>();
-    	if(Character.isLetter(event.getCharacter().charAt(0))) {
-    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase() + event.getCharacter(), "Nombre");
+    	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_clienteBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase(), combobox_buscarCliente.getValue());
     	}
     	else {
-    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase(), "Nombre");
+    		clientes = Controladora.getInstance().searchClientes(textfield_clienteBusqueda.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_buscarCliente.getValue());
     	}
-    	//System.out.println(clientes.size());
-    	//System.out.println(textfield_clienteBusqueda.getText().toLowerCase());
     	if(clientes.size() == 0) {
     		fillClientList(null);
     	}
@@ -2292,12 +2294,12 @@ public class Controller implements Initializable{
     	TextField textfield = (TextField) event.getSource();
     	ArrayList<Producto> productos = new ArrayList<>();
     	if(textfield.equals(textfield_productBuscar)) {
-    		if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
-    			productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase() + event.getCharacter(), combobox_productBuscar.getSelectionModel().getSelectedItem());
-    		}
-    		else {
-    			productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getSelectionModel().getSelectedItem());
-    		}
+    		if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_productBuscar.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+        		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase(), combobox_productBuscar.getValue());
+        	}
+        	else {
+        		productos = Controladora.getInstance().searchProducts(textfield_productBuscar.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_productBuscar.getValue());
+        	}
     		if(productos.size() == 0) {
     			fillProductList(null, "");
     		}
@@ -2306,12 +2308,12 @@ public class Controller implements Initializable{
     		}
     	}
     	else if(textfield.equals(textfield_peticionProductoBuscar)) {
-    		if(Character.isLetterOrDigit(event.getCharacter().charAt(0))) {
-    			productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase() + event.getCharacter(), combobox_peticionProducto.getSelectionModel().getSelectedItem());
-    		}
-    		else {
-    			productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase(), combobox_peticionProducto.getSelectionModel().getSelectedItem());
-    		}
+    		if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_productBuscar.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+        		productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase(), combobox_peticionProducto.getValue());
+        	}
+        	else {
+        		productos = Controladora.getInstance().searchProducts(textfield_peticionProductoBuscar.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_peticionProducto.getValue());
+        	}
     		if(productos.size() == 0) {
     			fillProductList(null, "Peticion");
     		}
@@ -2324,11 +2326,11 @@ public class Controller implements Initializable{
     //Busqueda de proveedores
     public void buscarProveedores(KeyEvent event) {
     	ArrayList<Proveedores> proveedores = new ArrayList<>();
-    	if(Character.isLetter(event.getCharacter().charAt(0))) {
-    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase() + event.getCharacter(), "Nombre");
+    	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_proveedorBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase(), combobox_buscarProveedor.getValue());
     	}
     	else {
-    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase(), "Nombre");
+    		proveedores = Controladora.getInstance().searchProveedores(textfield_proveedorBusqueda.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_buscarProveedor.getValue());
     	}
     	if(proveedores.size() == 0) {
     		fillProveedorList(null, "");
@@ -2336,6 +2338,42 @@ public class Controller implements Initializable{
     	else {
     		fillProveedorList(proveedores, "");
     	}
+    }
+    
+    public void buscarRubros(KeyEvent event) {
+    	ArrayList<Rubro> rubros = new ArrayList<>();
+    	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_rubroBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+    		rubros = Controladora.getInstance().searchRubro(textfield_rubroBusqueda.getText().toLowerCase(), combobox_rubroBusqueda.getValue());
+    	}
+    	else {
+    		rubros = Controladora.getInstance().searchRubro(textfield_rubroBusqueda.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_rubroBusqueda.getValue());
+    	}
+    	if(rubros.size() == 0) {
+    		fillRubroList(null);
+    	}
+    	else {
+    		fillRubroList(rubros);
+    	}
+    	
+    }
+    
+    //Busqueda de usuarios
+    public void buscarUsuarios(KeyEvent event) {
+    	ArrayList<Usuario> usuarios = new ArrayList<>();
+    	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_buscarUsuario.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+    		usuarios = Controladora.getInstance().searchUsuarios(textfield_buscarUsuario.getText().toLowerCase());
+    	}
+    	else {
+    		usuarios = Controladora.getInstance().searchUsuarios(textfield_buscarUsuario.getText().toLowerCase() + event.getCharacter().toLowerCase());
+    	}
+    	
+    	if(usuarios.size() == 0) {
+    		fillUsuario(null);
+    	}
+    	else {
+    		fillUsuario(usuarios);
+    	}
+    	
     }
     
     //FUNCIONES PARA CREAR RUBROS
@@ -2825,7 +2863,7 @@ public class Controller implements Initializable{
         		
         		pane_nuevoUsuario.setVisible(false);
         		fillEmpleadoList(null, "Usuario");
-        		fillUsuario();
+        		fillUsuario(null);
         		
         		alert = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
         		alert.setTitle("Informaciones");
@@ -2914,15 +2952,26 @@ public class Controller implements Initializable{
     	verifyUserPermissions();
     	
     	//Seteando los clientes
+    	ObservableList<String> combobox_clienteData = FXCollections.observableArrayList();
+    	combobox_clienteData.addAll("Codigo", "Nombre");
+    	combobox_buscarCliente.setItems(combobox_clienteData);
     	fillClientList(null);
     	
     	//Seteando los proveedores
+    	ObservableList<String> combobox_proveedorData = FXCollections.observableArrayList();
+    	combobox_buscarProveedor.setValue("Buscar por:");
+    	combobox_proveedorData.addAll("Codigo", "Nombre");
+    	combobox_buscarProveedor.setItems(combobox_proveedorData);
     	fillProveedorList(null, "");
     	
     	//Seteando los empleados
     	fillEmpleadoList(null, "");
     	
     	//Seteando los rubros
+    	ObservableList<String> combobox_rubroData = FXCollections.observableArrayList();
+    	combobox_rubroBusqueda.setValue("Buscar por:");
+    	combobox_rubroData.addAll("Codigo", "Nombre");
+    	combobox_rubroBusqueda.setItems(combobox_rubroData);
     	fillRubroList(null);
     	
     	//Seteando el combobox de productos
@@ -2967,7 +3016,7 @@ public class Controller implements Initializable{
     	
     	//Seteando usuarios
     	fillCargoUsuario();
-    	fillUsuario();
+    	fillUsuario(null);
     	
     	//Seteando reportes
     	fillReporteTotalTransacciones();
@@ -3353,11 +3402,11 @@ public class Controller implements Initializable{
     }
     
     public void selectTabCliente() {
-    	tabpane_recursosHumanos.getSelectionModel().select(tab_clientes);
+    	tabpane_Ventas.getSelectionModel().select(tab_clientes);
     }
     
     public void selectTabProveedor() {
-    	tabpane_recursosHumanos.getSelectionModel().select(tab_proveedores);;
+    	tabpane_Ventas.getSelectionModel().select(tab_proveedores);;
     }
     
     public void selectTabEmpleado() {
@@ -3642,13 +3691,23 @@ public class Controller implements Initializable{
     	textfield_facturaTotalPagado.setText(Float.toString(factura.getMontoTotal()));
     }
     
-    public void fillUsuario() {
+    public void fillUsuario(ArrayList<Usuario> u) {
     	ObservableList<Usuario> data = FXCollections.observableArrayList();
-    	for(Usuario usuario : Controladora.getInstance().getMisUsuarios()) {
-    		if(!usuario.isUsuarioActivo()) {
-    			data.add(usuario);
+    	if(u == null) {
+    		for(Usuario usuario : Controladora.getInstance().getMisUsuarios()) {
+    			if(usuario.isUsuarioActivo()) {
+    				data.add(usuario);
+    			}
     		}
     	}
+    	else {
+    		for(Usuario usuario : u) {
+    			if(usuario.isUsuarioActivo()) {
+    				data.add(usuario);
+    			}
+    		}
+    	}
+    	
     	tablecolumn_usuarioUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
     	tablecolumn_usuarioNombre.setCellValueFactory(new PropertyValueFactory<>("empleadoNombre"));
     	tablecolumn_usuarioCargo.setCellValueFactory(new PropertyValueFactory<>("cargoNombre"));
