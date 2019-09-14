@@ -55,7 +55,7 @@ public class ControllerNuevoCliente implements Initializable {
 		 
 		    Parent root = f.load();
 		    Controller c = f.getController();
-		    c.rh_pressed(null);
+		    c.ventas_pressed(null);
 		    c.selectTabCliente();
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
