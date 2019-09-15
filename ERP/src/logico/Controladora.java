@@ -148,6 +148,7 @@ public class Controladora implements Serializable{
 	}
 
 	private Empresa miEmpresa;
+	private CajaChica miCajaChica;
 	
 	private float ventaPromedioMensual;
 	
@@ -252,9 +253,16 @@ public class Controladora implements Serializable{
 		this.usuarioLogueado = null;
 		
 		this.miEmpresa = null;
+		this.miCajaChica = null;
 	}
 	
+	public CajaChica getMiCajaChica() {
+		return miCajaChica;
+	}
 	
+	public void setCajaChica(CajaChica cajaChica) {
+		miCajaChica = cajaChica;
+	}
 	
 	public Usuario getUsuarioLogueado() {
 		return usuarioLogueado;
@@ -3078,6 +3086,7 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
+	
 	
 	
 
