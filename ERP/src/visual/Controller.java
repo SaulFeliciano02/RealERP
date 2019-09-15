@@ -66,6 +66,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 //import jdk.nashorn.internal.ir.SetSplitState;
 import logico.Atributos;
+import logico.CajaChica;
 import logico.CantBienesYServiciosUtilizados;
 import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
@@ -91,6 +92,7 @@ import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
 import logico.ServicioUtilizado;
+import logico.TransaccionesCajaChica;
 import logico.UnidadMedida;
 import logico.Usuario;
 import javafx.scene.Node;
@@ -453,6 +455,23 @@ public class Controller implements Initializable{
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
+    
+    //CAJA CHICA
+    @FXML private TextField textfield_cajaFondoActual;
+    
+    @FXML private TextField textfield_cajaMontoAdd;
+    @FXML private TextArea textarea_cajaDescripcionAdd;
+    @FXML private Button button_cajaGuardarAdd;
+    
+    @FXML private TextField textfield_cajaMontoRemove;
+    @FXML private TextArea textarea_cajaDescripcionRemove;
+    @FXML private Button button_cajaGuardarRemove;
+    
+    @FXML private TableColumn<Float, TransaccionesCajaChica> tablecolumn_cajaMonto;
+    @FXML private TableColumn<String, TransaccionesCajaChica> tablecolumn_cajaDescripcion;
+    @FXML private TableColumn<LocalDate, TransaccionesCajaChica> tablecolumn_cajaFecha;
+    @FXML private TableColumn<String, TransaccionesCajaChica> tablecolumn_cajaUsuario;
+    @FXML private TableView<TransaccionesCajaChica> tableview_cajaList;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -2872,6 +2891,71 @@ public class Controller implements Initializable{
     	}
     	
     }
+    
+    public void guardarCajaChica(ActionEvent event) {
+    	float monto = 0;
+    	String descripcion = "";
+    	boolean canRegister = true;
+    	Alert warning = new Alert(AlertType.WARNING, "Ingrese el monto.");
+    	Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
+    	Alert confirmation = new Alert(AlertType.CONFIRMATION, "Esta seguro que desea realizar esta operación?", ButtonType.YES, ButtonType.NO);
+    	confirmation.showAndWait();
+    	if(confirmation.getResult() == ButtonType.YES) {
+    		if(event.getSource().equals(button_cajaGuardarAdd)) {
+        		if(textfield_cajaMontoAdd.getText().equalsIgnoreCase("")) {
+        			warning.showAndWait();
+        			canRegister = false;
+        		}
+        		if(canRegister) {
+        			monto = Float.parseFloat(textfield_cajaMontoAdd.getText());
+        			descripcion = textarea_cajaDescripcionAdd.getText();
+        			if(Controladora.getInstance().getMiCajaChica() == null) {
+        				CajaChica cajaChica = new CajaChica(0);
+        				Controladora.getInstance().setCajaChica(cajaChica);
+        			}
+        			TransaccionesCajaChica transaccion = new TransaccionesCajaChica(monto, descripcion, Controladora.getInstance().getUsuarioLogueado(), LocalDate.now());
+        			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
+        		    float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
+        			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual + monto);
+        		}
+        	}
+        	else if(event.getSource().equals(button_cajaGuardarRemove)) {
+        		Alert warningMoney = new Alert(AlertType.WARNING, "Se está excediendo del presupuesto de la caja.");
+        		if(textfield_cajaMontoRemove.getText().equalsIgnoreCase("")) {
+        			warning.showAndWait();
+        			canRegister = false;
+        		}
+        		else if(Float.parseFloat(textfield_cajaMontoRemove.getText()) > Float.parseFloat(textfield_cajaFondoActual.getText())) {
+        			warningMoney.showAndWait();
+        			canRegister = false;
+        		}
+        		if(canRegister) {
+        			monto = Float.parseFloat(textfield_cajaMontoRemove.getText());
+        			descripcion = textarea_cajaDescripcionRemove.getText();
+        			if(Controladora.getInstance().getMiCajaChica() == null) {
+        				CajaChica cajaChica = new CajaChica(0);
+        				Controladora.getInstance().setCajaChica(cajaChica);
+        			}
+        			TransaccionesCajaChica transaccion = new TransaccionesCajaChica(monto*-1, descripcion, Controladora.getInstance().getUsuarioLogueado(), LocalDate.now());
+        			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
+        			float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
+        			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual - monto);
+        		}
+        	}
+        	if(canRegister) {
+        		textfield_cajaMontoRemove.setText("");
+        		textarea_cajaDescripcionRemove.setText("");
+        		textfield_cajaMontoAdd.setText("");
+        		textarea_cajaDescripcionAdd.setText("");
+    		
+        		textfield_cajaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCajaChica().getMontoActual()));
+        		System.out.println("Klk");
+        		fillCajaTransacciones();
+        	}
+    	}
+    	
+		
+    }
 
 	public void verifyUserPermissions()
 	{
@@ -3096,6 +3180,16 @@ public class Controller implements Initializable{
     	
     	label_bienvenido.setText("Bienvenido, " + Controladora.getInstance().getUsuarioLogueado().getUsuario() + ". Hoy es " + dia 
     	+ ", "+ localCalendar.get(Calendar.DAY_OF_MONTH) + " de " + mes + " de " + localCalendar.get(Calendar.YEAR));
+    	
+    	//Seteando Caja chica
+    	fillCajaTransacciones();
+    	if(Controladora.getInstance().getMiCajaChica() != null) {
+    		textfield_cajaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCajaChica().getMontoActual()));
+    	}
+    	else {
+    		textfield_cajaFondoActual.setText("0.0");
+    	}
+    	
     }
     
 	public void fillCargoUsuario()
@@ -3365,6 +3459,22 @@ public class Controller implements Initializable{
     		tableview_CategoriaEmp.setItems(dataC);
     		tableview_CategoriaEmp.refresh();
     	}
+    }
+    
+    public void fillCajaTransacciones() {
+    	ObservableList<TransaccionesCajaChica> data = FXCollections.observableArrayList();
+    	if(Controladora.getInstance().getMiCajaChica() != null) {
+    		for(TransaccionesCajaChica t : Controladora.getInstance().getMiCajaChica().getTransacciones()) {
+    			data.add(t);
+    		}
+    	}
+    	tablecolumn_cajaMonto.setCellValueFactory(new PropertyValueFactory<>("actualizacion"));
+    	tablecolumn_cajaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+    	tablecolumn_cajaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    	tablecolumn_cajaUsuario.setCellValueFactory(new PropertyValueFactory<>("usuarioNombre"));
+    	
+    	tableview_cajaList.setItems(data);
+    	tableview_cajaList.refresh();
     }
     
     public TableView<Cliente> getTableview_clientesList(){
