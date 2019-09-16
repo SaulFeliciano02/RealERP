@@ -2897,7 +2897,7 @@
                                                                                     <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="620.0">
                                                                                        <children>
                                                                                           <Label text="Fecha" />
-                                                                                          <DatePicker />
+                                                                                          <DatePicker fx:id="datepicker_transaccionesPorDia" onAction="#fillReportePorDia" />
                                                                                        </children>
                                                                                        <VBox.margin>
                                                                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -2930,7 +2930,7 @@
                                                                                                             <Label text="Ventas pagadas" />
                                                                                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                                                                                <children>
-                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <TextField fx:id="textfield_ventasPagadasPorDia" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
                                                                                                                   <Label text="RD$" />
                                                                                                                </children>
                                                                                                             </HBox>
@@ -2944,7 +2944,7 @@
                                                                                                             <Label text="Pagos de ventas" />
                                                                                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                                                                                <children>
-                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <TextField fx:id="textfield_pagosVentasPorDia" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
                                                                                                                   <Label text="RD$" />
                                                                                                                </children>
                                                                                                             </HBox>
@@ -3009,7 +3009,7 @@
                                                                                                             <Label text="Compras pagadas" />
                                                                                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                                                                                <children>
-                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <TextField fx:id="textfield_comprasPagadasPorDia" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
                                                                                                                   <Label text="RD$" />
                                                                                                                </children>
                                                                                                             </HBox>
@@ -3023,7 +3023,7 @@
                                                                                                             <Label text="Pagos de compras" />
                                                                                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                                                                                <children>
-                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <TextField fx:id="textfield_pagoComprasPorDia" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
                                                                                                                   <Label text="RD$" />
                                                                                                                </children>
                                                                                                             </HBox>
@@ -3051,7 +3051,7 @@
                                                                                                             <Label text="Salario empleados" />
                                                                                                             <HBox alignment="CENTER" prefHeight="83.0" prefWidth="131.0">
                                                                                                                <children>
-                                                                                                                  <TextField alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
+                                                                                                                  <TextField fx:id="textfield_salarioEmpleadoPorDia" alignment="CENTER_RIGHT" editable="false" prefHeight="26.0" prefWidth="100.0" promptText="0.0" />
                                                                                                                   <Label text="RD$" />
                                                                                                                </children>
                                                                                                             </HBox>

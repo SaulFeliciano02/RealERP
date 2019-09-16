@@ -454,6 +454,12 @@ public class Controller implements Initializable{
     @FXML private TextField textField_deudaPeticionesPorPagar;
     @FXML private DatePicker datepicker_totalTransaccionesInicial;
     @FXML private DatePicker datepicker_totalTransaccionesFinal;
+    @FXML private DatePicker datepicker_transaccionesPorDia;
+    @FXML private TextField textfield_ventasPagadasPorDia;
+    @FXML private TextField textfield_pagosVentasPorDia;
+    @FXML private TextField textfield_comprasPagadasPorDia;
+    @FXML private TextField textfield_pagoComprasPorDia;
+    @FXML private TextField textfield_salarioEmpleadoPorDia;
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
@@ -3250,6 +3256,15 @@ public class Controller implements Initializable{
     	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     	
     	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    }
+    
+    public void fillReportePorDia(ActionEvent event)
+    {
+    	textfield_ventasPagadasPorDia.setText("" + Controladora.getInstance().calcularVentasPagadasPorDia(datepicker_transaccionesPorDia.getValue()));
+    	textfield_pagosVentasPorDia.setText("" + Controladora.getInstance().calcularPagosDeVentasPorDia(datepicker_transaccionesPorDia.getValue()));
+    	textfield_comprasPagadasPorDia.setText("" + Controladora.getInstance().calculoComprasPagadasPorDia(datepicker_transaccionesPorDia.getValue()));
+    	textfield_pagoComprasPorDia.setText("" + Controladora.getInstance().calcularPagosDeComprasPorDia(datepicker_transaccionesPorDia.getValue()));
+    	textfield_salarioEmpleadoPorDia.setText("" + Controladora.getInstance().calcularPagoEmpleadosPorDia());
     }
     
     public void fillReporteTotalTransaccionesAction(ActionEvent event)
