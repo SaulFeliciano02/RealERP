@@ -9937,7 +9937,7 @@ public void loadCategoriaEmpleado()
 			if(misFacturas.size() > 0)
 			{
 				for (Factura fac : misFacturas) {
-					if(fac.getAdeudado() == 0 && (fac.getFecha().isAfter(inicio) && fac.getFecha().isBefore(fin)) || (fac.getFecha().isEqual(inicio) || fac.getFecha().isEqual(fin)))
+					if(fac.getAdeudado() == 0 && ((fac.getFecha().isAfter(inicio) && fac.getFecha().isBefore(fin)) || (fac.getFecha().isEqual(inicio) || fac.getFecha().isEqual(fin))))
 					{
 						cantidad++;
 					}
@@ -10018,6 +10018,26 @@ public void loadCategoriaEmpleado()
 				}
 			}
 		}	
+	}
+	
+	public float calcularVentasPagadasPorDia(LocalDate dia)
+	{
+		float ventas = 0;
+		
+		if(dia != null)
+		{
+			if(misFacturas.size() > 0)
+			{
+				for (Factura fac : misFacturas) {
+					if(fac.getFecha().isEqual(dia))
+					{
+						ventas += fac.calcularIngreso();
+					}
+				}
+			}
+		}
+		
+		return ventas;
 	}
 	
 	public void calcularIngresosVentasPorPagar(LocalDate inicio, LocalDate fin)
@@ -10124,6 +10144,26 @@ public void loadCategoriaEmpleado()
 		}
 	}
 
+	public float calcularPagosDeVentasPorDia(LocalDate dia)
+	{
+		float pagos = 0;
+		
+		if(dia != null)
+		{
+			if(!misFacturas.isEmpty())
+			{
+				for (Factura fac : misFacturas) {
+					if(fac.getFecha().isEqual(dia))
+					{
+						pagos += fac.calcularPagos();
+					}
+				}
+			}
+		}
+		
+		return pagos;
+	}
+	
 	public float getIngresoTotal() {
 		return ingresoTotal;
 	}
@@ -10142,7 +10182,7 @@ public void loadCategoriaEmpleado()
 			if(misFacturas.size() > 0)
 			{
 				for (Factura fac : misFacturas) {
-					if(fac.getAdeudado() > 0 && (fac.getFecha().isAfter(inicio) && fac.getFecha().isBefore(fin)) || (fac.getFecha().isEqual(inicio) || fac.getFecha().isEqual(fin)))
+					if(fac.getAdeudado() > 0 && ((fac.getFecha().isAfter(inicio) && fac.getFecha().isBefore(fin)) || (fac.getFecha().isEqual(inicio) || fac.getFecha().isEqual(fin))))
 					{
 						cantidad++;
 					}
@@ -10500,6 +10540,26 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		
 		return egresosPagos;
 	}
+	
+	public float calculoComprasPagadasPorDia(LocalDate dia)
+	{
+		float compras = 0;
+		
+		if(dia != null)
+		{
+			if(misPeticiones.size() > 0)
+			{
+				for (Peticion p : misPeticiones) {
+					if(p.getFecha().isEqual(dia))
+					{
+						compras += p.getMonto();
+					}
+				}
+			}
+		}
+		
+		return compras;
+	}
 
 	public float getEgresosPagos() {
 		return egresosPagos;
@@ -10609,6 +10669,40 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		return montoPagoPeticionesPorPagarTotal;
 	}
 
+	public float calcularPagosDeComprasPorDia(LocalDate dia)
+	{
+		float pagos = 0;
+		
+		if(dia != null)
+		{
+			if(getMisPeticiones().size() > 0)
+			{
+				for (Peticion pet : misPeticiones) {
+					if(pet.getFecha().isEqual(dia))
+					{
+						pagos += pet.calcularPagosPeticion();
+					}
+				}
+			}
+		}
+		
+		return pagos;
+	}
+	
+	public float calcularPagoEmpleadosPorDia()
+	{
+		float pago = 0;
+		
+		if(!misEmpleados.isEmpty())
+		{
+			for (Empleado e : misEmpleados) {
+				pago += e.getSueldo();
+			}
+		}
+		
+		return pago;
+	}
+	
 	public float getMontoPagoPeticionesPorPagarTotal() {
 		return montoPagoPeticionesPorPagarTotal;
 	}
@@ -10626,7 +10720,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			if(misPeticiones.size() > 0)
 			{
 				for (Peticion pet : misPeticiones) {
-					if(pet.getAdeudado() > 0 && (pet.getFecha().isAfter(inicio) && pet.getFecha().isBefore(fin)) || (pet.getFecha().isEqual(inicio) || pet.getFecha().isEqual(fin)))
+					if(pet.getAdeudado() > 0 && ((pet.getFecha().isAfter(inicio) && pet.getFecha().isBefore(fin)) || (pet.getFecha().isEqual(inicio) || pet.getFecha().isEqual(fin))))
 					{
 						deudaPeticionesTotal += pet.getAdeudado();
 					}
