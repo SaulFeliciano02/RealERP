@@ -450,6 +450,8 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_egresosPeticionesPorPagar;
     @FXML private TextField textField_pagosPeticionesPorPagar;
     @FXML private TextField textField_deudaPeticionesPorPagar;
+    @FXML private DatePicker datepicker_totalTransaccionesInicial;
+    @FXML private DatePicker datepicker_totalTransaccionesFinal;
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
@@ -3117,43 +3119,85 @@ public class Controller implements Initializable{
     public void fillReporteTotalTransacciones()
     {
     	DecimalFormat df = new DecimalFormat("#.00");
-    	
-    	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().calcularCantidadVentasPagadas());
-    	
-    	Controladora.getInstance().calcularIngresosVentasPagadas();
+    	//
+    	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().calcularCantidadVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	Controladora.getInstance().calcularIngresosVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_IngresosVentasPagadas.setText("" + df.format(Controladora.getInstance().getIngresosVentasPagadas()));
-    	
-    	Controladora.getInstance().calcularGananciaVentasPagadas();
+    	//
+    	Controladora.getInstance().calcularGananciaVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_GananciaVentasPagadas.setText("" + df.format(Controladora.getInstance().getGananciaVentasPagadas()));
-    	
-    	textfield_CantidadVentasPorCobrar.setText("" + Controladora.getInstance().cantidadVentasPorCobrar());
-    	
-    	Controladora.getInstance().calcularIngresosVentasPorPagar();
+    	//
+    	textfield_CantidadVentasPorCobrar.setText("" + Controladora.getInstance().cantidadVentasPorCobrar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	Controladora.getInstance().calcularIngresosVentasPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_IngresosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getIngresosVentasPorPagar()));
-    	
-    	Controladora.getInstance().calcularDeudafacturas();
+    	//
+    	Controladora.getInstance().calcularDeudafacturas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_DeudaVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getDeudaTotal()));
-    	
+    	//
     	Controladora.getInstance().calcularIngresoTotal();
     	textfield_totalIngresos.setText("" + df.format(Controladora.getInstance().getIngresoTotal()));
-    	
-    	Controladora.getInstance().calcularGanaciaTotal();
+    	//
+    	Controladora.getInstance().calcularGanaciaTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_TotalGanancias.setText("" + df.format(Controladora.getInstance().getGananciasTotal()));
-    	
-    	Controladora.getInstance().calcularPagosDeudasClientesTotal();
+    	//
+    	Controladora.getInstance().calcularPagosDeudasClientesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
     	textfield_PagosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getPagosDeudasClientesTotal()));
+    	//
+    	textfield_cantidadComprasPagadas.setText("" + Controladora.getInstance().calcularCantidadPeticionesPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	textfield_egresosPagos.setText("" + df.format(Controladora.getInstance().calculoEgresosPagos(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	//
+    	textfield_cantidadComprasPorPagar.setText("" + Controladora.getInstance().calcularCantidadPeticionesPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	textfield_egresosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularEgresosPeticionesPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	//
+    	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     	
-    	textfield_cantidadComprasPagadas.setText("" + Controladora.getInstance().calcularCantidadPeticionesPagadas());
+    	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    }
+    
+    public void fillReporteTotalTransaccionesAction(ActionEvent event)
+    {
+    	DecimalFormat df = new DecimalFormat("#.00");
     	
-    	textfield_egresosPagos.setText("" + df.format(Controladora.getInstance().calculoEgresosPagos()));
+    	textfield_CantidadVentasPagadas.setText("" + Controladora.getInstance().calcularCantidadVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
     	
-    	textfield_cantidadComprasPorPagar.setText("" + Controladora.getInstance().calcularCantidadPeticionesPorPagar());
+    	Controladora.getInstance().calcularIngresosVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_IngresosVentasPagadas.setText("" + df.format(Controladora.getInstance().getIngresosVentasPagadas()));
+    	//
+    	Controladora.getInstance().calcularGananciaVentasPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_GananciaVentasPagadas.setText("" + df.format(Controladora.getInstance().getGananciaVentasPagadas()));
+    	//
+    	textfield_CantidadVentasPorCobrar.setText("" + Controladora.getInstance().cantidadVentasPorCobrar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	Controladora.getInstance().calcularIngresosVentasPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_IngresosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getIngresosVentasPorPagar()));
+    	//
+    	Controladora.getInstance().calcularDeudafacturas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_DeudaVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getDeudaTotal()));
+    	//
+    	Controladora.getInstance().calcularIngresoTotal();
+    	textfield_totalIngresos.setText("" + df.format(Controladora.getInstance().getIngresoTotal()));
+    	//
+    	Controladora.getInstance().calcularGanaciaTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_TotalGanancias.setText("" + df.format(Controladora.getInstance().getGananciasTotal()));
+    	//
+    	Controladora.getInstance().calcularPagosDeudasClientesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue());
+    	textfield_PagosVentasPorCobrar.setText("" + df.format(Controladora.getInstance().getPagosDeudasClientesTotal()));
+    	//
+    	textfield_cantidadComprasPagadas.setText("" + Controladora.getInstance().calcularCantidadPeticionesPagadas(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	textfield_egresosPagos.setText("" + df.format(Controladora.getInstance().calculoEgresosPagos(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	//
+    	textfield_cantidadComprasPorPagar.setText("" + Controladora.getInstance().calcularCantidadPeticionesPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue()));
+    	//
+    	textfield_egresosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularEgresosPeticionesPorPagar(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	//
+    	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     	
-    	textfield_egresosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularEgresosPeticionesPorPagar()));
-    	
-    	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal()));
-    	
-    	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal()));
+    	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {
