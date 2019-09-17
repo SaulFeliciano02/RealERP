@@ -463,6 +463,8 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_ingresosTotales;
     @FXML private TextField textfield_EgresosTotales;
     @FXML private TextField textfield_balanceTotal;
+    @FXML private Button button_totalTransacciones;
+    @FXML private Button button_transaccionesPorDia;
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
@@ -3996,11 +3998,15 @@ public class Controller implements Initializable{
     }
     
     public void totaltransacciones(ActionEvent event) {
+    	button_totalTransacciones.setDisable(true);
+    	button_transaccionesPorDia.setDisable(false);
     	vbox_totalTransacciones.setVisible(true);
     	vbox_transaccionesporDia.setVisible(false);
     }
     
     public void transaccionespordia(ActionEvent event) {
+    	button_totalTransacciones.setDisable(false);
+    	button_transaccionesPorDia.setDisable(true);
     	vbox_totalTransacciones.setVisible(false);
     	vbox_transaccionesporDia.setVisible(true);
     }
