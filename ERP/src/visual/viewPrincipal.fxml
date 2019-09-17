@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -2460,8 +2460,8 @@
                                                                      <children>
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="630.0">
                                                                            <children>
-                                                                              <Button mnemonicParsing="false" onAction="#totaltransacciones" text="Total de transacciones" />
-                                                                              <Button mnemonicParsing="false" onAction="#transaccionespordia" text="Transacciones por día">
+                                                                              <Button fx:id="button_totalTransacciones" disable="true" mnemonicParsing="false" onAction="#totaltransacciones" text="Total de transacciones" />
+                                                                              <Button fx:id="button_transaccionesPorDia" mnemonicParsing="false" onAction="#transaccionespordia" text="Transacciones por día">
                                                                                  <HBox.margin>
                                                                                     <Insets left="10.0" />
                                                                                  </HBox.margin>
@@ -2474,7 +2474,7 @@
                                                                         <Pane prefHeight="1.0" prefWidth="630.0" style="-fx-background-image: url('file:src/visual/images/background/BodyDivid.png'); -fx-background-size: stretch;" />
                                                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                                            <children>
-                                                                              <VBox fx:id="vbox_totalTransacciones" prefHeight="720.0" prefWidth="630.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <VBox fx:id="vbox_totalTransacciones" prefHeight="720.0" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <children>
                                                                                     <Label contentDisplay="TOP" opacity="0.3" text="Total de transacciones">
                                                                                        <font>
@@ -2888,7 +2888,7 @@
                                                                                     </ScrollPane>
                                                                                  </children>
                                                                               </VBox>
-                                                                              <VBox fx:id="vbox_transaccionesporDia" prefHeight="720.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <VBox fx:id="vbox_transaccionesporDia" prefHeight="720.0" prefWidth="620.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                  <children>
                                                                                     <Label opacity="0.4" text="Transacciones por día">
                                                                                        <font>
@@ -3041,7 +3041,7 @@
                                                                                                 <Label text="RD$" />
                                                                                              </children>
                                                                                              <VBox.margin>
-                                                                                                <Insets bottom="10.0" />
+                                                                                                <Insets bottom="10.0" top="10.0" />
                                                                                              </VBox.margin>
                                                                                           </HBox>
                                                                                        </children>
