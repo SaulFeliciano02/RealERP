@@ -542,6 +542,68 @@ public class Controladora implements Serializable{
 		
 	}
 	
+	public void guardarCajaChicaSQL(CajaChica caja, TransaccionesCajaChica tr)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO cajachica (monto, fecha) VALUES (?, ?)");
+			p.setFloat(1, caja.getMontoActual());
+			p.setDate(2, (java.sql.Date.valueOf(LocalDate.now())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			c.close();
+			
+			c2 = con.conectar();
+			p = (PreparedStatement) c2.prepareStatement("INSERT INTO transaccionescajachica (montoactual, actualizacion, descripcion, usuario, fecha) VALUES (?, ?, ?, ?, ?)");
+			p.setInt(1, getMiCajaChica().getTransacciones().size());
+			p.setFloat(2, tr.getActualizacion());
+			p.setString(3, tr.getDescripcion());
+			p.setInt(4, getMisUsuarios().indexOf(tr.getUsuario())+1);
+			p.setDate(5, (java.sql.Date.valueOf(tr.getFecha())));
+			
+			p.executeUpdate();
+			
+			c2.close();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
 	public void guardarPeticionSQL(Peticion pet)
 	{
 		Conexion con = new Conexion();
@@ -4714,6 +4776,153 @@ public class Controladora implements Serializable{
 		}
 		
 		return activar;
+	}
+	
+	public boolean activarLoadCajaChica()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM cajachica");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadCajaChica()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		float monto = 0;
+		int idCaja = 0;
+		float actualizacion = 0;
+		String descripcion = null;
+		int idUsu = 0;
+		Usuario usu = null;
+		Date fecha = null;
+		ArrayList<TransaccionesCajaChica> trs = new ArrayList<>();
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM transaccionescajachica");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				idCaja = r.getInt(2);
+				actualizacion = r.getFloat(3);
+				descripcion = r.getString(4);
+				idUsu = r.getInt(5);
+				fecha = r.getDate(6);
+				
+				usu = getMisUsuarios().get(idUsu-1);
+				TransaccionesCajaChica tr = new TransaccionesCajaChica(actualizacion, descripcion, usu, LocalDate.parse(fecha.toString()));
+				trs.add(tr);
+				
+			}
+			
+			c.close();
+			
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM cajachica WHERE idcajachica = '"+idCaja+"'");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r2.next())
+			{
+				monto = r.getFloat(2);
+			}
+			
+			CajaChica cj = new CajaChica(monto);
+			cj.setTransacciones(trs);
+			
+			setCajaChica(cj);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 	
 	public boolean activarLoadPeticiones()
