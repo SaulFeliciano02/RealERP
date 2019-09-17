@@ -460,6 +460,9 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_comprasPagadasPorDia;
     @FXML private TextField textfield_pagoComprasPorDia;
     @FXML private TextField textfield_salarioEmpleadoPorDia;
+    @FXML private TextField textfield_ingresosTotales;
+    @FXML private TextField textfield_EgresosTotales;
+    @FXML private TextField textfield_balanceTotal;
     
     @FXML private VBox pane_cuentasPorPagar;
     @FXML private VBox pane_cuentasPorCobrar;
@@ -2925,6 +2928,7 @@ public class Controller implements Initializable{
         			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
         		    float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
         			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual + monto);
+        			Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica(), transaccion);
         		}
         	}
         	else if(event.getSource().equals(button_cajaGuardarRemove)) {
@@ -2948,6 +2952,8 @@ public class Controller implements Initializable{
         			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
         			float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
         			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual - monto);
+        			Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica(), transaccion);
+
         		}
         	}
         	if(canRegister) {
@@ -3256,6 +3262,15 @@ public class Controller implements Initializable{
     	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     	
     	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	
+    	float ingresoTotal = Float.parseFloat(textfield_IngresosVentasPagadas.getText()) + Float.parseFloat(textfield_GananciaVentasPagadas.getText());
+    	
+    	textfield_ingresosTotales.setText("" + df.format(ingresoTotal));
+    	
+    	float egresoTotal = Float.parseFloat(textfield_egresosPagos.getText()) + Float.parseFloat(textfield_egresosPeticionesPorPagar.getText());
+    	
+    	textfield_EgresosTotales.setText("" + df.format(egresoTotal));
+    	
     }
     
     public void fillReportePorDia(ActionEvent event)
@@ -3307,6 +3322,14 @@ public class Controller implements Initializable{
     	textField_pagosPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularMontoPagosPeticionesPorPagarTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
     	
     	textField_deudaPeticionesPorPagar.setText("" + df.format(Controladora.getInstance().calcularDeudaPeticionesTotal(datepicker_totalTransaccionesInicial.getValue(), datepicker_totalTransaccionesFinal.getValue())));
+    	
+    	float ingresoTotal = Float.parseFloat(textfield_IngresosVentasPagadas.getText()) + Float.parseFloat(textfield_GananciaVentasPagadas.getText());
+    	
+    	textfield_ingresosTotales.setText("" + df.format(ingresoTotal));
+    	
+    	float egresoTotal = Float.parseFloat(textfield_egresosPagos.getText()) + Float.parseFloat(textfield_egresosPeticionesPorPagar.getText());
+    	
+    	textfield_EgresosTotales.setText("" + df.format(egresoTotal));
     }
     
     public void fillRubroList(ArrayList<Rubro> r) {

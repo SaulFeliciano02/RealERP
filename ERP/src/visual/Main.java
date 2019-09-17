@@ -211,6 +211,10 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadPagoPeticionesCredito();
 					}
+					if(Controladora.getInstance().activarLoadCajaChica())
+					{
+						Controladora.getInstance().loadCajaChica();
+					}
 					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
 						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
@@ -485,6 +489,10 @@ public class Main extends Application{
 					if(Controladora.getInstance().activarLoadPagoPeticionesCredito())
 					{
 						Controladora.getInstance().loadPagoPeticionesCredito();
+					}
+					if(Controladora.getInstance().activarLoadCajaChica())
+					{
+						Controladora.getInstance().loadCajaChica();
 					}
 					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
 						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
