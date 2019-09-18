@@ -542,15 +542,12 @@ public class Controladora implements Serializable{
 		
 	}
 	
-	public void guardarCajaChicaSQL(CajaChica caja, TransaccionesCajaChica tr)
+	public void guardarCajaChicaSQL(CajaChica caja)
 	{
 		Conexion con = new Conexion();
 		Connection c = null;
-		Connection c2 = null;
 		Statement s = null;
-		Statement s2 = null;
 		ResultSet r = null;
-		ResultSet r2 = null;
 		PreparedStatement p = null;
 		
 		try {
@@ -564,18 +561,57 @@ public class Controladora implements Serializable{
 			p.executeUpdate();
 			
 			c.close();
+			System.out.println("Datos guardados!");
 			
-			c2 = con.conectar();
-			p = (PreparedStatement) c2.prepareStatement("INSERT INTO transaccionescajachica (montoactual, actualizacion, descripcion, usuario, fecha) VALUES (?, ?, ?, ?, ?)");
-			p.setInt(1, getMiCajaChica().getTransacciones().size());
-			p.setFloat(2, tr.getActualizacion());
-			p.setString(3, tr.getDescripcion());
-			p.setInt(4, getMisUsuarios().indexOf(tr.getUsuario())+1);
-			p.setDate(5, (java.sql.Date.valueOf(tr.getFecha())));
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
+	public void guardarTransaccionCaja(TransaccionesCajaChica transaccion) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO transaccionescajachica (montoactual, actualizacion, descripcion, usuario, fecha) VALUES (?, ?, ?, ?, ?)");
+			p.setFloat(1, getMiCajaChica().getMontoActual());
+			p.setFloat(2, transaccion.getActualizacion());
+			p.setString(3, transaccion.getDescripcion());
+			p.setInt(4, getMisUsuarios().indexOf(transaccion.getUsuario())+1);
+			p.setDate(5, (java.sql.Date.valueOf(transaccion.getFecha())));
 			
 			p.executeUpdate();
 			
-			c2.close();
+			//ejecutar el preparedStatement
+			p = (PreparedStatement)
+					c.prepareStatement("UPDATE cajachica SET monto = '"+Controladora.getInstance().getMiCajaChica().getMontoActual()+"' WHERE idcajachica = 1");
+			p.executeUpdate();
 			System.out.println("Datos guardados!");
 			
 		} catch (Exception e2) {
@@ -4892,12 +4928,11 @@ public class Controladora implements Serializable{
 			{
 				monto = r.getFloat(2);
 			}
-			
 			CajaChica cj = new CajaChica(monto);
 			cj.setTransacciones(trs);
 			
 			setCajaChica(cj);
-			
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

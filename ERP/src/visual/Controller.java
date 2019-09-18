@@ -2925,12 +2925,13 @@ public class Controller implements Initializable{
         			if(Controladora.getInstance().getMiCajaChica() == null) {
         				CajaChica cajaChica = new CajaChica(0);
         				Controladora.getInstance().setCajaChica(cajaChica);
+        				Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
         			}
         			TransaccionesCajaChica transaccion = new TransaccionesCajaChica(monto, descripcion, Controladora.getInstance().getUsuarioLogueado(), LocalDate.now());
         			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
         		    float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
         			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual + monto);
-        			Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica(), transaccion);
+        			Controladora.getInstance().guardarTransaccionCaja(transaccion);
         		}
         	}
         	else if(event.getSource().equals(button_cajaGuardarRemove)) {
@@ -2949,12 +2950,13 @@ public class Controller implements Initializable{
         			if(Controladora.getInstance().getMiCajaChica() == null) {
         				CajaChica cajaChica = new CajaChica(0);
         				Controladora.getInstance().setCajaChica(cajaChica);
+        				Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
         			}
         			TransaccionesCajaChica transaccion = new TransaccionesCajaChica(monto*-1, descripcion, Controladora.getInstance().getUsuarioLogueado(), LocalDate.now());
         			Controladora.getInstance().getMiCajaChica().getTransacciones().add(transaccion);
         			float montoActual = Controladora.getInstance().getMiCajaChica().getMontoActual();
         			Controladora.getInstance().getMiCajaChica().setMontoActual(montoActual - monto);
-        			Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica(), transaccion);
+        			Controladora.getInstance().guardarTransaccionCaja(transaccion);
 
         		}
         	}
@@ -2965,7 +2967,6 @@ public class Controller implements Initializable{
         		textarea_cajaDescripcionAdd.setText("");
     		
         		textfield_cajaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCajaChica().getMontoActual()));
-        		System.out.println("Klk");
         		fillCajaTransacciones();
         	}
     	}
