@@ -78,6 +78,7 @@ import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
+import logico.CuentaBanco;
 import logico.Empleado;
 import logico.Empresa;
 import logico.Estandar;
@@ -93,6 +94,7 @@ import logico.Rubro;
 import logico.Servicio;
 import logico.ServicioUtilizado;
 import logico.TransaccionesCajaChica;
+import logico.TransaccionesCuentaBanco;
 import logico.UnidadMedida;
 import logico.Usuario;
 import javafx.scene.Node;
@@ -480,11 +482,28 @@ public class Controller implements Initializable{
     @FXML private TextArea textarea_cajaDescripcionRemove;
     @FXML private Button button_cajaGuardarRemove;
     
+    @FXML private TableColumn<Float, TransaccionesCuentaBanco> tablecolumn_cuentaMonto;
+    @FXML private TableColumn<String, TransaccionesCuentaBanco> tablecolumn_cuentaDescripcion;
+    @FXML private TableColumn<LocalDate, TransaccionesCuentaBanco> tablecolumn_cuentaFecha;
+    @FXML private TableView<TransaccionesCuentaBanco> tableview_cuentaList;
+    
+    //CUENTA DE BANCO
+    @FXML private TextField textfield_cuentaFondoActual;
+    
+    @FXML private TextField textfield_cuentaMontoAdd;
+    @FXML private TextArea textarea_cuentaDescripcionAdd;
+    @FXML private Button button_cuentaGuardarAdd;
+    
+    @FXML private TextField textfield_cuentaMontoRemove;
+    @FXML private TextArea textarea_cuentaDescripcionRemove;
+    @FXML private Button button_cuentaGuardarRemove;
+    
     @FXML private TableColumn<Float, TransaccionesCajaChica> tablecolumn_cajaMonto;
     @FXML private TableColumn<String, TransaccionesCajaChica> tablecolumn_cajaDescripcion;
     @FXML private TableColumn<LocalDate, TransaccionesCajaChica> tablecolumn_cajaFecha;
     @FXML private TableColumn<String, TransaccionesCajaChica> tablecolumn_cajaUsuario;
     @FXML private TableView<TransaccionesCajaChica> tableview_cajaList;
+    
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -2915,7 +2934,7 @@ public class Controller implements Initializable{
     	confirmation.showAndWait();
     	if(confirmation.getResult() == ButtonType.YES) {
     		if(event.getSource().equals(button_cajaGuardarAdd)) {
-        		if(textfield_cajaMontoAdd.getText().equalsIgnoreCase("")) {
+        		if(textfield_cajaMontoAdd.getText().equalsIgnoreCase("") || textarea_cajaDescripcionAdd.getText().equalsIgnoreCase("")) {
         			warning.showAndWait();
         			canRegister = false;
         		}
@@ -2936,7 +2955,7 @@ public class Controller implements Initializable{
         	}
         	else if(event.getSource().equals(button_cajaGuardarRemove)) {
         		Alert warningMoney = new Alert(AlertType.WARNING, "Se está excediendo del presupuesto de la caja.");
-        		if(textfield_cajaMontoRemove.getText().equalsIgnoreCase("")) {
+        		if(textfield_cajaMontoRemove.getText().equalsIgnoreCase("") || textarea_cajaDescripcionRemove.getText().equalsIgnoreCase("")) {
         			warning.showAndWait();
         			canRegister = false;
         		}
@@ -2970,8 +2989,73 @@ public class Controller implements Initializable{
         		fillCajaTransacciones();
         	}
     	}
-    	
-		
+    }
+    
+    public void guardarCuentaBanco(ActionEvent event) {
+    	float monto = 0;
+    	String descripcion = "";
+    	boolean canRegister = true;
+    	Alert warning = new Alert(AlertType.WARNING, "Ingrese el monto.");
+    	Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
+    	Alert confirmation = new Alert(AlertType.CONFIRMATION, "Esta seguro que desea realizar esta operación?", ButtonType.YES, ButtonType.NO);
+    	confirmation.showAndWait();
+    	if(confirmation.getResult() == ButtonType.YES) {
+    		if(event.getSource().equals(button_cuentaGuardarAdd)) {
+        		if(textfield_cuentaMontoAdd.getText().equalsIgnoreCase("") || textarea_cuentaDescripcionAdd.getText().equalsIgnoreCase("")) {
+        			warning.showAndWait();
+        			canRegister = false;
+        		}
+        		if(canRegister) {
+        			monto = Float.parseFloat(textfield_cuentaMontoAdd.getText());
+        			descripcion = textarea_cuentaDescripcionAdd.getText();
+        			if(Controladora.getInstance().getMiCuentaBanco() == null) {
+        				CuentaBanco cuentaBanco = new CuentaBanco(0);
+        				Controladora.getInstance().setCuentaBanco(cuentaBanco);
+        				//Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
+        			}
+        			TransaccionesCuentaBanco transaccion = new TransaccionesCuentaBanco(monto, descripcion, LocalDate.now());
+        			Controladora.getInstance().getMiCuentaBanco().getTransacciones().add(transaccion);
+        		    float montoActual = Controladora.getInstance().getMiCuentaBanco().getMontoActual();
+        			Controladora.getInstance().getMiCuentaBanco().setMontoActual(montoActual + monto);
+        			//Controladora.getInstance().guardarTransaccionCaja(transaccion);
+        		}
+        	}
+        	else if(event.getSource().equals(button_cuentaGuardarRemove)) {
+        		Alert warningMoney = new Alert(AlertType.WARNING, "Se está excediendo del presupuesto de la caja.");
+        		if(textfield_cuentaMontoRemove.getText().equalsIgnoreCase("") || textarea_cuentaDescripcionRemove.getText().equalsIgnoreCase("")) {
+        			warning.showAndWait();
+        			canRegister = false;
+        		}
+        		/**else if(Float.parseFloat(textfield_cuentaMontoRemove.getText()) > Float.parseFloat(textfield_cuentaFondoActual.getText())) {
+        			warningMoney.showAndWait();
+        			canRegister = false;
+        		}**/
+        		if(canRegister) {
+        			monto = Float.parseFloat(textfield_cuentaMontoRemove.getText());
+        			descripcion = textarea_cuentaDescripcionRemove.getText();
+        			if(Controladora.getInstance().getMiCuentaBanco() == null) {
+        				CuentaBanco cuentaBanco = new CuentaBanco(0);
+        				Controladora.getInstance().setCuentaBanco(cuentaBanco);
+        				//Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
+        			}
+        			TransaccionesCuentaBanco transaccion = new TransaccionesCuentaBanco(monto*-1, descripcion, LocalDate.now());
+        			Controladora.getInstance().getMiCuentaBanco().getTransacciones().add(transaccion);
+        			float montoActual = Controladora.getInstance().getMiCuentaBanco().getMontoActual();
+        			Controladora.getInstance().getMiCuentaBanco().setMontoActual(montoActual - monto);
+        			//Controladora.getInstance().guardarTransaccionCaja(transaccion);
+
+        		}
+        	}
+        	if(canRegister) {
+        		textfield_cuentaMontoRemove.setText("");
+        		textarea_cuentaDescripcionRemove.setText("");
+        		textfield_cuentaMontoAdd.setText("");
+        		textarea_cuentaDescripcionAdd.setText("");
+    		
+        		//textfield_cuentaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCajaChica().getMontoActual()));
+        		fillCuentaTransacciones();
+        	}
+    	}	
     }
 
 	public void verifyUserPermissions()
@@ -3206,6 +3290,10 @@ public class Controller implements Initializable{
     	else {
     		textfield_cajaFondoActual.setText("0.0");
     	}
+    	
+    	//Seteando cuenta de banco
+    	fillCuentaTransacciones();
+    	
     	
     }
     
@@ -3560,6 +3648,21 @@ public class Controller implements Initializable{
     	
     	tableview_cajaList.setItems(data);
     	tableview_cajaList.refresh();
+    }
+    
+    public void fillCuentaTransacciones() {
+    	ObservableList<TransaccionesCuentaBanco> data = FXCollections.observableArrayList();
+    	if(Controladora.getInstance().getMiCuentaBanco() != null) {
+    		for(TransaccionesCuentaBanco t : Controladora.getInstance().getMiCuentaBanco().getTransacciones()) {
+    			data.add(t);
+    		}
+    	}
+    	tablecolumn_cuentaMonto.setCellValueFactory(new PropertyValueFactory<>("actualizacion"));
+    	tablecolumn_cuentaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+    	tablecolumn_cuentaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+    	
+    	tableview_cuentaList.setItems(data);
+    	tableview_cuentaList.refresh();
     }
     
     public TableView<Cliente> getTableview_clientesList(){
