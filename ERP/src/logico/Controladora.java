@@ -149,6 +149,7 @@ public class Controladora implements Serializable{
 
 	private Empresa miEmpresa;
 	private CajaChica miCajaChica;
+	private CuentaBanco miCuentaBanco;
 	
 	private float ventaPromedioMensual;
 	
@@ -254,6 +255,7 @@ public class Controladora implements Serializable{
 		
 		this.miEmpresa = null;
 		this.miCajaChica = null;
+		this.miCuentaBanco = null;
 	}
 	
 	public CajaChica getMiCajaChica() {
@@ -262,6 +264,14 @@ public class Controladora implements Serializable{
 	
 	public void setCajaChica(CajaChica cajaChica) {
 		miCajaChica = cajaChica;
+	}
+	
+	public CuentaBanco getMiCuentaBanco() {
+		return miCuentaBanco;
+	}
+	
+	public void setCuentaBanco(CuentaBanco cuentaBanco) {
+		miCuentaBanco = cuentaBanco;
 	}
 	
 	public Usuario getUsuarioLogueado() {
