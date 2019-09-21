@@ -1604,7 +1604,7 @@
                                                                      <children>
                                                                         <HBox alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="630.0">
                                                                            <children>
-                                                                              <ComboBox prefHeight="30.0" prefWidth="119.0" promptText="Buscar por:" />
+                                                                              <ComboBox prefHeight="30.0" prefWidth="142.0" promptText="Buscar por:" />
                                                                               <TextField prefHeight="31.0" prefWidth="229.0" promptText="Búsqueda" />
                                                                               <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                  <effect>
@@ -2173,6 +2173,34 @@
                                                          <children>
                                                             <VBox layoutX="196.0" layoutY="178.0" prefHeight="613.6" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <children>
+                                                                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="630.0">
+                                                                     <children>
+                                                                        <Label text="Monto actual:">
+                                                                           <HBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </HBox.margin>
+                                                                           <font>
+                                                                              <Font name="System Bold" size="17.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                        <TextField fx:id="textfield_cajaFondoActual1" alignment="CENTER_RIGHT" editable="false" promptText="0.0">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" />
+                                                                           </HBox.margin>
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </TextField>
+                                                                        <Label text="RD$">
+                                                                           <HBox.margin>
+                                                                              <Insets left="3.0" />
+                                                                           </HBox.margin>
+                                                                           <font>
+                                                                              <Font name="System Bold" size="12.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </HBox>
                                                                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                      <children>
                                                                         <Pane prefHeight="526.0" prefWidth="288.0">
@@ -2305,7 +2333,7 @@
                                                                         </TableView>
                                                                      </children>
                                                                      <VBox.margin>
-                                                                        <Insets top="20.0" />
+                                                                        <Insets />
                                                                      </VBox.margin>
                                                                   </HBox>
                                                                </children>
@@ -3070,12 +3098,12 @@
                                                                      <children>
                                                                         <HBox prefHeight="46.0" prefWidth="610.0">
                                                                            <children>
-                                                                              <Button mnemonicParsing="false" onAction="#abrirCuentasPorPagar" text="Cuentas por pagar">
+                                                                              <Button fx:id="boton_cuentasPorPagar" disable="true" mnemonicParsing="false" onAction="#abrirCuentasPorPagar" text="Cuentas por pagar">
                                                                                  <font>
                                                                                     <Font size="17.0" />
                                                                                  </font>
                                                                               </Button>
-                                                                              <Button mnemonicParsing="false" onAction="#abrirCuentasPorCobrar" text="Cuentas por cobrar">
+                                                                              <Button fx:id="boton_cuentasPorCobrar" mnemonicParsing="false" onAction="#abrirCuentasPorCobrar" text="Cuentas por cobrar">
                                                                                  <HBox.margin>
                                                                                     <Insets left="20.0" />
                                                                                  </HBox.margin>
