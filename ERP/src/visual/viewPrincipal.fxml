@@ -1604,8 +1604,8 @@
                                                                      <children>
                                                                         <HBox alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="630.0">
                                                                            <children>
-                                                                              <ComboBox prefHeight="30.0" prefWidth="142.0" promptText="Buscar por:" />
-                                                                              <TextField prefHeight="31.0" prefWidth="229.0" promptText="Búsqueda" />
+                                                                              <ComboBox fx:id="combobox_buscarEmpleado" prefHeight="30.0" prefWidth="142.0" promptText="Buscar por:" />
+                                                                              <TextField fx:id="textfield_buscarEmpleado" onKeyTyped="#buscarEmpleados" prefHeight="31.0" prefWidth="229.0" promptText="Búsqueda" />
                                                                               <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="31.0" prefWidth="30.0">
                                                                                  <effect>
                                                                                     <ImageInput>
@@ -2183,7 +2183,7 @@
                                                                               <Font name="System Bold" size="17.0" />
                                                                            </font>
                                                                         </Label>
-                                                                        <TextField fx:id="textfield_cajaFondoActual1" alignment="CENTER_RIGHT" editable="false" promptText="0.0">
+                                                                        <TextField fx:id="textfield_cuentaFondoActual" alignment="CENTER_RIGHT" editable="false" promptText="0.0">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" />
                                                                            </HBox.margin>
@@ -3349,7 +3349,7 @@
                                                                               <Label text="Monto máximo permitido:" />
                                                                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="282.0">
                                                                                  <children>
-                                                                                    <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="137.0" promptText="0.0" />
+                                                                                    <TextField fx:id="textfield_cajaMaximo" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="137.0" promptText="0.0" />
                                                                                     <Label text="RD$">
                                                                                        <HBox.margin>
                                                                                           <Insets left="3.0" />

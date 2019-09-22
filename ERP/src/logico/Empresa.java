@@ -14,10 +14,11 @@ public class Empresa {
 	private LocalDate fechasecvencimiento;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFinal;
+	private float cajaMaximo;
 	private boolean borrado;
 	public Empresa(String nombre, String rnc, String telefono, String domicilio, int valorFiscalInferior,
 			int valorFiscalMayor, LocalDate fechaSecSolicitada, LocalDate fechasecvencimiento, LocalDate fechaInicio,
-			LocalDate fechaFinal) {
+			LocalDate fechaFinal, float cajaMaximo) {
 		super();
 		this.nombre = nombre;
 		this.rnc = rnc;
@@ -30,6 +31,7 @@ public class Empresa {
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
 		this.ITBIS = 18;
+		this.cajaMaximo = cajaMaximo;
 	}
 	public String getNombre() {
 		return nombre;
@@ -103,6 +105,13 @@ public class Empresa {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	public float getCajaMaximo() {
+		return cajaMaximo;
+	}
+	public void setCajaMaximo(float cajaMaximo) {
+		this.cajaMaximo = cajaMaximo;
+	}
+	
 	
 	
 	

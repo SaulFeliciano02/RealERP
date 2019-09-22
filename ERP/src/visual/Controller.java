@@ -302,6 +302,8 @@ public class Controller implements Initializable{
     @FXML private TableView<Atributos> tableView_atributos;
     @FXML private ListView<String> listView_grupoAtributos = new ListView<>();
     @FXML private TextField textfield_infoFamilia;
+    @FXML private RadioButton radiobutton_atributo;
+    @FXML private RadioButton radiobutton_familia;
     
     //DESPLIEGUE DE CLIENTE
     @FXML private TableColumn<Cliente, String> tablecolumn_clienteCodigo;
@@ -347,6 +349,8 @@ public class Controller implements Initializable{
     @FXML private Button button_nuevoEmpleado;
     @FXML private Button button_modificarVendedor;
     @FXML private Button button_eliminarVendedor;
+    @FXML private TextField textfield_buscarEmpleado;
+    @FXML private ComboBox<String> combobox_buscarEmpleado;
     
     //DESPLIEGUE DE RUBROS
     @FXML private Button button_rubroNuevo;
@@ -407,6 +411,8 @@ public class Controller implements Initializable{
     
     @FXML private DatePicker datepicker_empresaFechaInicio;
     @FXML private DatePicker datepicker_empresaFechaFinal;
+    
+    @FXML private TextField textfield_cajaMaximo;
     
     @FXML private Button button_empresaGuardar;
     
@@ -1298,6 +1304,12 @@ public class Controller implements Initializable{
     	textfield_registrar_atributo.setText("");
     	textfield_register_familia.setText("");
     	button_agregar_atributo.setDisable(true);
+    }
+    
+    public void activarEliminarAtributo(MouseEvent event) {
+    	if(tableView_atributos.getSelectionModel().getSelectedItem() != null) {
+    		button_atributosEliminar.setDisable(false);
+    	}
     }
     
     public void pressed_nuevoGastoGeneral(ActionEvent event)
@@ -2343,6 +2355,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Busqueda de productos
     public void buscarProductos(KeyEvent event) {
     	TextField textfield = (TextField) event.getSource();
     	ArrayList<Producto> productos = new ArrayList<>();
@@ -2391,6 +2404,24 @@ public class Controller implements Initializable{
     	else {
     		fillProveedorList(proveedores, "");
     	}
+    }
+    
+    //Busqueda de empleados
+    public void buscarEmpleados(KeyEvent event) {
+    	ArrayList<Empleado> empleados = new ArrayList<>();
+    	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_buscarEmpleado.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
+    		empleados = Controladora.getInstance().searchEmpleados(textfield_buscarEmpleado.getText().toLowerCase(), combobox_buscarEmpleado.getValue());
+    	}
+    	else {
+    		empleados = Controladora.getInstance().searchEmpleados(textfield_buscarEmpleado.getText().toLowerCase() + event.getCharacter().toLowerCase(), combobox_buscarEmpleado.getValue());
+    	}
+    	if(empleados.size() == 0) {
+    		fillEmpleadoList(null, "");;
+    	}
+    	else {
+    		fillEmpleadoList(empleados, "");
+    	}
+    	
     }
     
     public void buscarRubros(KeyEvent event) {
@@ -2500,26 +2531,51 @@ public class Controller implements Initializable{
     }
     
     public void eliminarAtributo(ActionEvent event) {
-    	/**Atributos atributo = tableView_atributos.getSelectionModel().getSelectedItem();
-    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + atributo.getNombre() + "?", ButtonType.YES, ButtonType.NO);
-    	alert.showAndWait();
+    	Atributos atributo = tableView_atributos.getSelectionModel().getSelectedItem();
+    	if(radiobutton_atributo.isSelected()) {
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + atributo.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    		alert.showAndWait();
     	
-    	if (alert.getResult() == ButtonType.YES) {
-    		if(rubro!=null) {
-    			if(Controladora.getInstance().isRubroInProduct(rubro)) {
-    				Alert rubroTaken = new Alert(AlertType.CONFIRMATION);
-    				rubroTaken.setContentText("Este rubro es parte de un producto.");
-    				rubroTaken.show();
+    		if(alert.getResult() == ButtonType.YES) {
+    			if(Controladora.getInstance().isAtributoInProduct(atributo.getNombre())) {
+    				Alert atributoUsed = new Alert(AlertType.WARNING, "Este atributo pertenece a un producto");
+    				atributoUsed.showAndWait();
     			}
     			else {
-    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
-    				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
-    				Controladora.getInstance().borrarRubro(indice+1);
-    				fillRubroList(null);
+    				int indice = Controladora.getInstance().getMisAtributos().indexOf(atributo);
+    				Controladora.getInstance().getMisAtributos().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarAtributo(indice+1);
+    				fillAtributesList(null);
     			}
-    				
-        	}
-    	}**/
+    		}
+    	}
+    	else if(radiobutton_familia.isSelected()) {
+    		GrupoAtributo grupoAtributo = atributo.getGrupoAtributo();
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + grupoAtributo.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+    		alert.showAndWait();
+    		
+    		
+    		if(alert.getResult() == ButtonType.YES) {
+    			if(Controladora.getInstance().isFamiliaInProduct(grupoAtributo.getNombre())) {
+    				Alert grupoUsed = new Alert(AlertType.WARNING, "Este grupo de familia pertenece a un producto");
+    				grupoUsed.showAndWait();
+    			}
+    			else {
+    				for(Atributos a : Controladora.getInstance().getMisAtributos()) {
+    					if(a.getGrupoAtributo().equals(grupoAtributo)) {
+    						int indiceAtributo = Controladora.getInstance().getMisAtributos().indexOf(a);
+    						Controladora.getInstance().getMisAtributos().get(indiceAtributo).setBorrado(true);
+    					}
+    				}
+    				int indice = Controladora.getInstance().getMisGrupoAtributo().indexOf(grupoAtributo);
+    				Controladora.getInstance().getMisGrupoAtributo().get(indice).setBorrado(true);
+    				Controladora.getInstance().borrarAtributo(indice+1);
+    				fillAtributesList(null);
+    			}
+    		}
+    	}
+    	tableView_atributos.getSelectionModel().clearSelection();
+    	button_atributosEliminar.setDisable(true);
     }
 
     
@@ -2592,6 +2648,7 @@ public class Controller implements Initializable{
     	LocalDate fechaVencimiento = null;
     	LocalDate fechaInicio = null;
     	LocalDate fechaFinal = null;
+    	float cajaMaximo = 0;
     	try {
     		nombre = textfield_empresaNombre.getText();
     		rnc = textfield_empresaRNC.getText();
@@ -2601,6 +2658,7 @@ public class Controller implements Initializable{
     		fechaVencimiento = datepicker_empresaFechaVencimiento.getValue();
     		fechaInicio = datepicker_empresaFechaInicio.getValue();
     		fechaFinal = datepicker_empresaFechaFinal.getValue();
+    		cajaMaximo = Float.parseFloat(textfield_cajaMaximo.getText());
     		if(nombre != null)
     		{
     			Controladora.getInstance().actualizarProveedorPorDefecto(nombre);
@@ -2609,7 +2667,7 @@ public class Controller implements Initializable{
     		
     	}
     	
-    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, fechaSolicitada, fechaVencimiento, fechaInicio, fechaFinal);
+    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, fechaSolicitada, fechaVencimiento, fechaInicio, fechaFinal, cajaMaximo);
     	Controladora.getInstance().setMiEmpresa(empresa);
     	
     	Controladora.getInstance().guardarInfoEmpresaSQL(empresa);
@@ -2930,14 +2988,23 @@ public class Controller implements Initializable{
     	float monto = 0;
     	String descripcion = "";
     	boolean canRegister = true;
-    	Alert warning = new Alert(AlertType.WARNING, "Ingrese el monto.");
+    	Alert warning = new Alert(AlertType.WARNING, "Ingrese todos los datos");
     	Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
     	Alert confirmation = new Alert(AlertType.CONFIRMATION, "Esta seguro que desea realizar esta operación?", ButtonType.YES, ButtonType.NO);
     	confirmation.showAndWait();
     	if(confirmation.getResult() == ButtonType.YES) {
     		if(event.getSource().equals(button_cajaGuardarAdd)) {
+    			Alert limitWarning = new Alert(AlertType.WARNING, "Sobrepasa el límite de caja");
+    			float montoMaximo = 0;
+    			if(Controladora.getInstance().getMiEmpresa() != null) {
+    				montoMaximo = Controladora.getInstance().getMiEmpresa().getCajaMaximo();
+    			}
         		if(textfield_cajaMontoAdd.getText().equalsIgnoreCase("") || textarea_cajaDescripcionAdd.getText().equalsIgnoreCase("")) {
         			warning.showAndWait();
+        			canRegister = false;
+        		}
+        		else if(Float.parseFloat(textfield_cajaMontoAdd.getText()) > montoMaximo) {
+        			limitWarning.showAndWait();
         			canRegister = false;
         		}
         		if(canRegister) {
@@ -2997,7 +3064,7 @@ public class Controller implements Initializable{
     	float monto = 0;
     	String descripcion = "";
     	boolean canRegister = true;
-    	Alert warning = new Alert(AlertType.WARNING, "Ingrese el monto.");
+    	Alert warning = new Alert(AlertType.WARNING, "Ingrese todos los datos.");
     	Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
     	Alert confirmation = new Alert(AlertType.CONFIRMATION, "Esta seguro que desea realizar esta operación?", ButtonType.YES, ButtonType.NO);
     	confirmation.showAndWait();
@@ -3013,13 +3080,13 @@ public class Controller implements Initializable{
         			if(Controladora.getInstance().getMiCuentaBanco() == null) {
         				CuentaBanco cuentaBanco = new CuentaBanco(0);
         				Controladora.getInstance().setCuentaBanco(cuentaBanco);
-        				//Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
+        				Controladora.getInstance().guardarCuentaBancoSQL(Controladora.getInstance().getMiCuentaBanco());
         			}
         			TransaccionesCuentaBanco transaccion = new TransaccionesCuentaBanco(monto, descripcion, LocalDate.now());
         			Controladora.getInstance().getMiCuentaBanco().getTransacciones().add(transaccion);
         		    float montoActual = Controladora.getInstance().getMiCuentaBanco().getMontoActual();
         			Controladora.getInstance().getMiCuentaBanco().setMontoActual(montoActual + monto);
-        			//Controladora.getInstance().guardarTransaccionCaja(transaccion);
+        			Controladora.getInstance().guardarTransaccionCuenta(transaccion);
         		}
         	}
         	else if(event.getSource().equals(button_cuentaGuardarRemove)) {
@@ -3028,24 +3095,23 @@ public class Controller implements Initializable{
         			warning.showAndWait();
         			canRegister = false;
         		}
-        		/**else if(Float.parseFloat(textfield_cuentaMontoRemove.getText()) > Float.parseFloat(textfield_cuentaFondoActual.getText())) {
+        		else if(Float.parseFloat(textfield_cuentaMontoRemove.getText()) > Float.parseFloat(textfield_cuentaFondoActual.getText())) {
         			warningMoney.showAndWait();
         			canRegister = false;
-        		}**/
+        		}
         		if(canRegister) {
         			monto = Float.parseFloat(textfield_cuentaMontoRemove.getText());
         			descripcion = textarea_cuentaDescripcionRemove.getText();
         			if(Controladora.getInstance().getMiCuentaBanco() == null) {
         				CuentaBanco cuentaBanco = new CuentaBanco(0);
         				Controladora.getInstance().setCuentaBanco(cuentaBanco);
-        				//Controladora.getInstance().guardarCajaChicaSQL(Controladora.getInstance().getMiCajaChica());
+        				Controladora.getInstance().guardarCuentaBancoSQL(Controladora.getInstance().getMiCuentaBanco());
         			}
         			TransaccionesCuentaBanco transaccion = new TransaccionesCuentaBanco(monto*-1, descripcion, LocalDate.now());
         			Controladora.getInstance().getMiCuentaBanco().getTransacciones().add(transaccion);
         			float montoActual = Controladora.getInstance().getMiCuentaBanco().getMontoActual();
         			Controladora.getInstance().getMiCuentaBanco().setMontoActual(montoActual - monto);
-        			//Controladora.getInstance().guardarTransaccionCaja(transaccion);
-
+        			Controladora.getInstance().guardarTransaccionCuenta(transaccion);
         		}
         	}
         	if(canRegister) {
@@ -3054,7 +3120,7 @@ public class Controller implements Initializable{
         		textfield_cuentaMontoAdd.setText("");
         		textarea_cuentaDescripcionAdd.setText("");
     		
-        		//textfield_cuentaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCajaChica().getMontoActual()));
+        		textfield_cuentaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCuentaBanco().getMontoActual()));
         		fillCuentaTransacciones();
         	}
     	}	
@@ -3153,6 +3219,10 @@ public class Controller implements Initializable{
     	
     	//Seteando los empleados
     	fillEmpleadoList(null, "");
+    	ObservableList<String> combobox_empleadoData = FXCollections.observableArrayList();
+    	combobox_buscarEmpleado.setValue("Buscar por:");
+    	combobox_empleadoData.addAll("Codigo", "Nombre");
+    	combobox_buscarEmpleado.setItems(combobox_proveedorData);
     	
     	//Seteando los rubros
     	ObservableList<String> combobox_rubroData = FXCollections.observableArrayList();
@@ -3295,6 +3365,12 @@ public class Controller implements Initializable{
     	
     	//Seteando cuenta de banco
     	fillCuentaTransacciones();
+    	if(Controladora.getInstance().getMiCuentaBanco() != null) {
+    		textfield_cuentaFondoActual.setText(Float.toString(Controladora.getInstance().getMiCuentaBanco().getMontoActual()));
+    	}
+    	else {
+    		textfield_cuentaFondoActual.setText("0.0");
+    	}
     	
     	
     }
@@ -3500,10 +3576,18 @@ public class Controller implements Initializable{
     public void fillAtributesList(ArrayList<Atributos> a) {
     	ObservableList<Atributos> data = FXCollections.observableArrayList();
     	if(a == null) {
-    		data.addAll(Controladora.getInstance().getMisAtributos());
+    		for(Atributos atributo : Controladora.getInstance().getMisAtributos()) {
+    			if(!atributo.isBorrado()) {
+    				data.add(atributo);
+    			}
+    		}
     	}
     	else {
-    		data.addAll(a);
+    		for(Atributos atributo : a) {
+    			if(!atributo.isBorrado()) {
+    				data.add(atributo);
+    			}
+    		}
     	}
 		tablecolumn_atributogrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
     	tablecolumn_atributonombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
