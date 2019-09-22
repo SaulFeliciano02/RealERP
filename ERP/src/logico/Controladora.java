@@ -650,6 +650,103 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public void guardarCuentaBancoSQL(CuentaBanco cuentaBanco)
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO montocuentabancaria (monto, fecha) VALUES (?, ?)");
+			p.setFloat(1, cuentaBanco.getMontoActual());
+			p.setDate(2, (java.sql.Date.valueOf(LocalDate.now())));
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			c.close();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
+	public void guardarTransaccionCuenta(TransaccionesCuentaBanco transaccion) {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO transaccionescuentabancaria (montoactual, actualizacion, descripcion, fecha) VALUES (?, ?, ?, ?)");
+			p.setFloat(1, getMiCajaChica().getMontoActual());
+			p.setFloat(2, transaccion.getActualizacion());
+			p.setString(3, transaccion.getDescripcion());
+			p.setDate(4, (java.sql.Date.valueOf(transaccion.getFecha())));
+			
+			p.executeUpdate();
+			
+			//ejecutar el preparedStatement
+			p = (PreparedStatement)
+					c.prepareStatement("UPDATE montocuentabancaria SET monto = '"+Controladora.getInstance().getMiCuentaBanco().getMontoActual()+"' WHERE idmontocuentabancaria = 1");
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
 	public void guardarPeticionSQL(Peticion pet)
 	{
 		Conexion con = new Conexion();
@@ -3080,16 +3177,17 @@ public class Controladora implements Serializable{
 			
 			if(empresa.getITBIS() != 18) {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis) VALUES (?, ?, ?, ?, ?)");
-				p.setInt(5, empresa.getITBIS());
+					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis) VALUES (?, ?, ?, ?, ?, ?)");
+				p.setInt(6, empresa.getITBIS());
 			}else {
 				p = (PreparedStatement)
-						c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio) VALUES (?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio) VALUES (?, ?, ?, ?, ?)");
 			}
 			p.setString(1, empresa.getNombre());
 			p.setString(2, empresa.getRnc());
 			p.setString(3, empresa.getTelefono());
 			p.setString(4, empresa.getDomicilio());
+			p.setFloat(5, empresa.getCajaMaximo());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -3976,6 +4074,34 @@ public class Controladora implements Serializable{
 		for(Peticion peticion : Controladora.getInstance().getMisPeticiones()) {
 			if(peticion.getCodigo().equalsIgnoreCase(codigo)) {
 				result = peticion;
+			}
+		}
+		return result;
+	}
+	
+	public boolean isAtributoInProduct(String atributo) {
+		boolean result = false;
+		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
+			for(Combinaciones combinacion : estandar.getCombinaciones()) {
+				for(Atributos a : combinacion.getListaAtributos()) {
+					if(a.getNombre().equalsIgnoreCase(atributo)) {
+						return true;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	public boolean isFamiliaInProduct(String familia) {
+		boolean result = false;
+		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
+			for(Combinaciones combinacion : estandar.getCombinaciones()) {
+				for(Atributos a : combinacion.getListaAtributos()) {
+					if(a.getGrupoAtributo().getNombre().equalsIgnoreCase(familia)) {
+						return true;
+					}
+				}
 			}
 		}
 		return result;
@@ -9544,6 +9670,81 @@ public void loadCategoriaEmpleado()
 			p = (PreparedStatement)
 					cSQL.prepareStatement("UPDATE gastosgenerales SET borrado = 1 WHERE idgastosgenerales = '"+indiceGasto+"'");
 			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void borrarAtributo(int indiceAtributo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE atributos SET borrado = 1 WHERE idatributos = '"+indiceAtributo+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void borrarGrupoAtributo(int indiceGrupoAtributo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE atributos SET borrado = 1 WHERE grupoatributo = '"+indiceGrupoAtributo+"'");
+			p.executeUpdate();
+			
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE grupoatributo SET borrado = 1 WHERE idgrupoatributo = '"+indiceGrupoAtributo+"'");
+			p.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
