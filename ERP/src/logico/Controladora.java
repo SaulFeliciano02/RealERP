@@ -4893,7 +4893,7 @@ public class Controladora implements Serializable{
 		ResultSet r2 = null;
 		PreparedStatement p = null;
 		float monto = 0;
-		int idCaja = 0;
+		float montoAnteriorCaja = 0;
 		float actualizacion = 0;
 		String descripcion = null;
 		int idUsu = 0;
@@ -4913,7 +4913,7 @@ public class Controladora implements Serializable{
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
 			{
-				idCaja = r.getInt(2);
+				montoAnteriorCaja = r.getFloat(2);
 				actualizacion = r.getFloat(3);
 				descripcion = r.getString(4);
 				idUsu = r.getInt(5);
@@ -4931,12 +4931,12 @@ public class Controladora implements Serializable{
 			
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 			s2 = (Statement) c2.createStatement();
-			r2 = s2.executeQuery("SELECT * FROM cajachica WHERE idcajachica = '"+idCaja+"'");
+			r2 = s2.executeQuery("SELECT * FROM cajachica");
 			
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r2.next())
 			{
-				monto = r.getFloat(2);
+				monto = r2.getFloat(2);
 			}
 			CajaChica cj = new CajaChica(monto);
 			cj.setTransacciones(trs);
