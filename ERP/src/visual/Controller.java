@@ -2634,56 +2634,64 @@ public class Controller implements Initializable{
     		datepicker_empresaFechaVencimiento.setValue(emp.getFechasecvencimiento());
     		datepicker_empresaFechaInicio.setValue(emp.getFechaInicio());
     		datepicker_empresaFechaFinal.setValue(emp.getFechaFinal());
+    		textfield_cajaMaximo.setText("" + emp.getCajaMaximo());
     	}
     }
     
     public void guardarEmpresa(ActionEvent event) {
-    	String nombre = "";
-    	String rnc = "";
-    	String telefono = "";
-    	String domicilio = "";
-    	int valorFiscalInferior = spinner_empresaValorFiscalMin.getValue();
-    	int valorFiscalMayor = spinner_empresaValorFiscalMax.getValue();
-    	LocalDate fechaSolicitada = null;
-    	LocalDate fechaVencimiento = null;
-    	LocalDate fechaInicio = null;
-    	LocalDate fechaFinal = null;
-    	float cajaMaximo = 0;
-    	try {
-    		nombre = textfield_empresaNombre.getText();
-    		rnc = textfield_empresaRNC.getText();
-    		domicilio = textarea_empresaDomicilio.getText();
-    		telefono = textfield_empresaTelefono.getText();
-    		fechaSolicitada = datepicker_empresaFechaSolicitada.getValue();
-    		fechaVencimiento = datepicker_empresaFechaVencimiento.getValue();
-    		fechaInicio = datepicker_empresaFechaInicio.getValue();
-    		fechaFinal = datepicker_empresaFechaFinal.getValue();
-    		cajaMaximo = Float.parseFloat(textfield_cajaMaximo.getText());
-    		if(nombre != null)
-    		{
-    			Controladora.getInstance().actualizarProveedorPorDefecto(nombre);
-    		}
-    	}catch(NullPointerException e) {
-    		
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "¿Desea actualizar la información de su empresa?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	if(alert.getResult() == ButtonType.YES) {
+	    	String nombre = "";
+	    	String rnc = "";
+	    	String telefono = "";
+	    	String domicilio = "";
+	    	int valorFiscalInferior = spinner_empresaValorFiscalMin.getValue();
+	    	int valorFiscalMayor = spinner_empresaValorFiscalMax.getValue();
+	    	LocalDate fechaSolicitada = null;
+	    	LocalDate fechaVencimiento = null;
+	    	LocalDate fechaInicio = null;
+	    	LocalDate fechaFinal = null;
+	    	float cajaMaximo = 0;
+	    	try {
+	    		nombre = textfield_empresaNombre.getText();
+	    		rnc = textfield_empresaRNC.getText();
+	    		domicilio = textarea_empresaDomicilio.getText();
+	    		telefono = textfield_empresaTelefono.getText();
+	    		fechaSolicitada = datepicker_empresaFechaSolicitada.getValue();
+	    		fechaVencimiento = datepicker_empresaFechaVencimiento.getValue();
+	    		fechaInicio = datepicker_empresaFechaInicio.getValue();
+	    		fechaFinal = datepicker_empresaFechaFinal.getValue();
+	    		cajaMaximo = Float.parseFloat(textfield_cajaMaximo.getText());
+	    		if(nombre != null)
+	    		{
+	    			Controladora.getInstance().actualizarProveedorPorDefecto(nombre);
+	    		}
+	    	}catch(NullPointerException e) {
+	    		
+	    	}
+	    	
+	    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, fechaSolicitada, fechaVencimiento, fechaInicio, fechaFinal, cajaMaximo);
+	    	Controladora.getInstance().setMiEmpresa(empresa);
+	    	
+	    	Controladora.getInstance().guardarInfoEmpresaSQL(empresa);
+	    	Controladora.getInstance().guardarAnioFiscal(empresa);
+	    	Controladora.getInstance().guardarRangoNumerosValorFiscal(empresa);
+	    	
+	    	text_negocioName.setText(nombre);
+	    	
+	    	alert = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
+    		alert.setTitle("Informaciones");
+    		alert.showAndWait();
     	}
-    	
-    	Empresa empresa = new Empresa(nombre, rnc, telefono, domicilio, valorFiscalInferior, valorFiscalMayor, fechaSolicitada, fechaVencimiento, fechaInicio, fechaFinal, cajaMaximo);
-    	Controladora.getInstance().setMiEmpresa(empresa);
-    	
-    	Controladora.getInstance().guardarInfoEmpresaSQL(empresa);
-    	Controladora.getInstance().guardarAnioFiscal(empresa);
-    	Controladora.getInstance().guardarRangoNumerosValorFiscal(empresa);
-    	
-    	text_negocioName.setText(nombre);
-    	
-    	textfield_empresaNombre.setText("");
+    	/*textfield_empresaNombre.setText("");
     	textfield_empresaRNC.setText("");
     	textfield_empresaTelefono.setText("");
     	textarea_empresaDomicilio.setText("");
     	spinner_empresaValorFiscalMin.getValueFactory().setValue(0);
     	spinner_empresaValorFiscalMax.getValueFactory().setValue(0);
     	datepicker_empresaFechaInicio.setValue(null);
-    	datepicker_empresaFechaFinal.setValue(null);
+    	datepicker_empresaFechaFinal.setValue(null);*/
     	
    
     }
@@ -2852,7 +2860,7 @@ public class Controller implements Initializable{
     				Controladora.getInstance().modificarProveedorSaldo(Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo(), indiceProveedor+1);
     			}
     			else if(combobox_peticionEstado.getValue().equalsIgnoreCase("Rechazada")) {
-    				Alert alert = new Alert(AlertType.CONFIRMATION, "Desea declinar esta petición?", ButtonType.YES, ButtonType.NO);
+    				Alert alert = new Alert(AlertType.CONFIRMATION, "¿Desea declinar esta petición?", ButtonType.YES, ButtonType.NO);
     		    	alert.showAndWait();
     		    	if(alert.getResult() == ButtonType.YES) {
     		    		Peticion peticionModificar = tableview_peticionList.getSelectionModel().getSelectedItem();

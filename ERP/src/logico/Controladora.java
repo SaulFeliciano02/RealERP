@@ -3177,11 +3177,11 @@ public class Controladora implements Serializable{
 			
 			if(empresa.getITBIS() != 18) {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis) VALUES (?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis, limitemontocajachica) VALUES (?, ?, ?, ?, ?, ?, ?)");
 				p.setInt(6, empresa.getITBIS());
 			}else {
 				p = (PreparedStatement)
-						c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio) VALUES (?, ?, ?, ?, ?)");
+						c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, limitemontocajachica) VALUES (?, ?, ?, ?, ?)");
 			}
 			p.setString(1, empresa.getNombre());
 			p.setString(2, empresa.getRnc());
@@ -5674,6 +5674,7 @@ public class Controladora implements Serializable{
 		Date fechainicio = null;
 		Date fechaFinal = null;
 		boolean borradoAnioFiscal = false;
+		float limiteMontoCajaChica = 0;
 		
 		try {
 			
@@ -5693,7 +5694,8 @@ public class Controladora implements Serializable{
 				telefono = r.getString(4);
 				domicilio = r.getString(5);
 				itbis = r.getInt(6);
-				borrado = r.getBoolean(7);
+				limiteMontoCajaChica = r.getFloat(7);
+				borrado = r.getBoolean(8);
 				
 			}
 			
@@ -5722,7 +5724,7 @@ public class Controladora implements Serializable{
 				borradoAnioFiscal = r3.getBoolean(4);
 			}
 			
-			Empresa emp = new Empresa(nombre, rnc, telefono, domicilio, valorfiscalinferior, valorfiscalsuperior, LocalDate.parse(fechasolicitada.toString()), LocalDate.parse(fechaVencimiento.toString()), LocalDate.parse(fechainicio.toString()), LocalDate.parse(fechaFinal.toString()));
+			Empresa emp = new Empresa(nombre, rnc, telefono, domicilio, valorfiscalinferior, valorfiscalsuperior, LocalDate.parse(fechasolicitada.toString()), LocalDate.parse(fechaVencimiento.toString()), LocalDate.parse(fechainicio.toString()), LocalDate.parse(fechaFinal.toString()), limiteMontoCajaChica);
 			Controladora.getInstance().setMiEmpresa(emp);
 			
 		} catch (SQLException e) {
@@ -5808,6 +5810,148 @@ public class Controladora implements Serializable{
 				
 			}
 			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean activarLoadCuentaBancaria()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM montocuentabancaria");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public void loadCuentaBancaria()
+	{
+		Conexion con = new Conexion();
+		Connection c = null;
+		Connection c2 = null;
+		Statement s = null;
+		Statement s2 = null;
+		ResultSet r = null;
+		ResultSet r2 = null;
+		PreparedStatement p = null;
+		float monto = 0;
+		float montoAnteriorCuenta = 0;
+		float actualizacion = 0;
+		String descripcion = null;
+		Date fecha = null;
+		ArrayList<TransaccionesCuentaBanco> trs = new ArrayList<>();
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT * FROM transaccionescuentabancaria");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				montoAnteriorCuenta = r.getFloat(2);
+				actualizacion = r.getFloat(3);
+				descripcion = r.getString(4);
+				fecha = r.getDate(5);
+				
+				TransaccionesCuentaBanco tr = new TransaccionesCuentaBanco(actualizacion, descripcion, LocalDate.parse(fecha.toString()));
+				trs.add(tr);
+				
+			}
+			
+			c.close();
+			
+			c2 = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s2 = (Statement) c2.createStatement();
+			r2 = s2.executeQuery("SELECT * FROM montocuentabancaria");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r2.next())
+			{
+				monto = r2.getFloat(2);
+			}
+			CuentaBanco cj = new CuentaBanco(monto);
+			cj.setTransacciones(trs);
+			
+			setCuentaBanco(cj);
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
