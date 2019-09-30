@@ -487,6 +487,7 @@ public class ControllerNuevaFactura implements Initializable{
     				
     				for(Combinaciones c : Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).getCombinaciones()) {
     					if(c.getNumeroSerie().equalsIgnoreCase(Controladora.getInstance().findFacturaNumeroSerie(items))) {
+    						System.out.println("Klk");
     						int indiceCombinacion = Controladora.getInstance().getMisCombinaciones().indexOf(c)+1;	
     						Controladora.getInstance().restarExistenciaActualMatriz(c.getExistenciaActual()-cantidad, indiceCombinacion);
     						c.setExistenciaActual(c.getExistenciaActual()-cantidad);
@@ -567,6 +568,7 @@ public class ControllerNuevaFactura implements Initializable{
     	
     	
     	for(CantProductosUtilizados c : prodFacturados) {
+    		System.out.println("En esta parte se esta guardando: " + c.getNombre());
     		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     		Controladora.getInstance().guardarCantProductosUtilizadosSQL( (Estandar) c.getProducto(), c);
     		Controladora.getInstance().guardarProductosFacturadosSQL(c, factura);
