@@ -897,13 +897,15 @@ public class ControllerNuevaFactura implements Initializable{
         		precioConvertido = cantidadConvertida * Float.parseFloat(Controladora.getInstance().findFacturaCosto(item));
         		String itemNombre = Controladora.getInstance().findFacturaNombre(item);
         		Boolean hasPromotion = false;
+        		String dayOfWeek = LocalDate.now().getDayOfWeek().toString();
+        		String dia = turnDaysInSpanish(dayOfWeek);
 				//float precioPromocion = 0;
 				for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
 					for(Producto promoProductos : promocion.getProductos()) {
 							if(promoProductos.equals(producto) && 
 									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
 									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
-									|| promocion.getDia().equalsIgnoreCase(LocalDate.now().getDayOfWeek().toString()))) {
+									|| promocion.getDia().equalsIgnoreCase(dia))) {
 								hasPromotion = true;
 							}
 					}
@@ -1049,6 +1051,8 @@ public class ControllerNuevaFactura implements Initializable{
 	
 	public void fillProductos(ArrayList<Producto> producto) {
 		ObservableList<String> data = FXCollections.observableArrayList();
+		String dayOfWeek = LocalDate.now().getDayOfWeek().toString();
+		String dia = turnDaysInSpanish(dayOfWeek);
 		if(producto == null) {
 			for(Producto p : Controladora.getInstance().getMisProductos()) {
 				Boolean hasPromotion = false;
@@ -1058,7 +1062,7 @@ public class ControllerNuevaFactura implements Initializable{
 							if(promoProductos.equals(p) && 
 									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
 									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
-									|| promocion.getDia().equalsIgnoreCase(LocalDate.now().getDayOfWeek().toString()))) {
+									|| promocion.getDia().equalsIgnoreCase(dia))) {
 								hasPromotion = true;
 								precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;
 							}
@@ -1373,6 +1377,34 @@ public class ControllerNuevaFactura implements Initializable{
 		textfield_facturaPeticionSeleccionada.setText("");
 		button_facturaPeticionSeleccionar.setDisable(true);
 		titledpane_busquedaPeticiones.setVisible(false);
+	}
+	
+	public String turnDaysInSpanish(String dayOfTheWeek) {
+		String dia = "";
+		switch (dayOfTheWeek) {
+  	  		case "Monday":
+  	  			dia = "lunes";
+  	  			break;
+  	  		case "Tuesday":
+  	  			dia = "martes";
+  	  			break;
+  	  		case "Wednesday":
+  	  			dia = "miércoles";
+  	  			break;
+  	  		case "Thursday":
+  	  			dia = "jueves";
+  	  			break;
+  	  		case "Friday":
+  	  			dia = "viernes";
+  	  			break;
+  	  		case "Saturday":
+  	  			dia = "sábado";
+  	  			break;
+  	  		case "Sunday":
+  	  			dia = "domingo";
+  	  			break;
+		}
+		return dia;
 	}
 
 }

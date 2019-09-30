@@ -344,7 +344,7 @@ public class ControllerNuevoProducto implements Initializable {
     			}
     		}
     		else if(tipoProducto.equalsIgnoreCase("Estandar") || tipoProducto.equalsIgnoreCase("Kit")) {
-    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0
+    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0
     					&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
     				button_productGuardar.setDisable(false);
     			}
@@ -369,7 +369,7 @@ public class ControllerNuevoProducto implements Initializable {
     		pane_costosIndirectos.setVisible(false);
     		textfield_costoPrecioCompraProducto.setText("0");
     		textfield_costoPrecioCompraProducto.setDisable(true);
-    		textfield_generalProveedor.setText(Controladora.getInstance().getMiEmpresa().getNombre());
+    		//textfield_generalProveedor.setText(Controladora.getInstance().getMiEmpresa().getNombre());
     		textfield_generalProveedor.setDisable(true);
     		button_productoBuscarProveedor.setDisable(true);
 
@@ -2240,6 +2240,8 @@ public class ControllerNuevoProducto implements Initializable {
     			existencia = Float.parseFloat(exAct.getText());
     		}
     		catch(NullPointerException e) {
+    			Alert needExistencia = new Alert(AlertType.WARNING, "Determina la existencia del producto");
+    			needExistencia.showAndWait();
     		}
     	}
    		
@@ -2361,7 +2363,7 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     		else {
     			original = nombreSelect + "[" + "Unidad: " + "Unidad nula" + ", disponibles: " + 
-        			(formato1.format(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)))) + "]";
+        			(formato1.format(estandar.get(0).getExistenciaActual() - (Float.parseFloat(cantidad)*existencia))) + "]";
     		}
     		
     	}
