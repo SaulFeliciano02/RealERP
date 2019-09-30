@@ -9320,8 +9320,12 @@ public void loadCategoriaEmpleado()
 				int producto = r.getInt(2);
 				byte[] foto = r.getBytes(3);
 				boolean borrado = r.getBoolean(4);
+				try {
+					Controladora.getInstance().getMisProductos().get(producto-1).setFoto(foto);
+				}catch(IndexOutOfBoundsException e) {
+					
+				}
 				
-				Controladora.getInstance().getMisProductos().get(producto-1).setFoto(foto);
 			}
 		
 			
