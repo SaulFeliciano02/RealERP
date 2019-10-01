@@ -46,25 +46,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <HBox fx:id="box_Principal" alignment="CENTER_LEFT" fillHeight="false">
-                     <children>
-                        <Button fx:id="selected_Principal" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="true">
-                           <padding>
-                              <Insets right="3.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="button_principal" mnemonicParsing="false" onAction="#principal_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/selected_button_principal.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
-                     </children>
-                     <padding>
-                        <Insets top="40.0" />
-                     </padding>
-                  </HBox>
                   <HBox fx:id="box_productos" alignment="CENTER_LEFT">
                      <children>
-                        <Button fx:id="selected_productos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;" visible="false">
+                        <Button fx:id="selected_productos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;">
                            <graphic>
                               <ImageView pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -75,7 +59,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/selected_button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -222,7 +206,7 @@
                      <children>
                         <AnchorPane prefHeight="74.0" prefWidth="630.0">
                            <children>
-                              <Label fx:id="text_menuName" layoutY="50.0" text="Principal" textFill="#6b6868">
+                              <Label fx:id="text_menuName" layoutY="50.0" text="Productos" textFill="#6b6868">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -262,20 +246,7 @@
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <VBox fx:id="pane_Principal" layoutX="187.0" layoutY="151.0" prefHeight="555.2" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Text layoutX="222.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pane Principal" wrappingWidth="93.48516845703125" />
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <VBox fx:id="pane_Productos" prefHeight="556.0" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox fx:id="pane_Productos" prefHeight="556.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
