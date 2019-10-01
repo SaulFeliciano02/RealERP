@@ -3197,7 +3197,7 @@ public class Controller implements Initializable{
 	    	button_productos.setDisable(true);
 	    	button_ventas.setDisable(true);
 	    	button_historial.setDisable(true);
-	    	button_rh.setDisable(true);
+	    	button_rh.setDisable(false);
 	    	button_admin.setDisable(false);
 	    	button_help.setDisable(true); 
 	    	button_config.setDisable(true); 
@@ -3458,9 +3458,16 @@ public class Controller implements Initializable{
     	
     	combobox_data = FXCollections.observableArrayList();
     	
-    	for (Cargo cargo : Controladora.getInstance().getMisCargos()) {
-    		combobox_data.add(cargo.getNombre());
-		}
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root"))
+    	{
+    		combobox_data.add("Administrador");
+    	}
+    	else
+    	{
+    		for (Cargo cargo : Controladora.getInstance().getMisCargos()) {
+    			combobox_data.add(cargo.getNombre());
+    		}
+    	}
     	
     	combobox_cargoUsuario.setItems(combobox_data);
     	

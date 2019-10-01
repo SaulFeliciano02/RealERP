@@ -69,7 +69,7 @@ public class Main extends Application{
 			
 		} 
 		
-		else if((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) ||
+		else if(((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) && !Controladora.getInstance().activarLoadUsuarios()) ||
 				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
 		{
 			System.out.println("wawawa");
@@ -351,6 +351,15 @@ public class Main extends Application{
 					e.printStackTrace();
 				} 
 		}*/
+		else if(textfield_usuario.getText().equalsIgnoreCase("root") && Controladora.getInstance().activarLoadUsuarios())
+		{
+			message.setText("¡Este usuario ya no está disponible!");
+			message.setTextFill(Color.rgb(210, 39, 30));
+			
+			loading_progress.setVisible(false);
+			loading_progress.setProgress(0);
+		}
+		
 		passwordfield_login.clear();
 		
 	}
@@ -368,7 +377,7 @@ public class Main extends Application{
 			
 		} 
 		
-		else if((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) ||
+		else if(((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) && !Controladora.getInstance().activarLoadUsuarios()) ||
 				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
 		{
 	    	/**ABRIENDO viewPrincipal.fxml**/
@@ -527,6 +536,15 @@ public class Main extends Application{
 					e.printStackTrace();
 				} 
 		}
+		else if(textfield_usuario.getText().equalsIgnoreCase("root") && Controladora.getInstance().activarLoadUsuarios())
+		{
+			message.setText("¡Este usuario ya no está disponible!");
+			message.setTextFill(Color.rgb(210, 39, 30));
+			
+			loading_progress.setVisible(false);
+			loading_progress.setProgress(0);
+		}
+		
 		passwordfield_login.clear();
 	}
 		
