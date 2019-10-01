@@ -3756,6 +3756,174 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public void sendMasaIntoDatabase() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			for(UnidadMedida a : Controladora.getInstance().getMisUnidadMedida()) {
+				if(a.getCategoria().equalsIgnoreCase("masa")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO masa (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+					
+				if(s!=null) {
+					s.close();
+				}
+					
+				if(r!=null) {
+					r.close();
+				}
+					
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void sendLongitudIntoDatabase() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			for(UnidadMedida a : Controladora.getInstance().getMisUnidadMedida()) {
+				if(a.getCategoria().equalsIgnoreCase("longitud")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO longitud (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+					
+				if(s!=null) {
+					s.close();
+				}
+					
+				if(r!=null) {
+					r.close();
+				}
+					
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void sendAreaIntoDatabase() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			for(UnidadMedida a : Controladora.getInstance().getMisUnidadMedida()) {
+				if(a.getCategoria().equalsIgnoreCase("area")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO area (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+					
+				if(s!=null) {
+					s.close();
+				}
+					
+				if(r!=null) {
+					r.close();
+				}
+					
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void sendVolumenIntoDatabase() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			c = con.conectar();
+			for(UnidadMedida a : Controladora.getInstance().getMisUnidadMedida()) {
+				if(a.getCategoria().equalsIgnoreCase("volumen")) {
+					p = (PreparedStatement)
+							c.prepareStatement("INSERT INTO volumen (categoria, nombre, abreviatura) VALUES (?, ?, ?)");
+					p.setString(1, a.getCategoria());
+					p.setString(2, a.getNombre());
+					p.setString(3, a.getAbreviatura());
+					p.executeUpdate();
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				if(c!=null) {
+					c.close();
+				}
+					
+				if(s!=null) {
+					s.close();
+				}
+					
+				if(r!=null) {
+					r.close();
+				}
+					
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	/**FUNCION PARA VERIFICAR SI UN STRING DADO ES UN NUMERO**/
 	
 	public boolean isNumber(String string) {
@@ -4837,6 +5005,230 @@ public class Controladora implements Serializable{
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 			s = (Statement) c.createStatement();
 			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM infoempresa");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarUnidadMedidaMasa() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM masa");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarUnidadMedidaLongitud() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM longitud");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarUnidadMedidaArea() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM area");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarUnidadMedidaVolumen() {
+		Conexion con = new Conexion();
+		Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM volumen");
 			
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())

@@ -89,6 +89,18 @@ public class Main extends Application{
 			Stage loginStage = (Stage) button_acceder.getScene().getWindow();
 			loginStage.close();
 				try {
+					if(!Controladora.getInstance().activarUnidadMedidaMasa()) {
+						Controladora.getInstance().sendMasaIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaLongitud()) {
+						Controladora.getInstance().sendLongitudIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaArea()) {
+						Controladora.getInstance().sendAreaIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaVolumen()) {
+						Controladora.getInstance().sendVolumenIntoDatabase();
+					}
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
 					if(Controladora.getInstance().activarLoadInfoEmpresa())
@@ -375,6 +387,18 @@ public class Main extends Application{
 			Stage loginStage = (Stage) button_acceder.getScene().getWindow();
 			loginStage.close();
 				try {
+					if(!Controladora.getInstance().activarUnidadMedidaMasa()) {
+						Controladora.getInstance().sendMasaIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaLongitud()) {
+						Controladora.getInstance().sendLongitudIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaArea()) {
+						Controladora.getInstance().sendAreaIntoDatabase();
+					}
+					if(!Controladora.getInstance().activarUnidadMedidaVolumen()) {
+						Controladora.getInstance().sendVolumenIntoDatabase();
+					}
 					//Controladora.getInstance().sendUnidadesIntoDatabase();
 					//Controladora.getInstance().loadProductos();
 					if(Controladora.getInstance().activarLoadInfoEmpresa())
