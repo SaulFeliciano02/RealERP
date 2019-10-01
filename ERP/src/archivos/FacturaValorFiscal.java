@@ -67,45 +67,13 @@ public class FacturaValorFiscal {
 		
 		document.open();
 		
-		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18;
+		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24;
 		List list, list2;
 		float itbis = 0;
 		float subtotal = 0;
 		float itbistotal = 0;
 		float descuentototal = 0;
-		try {
-		       /*	ct.setSimpleColumn(0,0,0,0);
-		        p=new Paragraph();
-		        list=new List();
-		        list.add(new ListItem("Nombre de prueba para la empresa"));
-		        list.add(new ListItem("Sucursal prueba"));
-		        list.add(new ListItem("RNC: 123Prueba"));
-		        list.add(new ListItem("Fecha: " + LocalDate.now()));
-		        p.add(list);
-		        ct.addElement(p);
-		        ct.go();
-		        ct2.setSimpleColumn(0,0,200,200);
-		        p2=new Paragraph();
-		        list=new List();
-		        list.add(new ListItem("Factura de crédito fiscal"));
-		        list.add(new ListItem("NCF: B0100000572"));
-		        list.add(new ListItem("Vencimiento secuencia: " + LocalDate.of(LocalDate.now().getYear()+2, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth())));
-		        p2.add(list);
-		        ct2.addElement(p2);
-		        ct2.go();*/
-			
-		        /*PdfPTable table = new PdfPTable(3);
-		        table.setWidthPercentage(100);
-		        table.addCell(getCell("Nombre de prueba para la empresa", PdfPCell.ALIGN_LEFT));
-		        table.addCell(getCell("Sucursal prueba", PdfPCell.ALIGN_LEFT));
-		        table.addCell(getCell("RNC: 123Prueba", PdfPCell.ALIGN_LEFT));
-		        table.addCell(getCell("Fecha: " + LocalDate.now(), PdfPCell.ALIGN_LEFT));
-		        table.addCell(getCell("Text in the middle", PdfPCell.ALIGN_CENTER));
-		        table.addCell(getCell("Factura de crédito fiscal", PdfPCell.ALIGN_RIGHT));
-		        table.addCell(getCell("NCF: B0100000572", PdfPCell.ALIGN_RIGHT));
-		        table.addCell(getCell("Vencimiento secuencia: " + LocalDate.of(LocalDate.now().getYear()+2, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()), PdfPCell.ALIGN_RIGHT));
-		        document.add(table);*/
-				
+		try {	
 				Chunk glue = new Chunk(new VerticalPositionMark());
 				p = new Paragraph("" + Controladora.getInstance().getMiEmpresa().getNombre());
 				p.add(new Chunk(glue));
@@ -169,6 +137,10 @@ public class FacturaValorFiscal {
 				p4.add("" + fechaVencimiento);
 				document.add(p4);
 				
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+				p24 = new Paragraph("Hora: " + factura.getHora().format(dtf));
+				document.add(p24);
+				
 				p5=new Paragraph();
 		        list=new List();
 		        list.add(new ListItem("RNC CLIENTE: " + factura.getMiCliente().getRnc()));
@@ -182,6 +154,15 @@ public class FacturaValorFiscal {
 		        
 		        p7 = new Paragraph("                                                                  ");
 		        document.add(p7);
+		        
+		        p19 = new Paragraph("----------------------------------------------------------------------------------------------------------------------------");
+		        p20 = new Paragraph("													INFORMACIÓN DE LA FACTURA												");
+		        p21 = new Paragraph("----------------------------------------------------------------------------------------------------------------------------");
+		        p23 = new Paragraph("                                                                              											     ");
+		        document.add(p19);
+		        document.add(p20);
+		        document.add(p21);
+		        document.add(p23);
 		        
 		        PdfPTable table = new PdfPTable(4); // 4 columns.
 
@@ -268,6 +249,10 @@ public class FacturaValorFiscal {
 	            p11.add(new Chunk(glue));
 	            p11.add("TOTAL:  " + Math.round(subtotal));
 	            document.add(p11);
+	            p22 = new Paragraph();
+	            p22.add(new Chunk(glue));
+	            p22.add("Atendido por: " + factura.getNombreUsuarioFact());
+	            document.add(p22);
 	            if(factura.getCantcopias() > 1)
 	            {
 	            	p12 = new Paragraph();
