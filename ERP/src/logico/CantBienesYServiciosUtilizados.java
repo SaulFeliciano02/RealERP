@@ -1,7 +1,5 @@
 package logico;
 
-import java.util.ArrayList;
-
 public class CantBienesYServiciosUtilizados {
 	private String unidad;
 	private float cantidad;

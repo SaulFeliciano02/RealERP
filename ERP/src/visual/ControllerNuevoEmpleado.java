@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,8 +31,6 @@ import javafx.stage.Window;
 import logico.CategoriaEmpleado;
 import logico.Controladora;
 import logico.Empleado;
-import logico.Proveedores;
-import logico.Rubro;
 
 public class ControllerNuevoEmpleado implements Initializable{
 
@@ -62,6 +59,7 @@ public class ControllerNuevoEmpleado implements Initializable{
     @FXML private RadioButton radiobutton_PorHora;
     @FXML private RadioButton radiobutton_PorDia;
 	
+    //Cierra y vuelve a abrir la ventana principal.
 	public void reload(Stage stage) {
     	
    		try {
@@ -88,6 +86,7 @@ public class ControllerNuevoEmpleado implements Initializable{
    		
 	}
 	
+	//Verifica si el input de un textfield es un número.
     public void numericFieldPressed(KeyEvent event) {
     	TextField source = (TextField) event.getSource();
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
@@ -99,8 +98,11 @@ public class ControllerNuevoEmpleado implements Initializable{
     	}
     }
 	
+    //Función que determina si la tecla presionada en un textfield cumple con los parámetros para ser considero un valor de tipo float.
 	public void floatFieldPressed(KeyEvent event) {	
     	TextField source = (TextField) event.getSource();
+    	//Cuando se presiona una tecla para ser registrada como input en un textfield de javafx,
+    	//esta no queda registrada hasta que se termine de procesar el evento.
     	if(source.getLength() == 0) {
 	   		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
 	       		event.consume();
@@ -116,15 +118,17 @@ public class ControllerNuevoEmpleado implements Initializable{
     	}
 	 }
 	
-	
+	//Cierra la ventana
 	public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
 	   	reload(stage);
 	}
 	
-
+	//Determina si los parámetros de un empleado están completos.
 	public void empleadoActivarGuardar(KeyEvent event) {
+		//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
 		if(textfield_empleadoCodigo.getLength() > 0 && textfield_empleadoNombre.getLength() > 0 && textfield_empleadoRNC.getLength() > 0) {
 			button_empleadoGuardar.setDisable(false);
 		}
@@ -132,7 +136,8 @@ public class ControllerNuevoEmpleado implements Initializable{
 			button_empleadoGuardar.setDisable(true);
 		}
 	}
-	
+
+	//Guarda un nuevo empleado
 	public void guardarEmpleado(ActionEvent Event) {
 		boolean isEmpty = false;
 		boolean validRegister = true;

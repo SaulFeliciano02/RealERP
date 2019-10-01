@@ -1,33 +1,20 @@
 package visual;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.itextpdf.text.pdf.codec.Base64.InputStream;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
-import basededatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -40,7 +27,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
@@ -71,7 +57,6 @@ import logico.Combinaciones;
 import logico.Controladora;
 import logico.CostoDirecto;
 import logico.CostoIndirectoProducto;
-import logico.Empleado;
 import logico.Estandar;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
@@ -255,7 +240,7 @@ public class ControllerNuevoProducto implements Initializable {
     
     /**FUNCIONES GENERALES**/
     
-    //Verifica si el input de un textfield es un numero
+    //Verifica si el input de un textfield es un número.
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter()) && !event.getCode().equals(KeyCode.BACK_SPACE)) {
     		event.consume();
@@ -276,9 +261,12 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
+    //Función que determina si la tecla presionada en un textfield cumple con los parámetros para ser considero un valor de tipo float.
     public void floatFieldPressed(KeyEvent event) {
     	
     	TextField source = (TextField) event.getSource();
+    	//Cuando se presiona una tecla para ser registrada como input en un textfield de javafx,
+    	//esta no queda registrada hasta que se termine de procesar el evento.
     	if(source.getLength() == 0) {
     		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
         		event.consume();
@@ -292,7 +280,7 @@ public class ControllerNuevoProducto implements Initializable {
     	
     }
     
-    //Cierra la venta de nuevoProducto
+    //Cierra y vuelve a abrir la ventana principal
     public void reload(Stage stage) {
     	
    		try {
@@ -318,14 +306,18 @@ public class ControllerNuevoProducto implements Initializable {
    		
 	}
     
+    //Cierra la ventana
     public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
 	   	reload(stage);
     }
     
+    //Determina si los parámetros de un producto están completos.
     public void activarProductoGuardar(KeyEvent event) {
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
+    	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(!modificado) {
     		if(tipoProducto.equalsIgnoreCase("Matriz")) {
     			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
@@ -356,6 +348,7 @@ public class ControllerNuevoProducto implements Initializable {
     		
     }
     
+    //Activa el tab de partida.
     public void activarPartida(ActionEvent event) {
     	
     	if(checkbox_generalProducible.isSelected()) {
@@ -438,7 +431,7 @@ public class ControllerNuevoProducto implements Initializable {
         }
     }
     
-    //Guardar Producto (En Progreso)
+    //Guardar Producto
     public void guardarProducto(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	a.setAlertType(AlertType.ERROR);
@@ -460,6 +453,7 @@ public class ControllerNuevoProducto implements Initializable {
     			foto = new byte[(int) fotofile.length()];
 	            FileInputStream input = new FileInputStream(fotofile);
 	            input.read(foto);
+	            input.close();
 	            
     	    }catch(Exception ex){
     	    	System.out.println("Error al cargar la imagen");
@@ -1281,7 +1275,7 @@ public class ControllerNuevoProducto implements Initializable {
             	}
             	
             	else if(tipoProducto.equalsIgnoreCase("Servicio")) {
-            		float costo = 0;
+            		//float costo = 0;
             		float costoManoObra = 0;
             		ManoDeObra infoManoDeObra = null;
             		CategoriaEmpleado categoriaempleado = null;
@@ -1312,7 +1306,7 @@ public class ControllerNuevoProducto implements Initializable {
             			}
             		}
             		if(canRegister) {
-            			costo = Float.parseFloat(textfield_preciosCostos.getText());
+            			//costo = Float.parseFloat(textfield_preciosCostos.getText());
             			a.setAlertType(AlertType.WARNING);
             			if(combobox_costosEncargadosFabricacion.getSelectionModel().isEmpty()) {
             				a.setContentText("Eliga la categoria de empleado que ejercera este servicio.");
@@ -1739,7 +1733,7 @@ public class ControllerNuevoProducto implements Initializable {
     	String atributo1 = listView_atributos1.getSelectionModel().getSelectedItem();
     	String atributo2 = listView_atributos2.getSelectionModel().getSelectedItem();
     	String atributo3 = listView_atributos3.getSelectionModel().getSelectedItem();
-    	int i;
+    	//int i;
     	if((!textfield_numSerie.getText().isEmpty() && !textfield_cantidadComb.getText().isEmpty()))
     	{
     		String num = textfield_numSerie.getText();
@@ -2104,16 +2098,16 @@ public class ControllerNuevoProducto implements Initializable {
     public void movePartida(ActionEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	boolean isAlreadySelected = false;
-    	String selection = null;
-    	int posicion;
-    	posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
-		selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
+    	//String selection = null;
+    	//int posicion;
+    	//posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
+		//selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
     	String select_items = listview_partida.getSelectionModel().getSelectedItem();
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
     	String item_moved = "";
     	String tipoConversion = "";
-    	float costo = 0;
+    	//float costo = 0;
     	float cantidadConvertida = 0;
     	ArrayList<Estandar> estandar = Controladora.getInstance().searchProductsEstandar(nameOriginal.toLowerCase(), "Nombre");
     	if(estandar.get(0).getUnidadMedida() == null) {
@@ -2440,8 +2434,8 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 		
 		for(String valor : listview_partidaSelect.getItems()) {
-			 int posicion = valor.indexOf("[");
-    		 String selection = valor.substring(0, posicion);
+			 //int posicion = valor.indexOf("[");
+    		 //String selection = valor.substring(0, posicion);
     		 String nombre = Controladora.getInstance().findPartidaNombre(valor);
     		 Estandar p = (Estandar) Controladora.getInstance().buscarProducto(nombre);
     		 
