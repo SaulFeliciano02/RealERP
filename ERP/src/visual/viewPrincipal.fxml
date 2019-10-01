@@ -59,7 +59,7 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/selected_button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
                      </children>
                      <padding>
                         <Insets top="40.0" />
