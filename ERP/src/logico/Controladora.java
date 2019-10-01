@@ -4405,6 +4405,7 @@ public class Controladora implements Serializable{
 					
 					listaAtributos.add(getMisAtributos().get(idatributo-1));
 				}
+				c2.close();
 				
 				int i;
 				
@@ -4426,6 +4427,7 @@ public class Controladora implements Serializable{
 					idCombinacion2 = r3.getInt(3);
 					existencia = r3.getFloat(4);
 				}
+				c3.close();
 				
 				comb = new Combinaciones(numserie, existencia, listaAtributos);
 				
@@ -7067,6 +7069,7 @@ public boolean activarLoadServicios()
 						nombreCat = r9.getString(2);
 					}
 				
+					c9.close();
 					c3 = con.conectar();
 				
 					//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
@@ -7092,7 +7095,8 @@ public boolean activarLoadServicios()
 							cantidad = r4.getFloat(3);
 						
 						}
-					
+						
+						c4.close();
 					
 						Estandar prod = getMisProductosEstandar().get(idestandar-1);
 					
@@ -7111,7 +7115,8 @@ public boolean activarLoadServicios()
 						productoidp = r5.getInt(3);
 						activo = r5.getBoolean(4);
 					}
-				
+					
+					c5.close();
 					c6 = con.conectar();
 					s6 = (Statement) c6.createStatement();
 					r6 = s6.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
@@ -7122,7 +7127,8 @@ public boolean activarLoadServicios()
 						descripcionprecio = r6.getString(3);
 						fechaprecio = r6.getDate(4);
 					}
-				
+					
+					c6.close();
 					c7 = con.conectar();
 					s7 = (Statement) c7.createStatement();
 					r7 = s7.executeQuery("SELECT * FROM rubroproducto WHERE producto = '"+idproducto+"'");
@@ -7132,7 +7138,8 @@ public boolean activarLoadServicios()
 						rubroid = r7.getInt(2);
 						productorubroid = r7.getInt(3);
 					}
-				
+					
+					c7.close();
 					c8 = con.conectar();
 					s8 = (Statement) c8.createStatement();
 					r8 = s8.executeQuery("SELECT * FROM rubros WHERE idrubros = '"+rubroid+"'");
@@ -7142,7 +7149,8 @@ public boolean activarLoadServicios()
 						codigorubro = r8.getString(2);
 						nombrerubro = r8.getString(3);
 					}
-				
+					c8.close();
+					
 					Rubro ru = buscarRubro(nombrerubro);
 					Precio pre = new Precio(montoprecio, descripcionprecio, activo);
 					CategoriaEmpleado cat = buscarCategoria(nombreCat);
@@ -7778,7 +7786,7 @@ public void loadManoDeObra()
 				
 				Controladora.getInstance().getMisProductosEstandar().get(estandarID-1).setInfoManoDeObra(mano);
 			}
-			
+			c2.close();
 			c3 = con.conectar();
 			
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
@@ -7801,6 +7809,8 @@ public void loadManoDeObra()
 				
 				Controladora.getInstance().getMisProductosServicio().get(servicioID-1).setInfoManoDeObra(mano);
 			}
+			
+			c3.close();
 		}		
 		
 	} catch (SQLException e) {

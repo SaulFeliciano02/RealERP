@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.text.DecimalFormat;
 import com.itextpdf.text.Chunk;
@@ -50,7 +51,7 @@ public class FacturaDeConsumo {
 		
 		document.open();
 		
-		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11;
+		Paragraph p, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p19, p20, p21, p22, p23, p24;
 		ColumnText ct = new ColumnText(writer.getDirectContent());
 		ColumnText ct2 = new ColumnText(writer.getDirectContent());
 		List list, list2;
@@ -95,12 +96,25 @@ public class FacturaDeConsumo {
 			
 			p4 = new Paragraph("Fecha: " + LocalDate.now());
 			document.add(p4);
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+			p24 = new Paragraph("Hora: " + factura.getHora().format(dtf));
+			document.add(p24);
 	        
 	        p6 = new Paragraph("                                                                  ");
 	        document.add(p6);
 	        
 	        p7 = new Paragraph("                                                                  ");
 	        document.add(p7);
+	        
+	        p19 = new Paragraph("----------------------------------------------------------------------------------------------------------------------------");
+	        p20 = new Paragraph("													INFORMACIÓN DE LA FACTURA												");
+	        p21 = new Paragraph("----------------------------------------------------------------------------------------------------------------------------");
+	        p23 = new Paragraph("                                                                              											     ");
+	        document.add(p19);
+	        document.add(p20);
+	        document.add(p21);
+	        document.add(p23);
 	        
 	        PdfPTable table = new PdfPTable(4); // 4 columns.
 
@@ -187,6 +201,10 @@ public class FacturaDeConsumo {
             p11.add(new Chunk(glue));
             p11.add("TOTAL:  " + Math.round(subtotal));
             document.add(p11);
+            p22 = new Paragraph();
+            p22.add(new Chunk(glue));
+            p22.add("Atendido por: " + factura.getNombreUsuarioFact());
+            document.add(p22);
             if(factura.getCantcopias() > 1)
             {
             	Paragraph p12 = new Paragraph();
