@@ -484,6 +484,13 @@ public class Controller implements Initializable{
     @FXML private TableColumn<String, TransaccionesCajaChica> tablecolumn_cajaUsuario;
     @FXML private TableView<TransaccionesCajaChica> tableview_cajaList;
     
+    //ADMINSITRACION
+    @FXML private TabPane tabpane_administracion;
+    @FXML private Tab tab_administracionGeneral;
+    @FXML private Tab tab_administracionUsuarios;
+    @FXML private Tab tab_administracionCajaChica;
+    @FXML private Tab tab_administracionCuentaBanco;
+    
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -670,7 +677,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(false);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -680,7 +687,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(true);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -742,7 +749,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(false);
     	pane_Ventas.setDisable(true);
@@ -752,7 +759,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(true);
     	pane_Ventas.setVisible(false);
@@ -803,7 +810,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(false);
@@ -813,7 +820,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(true);
@@ -865,7 +872,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -875,7 +882,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -925,7 +932,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -935,7 +942,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -988,7 +995,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -998,7 +1005,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -1049,7 +1056,7 @@ public class Controller implements Initializable{
     	button_help.setEffect(nonpressed_help1); 
     	//button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -1059,7 +1066,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(true);
     	pane_Config.setDisable(false);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -1111,7 +1118,7 @@ public class Controller implements Initializable{
     	//button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
     	
-    	pane_Principal.setDisable(true);
+    	//pane_Principal.setDisable(true);
     	pane_Gastos.setDisable(true);
     	pane_Productos.setDisable(true);
     	pane_Ventas.setDisable(true);
@@ -1121,7 +1128,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setDisable(false);
     	pane_Config.setDisable(true);
     	
-    	pane_Principal.setVisible(false);
+    	//pane_Principal.setVisible(false);
     	pane_Gastos.setVisible(false);
     	pane_Productos.setVisible(false);
     	pane_Ventas.setVisible(false);
@@ -3183,7 +3190,22 @@ public class Controller implements Initializable{
 		//root es el usuario por defecto del programa, no esta guardado en la base de datos,
     	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
     	//en el programa con este usuario.
-		if(user.getUsuario().equalsIgnoreCase("root")) {}
+		if(user.getUsuario().equalsIgnoreCase("root")) {
+			admin_pressed(null);
+			selectTabUsuarios();
+	    	button_gastos.setDisable(true);
+	    	button_productos.setDisable(true);
+	    	button_ventas.setDisable(true);
+	    	button_historial.setDisable(true);
+	    	button_rh.setDisable(true);
+	    	button_admin.setDisable(false);
+	    	button_help.setDisable(true); 
+	    	button_config.setDisable(true); 
+	    	
+	    	tab_administracionGeneral.setDisable(true);
+	    	tab_administracionCajaChica.setDisable(true);
+	    	tab_administracionCuentaBanco.setDisable(true);
+		}
 		else {
 			if(!user.getCargo().isManejodeproductos())
 			{
@@ -3856,6 +3878,10 @@ public class Controller implements Initializable{
     
     public void selectTabPromocion() {
     	tabpane_Ventas.getSelectionModel().select(tab_promocion);;
+    }
+    
+    public void selectTabUsuarios() {
+    	tabpane_administracion.getSelectionModel().select(tab_administracionUsuarios);
     }
     
     public void abrirInfoAdicionalProducto(ActionEvent event) {
