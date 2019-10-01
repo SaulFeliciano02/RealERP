@@ -1,48 +1,28 @@
 package visual;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import logico.Controladora;
 import logico.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 public class Main extends Application{
 	
@@ -77,8 +57,6 @@ public class Main extends Application{
 	}
 	
 	public void access_clicked(ActionEvent event) {
-		
-		float count=0;
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
@@ -367,7 +345,6 @@ public class Main extends Application{
 	
 	@FXML
 	public void onEnter(ActionEvent event){
-		float count=0;
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		if (passwordfield_login.getText().equals("") && !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {

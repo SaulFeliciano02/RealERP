@@ -3,13 +3,9 @@ package visual;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,17 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import logico.Cliente;
 import logico.Controladora;
 
@@ -46,7 +38,7 @@ public class ControllerNuevoCliente implements Initializable {
 	@FXML private DatePicker datepicker_cumpleCliente;
 /**FUNCIONES AGREGAR CLIENTE**/
 	
-	//Funcion abre y cierra la ventana principal para poder actualizar los datos
+	//Cierra y vuelve a abrir la ventana principal.
 	public void reload(Stage stage) {
     	
    		try {
@@ -72,7 +64,7 @@ public class ControllerNuevoCliente implements Initializable {
 			}
 	}
 	
-	//Funcion para determinar si el caracter presionado sobre un textfield es un numero
+	//Verifica si el input de un textfield es un número.
 	public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
@@ -90,8 +82,10 @@ public class ControllerNuevoCliente implements Initializable {
     	reload(stage);
     }
 	
-    //Función que determina si es posible guardar un cliente.
+    //Determina si los parámetros de un cliente están completos.
 	public void clienteActivarGuardar(KeyEvent event) {
+		//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
 		if(textfield_codigoCliente.getLength() > 0 && textfield_nombreCliente.getLength() > 0 && textfield_telefonoCliente.getLength() > 0 && 
 				textfield_rncCliente.getLength() > 0 && datepicker_cumpleCliente.getValue() != null) {
 			button_clienteGuardar.setDisable(false);
@@ -113,7 +107,7 @@ public class ControllerNuevoCliente implements Initializable {
 		}
 	}
 	
-	/**AQUI ESTA EL ASUNTO DE LAS TABLEVIEW**/
+	//Guarda un nuevo cliente
 	public void guardarCliente(ActionEvent event) {
 		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
 		success.showAndWait();
@@ -132,6 +126,9 @@ public class ControllerNuevoCliente implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 	
+	
+	//Íbamos a implementar una modificación al cliente (y probablemente al proveedor y empleado también)
+	//como lo hicimos con el producto, pero nos quedamos sin tiempo.
 	public void modifyOpen(Cliente cliente) {
 		textfield_codigoCliente.setText(cliente.getCodigo());
 		textfield_nombreCliente.setText(cliente.getNombre());

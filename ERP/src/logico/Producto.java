@@ -99,7 +99,13 @@ abstract public class Producto {
 		return rubroProducto;
 	}
 	public String getRubroProducto() {
-		return rubroProducto.getCodigo();
+		try {
+			return rubroProducto.getCodigo();
+		}
+		catch(NullPointerException e) {
+			return "";
+		}
+		
 	}
 	public void setRubroProducto(Rubro rubroProducto) {
 		this.rubroProducto = rubroProducto;

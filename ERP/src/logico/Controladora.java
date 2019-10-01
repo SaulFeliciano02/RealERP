@@ -1,22 +1,17 @@
 package logico;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.commons.codec.cli.Digest;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -389,7 +384,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		String nombre = null;
 		
 		try {
@@ -3766,7 +3760,6 @@ public class Controladora implements Serializable{
 	
 	public boolean isNumber(String string) {
 		boolean numeric = true;
-		int count = 0;
         try {
             Double.parseDouble(string);
         } catch (NumberFormatException e) {
@@ -4119,7 +4112,6 @@ public class Controladora implements Serializable{
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
-		PreparedStatement p = null;
 		int cuenta = 0;
 		int cuenta2 = 0;
 		int idUsuario = 0;
@@ -4222,7 +4214,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4283,7 +4274,6 @@ public class Controladora implements Serializable{
 		Connection c2 = null;
 		Statement s2 = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		int cuenta2 = 0;
@@ -4361,7 +4351,6 @@ public class Controladora implements Serializable{
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idcombinacionAtrib = 0;
 		int idatributo = 0;
@@ -4484,7 +4473,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4545,7 +4533,6 @@ public class Controladora implements Serializable{
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		int id = 0;
 		float precio = 0;
 		String descripcion = null;
@@ -4630,7 +4617,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4688,7 +4674,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4782,7 +4767,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int id = 0;
 		float monto = 0;
 		Date fecha = null;
@@ -4842,7 +4826,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4900,7 +4883,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -4958,7 +4940,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5019,7 +5000,6 @@ public class Controladora implements Serializable{
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		float monto = 0;
 		float montoAnteriorCaja = 0;
 		float actualizacion = 0;
@@ -5104,7 +5084,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5162,7 +5141,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5223,7 +5201,6 @@ public class Controladora implements Serializable{
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idGastoGeneral = 0;
 		int idProducto = 0;
@@ -5305,7 +5282,6 @@ public class Controladora implements Serializable{
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		int idpromocion = 0;
 		int porcientoDescuento = 0;
 		String nombre = null;
@@ -5409,7 +5385,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5467,7 +5442,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idCliente = 0;
 		float credito = 0;
@@ -5532,7 +5506,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5590,7 +5563,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idCliente = 0;
 		float deuda = 0;
@@ -5661,7 +5633,6 @@ public class Controladora implements Serializable{
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
-		PreparedStatement p = null;
 		int idInfoEmpresa = 0;
 		String nombre = null;
 		String rnc = null;
@@ -5785,7 +5756,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		
 		try {
 			
@@ -5845,7 +5815,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -5906,7 +5875,6 @@ public class Controladora implements Serializable{
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		float monto = 0;
 		float montoAnteriorCuenta = 0;
 		float actualizacion = 0;
@@ -5987,7 +5955,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		String codigo = null;
 		int idProv = 0;
 		Proveedores prov = null;
@@ -6061,7 +6028,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -6119,7 +6085,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int idPeticion = 0;
 		float montoAdeudado = 0;
 		
@@ -6175,7 +6140,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -6233,7 +6197,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int idPeticion = 0;
 		float montoPagado = 0;
 		Date fecha = null;
@@ -6295,7 +6258,6 @@ public class Controladora implements Serializable{
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -6359,7 +6321,6 @@ public class Controladora implements Serializable{
 		ResultSet r = null;
 		ResultSet r2 = null;
 		ResultSet r3 = null;
-		PreparedStatement p = null;
 		int idUsuario = 0;
 		String nombreUsuario = null;
 		int empleadoID = 0;
@@ -6453,7 +6414,6 @@ public class Controladora implements Serializable{
 		Connection c2 = null;
 		Statement s2 = null;
 		ResultSet r2 = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		int cuenta2 = 0;
@@ -6552,7 +6512,6 @@ public void loadKit()
 	ResultSet r8 = null;
 	ResultSet r9 = null;
 	ResultSet r10 = null;
-	PreparedStatement p = null;
 	//Variables para producto
 	String codigo = null;
 	String nombre = null;
@@ -6893,7 +6852,6 @@ public boolean activarLoadServicios()
 	Connection c2 = null;
 	Statement s2 = null;
 	ResultSet r2 = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	int cuenta2 = 0;
@@ -6989,7 +6947,6 @@ public boolean activarLoadServicios()
 		ResultSet r7 = null;
 		ResultSet r8 = null;
 		ResultSet r9 = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idproducto2 = 0;
 		int idServicioMateriales = 0;
@@ -7199,7 +7156,6 @@ public void loadUnidadesMedida()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		
 		try {
 			
@@ -7399,7 +7355,6 @@ public boolean activarLoadProveedores()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -7459,7 +7414,6 @@ public void loadProveedores()
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet q = null;
-		PreparedStatement p = null;
 		
 		try {
 			
@@ -7552,7 +7506,6 @@ public boolean activarRecuperarRubros()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -7610,7 +7563,6 @@ public void recuperarRubros()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	
 	try {
 		
@@ -7672,7 +7624,6 @@ public boolean activarLoadManoDeObra()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -7736,7 +7687,6 @@ public void loadManoDeObra()
 	ResultSet r = null;
 	ResultSet r2 = null;
 	ResultSet r3 = null;
-	PreparedStatement p = null;
 	int id =0;
 	float costo = 0;
 	float cantHoras = 0;
@@ -7857,7 +7807,6 @@ public boolean activarLoadProductos()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -7936,7 +7885,6 @@ public void loadProductos()
 	ResultSet r6 = null;
 	ResultSet r7 = null;
 	ResultSet r8 = null;
-	PreparedStatement p = null;
 	
 	//RECUPERACION PRODUCTO
 	int id = 0;
@@ -8111,7 +8059,6 @@ public void loadProductos()
 				}
 				Controladora.getInstance().getMisProductos().add(estandar);
 				Controladora.getInstance().getMisProductosEstandar().add(estandar);
-				System.out.println(estandar.getRubroProducto());
 			}
 		}
 		
@@ -8231,7 +8178,6 @@ public boolean activarLoadPartida()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -8304,7 +8250,6 @@ public boolean activarLoadPartida()
 		ResultSet r4 = null;
 		ResultSet r5 = null;
 		ResultSet r6 = null;
-		PreparedStatement p = null;
 		int i;
 		int idProducto = 0;
 		int idprodpart = 0;
@@ -8634,7 +8579,6 @@ public boolean activarLoadPartida()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 	
@@ -8694,7 +8638,6 @@ public void loadEmpleados()
 	Statement s2 = null;
 	ResultSet r = null;
 	ResultSet q = null;
-	PreparedStatement p = null;
 	
 	try {
 		
@@ -8776,7 +8719,6 @@ public boolean activarLoadCategoriaEmpleado()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	boolean activar = false;
 	int cuenta = 0;
 	
@@ -8834,7 +8776,6 @@ public void loadCategoriaEmpleado()
 	Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	PreparedStatement p = null;
 	
 	try {
 		
@@ -8888,7 +8829,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 	
@@ -8949,7 +8889,6 @@ public void loadCategoriaEmpleado()
 		Statement s2 = null;
 		ResultSet r = null;
 		ResultSet q = null;
-		PreparedStatement p = null;
 	
 		try {
 		
@@ -9030,7 +8969,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 	
@@ -9088,7 +9026,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 	
 		try {
 		
@@ -9141,7 +9078,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 	
@@ -9199,7 +9135,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 	
 		try {
 		
@@ -9256,7 +9191,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 	
@@ -9314,7 +9248,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 	
 		try {
 		
@@ -9965,7 +9898,6 @@ public void loadCategoriaEmpleado()
 		ResultSet r10 = null;
 		ResultSet r11 = null;
 		ResultSet r12 = null;
-		PreparedStatement p = null;
 		int idfactura = 0;
 		int idcliente = 0;
 		Cliente cli = null;
@@ -10877,7 +10809,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		boolean activar = false;
 		int cuenta = 0;
 		
@@ -10935,7 +10866,6 @@ public void loadCategoriaEmpleado()
 		Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		PreparedStatement p = null;
 		int id = 0;
 		int idFactura = 0;
 		float adeudado = 0;

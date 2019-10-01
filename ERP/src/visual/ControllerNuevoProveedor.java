@@ -39,6 +39,7 @@ public class ControllerNuevoProveedor implements Initializable{
 	
 	/**FUNCIONES AGREGAR PROVEEDOR**/
 	
+	//Cierra y vuelve a abrir la ventana principal.
 	public void reload(Stage stage) {
     	Window owner = stage.getOwner();
 		
@@ -63,6 +64,7 @@ public class ControllerNuevoProveedor implements Initializable{
 			}
 	}
 	
+	//Verifica si el input de un textfield es un número.
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
@@ -80,7 +82,10 @@ public class ControllerNuevoProveedor implements Initializable{
     	reload(stage);
     }
 	
+    //Determina si los parámetros de un proveedor están completos.
 	public void proveedorActivarGuardar(KeyEvent event) {
+		//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
 		if(textfield_codigoProveedor.getLength() > 0 && textfield_nombreProveedor.getLength() > 0 && textfield_rncProveedor.getLength() > 0
 				&& textfield_telefonoProveedor.getLength() > 0) {
 			button_proveedorGuardar.setDisable(false);
@@ -90,13 +95,18 @@ public class ControllerNuevoProveedor implements Initializable{
 		}
 	}
 	
+	//Guarda un nuevo proveedor.
 	public void guardarProveedor(ActionEvent Event) {
 		boolean isEmpty = false;
 		boolean validRegister = true;
 		Alert a = new Alert(AlertType.NONE); 
 		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
-		String nombrerubro = textfield_rubroProveedor.getText();
+		
+		//Supuestamente un proveedor tiene un rubro, si ves este comentario es debido a que nunca implementamos
+		//esto o si lo hicimos y se nos olvido removerlo, en cualquiera de los dos casos, sabes que hacer.
+		String nombrerubro = textfield_rubroProveedor.getText(); 
 		Rubro rubro = null;
+		
 		String codigo = textfield_codigoProveedor.getText();
 		String nombre = textfield_nombreProveedor.getText();
 		String telefono = textfield_telefonoProveedor.getText();

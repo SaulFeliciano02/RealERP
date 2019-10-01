@@ -1,17 +1,11 @@
 package visual;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.net.URL;
-import java.nio.file.FileAlreadyExistsException;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -22,22 +16,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 import archivos.Archivos;
-import basededatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -45,38 +31,27 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 //import jdk.nashorn.internal.ir.SetSplitState;
 import logico.Atributos;
 import logico.CajaChica;
 import logico.CantBienesYServiciosUtilizados;
-import logico.CantKitsUtilizados;
 import logico.CantProductosUtilizados;
 import logico.Cargo;
 import logico.CategoriaEmpleado;
 import logico.Cliente;
 import logico.Combinaciones;
 import logico.Controladora;
-import logico.CostoDirecto;
-import logico.CostoIndirecto;
 import logico.CostoIndirectoProducto;
 import logico.CuentaBanco;
 import logico.Empleado;
@@ -92,12 +67,9 @@ import logico.Promocion;
 import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
-import logico.ServicioUtilizado;
 import logico.TransaccionesCajaChica;
 import logico.TransaccionesCuentaBanco;
-import logico.UnidadMedida;
 import logico.Usuario;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -597,8 +569,8 @@ public class Controller implements Initializable{
 
 /**FUNCIONES MENU PRINCIPAL**/
 	
-    public void principal_pressed(ActionEvent event){
-    	
+	//Función que se activa al presionar el botón de principal.
+    public void principal_pressed(ActionEvent event){  	
     	pressed_principal1.setSource(pressed_principal); 
     	
     	nonpressed_principal1.setSource(nonpressed_principal); 
@@ -659,6 +631,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que se activa al presionar el botón de gastos.
     public void gastos_pressed(ActionEvent event){
     	pressed_gastos1.setSource(pressed_gastos ); 
     	
@@ -720,7 +693,11 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que se activa al presionar el botón de productos.
     public void productos_pressed(ActionEvent event){
+    	//root es el usuario por defecto del programa, no esta guardado en la base de datos,
+    	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
+    	//en el programa con este usuario.
     	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root")) {}
     	else if(Controladora.getInstance().getUsuarioLogueado().getCargo().getNombre().equalsIgnoreCase("Administrador"))
 		{
@@ -787,6 +764,7 @@ public class Controller implements Initializable{
 
     }
     
+    //Función que se activa al presionar el botón de ventas.
     public void ventas_pressed(ActionEvent event){
     	pressed_ventas1.setSource(pressed_ventas); 
     	
@@ -848,6 +826,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que se activa al presionar el botón de historial.
     public void historial_pressed(ActionEvent event){
     	pressed_historial1.setSource(pressed_historial); 
     	
@@ -908,6 +887,7 @@ public class Controller implements Initializable{
 
     }
     
+    //Función que se activa al presionar el botón de RR.HH.
     public void rh_pressed(ActionEvent event){
     	pressed_rh1.setSource(pressed_rh); 
     	
@@ -941,7 +921,6 @@ public class Controller implements Initializable{
     	button_productos.setEffect(nonpressed_productos1);
     	button_ventas.setEffect(nonpressed_ventas1);
     	button_historial.setEffect(nonpressed_historial1);
-    	//button_rh.setEffect(nonpressed_rh1);
     	button_admin.setEffect(nonpressed_admin1);
     	button_help.setEffect(nonpressed_help1); 
     	button_config.setEffect(nonpressed_config1); 
@@ -970,6 +949,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que se activa al presionar el botón de administración.
     public void admin_pressed(ActionEvent event){
     	pressed_admin1.setSource(pressed_admin); 
     	
@@ -1030,6 +1010,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que se activa al presionar el botón de configuración.
     public void config_pressed(ActionEvent event){
     	pressed_config1.setSource(pressed_config); 
     	
@@ -1090,7 +1071,7 @@ public class Controller implements Initializable{
     	
     }
     
-    
+    //Función que se activa al presionar el botón de ayuda.
     public void help_pressed(ActionEvent event){
     	pressed_help1.setSource(pressed_help); 
     	
@@ -1153,8 +1134,10 @@ public class Controller implements Initializable{
     	
     }
     
+    //Función que determina si la tecla presionada en un textfield cumple con los parámetros para ser considero un valor de tipo float.
     public void floatFieldPressed(KeyEvent event) {
-    	
+    	//Cuando se presiona una tecla para ser registrada como input en un textfield de javafx,
+    	//esta no queda registrada hasta que se termine de procesar el evento.
     	TextField source = (TextField) event.getSource();
     	if(source.getLength() == 0) {
     		if(!Controladora.getInstance().isFloat("", event.getCharacter())) {
@@ -1168,16 +1151,8 @@ public class Controller implements Initializable{
     	}
     	
     }
-  /*  public void config_pressed(ActionEvent event){
-    	
-    	    	text_menuName.setVisible(false);
-    	    	text_menuOptions.setVisible(true);
-    	    	text_menuOptions.setText("Configuración");
-    	    	
-    	    	pane_Config.setDisable(false);
-    	    	pane_Config.setVisible(true);
-    } */
-    
+
+    //Esta función actualmente no hace nada, para serte sincero probablemente pueda ser borrada.
     public void config_close(ActionEvent event){
     	text_menuName.setVisible(true);
     	text_menuOptions.setVisible(false);
@@ -1188,6 +1163,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Determina si los parámetros de familia y atributo localizados en el tab de atributos en la ventana de productos están completos.
     public void activar_nuevoAtributo(KeyEvent event) {
     	if(!textfield_register_familia.getText().isEmpty() && !textfield_registrar_atributo.getText().isEmpty()) {
     		button_agregar_atributo.setDisable(false);
@@ -1197,6 +1173,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Al hacer click en el listview de gastos generales, rellena los campos del gasto y activa los botones de modificar y eliminar.
     public void selected_gastoGeneral(MouseEvent event)
     {
     	listview_gastosG.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -1242,6 +1219,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Buscador de atributos por familia.
     public void selected_familiaAtributoList(MouseEvent event) {
     	listView_grupoAtributos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     	String familia = listView_grupoAtributos.getSelectionModel().getSelectedItem();
@@ -1273,6 +1251,7 @@ public class Controller implements Initializable{
     	textfield_infoFamilia.setText(info);
     }
     
+    //Guarda un nuevo atributo y una nueva familia de atributo (si esta no estaba registrada posteriormente).
     public void pressed_nuevoAtributo(ActionEvent event) {
     	ObservableList<Atributos> data = FXCollections.observableArrayList();
     	ObservableList<GrupoAtributo> data2 = FXCollections.observableArrayList();
@@ -1306,12 +1285,14 @@ public class Controller implements Initializable{
     	button_agregar_atributo.setDisable(true);
     }
     
+    //Activa el botón de eliminar atributo si se selecciona algún elemento del tableview.
     public void activarEliminarAtributo(MouseEvent event) {
     	if(tableView_atributos.getSelectionModel().getSelectedItem() != null) {
     		button_atributosEliminar.setDisable(false);
     	}
     }
     
+    //Guarda un nuevo gasto general (El if estaba pensado por si se realizaba la modificación en la misma función).
     public void pressed_nuevoGastoGeneral(ActionEvent event)
     {
     	if(!textfield_nombreGastoG.isDisabled()) {
@@ -1366,6 +1347,7 @@ public class Controller implements Initializable{
     	
    }
     
+    //Exporta el inventario (los productos) a una plantilla de Excel.
     public void pressed_exportarInventarioExcel(ActionEvent event)
     {
     	Archivos.carpeta();
@@ -1727,6 +1709,9 @@ public class Controller implements Initializable{
     	}	
     }
     
+    //Realiza la modificación de un gasto general 
+    //(la data anterior no se elimina, se realiza otra instancia de la clase y otra fila en la base de datos, 
+    //y la data anterior se le marca una variable booleana llamada “borrado” como true).
     public void pressed_modificarGastoGeneral(ActionEvent event)
     {
     	GastoGeneral gasto = Controladora.getInstance().buscarGasto(textfield_nombreGastoG.getText());
@@ -1791,6 +1776,7 @@ public class Controller implements Initializable{
     	}**/
     }
     
+    //Se elimina un gasto general (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void eliminarGastoGeneral(ActionEvent event) {
     	GastoGeneral encontrado = null;
     	Controladora.getInstance().getMisCostosIndirectos();
@@ -1830,25 +1816,12 @@ public class Controller implements Initializable{
     	}
     }
     
-    /*public void activarGuardarGastoG(KeyEvent event) // HACER UN WARNING QUE APAREZCA CUANDO INTENTA REGISTRAR UN GASTOGENERAL SIN NOMBRE, SIN MONTO O SIN FECHA
-    {
-    	String nombre = textfield_nombreGastoG.getText();
-    	String monto = textfield_montoGastoG.getText();
-    	LocalDate fecha = datepicker_fechaGastoG.getValue();
-    	
-    	if(nombre!=null || monto!=null || fecha!=null)
-    	{
-    		Dialog<String> dialog = new Dialog<>();
-    		 dialog.getDialogPane().getButtonTypes().add(loginButtonType);
-    		 boolean disabled = false; // computed based on content of text fields, for example
-    		 dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
-    	}
-    }*/
-    
+    //Puedes encargarte de darle algún propósito a una función, es completamente opcional.
     public void pressed_modificarAtributoOGrupo(ActionEvent event) {
     	//if()
     }
     
+    //Abre la ventana de nuevoProducto.fxml que es manejada por el controlador ControllerNuevoProducto.java.
     public void pressed_nuevoProducto(ActionEvent event){
     	
     	/**ABRIENDO nuevoProducto.fxml**/
@@ -1872,6 +1845,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -1903,6 +1880,7 @@ public class Controller implements Initializable{
 		}
     }
     
+    //Abre la ventana de nuevoProducto.fxml que es manejada por el controlador ControllerNuevoProducto.java con la intención de modificar un producto.
     public void pressed_modificarProducto(ActionEvent event){
     	try {
     		Producto producto = tableview_productList.getSelectionModel().getSelectedItem();
@@ -1922,6 +1900,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -1955,6 +1937,7 @@ public class Controller implements Initializable{
 		
     }
     
+    //Se elimina un producto (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void pressed_eliminarProducto(ActionEvent event){
     	Producto producto = tableview_productList.getSelectionModel().getSelectedItem();
 
@@ -1985,6 +1968,7 @@ public class Controller implements Initializable{
     	//Agregar acá un reload
     }
     
+    //Reinicia la ventana (no creo que se este usando pero recomendamos dejarla en cualquier caso).
     public void reload(Stage stage) {
     	
    		try {
@@ -2010,6 +1994,7 @@ public class Controller implements Initializable{
    		
 	}
     
+    //Abre la ventana de nuevoCliente.fxml que es manejada por el controlador ControllerNuevoCliente.java.
     public void pressed_nuevoCliente(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoCliente.fxml"));
@@ -2025,7 +2010,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
-			//SI CIERRO LA VENTANA DE REGISTROS DE CLIENTES CIERRO LA PRINCIPAL Y LA VUELVO A ABRIR
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -2058,6 +2046,7 @@ public class Controller implements Initializable{
 		}
     }
     
+    //Se elimina un cliente (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void pressed_eliminarCliente(ActionEvent event) {
     	Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + cliente.getNombre() + "?", ButtonType.YES, ButtonType.NO);
@@ -2085,6 +2074,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Abre la ventana de nuevoProveedor.fxml que es manejada por el controlador ControllerNuevoProveedor.java.
     public void pressed_nuevoProveedor(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoProveedor.fxml"));
@@ -2100,6 +2090,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -2131,7 +2125,8 @@ public class Controller implements Initializable{
 			e.printStackTrace();
 		}
     }
-    
+
+    //Se elimina un proveedor (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void pressed_eliminarProveedor(ActionEvent event) {
     	Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar a" + proveedor.getNombre() + "?", ButtonType.YES, ButtonType.NO);
@@ -2147,6 +2142,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Abre la ventana de nuevoEmpleado.fxml que es manejada por el controlador ControllerNuevoEmpleado.java.
     public void pressed_nuevoEmpleado(ActionEvent event) {
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoEmpleado.fxml"));
@@ -2162,6 +2158,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -2193,7 +2193,8 @@ public class Controller implements Initializable{
 			e.printStackTrace();
 		}
     }
-    
+
+    //Se elimina un empleado (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void pressed_eliminarEmpleado(ActionEvent event) {
     	Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar a" + empleado.getNombre() + "?", ButtonType.YES, ButtonType.NO);
@@ -2209,8 +2210,11 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Guarda un nuevo usuario.
     public void pressed_guardarUsuario(ActionEvent event)
     {
+    	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(!textfield_usuario.getText().equals("") && !textfield_empleadoUsuario.getText().equals("") && !textfield_passwordUsuario.getText().equals("") && combobox_cargoUsuario.getSelectionModel().getSelectedIndex()>0)
     	{
     		Alert alert = new Alert(AlertType.CONFIRMATION, "Confirmar creación del usuario" + textfield_usuario, ButtonType.YES, ButtonType.NO);
@@ -2228,7 +2232,8 @@ public class Controller implements Initializable{
         }
     	
     }
-    
+
+    //Abre la ventana de nuevaFactura.fxml que es manejada por el controlador ControllerNuevaFactura.java.
     public void pressed_nuevaFactura(ActionEvent event){
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaFactura.fxml"));
@@ -2244,6 +2249,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -2276,6 +2285,7 @@ public class Controller implements Initializable{
 		}
     }
     
+    //Abre la ventana de nuevaPromocion.fxml que es manejada por el controlador ControllerNuevaPromocion.java.
     public void pressed_nuevaPromocion(ActionEvent event){
     	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaPromocion.fxml"));
@@ -2291,6 +2301,10 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
+			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
+			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
+			//que esto no es lo mas efectivo.
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			      public void handle(WindowEvent we) {
 			          
@@ -2324,21 +2338,22 @@ public class Controller implements Initializable{
     }
     
     /**FUNCIONES GENERALES**/
-    //Verifica si el input de un textfield es un numero
+    
+    //Verifica si el input de un textfield es un número.
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter())) {
     		event.consume();
     	}
     }
     
-    //Cierra la venta de nuevoProducto
+    //Cierra la venta de nuevoProducto (Realmente no esta haciendo nada).
     public void cancelCreation(ActionEvent event) {
     	Button button = (Button) event.getSource();
     	Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
     }
     
-    //Busqueda de clientes
+    //Busqueda de clientes.
     public void buscarClientes(KeyEvent event) {
     	ArrayList<Cliente> clientes = new ArrayList<>();
     	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_clienteBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
@@ -2355,7 +2370,7 @@ public class Controller implements Initializable{
     	}
     }
     
-    //Busqueda de productos
+    //Busqueda de productos.
     public void buscarProductos(KeyEvent event) {
     	TextField textfield = (TextField) event.getSource();
     	ArrayList<Producto> productos = new ArrayList<>();
@@ -2389,7 +2404,7 @@ public class Controller implements Initializable{
     	}
     }
     
-    //Busqueda de proveedores
+    //Busqueda de proveedores.
     public void buscarProveedores(KeyEvent event) {
     	ArrayList<Proveedores> proveedores = new ArrayList<>();
     	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_proveedorBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
@@ -2406,7 +2421,7 @@ public class Controller implements Initializable{
     	}
     }
     
-    //Busqueda de empleados
+    //Busqueda de empleados.
     public void buscarEmpleados(KeyEvent event) {
     	ArrayList<Empleado> empleados = new ArrayList<>();
     	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_buscarEmpleado.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
@@ -2424,6 +2439,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Busqueda de rubros.
     public void buscarRubros(KeyEvent event) {
     	ArrayList<Rubro> rubros = new ArrayList<>();
     	if(event.getCode().equals(KeyCode.BACK_SPACE) || (textfield_rubroBusqueda.getLength() == 1 && event.getCode().equals(KeyCode.BACK_SPACE))) {
@@ -2470,8 +2486,10 @@ public class Controller implements Initializable{
     	pane_rubroCreate.setVisible(false);
     }
     
-    
+    //Determina si los parámetros de los rubros localizado en el tab de rubros en la ventana de rubros están completos.
     public void activarGuardarRubro(KeyEvent event) {
+    	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(textfield_rubroCodigo.getLength() > 0 && textfield_rubroNombre.getLength() > 0) {
     		button_rubroGuardar.setDisable(false);
     	}
@@ -2480,6 +2498,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Guarda un nuevo rubro.
     public void guardarRubro(ActionEvent event) {
     	ObservableList<Rubro> data = FXCollections.observableArrayList();
     	String codigo = textfield_rubroCodigo.getText();
@@ -2498,6 +2517,7 @@ public class Controller implements Initializable{
     	textfield_rubroNombre.setDisable(true);
     }
     
+    //Activa el botón de eliminar rubro dependiendo si hay un elemento seleccionado en el tableview.
     public void rubroTableViewClicked(MouseEvent event) {
     	if(!tableview_rubro.getSelectionModel().isEmpty()) {
     		button_rubroEliminar.setDisable(false);
@@ -2507,6 +2527,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Se elimina un rubro (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void eliminarRubro(ActionEvent event) {
     	Rubro rubro = tableview_rubro.getSelectionModel().getSelectedItem();
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + rubro.getNombreRubro() + "?", ButtonType.YES, ButtonType.NO);
@@ -2530,6 +2551,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Se elimina un atributo o familia atributo dependiendo del radiobutton seleccionado (la data no se elimina, se le marca una variable booleana llamada “borrado” como true).
     public void eliminarAtributo(ActionEvent event) {
     	Atributos atributo = tableView_atributos.getSelectionModel().getSelectedItem();
     	if(radiobutton_atributo.isSelected()) {
@@ -2578,19 +2600,18 @@ public class Controller implements Initializable{
     	button_atributosEliminar.setDisable(true);
     }
 
-    
+    //Esta función y eliminarProveedor existían antes de implementar la base de datos correctamente, actualmente no tienen uso.
     public void eliminarCliente(ActionEvent event) {
     	int index = tableview_clientesList.getSelectionModel().getSelectedIndex();
     	tableview_clientesList.getItems().remove(index);
     }
-
-    
+  
     public void eliminarProveedor(ActionEvent event) {
     	int index = tableview_proveedoresList.getSelectionModel().getSelectedIndex();
     	tableview_proveedoresList.getItems().remove(index);
     }
     
-
+    //Guarda una nueva categoría de empleado.
     public void pressed_guardarCategoriaEmp(ActionEvent event)
     {
     	if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
@@ -2619,6 +2640,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Rellena los datos de la empresa (puede usar refinamiento).
     public void fillEmpresa()
     {
     	if(Controladora.getInstance().getMiEmpresa() != null)
@@ -2638,6 +2660,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Guarda los datos de la empresa (puede usar refinamiento).
     public void guardarEmpresa(ActionEvent event) {
     	Alert alert = new Alert(AlertType.CONFIRMATION, "¿Desea actualizar la información de su empresa?", ButtonType.YES, ButtonType.NO);
     	alert.showAndWait();
@@ -2698,12 +2721,14 @@ public class Controller implements Initializable{
     
     /**FUNCIONES DE LAS PETICIONES**/
     
+    //Selecciona un producto para las peticiones.
     public void tableview_peticionProductosClicked(MouseEvent event) {
     	Producto producto = tableview_peticionProducto.getSelectionModel().getSelectedItem();
     	textfield_peticionProductoSeleccionado.setText(producto.getNombre());
     	button_peticionProductoSeleccionar.setDisable(false);
     }
     
+    //Guarda la selección del producto para la petición.
     public void peticionSelectProducto(ActionEvent event) {
     	textfield_peticionProducto.setText(textfield_peticionProductoSeleccionado.getText());
     	//combobox_peticionProveedor.setDisable(false);
@@ -2716,17 +2741,20 @@ public class Controller implements Initializable{
     	cerrar_titledpane_busquedaProductosPeticiones(event);
     }
     
+    //Selecciona un proveedor para las peticiones.
     public void tableview_peticionProveedorClicked(MouseEvent event) {
     	Proveedores proveedor = tableview_peticionProveedoresList.getSelectionModel().getSelectedItem();
     	textfield_peticionProveedorSeleccionado.setText(proveedor.getCodigo());
     	button_peticionProveedorSeleccionar.setDisable(false);
     }
     
+    //Guarda la selección del proveedor para la petición.
     public void peticionSelectProveedor(ActionEvent event) {
     	textfield_peticionProveedor.setText(textfield_peticionProveedorSeleccionado.getText());
     	cerrar_infoBusquedaProveedoresPeticiones(event);
     }
     
+    //Determina el tipo de pago que se hará a la petición (efectivo, crédito, tarjeta (no implementado)).
     public void peticionTipoDePago(ActionEvent event) {
     	if(event.getSource().equals(radiobutton_peticionEfectivo)) {
     		radiobutton_peticionCredito.setSelected(false);
@@ -2748,12 +2776,14 @@ public class Controller implements Initializable{
     	textfield_peticionMonto.setText(Float.toString(producto.getCosto()*spinner_peticionCantidad.getValue()));
     }
     
+    //Activa el botón para poder administrar una petición.
     public void activarAdministrarPeticion(MouseEvent event) {
     	if(!tableview_peticionList.getSelectionModel().isEmpty()) {
     		button_peticionAdministrar.setDisable(false);
     	}
     }
     
+    //Abre la administración de una petición para determinar su estado (Aceptada o pendiente).
     public void openAdministrarPeticion(ActionEvent event) {
     	Alert a = new Alert(AlertType.WARNING);
     	Peticion peticion = tableview_peticionList.getSelectionModel().getSelectedItem();
@@ -2786,10 +2816,14 @@ public class Controller implements Initializable{
     	
     }
     
+    //Guarda una nueva petición.
     public void guardarPeticion(ActionEvent event) {
     	boolean canRegister = true;
     	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
     	Alert a = new Alert(AlertType.WARNING);
+    	
+    	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(textfield_peticionProveedor.getText().equalsIgnoreCase("")) {
     		a.setContentText("Falta ingresar los datos del proveedor");
     		a.show();
@@ -2830,7 +2864,7 @@ public class Controller implements Initializable{
             	}
     			if(combobox_peticionEstado.getValue().equalsIgnoreCase("Aceptada")) {
     				Producto productoSuma = tableview_peticionList.getSelectionModel().getSelectedItem().getProducto();
-    				int indiceProducto = Controladora.getInstance().getMisProductos().indexOf(productoSuma);
+    				//int indiceProducto = Controladora.getInstance().getMisProductos().indexOf(productoSuma);
     				if(productoSuma.getTipoProducto().equalsIgnoreCase("Estandar") || productoSuma.getTipoProducto().equalsIgnoreCase("Matriz")) {
     					Estandar productoSumaEstandar = (Estandar) productoSuma;
     					int indiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoSumaEstandar);
@@ -2923,7 +2957,8 @@ public class Controller implements Initializable{
         	fillPeticion();
     	}
     }
-    
+
+    //Guarda un nuevo usuario.
     public void guardarUsuario(ActionEvent event) {
     	Alert a = new Alert(AlertType.WARNING);
     	boolean canRegister = true;
@@ -2941,6 +2976,8 @@ public class Controller implements Initializable{
     		
     	}
     	
+    	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
+    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(usuarioNombre.equalsIgnoreCase("")) {
     		a.setContentText("Seleccione el nombre del usuario");
     		a.show();
@@ -2992,6 +3029,7 @@ public class Controller implements Initializable{
     	
     }
     
+    //Guarda la caja chica o cualquier transacción que se haga en ella.
     public void guardarCajaChica(ActionEvent event) {
     	float monto = 0;
     	String descripcion = "";
@@ -3057,6 +3095,7 @@ public class Controller implements Initializable{
         		}
         	}
         	if(canRegister) {
+        		success.showAndWait();
         		textfield_cajaMontoRemove.setText("");
         		textarea_cajaDescripcionRemove.setText("");
         		textfield_cajaMontoAdd.setText("");
@@ -3068,6 +3107,7 @@ public class Controller implements Initializable{
     	}
     }
     
+    //Guarda la cuenta de banco o cualquier transacción que se haga en ella (puede ser refinado).
     public void guardarCuentaBanco(ActionEvent event) {
     	float monto = 0;
     	String descripcion = "";
@@ -3123,6 +3163,7 @@ public class Controller implements Initializable{
         		}
         	}
         	if(canRegister) {
+        		success.showAndWait();
         		textfield_cuentaMontoRemove.setText("");
         		textarea_cuentaDescripcionRemove.setText("");
         		textfield_cuentaMontoAdd.setText("");
@@ -3134,13 +3175,15 @@ public class Controller implements Initializable{
     	}	
     }
 
+    //Determina los permisos del usuario logeado.
 	public void verifyUserPermissions()
 	{
 		Usuario user = Controladora.getInstance().getUsuarioLogueado();
 		
-		if(user.getUsuario().equalsIgnoreCase("root")) {
-			
-		}
+		//root es el usuario por defecto del programa, no esta guardado en la base de datos,
+    	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
+    	//en el programa con este usuario.
+		if(user.getUsuario().equalsIgnoreCase("root")) {}
 		else {
 			if(!user.getCargo().isManejodeproductos())
 			{
@@ -3291,9 +3334,11 @@ public class Controller implements Initializable{
     	
     	//Obtener fecha actual y traducir dias y meses
     	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-    	java.util.Date currentTime = localCalendar.getTime();
+    	//java.util.Date currentTime = localCalendar.getTime();
     	DateFormatSymbols letras = new DateFormatSymbols();
     	
+    	//Los días de la semana y los meses en java (y realmente en cualquier otro lenguaje) están escritas en inglés,
+    	//el switch fue la solución que encontramos a ese tropiezo.
     	String dia = letras.getWeekdays()[localCalendar.get(Calendar.DAY_OF_WEEK)];
     	switch (dia) {
     	  case "Monday":
@@ -3816,7 +3861,6 @@ public class Controller implements Initializable{
     public void abrirInfoAdicionalProducto(ActionEvent event) {
     	pane_InfoAdicionalProducto.setVisible(true);
     	titledpane_productoInformacionAdicional.setVisible(true);
-    	int i = 0;
     	Producto p = tableview_productList.getSelectionModel().getSelectedItem();
     	System.out.println("El nombre de este producto es: " + p.getNombre());
     	if(p.getTipoProducto().equalsIgnoreCase("Estandar") || p.getTipoProducto().equalsIgnoreCase("Matriz")) {
@@ -4171,6 +4215,14 @@ public class Controller implements Initializable{
 	        }
 	    });
 		datepicker_empresaFechaVencimiento.setDayCellFactory(picker -> new DateCell() {
+	        public void updateItem(LocalDate date, boolean empty) {
+	            super.updateItem(date, empty);
+	            LocalDate today = LocalDate.now();
+
+	            setDisable(empty || date.compareTo(today) < 0 );
+	        }
+	    });
+		datepicker_fechaGastoG.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
 	            LocalDate today = LocalDate.now();
