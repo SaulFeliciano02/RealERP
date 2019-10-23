@@ -220,6 +220,7 @@ public class ControllerNuevoEmpleado implements Initializable{
 			CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
 			
 			Controladora.getInstance().getMisCategoriasEmpleado().add(cat);
+			Controladora.getInstance().guardarCategoriaEmpleadoSQL(cat);
 			
 			tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 			tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));

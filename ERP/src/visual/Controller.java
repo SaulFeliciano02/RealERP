@@ -27,7 +27,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,6 +63,7 @@ import logico.Factura;
 import logico.GastoGeneral;
 import logico.GrupoAtributo;
 import logico.Kit;
+import logico.ManoDeObra;
 import logico.Peticion;
 import logico.Producto;
 import logico.Promocion;
@@ -114,6 +117,7 @@ public class Controller implements Initializable{
     @FXML private TextField textfield_nombreCategoriaEmp;
     @FXML private TextField textfield_salarioCategoriaEmp;
     @FXML private Button button_guardarCategoriaEmp;
+    @FXML private Button button_editarCategoria;
     @FXML private TableView<CategoriaEmpleado> tableview_CategoriaEmp;
     @FXML private TableColumn<CategoriaEmpleado, String> tablecolumn_NombreCategoria;
     @FXML private TableColumn<CategoriaEmpleado, Float> tablecolumn_SueldoCategoria;
@@ -2030,7 +2034,7 @@ public class Controller implements Initializable{
 			  		 
 			  		    Parent root = f.load();
 			  		    Controller c = f.getController();
-			  		    c.rh_pressed(null);
+			  		    c.ventas_pressed(null);
 			  		    c.selectTabCliente();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
@@ -2110,8 +2114,8 @@ public class Controller implements Initializable{
 
 			  		    Parent root = f.load();
 			  		    Controller c = f.getController();
-			  		    c.rh_pressed(null);
-			  		    c.selectTabProveedor();
+			  		    c.ventas_pressed(null);
+					    c.selectTabProveedor();
 			  		    Scene sc = new Scene(root);
 			  		    primaryStage.setScene(sc);
 			  		    primaryStage.setTitle("Centro Pymes");
@@ -2207,7 +2211,11 @@ public class Controller implements Initializable{
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar a" + empleado.getNombre() + "?", ButtonType.YES, ButtonType.NO);
     	alert.showAndWait();
     	
-    	if (alert.getResult() == ButtonType.YES) {
+    	if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+    		Alert exist = new Alert(AlertType.WARNING, "Empleado en uso.");
+    		exist.showAndWait();
+    	}
+    	else if (alert.getResult() == ButtonType.YES) {
     		if(empleado!=null) {
     			int indice = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
     			Controladora.getInstance().getMisEmpleados().get(indice).setBorrado(true);
@@ -2331,6 +2339,8 @@ public class Controller implements Initializable{
 
 			  		    primaryStage.show();
 			  		    owner.hide();
+			  		    
+			  		    
 			  		} catch (IOException e) {
 			  			// TODO Auto-generated catch block
 			  			e.printStackTrace();
@@ -2511,17 +2521,24 @@ public class Controller implements Initializable{
     	String codigo = textfield_rubroCodigo.getText();
     	String nombre = textfield_rubroNombre.getText();
     	Rubro rubro = new Rubro(codigo, nombre);
-    	data.add(rubro);
-    	Controladora.getInstance().getMisRubros().add(rubro);
-    	Controladora.getInstance().guardarRubroSQL(rubro);
-    	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
-    	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
-    	tableview_rubro.getItems().add(rubro);
-    	tableview_rubro.refresh();
-    	textfield_rubroCodigo.setText("");
-    	textfield_rubroNombre.setText("");
-    	textfield_rubroCodigo.setDisable(true);
-    	textfield_rubroNombre.setDisable(true);
+    	if(!Controladora.getInstance().rubroCodeExists(rubro)) {
+    		data.add(rubro);
+    		Controladora.getInstance().getMisRubros().add(rubro);
+    		Controladora.getInstance().guardarRubroSQL(rubro);
+    		tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+    		tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
+    		tableview_rubro.getItems().add(rubro);
+    		tableview_rubro.refresh();
+    		textfield_rubroCodigo.setText("");
+    		textfield_rubroNombre.setText("");
+    		textfield_rubroCodigo.setDisable(true);
+    		textfield_rubroNombre.setDisable(true);
+    	}
+    	else {
+    		Alert alert = new Alert(AlertType.WARNING, "El código ya está en uso");
+    		alert.showAndWait();
+    	}
+    	
     }
     
     //Activa el botón de eliminar rubro dependiendo si hay un elemento seleccionado en el tableview.
@@ -2644,6 +2661,216 @@ public class Controller implements Initializable{
     		data.add(cat);
     		tableview_CategoriaEmp.getItems().add(cat);
     		tableview_CategoriaEmp.refresh();	
+    	}
+    }
+    
+    public void tableview_categoriaClicked(MouseEvent event) {
+    	CategoriaEmpleado categoria = tableview_CategoriaEmp.getSelectionModel().getSelectedItem();
+    	textfield_nombreCategoriaEmp.setText(categoria.getNombre());
+    	textfield_nombreCategoriaEmp.setEditable(false);
+    	textfield_salarioCategoriaEmp.setPromptText(Float.toString(categoria.getSueldo()));
+    	button_editarCategoria.setDisable(false);
+    }
+    
+    public void editarCategoria(ActionEvent event) {
+    	CategoriaEmpleado categoria = tableview_CategoriaEmp.getSelectionModel().getSelectedItem();
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar esta categoría (Productos y empleados se veran afectados por esta accion)?", ButtonType.YES, ButtonType.NO);
+    	alert.showAndWait();
+    	if(alert.getResult() == ButtonType.YES) {
+    		if(!Controladora.getInstance().isCategoriaInProducto(categoria) && !Controladora.getInstance().isCategoryInEmpleado(categoria)) {
+    			if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
+            	{
+            		String nombre = textfield_nombreCategoriaEmp.getText();
+            		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+        		
+            		if(radiobutton_PorDia.isSelected())
+            		{
+            			salario = salario/8;
+            		}
+            		if(salario != categoria.getSueldo()) {
+            			int index = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoria);
+            			Controladora.getInstance().getMisCategoriasEmpleado().get(index).setBorrado(true);
+            			Controladora.getInstance().borrarCategoriaEmpleado(index+1);
+            		
+            			CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+            			Controladora.getInstance().addCategoriaEmpleado(cat);
+            		}
+            		Alert success = new Alert(AlertType.CONFIRMATION, "Modificación realizada.");
+            		success.showAndWait();
+            		textfield_nombreCategoriaEmp.setText("");
+            		textfield_nombreCategoriaEmp.setPromptText("");
+            		textfield_nombreCategoriaEmp.setEditable(true);
+            		textfield_salarioCategoriaEmp.setText("");
+            		textfield_salarioCategoriaEmp.setPromptText("");
+            		
+            		tableview_CategoriaEmp.getSelectionModel().clearSelection();
+            		fillCategoriaEmpleado();
+            	}
+    		} 		
+    		else if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty()){
+    			String nombre = textfield_nombreCategoriaEmp.getText();
+        		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+    		
+        		if(radiobutton_PorDia.isSelected())
+        		{
+        			salario = salario/8;
+        		}
+        		
+        		if(salario != categoria.getSueldo()) {
+        			CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+        			
+        			ArrayList<Estandar> productosEstandar = Controladora.getInstance().getProductsEstandarWithCategory(categoria);
+        			ArrayList<Servicio> productosServicio = Controladora.getInstance().getProductsServicioWithCategory(categoria);
+        			ArrayList<Empleado> empleados = Controladora.getInstance().getEmpleadoWithCategory(categoria);
+        			
+        			int indexCategoria = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoria);
+        			
+        			Controladora.getInstance().getMisCategoriasEmpleado().get(indexCategoria).setBorrado(true);
+        			Controladora.getInstance().borrarCategoriaEmpleado(indexCategoria+1);
+        		
+        			Controladora.getInstance().addCategoriaEmpleado(cat);
+        			int indexNewCategoria = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(cat);
+        			
+        			for(Estandar estandar : productosEstandar) {
+        				int index = Controladora.getInstance().getMisProductos().indexOf(estandar);
+        				float costo = Controladora.getInstance().getMisProductos().get(index).getCosto();
+    					float costoitbis = Controladora.getInstance().getMisProductos().get(index).getCostoitbis();
+    					float precio = Controladora.getInstance().getMisProductos().get(index).getPrecio();
+        				if(estandar.getTipoProducto().equalsIgnoreCase("Estandar")) {
+        						
+        						int indexEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
+        						
+        						ManoDeObra mano = Controladora.getInstance().getMisProductosEstandar().get(indexEstandar).getInfoManoDeObra();
+        						int indexManoObra = Controladora.getInstance().getMisManosDeObras().indexOf(mano);
+        						
+        						float oldCostoManoObra = mano.getCosto();
+        						
+        						//La nueva mano de obra
+        						float newCostoManoObra = cat.getSueldo() * mano.getCantidadHoras();
+        						Controladora.getInstance().getMisProductosEstandar().get(indexEstandar).setManodeobra(newCostoManoObra);
+        						Controladora.getInstance().getMisProductosEstandar().get(indexEstandar).getInfoManoDeObra().setCosto(newCostoManoObra);
+        						Controladora.getInstance().getMisProductosEstandar().get(indexEstandar).getInfoManoDeObra().setCategoria(cat);
+        						Controladora.getInstance().editarEstandarCostoManoObra(indexEstandar, newCostoManoObra);
+        						Controladora.getInstance().editarManoDeObraCosto(indexManoObra+1, newCostoManoObra);
+        						Controladora.getInstance().editarCategoriaManoObraEstandar(indexNewCategoria+1, indexManoObra+1);
+        						
+        						//El nuevo costo
+        						float newCosto = costo + (newCostoManoObra-oldCostoManoObra);
+        						
+        						Controladora.getInstance().getMisManosDeObras().get(indexManoObra).setCosto(newCostoManoObra);
+        						Controladora.getInstance().getMisProductos().get(index).setCosto(newCosto);
+        						Controladora.getInstance().editarProductoCosto(index+1, newCosto);
+        						
+        						double porcientoGanancia = ((precio - costo - (costo*0.18)) / costo) * 100;
+        						System.out.println("El precio es: " + precio);
+        						System.out.println("El costo es: " + costo);
+        						System.out.println("El costoitbis es: " + costoitbis);
+        						System.out.println("El porciento de ganancia es: " + porcientoGanancia);
+        						
+        						//El nuevo precio
+        						double nuevoPrecio = Controladora.getInstance().calcularPrecio(newCosto, porcientoGanancia, 18);
+        						Controladora.getInstance().getMisProductos().get(index).getPrecioClass().setPrecio((float) nuevoPrecio);
+        						int indexPrecio = Controladora.getInstance().getMisPrecios().indexOf(Controladora.getInstance().getMisProductos().get(index).getPrecioClass());
+        						Controladora.getInstance().editarPrecio(indexPrecio+1, (float) nuevoPrecio);
+        						
+        						
+        				}
+        				else if(estandar.getTipoProducto().equalsIgnoreCase("Matriz")) {
+        					int indexMatrizEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
+    						int indexMatriz = Controladora.getInstance().getMisProductosMatriz().indexOf(estandar);
+    						
+    						
+    						ManoDeObra mano = Controladora.getInstance().getMisProductosMatriz().get(indexMatriz).getInfoManoDeObra();
+    						int indexManoObra = Controladora.getInstance().getMisManosDeObras().indexOf(mano);
+    						
+    						float oldCostoManoObra = mano.getCosto();
+    						
+    						//La nueva mano de obra
+    						float newCostoManoObra = cat.getSueldo() * mano.getCantidadHoras();
+    						Controladora.getInstance().getMisProductosMatriz().get(indexMatriz).setManodeobra(newCostoManoObra);
+    						Controladora.getInstance().getMisProductosMatriz().get(indexMatriz).getInfoManoDeObra().setCosto(newCostoManoObra);
+    						Controladora.getInstance().getMisProductosMatriz().get(indexMatriz).getInfoManoDeObra().setCategoria(cat);
+    						Controladora.getInstance().editarEstandarCostoManoObra(indexMatrizEstandar, newCostoManoObra);
+    						Controladora.getInstance().editarManoDeObraCosto(indexManoObra+1, newCostoManoObra);
+    						Controladora.getInstance().editarCategoriaManoObraEstandar(indexNewCategoria+1, indexManoObra+1);
+    						
+    						//El nuevo costo
+    						float newCosto = costo + (newCostoManoObra-oldCostoManoObra);
+    						
+    						Controladora.getInstance().getMisManosDeObras().get(indexManoObra).setCosto(newCostoManoObra);
+    						Controladora.getInstance().getMisProductos().get(index).setCosto(newCosto);
+    						Controladora.getInstance().editarProductoCosto(index+1, newCosto);
+    						
+    						double porcientoGanancia = ((precio - costo - (costo*0.18)) / costo) * 100;
+    						
+    						//El nuevo precio
+    						double nuevoPrecio = Controladora.getInstance().calcularPrecio(newCosto, porcientoGanancia, 18);
+    						Controladora.getInstance().getMisProductos().get(index).getPrecioClass().setPrecio((float) nuevoPrecio);
+    						int indexPrecio = Controladora.getInstance().getMisPrecios().indexOf(Controladora.getInstance().getMisProductos().get(index).getPrecioClass());
+    						Controladora.getInstance().editarPrecio(indexPrecio+1, (float) nuevoPrecio);
+        				}
+        			}
+        			for(Servicio servicio : productosServicio) {
+        				int index = Controladora.getInstance().getMisProductos().indexOf(servicio);
+    					int indexServicio = Controladora.getInstance().getMisProductosServicio().indexOf(servicio);
+    					
+    					float costo = Controladora.getInstance().getMisProductos().get(index).getCosto();
+    					float costoitbis = Controladora.getInstance().getMisProductos().get(index).getCostoitbis();
+    					float precio = Controladora.getInstance().getMisProductos().get(index).getPrecio();
+    					
+    					
+    					ManoDeObra mano = Controladora.getInstance().getMisProductosServicio().get(indexServicio).getInfoManoDeObra();
+    					int indexManoObra = Controladora.getInstance().getMisManosDeObras().indexOf(mano);
+    					
+    					float oldCostoManoObra = mano.getCosto();
+    					
+    					//La nueva mano de obra
+    					float newCostoManoObra = cat.getSueldo() * mano.getCantidadHoras();
+    					Controladora.getInstance().getMisProductosServicio().get(indexServicio).setManodeobra(newCostoManoObra);
+    					Controladora.getInstance().getMisProductosServicio().get(indexServicio).getInfoManoDeObra().setCosto(newCostoManoObra);
+    					Controladora.getInstance().getMisProductosServicio().get(indexServicio).getInfoManoDeObra().setCategoria(cat);
+    					//Controladora.getInstance().editarEstandarCostoManoObra(indexMatrizEstandar, newCostoManoObra);
+    					Controladora.getInstance().editarManoDeObraCosto(indexManoObra+1, newCostoManoObra);
+    					Controladora.getInstance().editarCategoriaManoObraServicio(indexNewCategoria+1, indexManoObra+1);
+    					
+    					
+    					//El nuevo costo
+    					float newCosto = costo + (newCostoManoObra-oldCostoManoObra);
+    					
+    					Controladora.getInstance().getMisManosDeObras().get(indexManoObra).setCosto(newCostoManoObra);
+    					Controladora.getInstance().getMisProductos().get(index).setCosto(newCosto);
+    					Controladora.getInstance().editarProductoCosto(index+1, newCosto);
+    					
+    					double porcientoGanancia = ((precio - costo - (costo*0.18)) / costo) * 100;
+    					
+    					//El nuevo precio
+    					double nuevoPrecio = Controladora.getInstance().calcularPrecio(newCosto, porcientoGanancia, 18);
+    					Controladora.getInstance().getMisProductos().get(index).getPrecioClass().setPrecio((float) nuevoPrecio);
+    					int indexPrecio = Controladora.getInstance().getMisPrecios().indexOf(Controladora.getInstance().getMisProductos().get(index).getPrecioClass());
+    					Controladora.getInstance().editarPrecio(indexPrecio+1, (float) nuevoPrecio);
+        			}
+        			
+        			for(Empleado empleado : empleados) {
+        				int indexEmpleado = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+        				Controladora.getInstance().getMisEmpleados().get(indexEmpleado).setCategoria(cat);
+        				Controladora.getInstance().getMisEmpleados().get(indexEmpleado).setSueldo(cat.getSueldo());
+        				Controladora.getInstance().editarSueldoCategoriaEmpleado(indexEmpleado+1, indexNewCategoria+1, Controladora.getInstance().getMisEmpleados().get(indexEmpleado).getSueldo());
+        			}
+        			
+        		}
+        		Alert success = new Alert(AlertType.CONFIRMATION, "Modificación realizada.");
+        		success.showAndWait();
+        		textfield_nombreCategoriaEmp.setText("");
+        		textfield_nombreCategoriaEmp.setPromptText("");
+        		textfield_nombreCategoriaEmp.setEditable(true);
+        		textfield_salarioCategoriaEmp.setText("");
+        		textfield_salarioCategoriaEmp.setPromptText("");
+        		
+        		tableview_CategoriaEmp.getSelectionModel().clearSelection();
+        		fillCategoriaEmpleado();
+        		fillProductList(null, "");
+    		}
+    		
     	}
     }
     
@@ -3186,7 +3413,7 @@ public class Controller implements Initializable{
 	public void verifyUserPermissions()
 	{
 		Usuario user = Controladora.getInstance().getUsuarioLogueado();
-		
+		System.out.println(user.getUsuario());
 		//root es el usuario por defecto del programa, no esta guardado en la base de datos,
     	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
     	//en el programa con este usuario.
@@ -3447,6 +3674,12 @@ public class Controller implements Initializable{
     		textfield_cuentaFondoActual.setText("0.0");
     	}
     	
+    	//Seteando modificacion de tableviews
+    	setEditEmpleado();
+    	setEditRubros();
+    	setEditClientes();
+    	setEditProveedores();
+    	
     	
     }
     
@@ -3586,10 +3819,18 @@ public class Controller implements Initializable{
     public void fillRubroList(ArrayList<Rubro> r) {
     	ObservableList<Rubro> data = FXCollections.observableArrayList();
     	if(r == null) {
-    		data.addAll(Controladora.getInstance().getMisRubros());
+    		for(Rubro rubro : Controladora.getInstance().getMisRubros()) {
+    			if(!rubro.isBorrado()) {
+    				data.add(rubro);
+    			}
+    		}
 		}
     	else {
-    		data.addAll(r);
+    		for(Rubro rubro : r) {
+    			if(!rubro.isBorrado()) {
+    				data.add(rubro);
+    			}
+    		}
     	}
     	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
@@ -3680,10 +3921,16 @@ public class Controller implements Initializable{
     public void fillClientList(ArrayList<Cliente> c) {
     	ObservableList<Cliente> data = FXCollections.observableArrayList();
     	if(c == null) {
-    		data.addAll(Controladora.getInstance().getMisClientes());
+    		for(Cliente cliente : Controladora.getInstance().getMisClientes()) {
+    			if(!cliente.isBorrado()) {
+    				data.add(cliente);
+    			}
+    		}
     	}
     	else {
-    		data.addAll(c);
+    		for(Cliente cliente : c) {
+    			data.add(cliente);
+    		}
     	}
 		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -3697,8 +3944,12 @@ public class Controller implements Initializable{
     
     public void fillProveedorList(ArrayList<Proveedores> p, String belongsTo) {
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
-    	if(p == null) {
-    		data.addAll(Controladora.getInstance().getMisProveedores());
+    	if(p == null) { 		
+    		for(Proveedores proveedor : Controladora.getInstance().getMisProveedores()) {
+    			if(!proveedor.isBorrado()) {
+    				data.add(proveedor);
+    			}
+    		}
     		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
     		{
     			data.remove(0);
@@ -3712,7 +3963,11 @@ public class Controller implements Initializable{
     		}	
     	}
     	else {	
-    		data.addAll(p);
+    		for(Proveedores proveedor : p) {
+    			if(!proveedor.isBorrado()) {
+    				data.add(proveedor);
+    			}
+    		}
     		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
     		{
     			data.remove(0);
@@ -3757,10 +4012,19 @@ public class Controller implements Initializable{
     public void fillEmpleadoList(ArrayList<Empleado> e, String belongsTo) {
     	ObservableList<Empleado> data = FXCollections.observableArrayList();
     	if(e == null) {
-    		data.addAll(Controladora.getInstance().getMisEmpleados());
+    		for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
+    			if(!empleado.isBorrado()) {
+    				data.add(empleado);
+    			}
+    		}
+    		
     	}
     	else {
-    		data.addAll(e);
+    		for(Empleado empleado : e){
+    			if(!empleado.isBorrado()) {
+    				data.add(empleado);
+    			}
+    		}
     	}
     	if(belongsTo.equalsIgnoreCase("")) {
     		tablecolumn_empleadoCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
@@ -3793,7 +4057,10 @@ public class Controller implements Initializable{
     	ObservableList<CategoriaEmpleado> dataC = FXCollections.observableArrayList();
     	if(Controladora.getInstance().getMisCategoriasEmpleado().size() > 0) {
     		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
-    			dataC.add(c);
+    			if(!c.isBorrado())
+    			{
+    				dataC.add(c);
+    			}
     		}
     		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
@@ -4379,6 +4646,669 @@ public class Controller implements Initializable{
     	pane_cuentasPorCobrar.setVisible(true);
     }
     
+    public void setEditEmpleado() {
+    	tablecolumn_empleadoNombre.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_empleadoNombre.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Empleado, String>>() {
+					@Override
+					public void handle(CellEditEvent<Empleado, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+							Empleado newEmpleado = new Empleado(empleado.getCodigo(), t.getNewValue(), empleado.getTelefono(), empleado.getDomicilio(), 
+									empleado.getCorreo(), empleado.getRnc(), empleado.getSueldo(), empleado.getCategoria());
+							
+							if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este empleado?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el empleado...");
+					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarEmpleado(index+1);
+							
+					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
+					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getNewValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	
+    	tablecolumn_empleadoTelefono.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_empleadoTelefono.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Empleado, String>>() {
+					@Override
+					public void handle(CellEditEvent<Empleado, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+							Empleado newEmpleado = new Empleado(empleado.getCodigo(), empleado.getNombre(), t.getNewValue(), empleado.getDomicilio(), 
+									empleado.getCorreo(), empleado.getRnc(), empleado.getSueldo(), empleado.getCategoria());
+							
+							if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este empleado?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el empleado...");
+					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarEmpleado(index+1);
+							
+					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
+					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getNewValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	
+    	tablecolumn_empleadoDireccion.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_empleadoDireccion.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Empleado, String>>() {
+					@Override
+					public void handle(CellEditEvent<Empleado, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+							Empleado newEmpleado = new Empleado(empleado.getCodigo(), empleado.getNombre(), empleado.getTelefono(), t.getNewValue(), 
+									empleado.getCorreo(), empleado.getRnc(), empleado.getSueldo(), empleado.getCategoria());
+							
+							if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este empleado?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el empleado...");
+					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarEmpleado(index+1);
+							
+					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
+					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getNewValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getOldValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	
+    	tablecolumn_empleadoCorreo.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_empleadoCorreo.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Empleado, String>>() {
+					@Override
+					public void handle(CellEditEvent<Empleado, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+							Empleado newEmpleado = new Empleado(empleado.getCodigo(), empleado.getNombre(), empleado.getTelefono(), empleado.getDomicilio(), 
+									t.getNewValue(), empleado.getRnc(), empleado.getSueldo(), empleado.getCategoria());
+							
+							if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este empleado?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el empleado...");
+					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarEmpleado(index+1);
+							
+					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
+					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getNewValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getOldValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	
+    	tablecolumn_empleadoRNC.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_empleadoRNC.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Empleado, String>>() {
+					@Override
+					public void handle(CellEditEvent<Empleado, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Empleado empleado = tableview_empleadoList.getSelectionModel().getSelectedItem();
+							Empleado newEmpleado = new Empleado(empleado.getCodigo(), empleado.getNombre(), empleado.getTelefono(), empleado.getDomicilio(), 
+									empleado.getCorreo(), t.getNewValue(), empleado.getSueldo(), empleado.getCategoria());
+							
+							if(Controladora.getInstance().isEmpleadoInUsuario(empleado.getCodigo())) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else if(Controladora.getInstance().empleadoRNCExists(newEmpleado)) {
+								Alert alert = new Alert(AlertType.WARNING, "RNC en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+				    			fillEmpleadoList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este empleado?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el empleado...");
+					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarEmpleado(index+1);
+							
+					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
+					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getNewValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+					    			fillEmpleadoList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    }
+    
+    public void setEditRubros() {
+    	tablecolumn_rubroNombre.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_rubroNombre.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Rubro, String>>() {
+					@Override
+					public void handle(CellEditEvent<Rubro, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Rubro rubro = tableview_rubro.getSelectionModel().getSelectedItem();
+							Rubro newRubro = new Rubro(rubro.getCodigo(), t.getNewValue());
+							
+							if(Controladora.getInstance().isRubroInProduct(rubro)) {
+								Alert alert = new Alert(AlertType.WARNING, "Empleado en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombreRubro(t.getOldValue());
+								fillRubroList(null);
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este rubro?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el rubro...");
+					    			int index = Controladora.getInstance().getMisRubros().indexOf(rubro);
+					    			Controladora.getInstance().getMisRubros().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarRubro(index+1);
+							
+					    			Controladora.getInstance().getMisRubros().add(newRubro);
+					    			Controladora.getInstance().guardarRubroSQL(newRubro);;
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombreRubro(t.getNewValue());
+									fillRubroList(null);
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombreRubro(t.getOldValue());
+									fillRubroList(null);
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    }
+    
+    public void setEditAtributos() {
+    	tablecolumn_atributonombre.setCellFactory(TextFieldTableCell.forTableColumn());
+    	
+    }
+    
+    public void setEditClientes() {
+    	tablecolumn_clienteNombre.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_clienteNombre.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Cliente, String>>() {
+					@Override
+					public void handle(CellEditEvent<Cliente, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
+							Cliente newCliente = new Cliente(cliente.getCodigo(), t.getNewValue(), cliente.getTelefono(), cliente.getTipoCliente(), 
+									cliente.getCumpleanos(), cliente.getRnc());
+
+							if(Controladora.getInstance().isClienteInFactura(cliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "Cliente en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+								fillClientList(null);
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el cliente...");
+					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarCliente(index+1);
+							
+					    			Controladora.getInstance().getMisClientes().add(newCliente);
+					    			Controladora.getInstance().guardarClienteSQL(newCliente);;
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getNewValue());
+									fillClientList(null);
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+									fillClientList(null);
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_clienteTelefono.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_clienteTelefono.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Cliente, String>>() {
+					@Override
+					public void handle(CellEditEvent<Cliente, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
+							Cliente newCliente = new Cliente(cliente.getCodigo(), cliente.getNombre(), t.getNewValue(), cliente.getTipoCliente(), 
+									cliente.getCumpleanos(), cliente.getRnc());
+
+							if(Controladora.getInstance().isClienteInFactura(cliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "Cliente en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+								fillClientList(null);
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el cliente...");
+					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarCliente(index+1);
+							
+					    			Controladora.getInstance().getMisClientes().add(newCliente);
+					    			Controladora.getInstance().guardarClienteSQL(newCliente);;
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getNewValue());
+									fillClientList(null);
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+									fillClientList(null);
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_clienteRNC.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_clienteRNC.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Cliente, String>>() {
+					@Override
+					public void handle(CellEditEvent<Cliente, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
+							Cliente newCliente = new Cliente(cliente.getCodigo(), cliente.getNombre(), cliente.getTelefono(), cliente.getTipoCliente(), 
+									cliente.getCumpleanos(), t.getNewValue());
+
+							if(Controladora.getInstance().isClienteInFactura(cliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "Cliente en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+								fillClientList(null);
+							}
+							else if(Controladora.getInstance().clienteRNCExists(newCliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "RNC en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+								fillClientList(null);
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el cliente...");
+					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarCliente(index+1);
+							
+					    			Controladora.getInstance().getMisClientes().add(newCliente);
+					    			Controladora.getInstance().guardarClienteSQL(newCliente);;
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getNewValue());
+									fillClientList(null);
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+									fillClientList(null);
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    }
+    
+    public void setEditProveedores() {
+    	tablecolumn_proveedorNombre.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorNombre.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), t.getNewValue(), proveedor.getTelefono(), proveedor.getDomicilio(),
+									proveedor.getCorreo(), proveedor.getRnc(), null, proveedor.getSitioWeb());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_proveedorRNC.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorRNC.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getDomicilio(),
+									proveedor.getCorreo(), t.getNewValue(), null, proveedor.getSitioWeb());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else if(Controladora.getInstance().proveedorRNCExists(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "RNC en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_proveedorTelefono.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorTelefono.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), proveedor.getNombre(), t.getNewValue(), proveedor.getDomicilio(),
+									proveedor.getCorreo(), proveedor.getRnc(), null, proveedor.getSitioWeb());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTelefono(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_proveedorDomicilio.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorDomicilio.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), proveedor.getNombre(), proveedor.getTelefono(), t.getNewValue(),
+									proveedor.getCorreo(), proveedor.getRnc(), null, proveedor.getSitioWeb());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setDomicilio(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_proveedorCorreo.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorCorreo.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getDomicilio(),
+									t.getNewValue(), proveedor.getRnc(), null, proveedor.getSitioWeb());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setCorreo(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
+    	tablecolumn_proveedorSitioWeb.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_proveedorSitioWeb.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Proveedores, String>>() {
+					@Override
+					public void handle(CellEditEvent<Proveedores, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Proveedores proveedor = tableview_proveedoresList.getSelectionModel().getSelectedItem();
+							Proveedores newProveedor = new Proveedores(proveedor.getCodigo(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getDomicilio(),
+									proveedor.getCorreo(), proveedor.getRnc(), null, t.getNewValue());
+							
+							if(Controladora.getInstance().isProveedorInProducto(proveedor)) {
+								Alert alert = new Alert(AlertType.WARNING, "Proveedor en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setSitioWeb(t.getOldValue());
+								fillProveedorList(null, "");
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el proveedor...");
+					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarProveedor(index+1);
+					    			
+					    			Controladora.getInstance().getMisProveedores().add(newProveedor);
+					    			Controladora.getInstance().guardarProveedorSQL(newProveedor);
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setSitioWeb(t.getNewValue());
+					    			fillProveedorList(null, "");
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setSitioWeb(t.getOldValue());
+					    			fillProveedorList(null, "");
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    }
     
     
 }

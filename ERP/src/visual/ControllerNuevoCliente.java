@@ -109,17 +109,29 @@ public class ControllerNuevoCliente implements Initializable {
 	
 	//Guarda un nuevo cliente
 	public void guardarCliente(ActionEvent event) {
-		Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
-		success.showAndWait();
+		
 		Cliente cliente = new Cliente(textfield_codigoCliente.getText(), textfield_nombreCliente.getText(), textfield_telefonoCliente.getText(), textfield_tipoCliente.getText(),
 				(java.sql.Date.valueOf(datepicker_cumpleCliente.getValue())), textfield_rncCliente.getText());
-		textfield_codigoCliente.setText("");
-		textfield_nombreCliente.setText("");
-		textfield_telefonoCliente.setText("");
-		textfield_tipoCliente.setText("");
-		textfield_rncCliente.setText("");
-		datepicker_cumpleCliente.setValue(null);
-		Controladora.getInstance().addCliente(cliente);
+		if(Controladora.getInstance().clienteCodigoExists(cliente)) {
+			Alert alert = new Alert(AlertType.WARNING, "El código ya está en uso");
+			alert.showAndWait();
+		}
+		else if(Controladora.getInstance().clienteRNCExists(cliente)) {
+			Alert alert = new Alert(AlertType.WARNING, "El RNC ya está en uso");
+			alert.showAndWait();
+		}
+		else {
+			Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
+			success.showAndWait();
+			textfield_codigoCliente.setText("");
+			textfield_nombreCliente.setText("");
+			textfield_telefonoCliente.setText("");
+			textfield_tipoCliente.setText("");
+			textfield_rncCliente.setText("");
+			datepicker_cumpleCliente.setValue(null);
+			Controladora.getInstance().addCliente(cliente);
+		}
+		
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class ControllerNuevoProveedor implements Initializable{
 	@FXML private TextField textfield_correoElectronicoProveedor;
 	@FXML private TextField textfield_sitioWebProveedor;
 	@FXML private TextField textfield_rubroProveedor;
+	@FXML private TextField textfield_telefonoAdicional;
 	
 	/**FUNCIONES AGREGAR PROVEEDOR**/
 	
@@ -147,7 +148,10 @@ public class ControllerNuevoProveedor implements Initializable{
 				textarea_direccionProveedor.setText("");
 				textfield_correoElectronicoProveedor.setText("");
 				textfield_sitioWebProveedor.setText("");
+				textfield_telefonoAdicional.setText("");
 			}
+			
+			
 			button_proveedorGuardar.setDisable(true);
 		}
 		

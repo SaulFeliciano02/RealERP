@@ -1193,10 +1193,18 @@ public class ControllerNuevaFactura implements Initializable{
 	public void fillClientList(ArrayList<Cliente> c) {
     	ObservableList<Cliente> data = FXCollections.observableArrayList();
     	if(c == null) {
-    		data.addAll(Controladora.getInstance().getMisClientes());
+    		for(Cliente cliente : Controladora.getInstance().getMisClientes()) {
+    			if(!cliente.isBorrado()) {
+    				data.add(cliente);
+    			}
+    		}
     	}
     	else {
-    		data.addAll(c);
+    		for(Cliente cliente : c) {
+    			if(!cliente.isBorrado()) {
+    				data.add(cliente);
+    			}
+    		}
     	}
 		tablecolumn_clienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));

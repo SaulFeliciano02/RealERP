@@ -2,11 +2,12 @@ package logico;
 
 public class Empleado extends Persona {
 	
-	public String domicilio;
-	public String correo;
-	public String rnc;
-	public float sueldo;
-	public CategoriaEmpleado categoria;
+	private String domicilio;
+	private String correo;
+	private String rnc;
+	private float sueldo;
+	private CategoriaEmpleado categoria;
+	private String tipo;
 	private boolean borrado;
 	
 	public Empleado(String codigo, String nombre, String telefono, String domicilio, String correo, String rnc, float sueldo, CategoriaEmpleado categoria) {
@@ -16,6 +17,7 @@ public class Empleado extends Persona {
 		this.sueldo = sueldo;
 		this.rnc = rnc;
 		this.categoria = categoria;
+		this.tipo = categoria.getNombre();
 		this.setBorrado(false);
 	}
 
@@ -66,6 +68,15 @@ public class Empleado extends Persona {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
 	
 	
 }

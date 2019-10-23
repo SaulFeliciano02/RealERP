@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -1521,12 +1521,10 @@
                                                                               <TableColumn fx:id="tablecolumn_proveedorRNC" prefWidth="75.0" text="RNC" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorRubro" prefWidth="75.0" text="Rubro" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorTelefono" prefWidth="75.0" text="Teléfono" />
-                                                                              <TableColumn prefWidth="75.0" text="Celular" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorSaldo" prefWidth="75.0" text="Saldo" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorDomicilio" prefWidth="75.0" text="Dominicilio" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorCorreo" prefWidth="75.0" text="Correo" />
                                                                               <TableColumn fx:id="tablecolumn_proveedorSitioWeb" prefWidth="75.0" text="SitioWeb" />
-                                                                              <TableColumn prefWidth="75.0" text="Categoría" />
                                                                            </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1630,7 +1628,7 @@
                                                                      <children>
                                                                         <AnchorPane prefHeight="590.0" prefWidth="263.0" HBox.hgrow="ALWAYS">
                                                                            <children>
-                                                                              <TableView fx:id="tableview_CategoriaEmp" layoutX="63.0" layoutY="95.0" prefHeight="589.6" prefWidth="263.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <TableView fx:id="tableview_CategoriaEmp" layoutX="63.0" layoutY="95.0" onMouseClicked="#tableview_categoriaClicked" prefHeight="589.6" prefWidth="263.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                 <columns>
                                                                                   <TableColumn fx:id="tablecolumn_NombreCategoria" prefWidth="75.0" text="Nombre" />
                                                                                   <TableColumn fx:id="tablecolumn_SueldoCategoria" prefWidth="75.0" text="Sueldo" />
@@ -1651,6 +1649,7 @@
                                                                            <children>
                                                                               <Pane layoutX="9.0" layoutY="6.0" prefHeight="249.0" prefWidth="271.0" style="-fx-border-color: GRAY;">
                                                                                  <children>
+                                                                                    <Button fx:id="button_editarCategoria" disable="true" layoutX="118.0" layoutY="211.0" mnemonicParsing="false" onAction="#editarCategoria" text="Editar" />
                                                                                     <Button fx:id="button_guardarCategoriaEmp" layoutX="187.0" layoutY="211.0" mnemonicParsing="false" onAction="#pressed_guardarCategoriaEmp" text="Guardar" />
                                                                                     <HBox layoutX="12.0" layoutY="171.0" prefHeight="26.0" prefWidth="190.0">
                                                                                        <children>
