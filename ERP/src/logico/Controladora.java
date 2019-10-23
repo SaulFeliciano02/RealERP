@@ -1029,7 +1029,8 @@ public class Controladora implements Serializable{
 			
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO usuarios (usuario, empleado) VALUES (?, ?)");
 			p.setString(1, usu.getUsuario());
-			p.setInt(2, misEmpleados.indexOf(usu.getEmpleado())+1);
+			System.out.println(Controladora.getInstance().getMisEmpleados().indexOf(usu.getEmpleado())+1);
+			p.setInt(2, Controladora.getInstance().getMisEmpleados().indexOf(usu.getEmpleado())+1);
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -1235,19 +1236,21 @@ public class Controladora implements Serializable{
 			p = (PreparedStatement) c.prepareStatement("INSERT INTO empleados (nombre, telefono, domicilio, correo, rnc, sueldo, categoria, codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			s = (Statement) c.createStatement();	
 			r = s.executeQuery("SELECT idcategoriaempleado FROM categoriaempleado WHERE nombre = '"+e.getCategoria().getNombre()+"'");
-			
+			System.out.println(e.getCategoria().getNombre());
+			int categoriaid = 0;
 			while(r.next())
 			{
-				p.setString(1, e.getNombre());
-				p.setString(2, e.getTelefono());
-				p.setString(3, e.getDomicilio());
-				p.setString(4, e.getCorreo());
-				p.setString(5, e.getRnc());
-				p.setFloat(6, e.getSueldo());
-				int categoriaid = r.getInt(1);
-				p.setInt(7, categoriaid);
-				p.setString(8, e.getCodigo());
+				categoriaid = r.getInt(1);
 			}
+			System.out.println(categoriaid);
+			p.setString(1, e.getNombre());
+			p.setString(2, e.getTelefono());
+			p.setString(3, e.getDomicilio());
+			p.setString(4, e.getCorreo());
+			p.setString(5, e.getRnc());
+			p.setFloat(6, e.getSueldo());
+			p.setInt(7, categoriaid);
+			p.setString(8, e.getCodigo());
 			
 			//ejecutar el preparedStatement
 			p.executeUpdate();
@@ -4152,13 +4155,23 @@ public class Controladora implements Serializable{
 	}
 	
 	public boolean isRubroInProduct(Rubro rubro) {
-		boolean check = false;
 		for(Producto p : Controladora.getInstance().getMisProductos()) {
 			if(!p.isBorrado() && (p.getRubroProductoClass().equals(rubro))) {
-				check = true;
+				return true;
 			}
 		}
-		return check;
+		return false;
+	}
+	
+	public boolean rubroCodeExists(Rubro rubro) {
+		for(Rubro r : Controladora.getInstance().getMisRubros()) {
+			if(r.getCodigo().equalsIgnoreCase(rubro.getCodigo())) {
+				System.out.println(r.getCodigo());
+				System.out.println(rubro.getCodigo());
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public ArrayList<GastoGeneral> getMisGastosGenerales() {
@@ -4266,6 +4279,132 @@ public class Controladora implements Serializable{
 			}
 		}
 		return result;
+	}
+	
+	public boolean isEmpleadoInUsuario(String codigo) {
+		for(Usuario usuario : Controladora.getInstance().getMisUsuarios()) {
+			if(usuario.getEmpleado().getCodigo().equalsIgnoreCase(codigo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean empleadoRNCExists(Empleado empleado) {
+		for(Empleado e : Controladora.getInstance().getMisEmpleados()) {
+			if(e.getRnc().equals(empleado.getRnc())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isClienteInFactura(Cliente cliente) {
+		for(Factura factura : Controladora.getInstance().getMisFacturas()) {
+			if(factura.getClienteCodigo().equalsIgnoreCase(cliente.getCodigo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean clienteCodigoExists(Cliente cliente) {
+		for(Cliente c : Controladora.getInstance().getMisClientes()) {
+			if(c.getCodigo().equalsIgnoreCase(cliente.getCodigo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean clienteRNCExists(Cliente cliente) {
+		for(Cliente c : Controladora.getInstance().getMisClientes()) {
+			if(c.getRnc().equalsIgnoreCase(cliente.getRnc())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isProveedorInProducto(Proveedores proveedor) {
+		for(Producto producto : Controladora.getInstance().getMisProductos()) {
+			if(producto.getProveedorPrinClass().equals(proveedor)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean proveedorRNCExists(Proveedores proveedor) {
+		for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
+			if(p.getRnc().equalsIgnoreCase(proveedor.getRnc())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isCategoriaInProducto(CategoriaEmpleado categoria) {
+		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
+			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				return true;
+			}
+		}
+		for(Estandar matriz : Controladora.getInstance().getMisProductosMatriz()) {
+			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				return true;
+			}
+		}
+		for(Servicio servicio : Controladora.getInstance().getMisProductosServicio()) {
+			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ArrayList<Estandar> getProductsEstandarWithCategory(CategoriaEmpleado categoria){
+		ArrayList<Estandar> productosEstandar = new ArrayList<>();
+		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
+			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				productosEstandar.add(estandar);
+			}
+		}
+		for(Estandar matriz : Controladora.getInstance().getMisProductosMatriz()) {
+			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				productosEstandar.add(matriz);
+			}
+		}
+		return productosEstandar;
+	}
+	
+	public ArrayList<Servicio> getProductsServicioWithCategory(CategoriaEmpleado categoria){
+		ArrayList<Servicio> productosServicio = new ArrayList<>();
+		for(Servicio servicio : Controladora.getInstance().getMisProductosServicio()) {
+			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria)) {
+				productosServicio.add(servicio);
+			}
+		}
+		return productosServicio;
+	}
+	
+	public boolean isCategoryInEmpleado(CategoriaEmpleado categoria) {
+		for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
+			if(empleado.getCategoria().equals(categoria)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ArrayList<Empleado> getEmpleadoWithCategory(CategoriaEmpleado categoria){
+		ArrayList<Empleado> empleados = new ArrayList<>();
+		for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
+			if(empleado.getCategoria().equals(categoria)) {
+				empleados.add(empleado);
+			}
+		}
+		return empleados;
 	}
 	
 	public boolean validarUsuario(String usuario, String password) {
@@ -6167,8 +6306,10 @@ public class Controladora implements Serializable{
 				Date cumpleanos = r.getDate(4);
 				String rnc = r.getString(5);
 				String nombre = r.getString(6);
+				boolean borrado = r.getBoolean(7);
 				
 				Cliente cli = new Cliente(codigo, nombre, telefono, null, (java.sql.Date) cumpleanos, rnc);
+				cli.setBorrado(borrado);
 				
 				Controladora.getInstance().getMisClientes().add(cli);
 				
@@ -7830,6 +7971,7 @@ public void loadProveedores()
 				String nombre = r.getString(8);
 				String telefono = r.getString(9);
 				String codigo = r.getString(10);
+				boolean borrado = r.getBoolean(11);
 				
 				if(rubroid > 0)
 				{
@@ -7843,6 +7985,7 @@ public void loadProveedores()
 						Rubro rubroproveedor = new Rubro(codrubro, nombrerubro);
 						
 						Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, rubroproveedor, sitioWeb);
+						cli.setBorrado(borrado);
 						
 						Controladora.getInstance().getMisProveedores().add(cli);
 					}
@@ -7851,6 +7994,7 @@ public void loadProveedores()
 				else
 				{
 					Proveedores cli = new Proveedores(codigo, nombre, telefono, domicilio, correo, rnc, null, sitioWeb);
+					cli.setBorrado(borrado);
 					
 					Controladora.getInstance().getMisProveedores().add(cli);
 				}
@@ -7975,9 +8119,10 @@ public void recuperarRubros()
 			int id = r.getInt(1);
 			String codigo = r.getString(2);
 			String nombreRubro = r.getString(3);				
-			
+			boolean borrado = r.getBoolean(4);
 			
 			Rubro pre = new Rubro(codigo, nombreRubro);
+			pre.setBorrado(borrado);
 			
 			Controladora.getInstance().getMisRubros().add(pre);
 			
@@ -9053,6 +9198,7 @@ public void loadEmpleados()
 			String rnc = r.getString(6);
 			float sueldo = r.getFloat(7);
 			int categoriaid = r.getInt(8);
+			boolean borrado = r.getBoolean(10);
 			
 			q = s2.executeQuery("SELECT * FROM categoriaempleado WHERE idcategoriaempleado = '"+categoriaid+"'");
 			while(q.next())
@@ -9064,6 +9210,7 @@ public void loadEmpleados()
 				CategoriaEmpleado categoriaEmp = new CategoriaEmpleado(nombrecategoria, sueldocategoria);
 				
 				Empleado emp = new Empleado(codigo, nombre, telefono, domicilio, correo, rnc, sueldocategoria, categoriaEmp);
+				emp.setBorrado(borrado);
 				
 				Controladora.getInstance().getMisEmpleados().add(emp);
 			}
@@ -9181,9 +9328,11 @@ public void loadCategoriaEmpleado()
 		{
 			int id = r.getInt(1);
 			String nombre = r.getString(2);
-			Float sueldo = r.getFloat(3);				
+			Float sueldo = r.getFloat(3);
+			boolean borrado = r.getBoolean(4);
 			
 			CategoriaEmpleado pre = new CategoriaEmpleado(nombre, sueldo);
+			pre.setBorrado(borrado);
 			
 			Controladora.getInstance().getMisCategoriasEmpleado().add(pre);
 		}
@@ -10007,7 +10156,7 @@ public void loadCategoriaEmpleado()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE clientes SET borrado = 1 WHERE idproductos = '"+indiceCliente+"'");
+					cSQL.prepareStatement("UPDATE clientes SET borrado = 1 WHERE idclientes = '"+indiceCliente+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -10043,7 +10192,7 @@ public void loadCategoriaEmpleado()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE proveedores SET borrado = 1 WHERE idproductos = '"+indiceProveedor+"'");
+					cSQL.prepareStatement("UPDATE proveedores SET borrado = 1 WHERE idproveedores = '"+indiceProveedor+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -10079,7 +10228,7 @@ public void loadCategoriaEmpleado()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE empleados SET borrado = 1 WHERE idproductos = '"+indiceEmpleado+"'");
+					cSQL.prepareStatement("UPDATE empleados SET borrado = 1 WHERE idempleados = '"+indiceEmpleado+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -10115,7 +10264,42 @@ public void loadCategoriaEmpleado()
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
 			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE rubros SET borrado = 1 WHERE idproductos = '"+indiceRubro+"'");
+					cSQL.prepareStatement("UPDATE rubros SET borrado = 1 WHERE idrubros = '"+indiceRubro+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void borrarCategoriaEmpleado(int indiceCategoria) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE categoriaempleado SET borrado = 1 WHERE idcategoriaempleado = '"+indiceCategoria+"'");
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -11677,6 +11861,290 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		
 		return deudaPeticionesTotal;
 	}
+	
+	public void editarPrecio(int indexPrecio, float precio) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE precio SET precio = '"+precio+"' WHERE idprecio = '"+indexPrecio+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarProductoCosto(int indexProducto, float costo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE productos SET costo = '"+costo+"' WHERE idproductos = '"+indexProducto+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarManoDeObraCosto(int indexManoDeObra, float costo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE manodeobra SET costo = '"+costo+"' WHERE idmanodeobra = '"+indexManoDeObra+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarEstandarCostoManoObra(int indexEstandar, float costo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE estandar SET manodeobra = '"+costo+"' WHERE idestandar = '"+indexEstandar+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarSueldoCategoriaEmpleado(int indexEmpleado, int indexNewCategoria, float sueldo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE empleados SET sueldo = '"+sueldo+"' WHERE idempleados = '"+indexEmpleado+"'");
+			p.executeUpdate();
+			
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE empleados SET categoria = '"+indexNewCategoria+"' WHERE idempleados = '"+indexEmpleado+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarCategoriaManoObraEstandar(int indexNewCategoria, int indexManoObra) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE manodeobraproducto SET categoriaempleado = '"+indexNewCategoria+"' WHERE manodeobra = '"+indexManoObra+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	public void editarCategoriaManoObraServicio(int indexNewCategoria, int indexManoObra) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE manodeobraservicio SET categoriaempleado = '"+indexNewCategoria+"' WHERE manodeobra = '"+indexManoObra+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	/**public void editarServicioCostoManoObra(int indexServicio, float costo) {
+		Conexion con = new Conexion();
+		Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE servicios SET manodeobra = '"+costo+"' WHERE idproductos = '"+indexServicio+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}**/
 	
 	
 }

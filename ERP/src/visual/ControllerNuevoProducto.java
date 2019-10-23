@@ -2768,7 +2768,11 @@ public class ControllerNuevoProducto implements Initializable {
 	public void fillProveedorList(ArrayList<Proveedores> p) {
     	ObservableList<Proveedores> data = FXCollections.observableArrayList();
     	if(p == null) {
-    		data.addAll(Controladora.getInstance().getMisProveedores());
+    		for(Proveedores proveedor : Controladora.getInstance().getMisProveedores()) {
+    			if(!proveedor.isBorrado()) {
+    				data.add(proveedor);
+    			}
+    		}
     		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
     		{
     			data.remove(0);
@@ -2782,7 +2786,22 @@ public class ControllerNuevoProducto implements Initializable {
     		}
     	}
     	else {
-    		data.addAll(p);
+    		for(Proveedores proveedor : p) {
+    			if(!proveedor.isBorrado()) {
+    				data.add(proveedor);
+    			}
+    		}
+    		if(data.get(0).getCodigo().equalsIgnoreCase("00"))
+    		{
+    			data.remove(0);
+    		}
+    		if(data.size() > 1)
+    		{
+    			if(data.get(0).getCodigo().equalsIgnoreCase(data.get(1).getCodigo()))
+        		{
+        			data.remove(1);
+        		}
+    		}
     	}
     	tablecolumn_proveedorCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_proveedorNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -2800,10 +2819,18 @@ public class ControllerNuevoProducto implements Initializable {
 	public void fillRubroList(ArrayList<Rubro> r) {
 		ObservableList<Rubro> data = FXCollections.observableArrayList();
     	if(r == null) {
-    		data.addAll(Controladora.getInstance().getMisRubros());
+    		for(Rubro rubro : Controladora.getInstance().getMisRubros()) {
+    			if(!rubro.isBorrado()) {
+    				data.add(rubro);
+    			}
+    		}
     	}
     	else {
-    		data.addAll(r);
+    		for(Rubro rubro : r) {
+    			if(!rubro.isBorrado()) {
+    				data.add(rubro);
+    			}
+    		}
     	}
     	tablecolumn_rubroCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	tablecolumn_rubroNombre.setCellValueFactory(new PropertyValueFactory<>("nombreRubro"));
@@ -2915,7 +2942,9 @@ public class ControllerNuevoProducto implements Initializable {
 
 		ObservableList<String> fabricacionData = FXCollections.observableArrayList();
 		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
-			fabricacionData.add(c.getNombre() + ": " + c.getSueldo() + "$");
+			if(!c.isBorrado()) {
+				fabricacionData.add(c.getNombre() + ": " + c.getSueldo() + "$");
+			}		
 		}
 		combobox_costosEncargadosFabricacion.setItems(fabricacionData);
 		
