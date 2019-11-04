@@ -1,8 +1,10 @@
 package logico;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,9 +14,6 @@ import java.util.Date;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
 import basededatos.Conexion;
 
@@ -381,7 +380,7 @@ public class Controladora implements Serializable{
 	public void createProveedorDefault()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		String nombre = null;
@@ -453,7 +452,7 @@ public class Controladora implements Serializable{
 	public void guardarPromedioGananciaAnualSQL(float monto)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -500,7 +499,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarClienteSQL(Cliente cliente) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -549,7 +548,7 @@ public class Controladora implements Serializable{
 	public void guardarCajaChicaSQL(CajaChica caja)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -595,7 +594,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarTransaccionCaja(TransaccionesCajaChica transaccion) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -647,7 +646,7 @@ public class Controladora implements Serializable{
 	public void guardarCuentaBancoSQL(CuentaBanco cuentaBanco)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -693,7 +692,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarTransaccionCuenta(TransaccionesCuentaBanco transaccion) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -744,7 +743,7 @@ public class Controladora implements Serializable{
 	public void guardarPeticionSQL(Peticion pet)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -795,7 +794,7 @@ public class Controladora implements Serializable{
 	public void guardarPeticionesCreditoSQL(Peticion pet)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -840,7 +839,7 @@ public class Controladora implements Serializable{
 	public void guardarPagoPeticionesCreditoSQL(Peticion pet, float monto, String tipoPago)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -887,7 +886,7 @@ public class Controladora implements Serializable{
 	public void guardarCargosUsuariosSQL(Cargo defaul)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -950,7 +949,7 @@ public class Controladora implements Serializable{
 	public void guardarNuevoPagoDeuda(Factura fac)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1019,7 +1018,7 @@ public class Controladora implements Serializable{
 	public void guardarUsuarioSQL(Usuario usu)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1083,7 +1082,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarImagenProductoSQL(byte[] foto, Producto prod) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1128,7 +1127,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarClienteCreditoSQL(Cliente cliente, float credito) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1174,7 +1173,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarClienteDeudaSQL(Cliente cliente) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1225,7 +1224,7 @@ public class Controladora implements Serializable{
 	}
 	public void guardarEmpleadoSQL(Empleado e) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1320,7 +1319,7 @@ public class Controladora implements Serializable{
 
 	public void guardarGastoGeneralSQL(GastoGeneral g) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1368,7 +1367,7 @@ public class Controladora implements Serializable{
 
 	public void guardarCategoriaEmpleadoSQL(CategoriaEmpleado categoria) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1414,7 +1413,7 @@ public class Controladora implements Serializable{
 	public void guardarRubroSQL(Rubro rubro) {
 		
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1460,7 +1459,7 @@ public class Controladora implements Serializable{
 	public void guardarProveedorSQL(Proveedores proveedor)
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1526,7 +1525,7 @@ public class Controladora implements Serializable{
 
 	public void guardarPrecioSQL(Precio precio) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1565,7 +1564,7 @@ public class Controladora implements Serializable{
 
 	public void guardarAreaSQL(Area area) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1604,7 +1603,7 @@ public class Controladora implements Serializable{
 
 	public void guardarVolumenSQL(Volumen volumen) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1643,7 +1642,7 @@ public class Controladora implements Serializable{
 
 	public void guardarMasaSQL(Masa masa) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1682,7 +1681,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarLongitudSQL(Longitud longitud) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1721,7 +1720,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarPromocionSQL(Promocion promocion) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1774,7 +1773,7 @@ public class Controladora implements Serializable{
 
 	public void guardarFacturaSQL(Factura factura, String tipoFactura) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1841,7 +1840,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarProductosFacturadosSQL(CantProductosUtilizados cantproductosutilizados, Factura factura) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1879,7 +1878,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarKitsUtilizadosSQL(CantKitsUtilizados cantkitutilizados) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1917,7 +1916,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarKitsFacturadosSQL(CantKitsUtilizados cantkitutilizados, Factura factura) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1955,7 +1954,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarServiciosFacturadosSQL(Servicio servicio, Factura factura) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -1993,7 +1992,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarDescuentosAutomaticsSQL(DescuentosAutomaticos descuentosAutomaticos) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2034,7 +2033,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarUnidadMedidaAreaSQL(Producto producto, Area area) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2072,7 +2071,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarUnidadMedidaLongitudSQL(Producto producto, Longitud longitud) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2110,7 +2109,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarUnidadMedidaMasaSQL(Producto producto, Masa masa) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2148,7 +2147,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarUnidadMedidaVolumenSQL(Producto producto, Volumen volumen) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2186,7 +2185,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarServiciosSQL(Producto producto, CategoriaEmpleado cat) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2224,7 +2223,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarServiciosMaterialesSQL(Servicio servicio, CantProductosUtilizados cantproductosutilizados) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2262,7 +2261,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarRubroProductoSQL(Producto producto, Rubro rubro) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2300,7 +2299,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarProveedorPrincipalProductoSQL(Producto producto, Proveedores proveedor) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2338,7 +2337,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarProveedoresSecProductoSQL(Producto producto, Proveedores proveedor) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2376,7 +2375,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarPromoProductoSQL(Producto producto, Promocion promocion) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2415,7 +2414,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarProductosSQL(Producto producto) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2464,7 +2463,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarPartidaSQL() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2500,7 +2499,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarPrecioProductoSQL(Producto producto, Precio precio) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2539,7 +2538,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarPartidaProdutilSQL(Partida partida, CantProductosUtilizados cantproductosutilizados) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2578,7 +2577,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarMatrizSQL(Estandar estandar, Combinaciones combinacion) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2617,7 +2616,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarKitProductosSQL(Kit kit, CantProductosUtilizados cantproductosutilizados) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2655,7 +2654,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarKitSQL(Kit kit) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2696,7 +2695,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarGrupoAtributoSQL(GrupoAtributo grupoatributo) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2733,7 +2732,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarEstandarSQL(Estandar estandar) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2778,7 +2777,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarDescProductoSQL(Producto producto, DescuentosAutomaticos descuentoautomatico) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2816,7 +2815,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarCostoIndirectoSQL(Producto producto, CostoIndirectoProducto costoIndirecto) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2856,7 +2855,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarProductoPartida(Producto producto, Partida partida) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2894,7 +2893,7 @@ public class Controladora implements Serializable{
 		
 	public void guardarCombinacionesAtributosSQL(Atributos atributo, Combinaciones combinaciones) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2932,7 +2931,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarCombinacionesSQL(Combinaciones comb) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -2970,7 +2969,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarCantProductosUtilizadosSQL(Estandar estandar, CantProductosUtilizados cantproductosutilizados) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3008,7 +3007,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarAtributoSQL(Atributos atributo) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3047,7 +3046,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarManoDeObraSQL(ManoDeObra manodeobra) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3086,7 +3085,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarManoDeObraProductoSQL(Estandar estandar, ManoDeObra manodeobra, CategoriaEmpleado categoriaempleado) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3126,7 +3125,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarManoDeObraServicioSQL(Servicio servicio, ManoDeObra manodeobra, CategoriaEmpleado categoriaempleado) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3165,7 +3164,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarInfoEmpresaSQL(Empresa empresa) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3212,7 +3211,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarRangoNumerosValorFiscal(Empresa empresa) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3253,7 +3252,7 @@ public class Controladora implements Serializable{
 	
 	public void guardarAnioFiscal(Empresa empresa) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3693,7 +3692,7 @@ public class Controladora implements Serializable{
 	
 	public void sendUnidadesIntoDatabase() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3761,7 +3760,7 @@ public class Controladora implements Serializable{
 	
 	public void sendMasaIntoDatabase() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3803,7 +3802,7 @@ public class Controladora implements Serializable{
 	
 	public void sendLongitudIntoDatabase() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3845,7 +3844,7 @@ public class Controladora implements Serializable{
 	
 	public void sendAreaIntoDatabase() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -3887,7 +3886,7 @@ public class Controladora implements Serializable{
 	
 	public void sendVolumenIntoDatabase() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -4410,9 +4409,9 @@ public class Controladora implements Serializable{
 	public boolean validarUsuario(String usuario, String password) {
 		boolean check = false;
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -4518,7 +4517,7 @@ public class Controladora implements Serializable{
 	public boolean emptyProveedores()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -4575,10 +4574,10 @@ public class Controladora implements Serializable{
 	public boolean activarloadMatriz()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		Connection c2 = null;
+		java.sql.Connection c2 = null;
 		Statement s2 = null;
 		ResultSet r2 = null;
 		boolean activar = false;
@@ -4649,9 +4648,9 @@ public class Controladora implements Serializable{
 	public void loadMatriz()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -4777,7 +4776,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadPrecio()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -4834,8 +4833,8 @@ public class Controladora implements Serializable{
 	public void loadPrecio()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -4921,7 +4920,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadPromedioGananciaAnual()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -4978,7 +4977,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadCargosUsuariosDefaultSQL()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5035,7 +5034,7 @@ public class Controladora implements Serializable{
 	public void desactivarPromedioGananciaAnualActual()
 	{
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -5071,7 +5070,7 @@ public class Controladora implements Serializable{
 	public void loadPromedioGananciaAnual()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int id = 0;
@@ -5130,7 +5129,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadInfoEmpresa()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5186,7 +5185,7 @@ public class Controladora implements Serializable{
 	
 	public boolean activarUnidadMedidaMasa() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5242,7 +5241,7 @@ public class Controladora implements Serializable{
 	
 	public boolean activarUnidadMedidaLongitud() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5298,7 +5297,7 @@ public class Controladora implements Serializable{
 	
 	public boolean activarUnidadMedidaArea() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5354,7 +5353,7 @@ public class Controladora implements Serializable{
 	
 	public boolean activarUnidadMedidaVolumen() {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5411,7 +5410,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadCliente()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5468,7 +5467,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadCajaChica()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5525,8 +5524,8 @@ public class Controladora implements Serializable{
 	public void loadCajaChica()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -5612,7 +5611,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadPeticiones()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5669,7 +5668,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadCostoIndirecto()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5726,8 +5725,8 @@ public class Controladora implements Serializable{
 	public void loadCostoIndirecto()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -5807,8 +5806,8 @@ public class Controladora implements Serializable{
 	public void loadPromocion()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -5913,7 +5912,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadClienteCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -5970,7 +5969,7 @@ public class Controladora implements Serializable{
 	public void loadClienteCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int id = 0;
@@ -6034,7 +6033,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadClienteDeuda()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -6091,7 +6090,7 @@ public class Controladora implements Serializable{
 	public void loadClienteDeuda()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int id = 0;
@@ -6155,9 +6154,9 @@ public class Controladora implements Serializable{
 	public void loadInfoEmpresa()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -6284,7 +6283,7 @@ public class Controladora implements Serializable{
 	public void loadCliente()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		
@@ -6345,7 +6344,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadCuentaBancaria()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -6402,8 +6401,8 @@ public class Controladora implements Serializable{
 	public void loadCuentaBancaria()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -6485,7 +6484,7 @@ public class Controladora implements Serializable{
 	public void loadPeticiones()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		String codigo = null;
@@ -6558,7 +6557,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadPeticionesCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -6615,7 +6614,7 @@ public class Controladora implements Serializable{
 	public void loadPeticionesCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int idPeticion = 0;
@@ -6670,7 +6669,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadPagoPeticionesCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -6727,7 +6726,7 @@ public class Controladora implements Serializable{
 	public void loadPagoPeticionesCredito()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int idPeticion = 0;
@@ -6788,7 +6787,7 @@ public class Controladora implements Serializable{
 	public boolean activarLoadUsuarios()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -6845,9 +6844,9 @@ public class Controladora implements Serializable{
 	public void loadUsuarios()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -6941,10 +6940,10 @@ public class Controladora implements Serializable{
 	public boolean activarLoadKit()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
-		Connection c2 = null;
+		java.sql.Connection c2 = null;
 		Statement s2 = null;
 		ResultSet r2 = null;
 		boolean activar = false;
@@ -7015,16 +7014,16 @@ public class Controladora implements Serializable{
 public void loadKit()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
-	Connection c2 = null;
-	Connection c3 = null;
-	Connection c4 = null;
-	Connection c5 = null;
-	Connection c6 = null;
-	Connection c7 = null;
-	Connection c8 = null;
-	Connection c9 = null;
-	Connection c10 = null;
+	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
+	java.sql.Connection c3 = null;
+	java.sql.Connection c4 = null;
+	java.sql.Connection c5 = null;
+	java.sql.Connection c6 = null;
+	java.sql.Connection c7 = null;
+	java.sql.Connection c8 = null;
+	java.sql.Connection c9 = null;
+	java.sql.Connection c10 = null;
 	Statement s = null;
 	Statement s2 = null;
 	Statement s3 = null;
@@ -7379,10 +7378,10 @@ public void loadKit()
 public boolean activarLoadServicios()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
-	Connection c2 = null;
+	java.sql.Connection c2 = null;
 	Statement s2 = null;
 	ResultSet r2 = null;
 	boolean activar = false;
@@ -7453,15 +7452,15 @@ public boolean activarLoadServicios()
 	public void loadServicios()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
-		Connection c4 = null;
-		Connection c5 = null;
-		Connection c6 = null;
-		Connection c7 = null;
-		Connection c8 = null;
-		Connection c9 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
+		java.sql.Connection c4 = null;
+		java.sql.Connection c5 = null;
+		java.sql.Connection c6 = null;
+		java.sql.Connection c7 = null;
+		java.sql.Connection c8 = null;
+		java.sql.Connection c9 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -7686,7 +7685,7 @@ public boolean activarLoadServicios()
 public void loadUnidadesMedida()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		
@@ -7885,7 +7884,7 @@ public void loadUnidadesMedida()
 public boolean activarLoadProveedores()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -7942,7 +7941,7 @@ public boolean activarLoadProveedores()
 public void loadProveedores()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -8039,7 +8038,7 @@ public void loadProveedores()
 public boolean activarRecuperarRubros()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -8096,7 +8095,7 @@ public boolean activarRecuperarRubros()
 public void recuperarRubros()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	
@@ -8158,7 +8157,7 @@ public void recuperarRubros()
 public boolean activarLoadManoDeObra()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -8215,9 +8214,9 @@ public boolean activarLoadManoDeObra()
 public void loadManoDeObra()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
-	Connection c2 = null;
-	Connection c3 = null;
+	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
+	java.sql.Connection c3 = null;
 	Statement s = null;
 	Statement s2 = null;
 	Statement s3 = null;
@@ -8341,7 +8340,7 @@ public void loadManoDeObra()
 public boolean activarLoadProductos()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -8398,14 +8397,14 @@ public boolean activarLoadProductos()
 public void loadProductos()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
-	Connection c2 = null;
-	Connection c3 = null;
-	Connection c4 = null;
-	Connection c5 = null;
-	Connection c6 = null;
-	Connection c7 = null;
-	Connection c8 = null;
+	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
+	java.sql.Connection c3 = null;
+	java.sql.Connection c4 = null;
+	java.sql.Connection c5 = null;
+	java.sql.Connection c6 = null;
+	java.sql.Connection c7 = null;
+	java.sql.Connection c8 = null;
 	Statement s = null;
 	Statement s2 = null;
 	Statement s3 = null;
@@ -8712,7 +8711,7 @@ public void loadProductos()
 public boolean activarLoadPartida()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -8769,12 +8768,12 @@ public boolean activarLoadPartida()
 	public void loadPartida()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
-		Connection c4 = null;
-		Connection c5 = null;
-		Connection c6 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
+		java.sql.Connection c4 = null;
+		java.sql.Connection c5 = null;
+		java.sql.Connection c6 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -9113,7 +9112,7 @@ public boolean activarLoadPartida()
 	public boolean activarLoadEmpleados()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -9170,7 +9169,7 @@ public boolean activarLoadPartida()
 public void loadEmpleados()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	Statement s2 = null;
 	ResultSet r = null;
@@ -9255,7 +9254,7 @@ public void loadEmpleados()
 public boolean activarLoadCategoriaEmpleado()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	boolean activar = false;
@@ -9312,7 +9311,7 @@ public boolean activarLoadCategoriaEmpleado()
 public void loadCategoriaEmpleado()
 {
 	Conexion con = new Conexion();
-	Connection c = null;
+	java.sql.Connection c = null;
 	Statement s = null;
 	ResultSet r = null;
 	
@@ -9367,7 +9366,7 @@ public void loadCategoriaEmpleado()
 	public boolean activarLoadAtributos()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -9424,8 +9423,8 @@ public void loadCategoriaEmpleado()
 	public void loadAtributos()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
 		Statement s = null;
 		Statement s2 = null;
 		ResultSet r = null;
@@ -9507,7 +9506,7 @@ public void loadCategoriaEmpleado()
 	public boolean activarLoadGrupoAtributo()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -9564,7 +9563,7 @@ public void loadCategoriaEmpleado()
 	public void loadGrupoAtributo()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 	
@@ -9616,7 +9615,7 @@ public void loadCategoriaEmpleado()
 	public boolean activarLoadGastosGenerales()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -9673,7 +9672,7 @@ public void loadCategoriaEmpleado()
 	public void loadGastosGenerales()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 	
@@ -9729,7 +9728,7 @@ public void loadCategoriaEmpleado()
 	public boolean activarLoadImagenProducto()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -9786,7 +9785,7 @@ public void loadCategoriaEmpleado()
 	public void loadImagenProducto()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 	
@@ -9842,7 +9841,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de restar la existencia actual de un producto estandar cuando se le hace una modificacion a este.
 	public void restarExistenciaActual(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -9878,7 +9877,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de restar la existencia actual de una matriz cuando se le hace una modificacion a este.
 	public void restarExistenciaActualMatriz(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -9929,7 +9928,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de restar la existencia actual de un producto kit cuando se le hace una modificacion a este.
 	public void restarExistenciaActualKit(float cantidadRestar, int indiceProducto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -9965,7 +9964,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de sumar la existencia actual de un producto kit cuando se le hace una modificacion a este.
 		public void sumarExistenciaActualKit(float cantidadSumar, int indiceProducto) {
 			Conexion con = new Conexion();
-			Connection cSQL = null;
+			java.sql.Connection cSQL = null;
 			Statement sSQL = null;
 			ResultSet r = null;
 			PreparedStatement p = null;
@@ -10001,7 +10000,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de sumar la existencia actual de un producto cuando se le hace una modificacion a este.
 	public void sumarExistenciaActual(float cantidadSumar, int indiceProducto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10037,7 +10036,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de modificar datos de una petición.
 	public void modificarEstadoPeticion(String estado, String metodo, String codigo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10076,7 +10075,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que se encarga de sumar la existencia actual de un producto cuando se le hace una modificacion a este.
 		public void modificarProveedorSaldo(float saldo, int indiceProveedor) {
 			Conexion con = new Conexion();
-			Connection cSQL = null;
+			java.sql.Connection cSQL = null;
 			Statement sSQL = null;
 			ResultSet r = null;
 			PreparedStatement p = null;
@@ -10112,7 +10111,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado al producto
 	public void borrarProducto(int indiceProducto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10148,7 +10147,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado del cliente
 	public void borrarCliente(int indiceCliente) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10184,7 +10183,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado del proveedor
 	public void borrarProveedor(int indiceProveedor) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10220,7 +10219,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado del empleado
 	public void borrarEmpleado(int indiceEmpleado) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10256,7 +10255,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado del rubro
 	public void borrarRubro(int indiceRubro) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10291,7 +10290,7 @@ public void loadCategoriaEmpleado()
 	
 	public void borrarCategoriaEmpleado(int indiceCategoria) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10327,7 +10326,7 @@ public void loadCategoriaEmpleado()
 	//Funcion que le asigna true al valor de borrado del gasto general
 	public void borrarGastoGeneral(int indiceGasto) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10362,7 +10361,7 @@ public void loadCategoriaEmpleado()
 	
 	public void borrarAtributo(int indiceAtributo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10397,7 +10396,7 @@ public void loadCategoriaEmpleado()
 	
 	public void borrarGrupoAtributo(int indiceGrupoAtributo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -10438,18 +10437,18 @@ public void loadCategoriaEmpleado()
 	public void loadFactura()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
-		Connection c2 = null;
-		Connection c3 = null;
-		Connection c4 = null;
-		Connection c5 = null;
-		Connection c6 = null;
-		Connection c7 = null;
-		Connection c8 = null;
-		Connection c9 = null;
-		Connection c10 = null;
-		Connection c11 = null;
-		Connection c12 = null;
+		java.sql.Connection c = null;
+		java.sql.Connection c2 = null;
+		java.sql.Connection c3 = null;
+		java.sql.Connection c4 = null;
+		java.sql.Connection c5 = null;
+		java.sql.Connection c6 = null;
+		java.sql.Connection c7 = null;
+		java.sql.Connection c8 = null;
+		java.sql.Connection c9 = null;
+		java.sql.Connection c10 = null;
+		java.sql.Connection c11 = null;
+		java.sql.Connection c12 = null;
 		Statement s = null;
 		Statement s2 = null;
 		Statement s3 = null;
@@ -11330,7 +11329,7 @@ public void loadCategoriaEmpleado()
 
 	public void guardarFacturaCreditoClienteSQL(Factura factura) {
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11382,7 +11381,7 @@ public void loadCategoriaEmpleado()
 	public boolean activarLoadFacturaCreditoClienteSQL()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		boolean activar = false;
@@ -11439,7 +11438,7 @@ public void loadCategoriaEmpleado()
 	public void loadFacturaCreditoCliente()
 	{
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		int id = 0;
@@ -11527,7 +11526,7 @@ public void loadCategoriaEmpleado()
 	public void actualizarProveedorPorDefecto(String nombre) {
 		
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11572,7 +11571,7 @@ public void loadCategoriaEmpleado()
 public void pagarDeudaPeticion(Peticion peticion, float monto) {
 		
 		Conexion con = new Conexion();
-		Connection c = null;
+		java.sql.Connection c = null;
 		Statement s = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11864,7 +11863,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarPrecio(int indexPrecio, float precio) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11899,7 +11898,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarProductoCosto(int indexProducto, float costo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11934,7 +11933,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarManoDeObraCosto(int indexManoDeObra, float costo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -11969,7 +11968,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarEstandarCostoManoObra(int indexEstandar, float costo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -12004,7 +12003,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarSueldoCategoriaEmpleado(int indexEmpleado, int indexNewCategoria, float sueldo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -12043,7 +12042,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarCategoriaManoObraEstandar(int indexNewCategoria, int indexManoObra) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -12078,7 +12077,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	public void editarCategoriaManoObraServicio(int indexNewCategoria, int indexManoObra) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;
@@ -12113,7 +12112,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	
 	/**public void editarServicioCostoManoObra(int indexServicio, float costo) {
 		Conexion con = new Conexion();
-		Connection cSQL = null;
+		java.sql.Connection cSQL = null;
 		Statement sSQL = null;
 		ResultSet r = null;
 		PreparedStatement p = null;

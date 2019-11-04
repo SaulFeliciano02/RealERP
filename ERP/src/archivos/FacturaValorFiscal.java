@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +22,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import basededatos.Conexion;
@@ -97,8 +97,8 @@ public class FacturaValorFiscal {
 				document.add(p3);
 				
 				Conexion con = new Conexion();
-				Connection c = null;
-				Statement s = null;
+				java.sql.Connection c = null;
+				java.sql.Statement s = null;
 				ResultSet r = null;
 				PreparedStatement pre = null;
 				int valorfiscalinferior = 0;
@@ -108,8 +108,8 @@ public class FacturaValorFiscal {
 				
 				c = con.conectar();
 				
-				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-				s = (Statement) c.createStatement();
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el java.sql.Statement
+				s = (java.sql.Statement) c.createStatement();
 				r = s.executeQuery("SELECT * FROM rangonumerosvalorfiscal WHERE valorfiscalinferior <= '"+Controladora.getInstance().getMisFacturas().size()+"' AND valorfiscalsuperior >= '"+Controladora.getInstance().getMisFacturas().size()+"'");
 				while(r.next())
 				{
