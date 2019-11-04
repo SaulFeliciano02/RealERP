@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import basededatos.BootstrapServices;
+import basededatos.Conexion;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -41,8 +43,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage){
 		try {
-			double nuevoPrecio = Controladora.getInstance().calcularPrecio(400, 10, 18);
-			System.out.println("El nuevo precio es " + nuevoPrecio);
+			new BootstrapServices().crearTablas();
 			FXMLLoader f = new FXMLLoader(getClass().getResource("Login.fxml"));
 		    Parent root = f.load();
 		    Scene sc = new Scene(root);
@@ -61,8 +62,8 @@ public class Main extends Application{
 	}
 	
 	public void access_clicked(ActionEvent event) throws IOException, InterruptedException {
-		Process process = Runtime.getRuntime().exec("C:\\xampp\\xampp_start.exe");
-		TimeUnit.SECONDS.sleep(2);
+		//Process process = Runtime.getRuntime().exec("C:\\xampp\\xampp_start.exe");
+		//TimeUnit.SECONDS.sleep(2);
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
@@ -265,8 +266,8 @@ public class Main extends Application{
 	
 	@FXML
 	public void onEnter(ActionEvent event) throws IOException, InterruptedException{
-		Process process = Runtime.getRuntime().exec("C:\\xampp\\xampp_start.exe");
-		TimeUnit.SECONDS.sleep(2);
+		//Process process = Runtime.getRuntime().exec("C:\\xampp\\xampp_start.exe");
+		//TimeUnit.SECONDS.sleep(2);
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
