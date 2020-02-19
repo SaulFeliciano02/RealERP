@@ -1737,51 +1737,50 @@ public class ControllerNuevoProducto implements Initializable {
     	if((!textfield_numSerie.getText().isEmpty() && !textfield_cantidadComb.getText().isEmpty()))
     	{
     		String num = textfield_numSerie.getText();
-    		float cant = Float.parseFloat(textfield_cantidadComb.getText());
-    		ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
-    		ArrayList<Atributos> b = new ArrayList<>(); 
-    		int i1;
-    		for(i1=0; i1<a.size(); i1++)
-    		{
-    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo1) && atributo1!=null)
-    			{
-    				b.add(a.get(i1));
-    			}
-    			
-    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo2) && atributo2!=null)
-    			{
-    				b.add(a.get(i1));
-    			}
-    			
-    			if(a.get(i1).getNombre().equalsIgnoreCase(atributo3) && atributo3!=null)
-    			{
-    				b.add(a.get(i1));
-    			}
+    		if(!Controladora.getInstance().validarNumeroSerie(num) || !checkNumSerie(num)) {
+    			Alert alert = new Alert(AlertType.WARNING, "Este número de serie esta en uso.");
+    			alert.showAndWait();
     		}
-    		//System.out.println(atributo1 + " " + atributo2 + " " + atributo3);
-    		Combinaciones comb = new Combinaciones(num, cant, b);
-    		combinacionFinal.add(comb);
-    		String atri1 =  b.get(0).getGrupo() + ": " + b.get(0).getNombre();
-    		String atri2 = ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre();
-    		String pcomb;
-    		pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual(); 
-    		if(b.size()>2)
-    		{
-    			String atri3 = ", " + b.get(2).getGrupo() + ": " + b.get(2).getNombre();
+    		else {
+    			float cant = Float.parseFloat(textfield_cantidadComb.getText());
+    			ArrayList<Atributos> a = Controladora.getInstance().getMisAtributos();
+    			ArrayList<Atributos> b = new ArrayList<>(); 
+    			int i1;
+    			for(i1=0; i1<a.size(); i1++)
+    			{
+    				if(a.get(i1).getNombre().equalsIgnoreCase(atributo1) && atributo1!=null){
+    					b.add(a.get(i1));
+    				}    			
+    				if(a.get(i1).getNombre().equalsIgnoreCase(atributo2) && atributo2!=null){
+    					b.add(a.get(i1));
+    				}
+    				if(a.get(i1).getNombre().equalsIgnoreCase(atributo3) && atributo3!=null){
+    					b.add(a.get(i1));
+    				}
+    			}
+    			//System.out.println(atributo1 + " " + atributo2 + " " + atributo3);
+    			Combinaciones comb = new Combinaciones(num, cant, b);
+    			combinacionFinal.add(comb);
+    			String atri1 =  b.get(0).getGrupo() + ": " + b.get(0).getNombre();
+    			String atri2 = ", " + b.get(1).getGrupo() + ": " + b.get(1).getNombre();
+    			String pcomb;
+    			pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual(); 
+    			if(b.size()>2){
+    				String atri3 = ", " + b.get(2).getGrupo() + ": " + b.get(2).getNombre();
     			
-    			pcomb = comb.numeroSerie + " " + atri1 + atri2 + atri3 + ", " + "Existencia: " + comb.getExistenciaActual(); 
-    		}
-    		else
-    		{
-    			pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual();
-    		}
+    				pcomb = comb.numeroSerie + " " + atri1 + atri2 + atri3 + ", " + "Existencia: " + comb.getExistenciaActual(); 
+    			}
+    			else{
+    				pcomb = comb.numeroSerie + " " + atri1 + atri2 + ", " + "Existencia: " + comb.getExistenciaActual();
+    			}
     		 
-    		listView_combinaciones.getItems().add(pcomb);
-    		textfield_numSerie.setText("");
-    		textfield_cantidadComb.setText("");
-    		listView_atributos1.getSelectionModel().clearSelection();
-    		listView_atributos2.getSelectionModel().clearSelection();
-    		listView_atributos3.getSelectionModel().clearSelection();
+    			listView_combinaciones.getItems().add(pcomb);
+    			textfield_numSerie.setText("");
+    			textfield_cantidadComb.setText("");
+    			listView_atributos1.getSelectionModel().clearSelection();
+    			listView_atributos2.getSelectionModel().clearSelection();
+    			listView_atributos3.getSelectionModel().clearSelection();
+    		}		
     	}
     }
     
@@ -1865,6 +1864,15 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void abrirBusquedaAtributo(ActionEvent event) {
     	titledpane_productoBuscarAtributo.setVisible(true);
+    }
+    
+    public boolean checkNumSerie(String numSerie) {
+    	for(Combinaciones c : combinacionFinal) {
+    		if(c.getNumeroSerie().equalsIgnoreCase(numSerie)) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
     
@@ -2444,6 +2452,7 @@ public class ControllerNuevoProducto implements Initializable {
 			 valorPartida += p.getCosto() * Float.parseFloat(cantidad);
 		}
 		if((checkbox_generalProducible.isSelected() || combobox_generalTipoProducto.getSelectionModel().getSelectedItem().equalsIgnoreCase("Servicio")) && textfield_costosTiempoFabricacion.getLength() > 0) {
+			System.out.println(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
 			String nombreCategoria = Controladora.getInstance().findEncargadoNombre(combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem());
 			String tiempoMedida = combobox_costosTiempoFabricacion.getSelectionModel().getSelectedItem();
 			float tiempoCantidad = Float.parseFloat(textfield_costosTiempoFabricacion.getText());

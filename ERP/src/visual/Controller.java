@@ -2531,8 +2531,6 @@ public class Controller implements Initializable{
     		tableview_rubro.refresh();
     		textfield_rubroCodigo.setText("");
     		textfield_rubroNombre.setText("");
-    		textfield_rubroCodigo.setDisable(true);
-    		textfield_rubroNombre.setDisable(true);
     	}
     	else {
     		Alert alert = new Alert(AlertType.WARNING, "El código ya está en uso");
@@ -3674,6 +3672,9 @@ public class Controller implements Initializable{
     		textfield_cuentaFondoActual.setText("0.0");
     	}
     	
+    	//Llenando el listview para la busqueda de atributos
+    	fillAtributosSearchBar();
+    	
     	//Seteando modificacion de tableviews
     	setEditEmpleado();
     	setEditRubros();
@@ -4496,16 +4497,7 @@ public class Controller implements Initializable{
     	spinner_peticionCantidad.setValueFactory(cantidad);
     }
     
-    public void setDatePickersConfiguracion() {
-		/*datepicker_empresaFechaInicio.setDayCellFactory(picker -> new DateCell() {
-	        public void updateItem(LocalDate date, boolean empty) {
-	            super.updateItem(date, empty);
-	            LocalDate today = LocalDate.now();
-
-	            setDisable(empty || date.compareTo(today) < 0 );
-	        }
-	    });*/
-		
+    public void setDatePickersConfiguracion() {		
 		datepicker_empresaFechaFinal.setDayCellFactory(picker -> new DateCell() {
 	        public void updateItem(LocalDate date, boolean empty) {
 	            super.updateItem(date, empty);
@@ -5310,5 +5302,14 @@ public class Controller implements Initializable{
     		);
     }
     
-    
+    public void fillAtributosSearchBar() {
+    	listView_grupoAtributos.getItems().clear();
+    	listView_grupoAtributos.getItems().add("Todos");
+    	for(GrupoAtributo grupoAtributo : Controladora.getInstance().getMisGrupoAtributo()) {
+    		if(!listView_grupoAtributos.getItems().contains(grupoAtributo.getNombre()))
+        	{
+        		listView_grupoAtributos.getItems().add(grupoAtributo.getNombre());
+        	}
+    	}
+    }
 }

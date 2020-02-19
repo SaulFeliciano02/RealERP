@@ -480,8 +480,8 @@ public class ControllerNuevaFactura implements Initializable{
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     				Estandar matriz = (Estandar) producto;
-    				int indiceProducto = Controladora.getInstance().getMisProductosMatriz().indexOf(matriz)+1;
-    				System.out.println(indiceProducto);
+    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz)+1;
+    				System.out.println("El indice del producto tipo matriz es: " + indiceProducto);
     				float cantidadRestar = matriz.getExistenciaActual() - cantidad;
     				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
     				
