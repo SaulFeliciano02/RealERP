@@ -4018,13 +4018,24 @@ public class Controladora implements Serializable{
 	}
 	
 	public String findEncargadoNombre(String string) {
-		String nombre = "";
-		int i = 0;
-		while(string.charAt(i) != ':') {
-			nombre += string.charAt(i);
-			i++;
+		try {
+			if(string.contains(":")) {
+				String nombre = "";
+				int i = 0;
+				while(string.charAt(i) != ':') {
+					nombre += string.charAt(i);
+					i++;
+				}
+				return nombre;
+			}
+			else {
+				return string;
+			}
+		}catch(NullPointerException e) {
+			return "";
 		}
-		return nombre;
+		
+		
 	}
 	
 	public String findFacturaNombre(String string) {
@@ -4093,6 +4104,7 @@ public class Controladora implements Serializable{
 			}
 			i++;
 		}
+		System.out.println("El numero de serie es: " + numeroSerie);
 		return numeroSerie;
 	}
 	
@@ -4404,6 +4416,17 @@ public class Controladora implements Serializable{
 			}
 		}
 		return empleados;
+	}
+	
+	public boolean validarNumeroSerie(String numeroSerie) {
+		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
+			for(Combinaciones c : estandar.getCombinaciones()) {
+				if(c.getNumeroSerie().equalsIgnoreCase(numeroSerie)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean validarUsuario(String usuario, String password) {
