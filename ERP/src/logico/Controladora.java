@@ -4094,17 +4094,22 @@ public class Controladora implements Serializable{
 		int i = 0;
 		String numeroSerie = "";
 		boolean check = true;
-		while(string.charAt(i) != ')') {
-			if(string.charAt(i) == '(') {
-				check = false;
+		try {
+			while(string.charAt(i) != ')') {
+				if(string.charAt(i) == '(') {
+					check = false;
+				}
+				if(!check && string.charAt(i) != ')' && string.charAt(i) != '(') {
+					//System.out.println(numeroSerie);
+					numeroSerie += string.charAt(i);
+				}
+				i++;
 			}
-			if(!check && string.charAt(i) != ')' && string.charAt(i) != '(') {
-				System.out.println(numeroSerie);
-				numeroSerie += string.charAt(i);
-			}
-			i++;
+		}catch(NullPointerException e) {
+			return "";
 		}
-		System.out.println("El numero de serie es: " + numeroSerie);
+		
+		//System.out.println("El numero de serie es: " + numeroSerie);
 		return numeroSerie;
 	}
 	

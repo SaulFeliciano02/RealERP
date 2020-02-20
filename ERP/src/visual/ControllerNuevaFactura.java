@@ -429,6 +429,7 @@ public class ControllerNuevaFactura implements Initializable{
     		tipoPago = radiobutton_facturaCredito.getText();
     	}
     	ArrayList<String> alreadyUsed = new ArrayList<>();
+    	ArrayList<String> serialAlreadyUsed = new ArrayList<>();
     	ArrayList<CantProductosUtilizados> prodFacturados = new ArrayList<>();
     	ArrayList<CantKitsUtilizados> kitFacturados = new ArrayList<>();
     	ArrayList<ServicioUtilizado> serviciosFacturados = new ArrayList<>();
@@ -438,16 +439,30 @@ public class ControllerNuevaFactura implements Initializable{
     		CantKitsUtilizados cantidadKitUtilizados = null;
     		ServicioUtilizado cantidadServicioUtilizados = null;
     		String nombreItem = Controladora.getInstance().findFacturaNombre(items);
+    		String serialItem = "";
+    		if(Controladora.getInstance().buscarProducto(nombreItem).getTipoProducto().equalsIgnoreCase("Matriz")) {
+    			serialItem = Controladora.getInstance().findFacturaNumeroSerie(items);
+    		}
+    		System.out.println("El item antes de entrar es " + nombreItem + " y el serial es " + serialItem);
     		if(!alreadyUsed.contains(nombreItem)) {
+    			System.out.println("Ingrese aqui con el item: " + nombreItem + " y el serial " + serialItem); 
     			Producto producto = Controladora.getInstance().buscarProducto(nombreItem);
     			float cantidad = 0;
-    			if(producto.getUnidadMedida() == null) {
+    			if(producto.getUnidadMedida() == null && !producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     				for(String searchSame : listview_productosFacturados.getItems()) {
     					String searchSameName = Controladora.getInstance().findFacturaNombre(searchSame);
-    					if(searchSameName.equalsIgnoreCase(nombreItem)) {			
+    					if(searchSameName.equalsIgnoreCase(nombreItem) && !producto.getTipoProducto().equalsIgnoreCase("Matriz")) {			
     							cantidad++;
     					}
+    					else if(producto.getTipoProducto().equalsIgnoreCase("Matriz") && !serialAlreadyUsed.contains(serialItem)) {
+    						//String serialItem = Controladora.getInstance().findFacturaNumeroSerie(items);
+    						String searchSameSerial = Controladora.getInstance().findFacturaNumeroSerie(searchSame);
+    						if(searchSameSerial.equalsIgnoreCase(serialItem)) {
+    							cantidad++;
+    						}
+    					}
     				}
+    				serialAlreadyUsed.add(serialItem);
     				alreadyUsed.add(nombreItem);
     			}
     			else {
@@ -487,10 +502,12 @@ public class ControllerNuevaFactura implements Initializable{
     				
     				for(Combinaciones c : Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).getCombinaciones()) {
     					if(c.getNumeroSerie().equalsIgnoreCase(Controladora.getInstance().findFacturaNumeroSerie(items))) {
-    						System.out.println("Klk");
+    						System.out.println("Estoy en la combinacion con la serie: " + c.getNumeroSerie());
     						int indiceCombinacion = Controladora.getInstance().getMisCombinaciones().indexOf(c)+1;	
     						Controladora.getInstance().restarExistenciaActualMatriz(c.getExistenciaActual()-cantidad, indiceCombinacion);
+    						System.out.println("La existencia actual de este producto antes de es: " + c.getExistenciaActual());
     						c.setExistenciaActual(c.getExistenciaActual()-cantidad);
+    						System.out.println("La existencia actual de este producto despues de es: " + c.getExistenciaActual());
     					}
     				}
     				Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
@@ -568,7 +585,7 @@ public class ControllerNuevaFactura implements Initializable{
     	
     	
     	for(CantProductosUtilizados c : prodFacturados) {
-    		System.out.println("En esta parte se esta guardando: " + c.getNombre());
+    		//System.out.println("En esta parte se esta guardando: " + c.getNombre());
     		Controladora.getInstance().getMisCantProductosUtilizados().add(c);
     		Controladora.getInstance().guardarCantProductosUtilizadosSQL( (Estandar) c.getProducto(), c);
     		Controladora.getInstance().guardarProductosFacturadosSQL(c, factura);
@@ -759,16 +776,27 @@ public class ControllerNuevaFactura implements Initializable{
     	a.setAlertType(AlertType.ERROR);
     	boolean isValid = true;
     	String item = listview_facturaProductoList.getSelectionModel().getSelectedItem();
-    	System.out.println("El nombre es " + Controladora.getInstance().findFacturaNombre(item));
+    	String serie = "";
+    	//System.out.println("El nombre es " + Controladora.getInstance().findFacturaNombre(item));
     	Producto producto = Controladora.getInstance().buscarProducto(Controladora.getInstance().findFacturaNombre(item));
     	float precioConvertido = 0;
     	float cantidadCheck = Float.parseFloat(textfield_facturaCantidad.getText());
+    	if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		serie = Controladora.getInstance().findFacturaNumeroSerie(item);
+    	}
     	for(String items : listview_productosFacturados.getItems()) {
-    		if(producto.getNombre().equalsIgnoreCase(Controladora.getInstance().findFacturaNombre(items))) {
+    		if(producto.getNombre().equalsIgnoreCase(Controladora.getInstance().findFacturaNombre(items)) && !producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     			cantidadCheck++;
     		}
+    		else {			
+    			System.out.println("El valor de la serie en donde suma la cantidad check es " + serie);
+    			if(serie.equalsIgnoreCase(Controladora.getInstance().findFacturaNumeroSerie(items))) {
+    				cantidadCheck++;
+    			}
+    		}
     	}
-    	isValid = checkExistenciaMinima(producto, cantidadCheck);
+    	System.out.println("El cantidad check es: " + cantidadCheck);
+    	isValid = checkExistenciaMinima(producto, cantidadCheck, serie);
     	
     	if(producto.getUnidadMedida() == null && isValid) {
     		for(int i = 0; i < Integer.parseInt(textfield_facturaCantidad.getText()); i++) {
@@ -894,7 +922,7 @@ public class ControllerNuevaFactura implements Initializable{
         		}
         	}
         	System.out.println(cantidadCheck);
-        	isValid = checkExistenciaMinima(producto, cantidadCheck);
+        	isValid = checkExistenciaMinima(producto, cantidadCheck, serie);
         	if(isValid) {
         		precioConvertido = cantidadConvertida * Float.parseFloat(Controladora.getInstance().findFacturaCosto(item));
         		String itemNombre = Controladora.getInstance().findFacturaNombre(item);
@@ -1323,11 +1351,11 @@ public class ControllerNuevaFactura implements Initializable{
 	    });
 	}
 	
-	public boolean checkExistenciaMinima(Producto producto, float cantidadCheck) {
+	public boolean checkExistenciaMinima(Producto producto, float cantidadCheck, String serial) {
 		boolean isValid = true;
 		Alert a = new Alert(AlertType.NONE); 
     	a.setAlertType(AlertType.ERROR);
-		if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+		if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     		Estandar estandar = (Estandar) producto;
     		System.out.println(cantidadCheck);
     		System.out.println(estandar.getExistenciaActual() - estandar.getExistenciaMinima());
@@ -1343,6 +1371,23 @@ public class ControllerNuevaFactura implements Initializable{
     			a.setContentText("Esta sobrepasando la existencia minima de un producto!");
     			a.show();
     			isValid = false;
+    		}
+    	}
+    	else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+    		Estandar estandar = (Estandar) producto;
+    		System.out.println("Detecte que el producto es una matriz");
+    		for(Combinaciones c : estandar.getCombinaciones()) {
+    			System.out.println("El serial es: " + serial);
+    			System.out.println("El numero de serie es" + c.getNumeroSerie());
+    			if(c.getNumeroSerie().equalsIgnoreCase(serial)) {
+    				System.out.println("El valor de cantidad check aqui es: " + cantidadCheck);
+    				System.out.println("El valor de la existencia actual es: " + c.getExistenciaActual());
+    				if(cantidadCheck > c.getExistenciaActual()) {
+    					a.setContentText("Esta sobrepasando la existencia minima de un producto!");
+    	    			a.show();
+    					isValid = false;
+    				}
+    			}
     		}
     	}
 		return isValid;
