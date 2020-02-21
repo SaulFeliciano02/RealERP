@@ -28,6 +28,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -434,6 +435,15 @@ public class ControllerNuevaPromocion implements Initializable{
 		
 		//checkbox_lunes.setSelected(true);
 		
+		Image derecha_promo = new Image(getClass().getResourceAsStream("images/misc/derecha.png"));
+	    ImageInput derecha_promo1 = new ImageInput();
+	    derecha_promo1.setSource(derecha_promo);
+		button_promocionSend.setEffect(derecha_promo1);
+		
+		Image izquierda_promo = new Image(getClass().getResourceAsStream("images/misc/izquierda.png"));
+	    ImageInput izquierda_promo1 = new ImageInput();
+	    izquierda_promo1.setSource(izquierda_promo);
+		button_promocionReturn.setEffect(izquierda_promo1);
 		
 	}
 	

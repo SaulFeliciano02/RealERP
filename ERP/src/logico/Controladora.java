@@ -4464,6 +4464,11 @@ public class Controladora implements Serializable{
 				check = true;
 			}
 			
+			if(!activarLoadUsuarios() && (usuario.equalsIgnoreCase("administrador") && password.equalsIgnoreCase("administrador")))
+			{
+				check = true;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
