@@ -22,11 +22,15 @@ import javafx.util.Duration;
 import logico.Controladora;
 import logico.Usuario;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -52,10 +56,12 @@ public class Main extends Application{
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 		    primaryStage.setMaximized(false);
 		    primaryStage.setResizable(false);
-		    
 		    primaryStage.show();
-
-		    			
+		    /*Image access = new Image(getClass().getResourceAsStream("images/misc/access.png"));
+		    ImageInput access1 = new ImageInput();
+		    access1.setSource(access);
+			button_acceder.setEffect(access1);*/
+		    
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -67,16 +73,23 @@ public class Main extends Application{
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
-		if (passwordfield_login.getText().equals("") && !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
+		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
 			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
 			loading_progress.setProgress(0);
 			
+			if(!Controladora.getInstance().activarLoadUsuarios())
+			{
+				Alert alert = new Alert(AlertType.INFORMATION, "Usted no posee usuarios registrados. Favor de acceder al sistema con la siguiente información: \n\nUsuario: administrador \nContraseña: administrador");
+	    		alert.showAndWait();
+	    		textfield_usuario.setText("administrador");
+	    		passwordfield_login.setText("administrador");
+			}
 		} 
 		
-		else if(((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) && !Controladora.getInstance().activarLoadUsuarios()) ||
+		else if(((passwordfield_login.getText().equalsIgnoreCase("administrador") && textfield_usuario.getText().equalsIgnoreCase("administrador")) && !Controladora.getInstance().activarLoadUsuarios()) ||
 				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
 		{
 			System.out.println("wawawa");
@@ -216,8 +229,8 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadCuentaBancaria();
 					}
-					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
-						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
+					if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
+						Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
 					}
 					else {
@@ -251,7 +264,7 @@ public class Main extends Application{
 				} 
 		}
 
-		else if(textfield_usuario.getText().equalsIgnoreCase("root") && Controladora.getInstance().activarLoadUsuarios())
+		if(textfield_usuario.getText().equalsIgnoreCase("administrador") && Controladora.getInstance().activarLoadUsuarios())
 		{
 			message.setText("¡Este usuario ya no está disponible!");
 			message.setTextFill(Color.rgb(210, 39, 30));
@@ -271,16 +284,23 @@ public class Main extends Application{
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
-		if (passwordfield_login.getText().equals("") && !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
+		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
 			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
 			loading_progress.setVisible(false);
 			loading_progress.setProgress(0);
 			
+			if(!Controladora.getInstance().activarLoadUsuarios())
+			{
+				Alert alert = new Alert(AlertType.INFORMATION, "Usted no posee usuarios registrados. Favor de acceder al sistema con la siguiente información: \n\nUsuario: administrador \nContraseña: administrador");
+	    		alert.showAndWait();
+	    		textfield_usuario.setText("administrador");
+	    		passwordfield_login.setText("administrador");
+			}
 		} 
 		
-		else if(((passwordfield_login.getText().equalsIgnoreCase("root") && textfield_usuario.getText().equalsIgnoreCase("root")) && !Controladora.getInstance().activarLoadUsuarios()) ||
+		if(((passwordfield_login.getText().equalsIgnoreCase("administrador") && textfield_usuario.getText().equalsIgnoreCase("administrador")) && !Controladora.getInstance().activarLoadUsuarios()) ||
 				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
 		{
 			System.out.println("wawawa");
@@ -420,8 +440,8 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadCuentaBancaria();
 					}
-					if(textfield_usuario.getText().equalsIgnoreCase("root")) {
-						Usuario userRoot = new Usuario("root", null, true, "root", true, null);
+					if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
+						Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
 					}
 					else {
@@ -444,7 +464,7 @@ public class Main extends Application{
 				} 
 		}
 
-		else if(textfield_usuario.getText().equalsIgnoreCase("root") && Controladora.getInstance().activarLoadUsuarios())
+		if(textfield_usuario.getText().equalsIgnoreCase("administrador") && Controladora.getInstance().activarLoadUsuarios())
 		{
 			message.setText("¡Este usuario ya no está disponible!");
 			message.setTextFill(Color.rgb(210, 39, 30));

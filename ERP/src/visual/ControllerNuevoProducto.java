@@ -40,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -160,6 +161,9 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private TextField textfield_preciosPrecio;
 	@FXML private CheckBox checkbox_preciosHabilitar;
 	@FXML private CheckBox checkbox_Impuestos;
+	@FXML private AnchorPane anchor_izquierdaPrecio;
+	@FXML private AnchorPane anchor_abajoprecio;
+	@FXML private AnchorPane anchor_derechaPrecio;
 	
 	//VARIABLES PARA BUSQUEDA DE PROVEEDOR
 	@FXML private TitledPane titledpane_productoBuscarProveedor;
@@ -2757,6 +2761,42 @@ public class ControllerNuevoProducto implements Initializable {
 		//Seteando listview gastosgenerales
 		rellenarCostosGenerales(null);
 		textfield_preciosImpuestos.setEditable(false);
+		
+		Image partida_derecha = new Image(getClass().getResourceAsStream("images/misc/derecha.png"));
+	    ImageInput partida_derecha1 = new ImageInput();
+	    partida_derecha1.setSource(partida_derecha);
+		button_partidaSendTo.setEffect(partida_derecha1);
+		
+		Image partida_izquierda = new Image(getClass().getResourceAsStream("images/misc/izquierda.png"));
+	    ImageInput partida_izquierda1 = new ImageInput();
+	    partida_izquierda1.setSource(partida_izquierda);
+		button_partidaSendBack.setEffect(partida_izquierda1);
+		
+		Image costo_derecha = new Image(getClass().getResourceAsStream("images/misc/derecha.png"));
+	    ImageInput costo_derecha1 = new ImageInput();
+	    costo_derecha1.setSource(costo_derecha);
+		button_DerCostoIndirecto.setEffect(costo_derecha1);
+		
+		Image costo_izquierda = new Image(getClass().getResourceAsStream("images/misc/izquierda.png"));
+	    ImageInput costo_izquierda1 = new ImageInput();
+	    costo_izquierda1.setSource(costo_izquierda);
+		button_IzqCostoIndirecto.setEffect(costo_izquierda1);
+		
+		Image precio_izquierda = new Image(getClass().getResourceAsStream("images/misc/flecha_izq.png"));
+	    ImageInput precio_izquierda1 = new ImageInput();
+	    precio_izquierda1.setSource(precio_izquierda);
+		anchor_izquierdaPrecio.setEffect(precio_izquierda1);
+		
+		Image precio_abajo = new Image(getClass().getResourceAsStream("images/misc/flecha_abajo.png"));
+	    ImageInput precio_abajo1 = new ImageInput();
+	    precio_abajo1.setSource(precio_abajo);
+		anchor_abajoprecio.setEffect(precio_abajo1);
+		
+		Image precio_derecha = new Image(getClass().getResourceAsStream("images/misc/flecha_der.png"));
+	    ImageInput precio_derecha1 = new ImageInput();
+	    precio_derecha1.setSource(precio_derecha);
+		anchor_derechaPrecio.setEffect(precio_derecha1);
+		
 	}
 	
 	public void fillUnidadMedida(ArrayList<UnidadMedida> u) {

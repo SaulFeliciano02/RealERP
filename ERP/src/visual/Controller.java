@@ -220,6 +220,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Peticion, LocalDate> tablecolumn_peticionFecha;
     @FXML private TableView<Peticion> tableview_peticionList;
     @FXML private Button button_peticionAdministrar;
+    @FXML private Button button_peticion_nueva;
     private boolean administrarPeticion = false;
     
     @FXML private Button button_peticionBuscarProducto;
@@ -494,7 +495,8 @@ public class Controller implements Initializable{
     @FXML private Tab tab_administracionUsuarios;
     @FXML private Tab tab_administracionCajaChica;
     @FXML private Tab tab_administracionCuentaBanco;
-    
+    @FXML private Button button_nuevo_usuario;
+    @FXML private Button button_eliminar_usuario;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -546,6 +548,8 @@ public class Controller implements Initializable{
 	Image clicked_nuevoProducto = new Image(getClass().getResourceAsStream("images/buttons/producto_nuevo_clicked.png"));
 	Image clicked_modificarProducto = new Image(getClass().getResourceAsStream("images/buttons/producto_modificar_clicked.png"));
 	Image clicked_eliminarProducto = new Image(getClass().getResourceAsStream("images/buttons/producto_eliminar_clicked.png"));
+	Image producto_nuevo = new Image(getClass().getResourceAsStream("images/buttons/producto_nuevo.png"));
+	
 	
 	ImageInput pressed_principal1 = new ImageInput(); 
 	ImageInput pressed_gastos1 = new ImageInput(); 
@@ -709,7 +713,7 @@ public class Controller implements Initializable{
     	//root es el usuario por defecto del programa, no esta guardado en la base de datos,
     	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
     	//en el programa con este usuario.
-    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root")) {}
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")) {}
     	else if(Controladora.getInstance().getUsuarioLogueado().getCargo().getNombre().equalsIgnoreCase("Administrador"))
 		{
 			tab_atributos.setDisable(false);
@@ -772,7 +776,9 @@ public class Controller implements Initializable{
     	pane_Admin.setVisible(false);
     	pane_Ayuda.setVisible(false);
     	pane_Config.setVisible(false);
-
+    	
+    	
+    	
     }
     
     //Función que se activa al presionar el botón de ventas.
@@ -834,6 +840,7 @@ public class Controller implements Initializable{
     	pane_Ayuda.setVisible(false);
     	pane_Config.setVisible(false);
 
+    	
     	
     }
     
@@ -3415,15 +3422,15 @@ public class Controller implements Initializable{
 		//root es el usuario por defecto del programa, no esta guardado en la base de datos,
     	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
     	//en el programa con este usuario.
-		if(user.getUsuario().equalsIgnoreCase("root")) {
+		if(user.getUsuario().equalsIgnoreCase("administrador")) {
 			admin_pressed(null);
 			selectTabUsuarios();
 	    	button_gastos.setDisable(true);
 	    	button_productos.setDisable(true);
 	    	button_ventas.setDisable(true);
 	    	button_historial.setDisable(true);
-	    	button_rh.setDisable(false);
 	    	button_admin.setDisable(false);
+	    	button_rh.setDisable(false);
 	    	button_help.setDisable(true); 
 	    	button_config.setDisable(true); 
 	    	
@@ -3681,7 +3688,115 @@ public class Controller implements Initializable{
     	setEditClientes();
     	setEditProveedores();
     	
+    	Image prod_nuevo = new Image(getClass().getResourceAsStream("images/buttons/producto_nuevo.png"));
+	    ImageInput prod_nuevo1 = new ImageInput();
+	    prod_nuevo1.setSource(prod_nuevo);
+    	button_nuevoProducto.setEffect(prod_nuevo1);
     	
+    	Image prod_modificado = new Image(getClass().getResourceAsStream("images/buttons/producto_modificar.png"));
+	    ImageInput prod_modificado1 = new ImageInput();
+	    prod_modificado1.setSource(prod_modificado);
+    	button_modificarProducto.setEffect(prod_modificado1);
+    	
+    	Image prod_eliminar = new Image(getClass().getResourceAsStream("images/buttons/producto_eliminar.png"));
+	    ImageInput prod_eliminar1 = new ImageInput();
+	    prod_eliminar1.setSource(prod_eliminar);
+    	button_eliminarProducto.setEffect(prod_eliminar1);
+    	
+    	Image rubro_nuevo = new Image(getClass().getResourceAsStream("images/buttons/rubro_add.png"));
+	    ImageInput rubro_nuevo1 = new ImageInput();
+	    rubro_nuevo1.setSource(rubro_nuevo);
+    	button_rubroNuevo.setEffect(rubro_nuevo1);
+    	
+    	Image rubro_eliminar = new Image(getClass().getResourceAsStream("images/buttons/rubro_delete.png"));
+	    ImageInput rubro_eliminar1 = new ImageInput();
+	    rubro_eliminar1.setSource(rubro_nuevo);
+    	button_rubroEliminar.setEffect(rubro_eliminar1);
+    	
+    	Image peticion_nueva = new Image(getClass().getResourceAsStream("images/buttons/peticion_nueva.png"));
+	    ImageInput peticion_nueva1 = new ImageInput();
+	    peticion_nueva1.setSource(peticion_nueva);
+    	button_peticion_nueva.setEffect(peticion_nueva1);
+    	
+    	Image peticion_admin = new Image(getClass().getResourceAsStream("images/buttons/peticion_admin.png"));
+	    ImageInput peticion_admin1 = new ImageInput();
+	    peticion_admin1.setSource(peticion_admin);
+    	button_peticionAdministrar.setEffect(peticion_admin1);
+    	
+    	Image nuevo_emp = new Image(getClass().getResourceAsStream("images/buttons/empleado_new.png"));
+	    ImageInput nuevo_emp1 = new ImageInput();
+	    nuevo_emp1.setSource(nuevo_emp);
+    	button_nuevoEmpleado.setEffect(nuevo_emp1);
+    	
+    	Image eliminar_emp = new Image(getClass().getResourceAsStream("images/buttons/empleado_delete.png"));
+	    ImageInput eliminar_emp1 = new ImageInput();
+	    eliminar_emp1.setSource(eliminar_emp);
+    	button_eliminarVendedor.setEffect(eliminar_emp1);
+    	
+    	Image nuevo_usu = new Image(getClass().getResourceAsStream("images/buttons/user_new.png"));
+	    ImageInput nuevo_usu1 = new ImageInput();
+	    nuevo_usu1.setSource(nuevo_usu);
+    	button_nuevo_usuario.setEffect(nuevo_usu1);
+    	
+    	Image eliminar_usu = new Image(getClass().getResourceAsStream("images/buttons/user_delete.png"));
+	    ImageInput eliminar_usu1 = new ImageInput();
+	    eliminar_usu1.setSource(eliminar_usu);
+    	button_eliminar_usuario.setEffect(eliminar_usu1);
+    	
+    	Image factura_nueva = new Image(getClass().getResourceAsStream("images/buttons/factura_nueva.png"));
+	    ImageInput factura_nueva1 = new ImageInput();
+	    factura_nueva1.setSource(factura_nueva);
+    	button_nuevaFactura.setEffect(factura_nueva1);
+    	
+    	Image promocion_nueva = new Image(getClass().getResourceAsStream("images/buttons/promo_nueva.png"));
+	    ImageInput promocion_nueva1 = new ImageInput();
+	    promocion_nueva1.setSource(promocion_nueva);
+    	button_nuevaPromocion.setEffect(promocion_nueva1);
+    	
+    	Image promocion_eliminar = new Image(getClass().getResourceAsStream("images/buttons/promo_delete.png"));
+	    ImageInput promocion_eliminar1 = new ImageInput();
+	    promocion_eliminar1.setSource(promocion_eliminar);
+    	button_eliminarPromocion.setEffect(promocion_eliminar1);
+    	
+    	Image cliente_nuevo = new Image(getClass().getResourceAsStream("images/buttons/client_nuevo.png"));
+	    ImageInput cliente_nuevo1 = new ImageInput();
+	    cliente_nuevo1.setSource(cliente_nuevo);
+    	button_nuevoCliente.setEffect(cliente_nuevo1);
+    	
+    	Image cliente_eliminar = new Image(getClass().getResourceAsStream("images/buttons/client_delete.png"));
+	    ImageInput cliente_eliminar1 = new ImageInput();
+	    cliente_eliminar1.setSource(cliente_eliminar);
+    	button_eliminarCliente.setEffect(cliente_eliminar1);
+    	
+    	Image proveedor_nuevo = new Image(getClass().getResourceAsStream("images/buttons/provee_nuevo.png"));
+	    ImageInput proveedor_nuevo1 = new ImageInput();
+	    proveedor_nuevo1.setSource(proveedor_nuevo);
+    	button_nuevoProveedor.setEffect(proveedor_nuevo1);
+    	
+    	Image proveedor_delete = new Image(getClass().getResourceAsStream("images/buttons/provee_delete.png"));
+	    ImageInput proveedor_delete1 = new ImageInput();
+	    proveedor_delete1.setSource(proveedor_delete);
+    	button_eliminarProveedor.setEffect(proveedor_delete1);
+    	
+    	pressed_productos1.setSource(pressed_productos); 
+    	nonpressed_principal1.setSource(nonpressed_principal); 
+    	nonpressed_gastos1.setSource(nonpressed_gastos ); 
+    	nonpressed_productos1.setSource(nonpressed_productos); 
+    	nonpressed_ventas1.setSource(nonpressed_ventas); 
+    	nonpressed_historial1.setSource(nonpressed_historial); 
+    	nonpressed_rh1.setSource(nonpressed_rh); 
+    	nonpressed_admin1.setSource(nonpressed_admin); 
+    	nonpressed_help1.setSource(nonpressed_help); 
+    	nonpressed_config1.setSource(nonpressed_config);
+    	
+    	button_productos.setEffect(pressed_productos1);
+    	button_ventas.setEffect(nonpressed_ventas1);
+    	button_historial.setEffect(nonpressed_historial1);
+    	button_rh.setEffect(nonpressed_rh1);
+    	button_admin.setEffect(nonpressed_admin1);
+    	button_help.setEffect(nonpressed_help1); 
+    	button_config.setEffect(nonpressed_config1); 
+    	button_gastos.setEffect(nonpressed_gastos1);
     }
     
 	public void fillCargoUsuario()
@@ -3692,7 +3807,7 @@ public class Controller implements Initializable{
     	
     	combobox_data = FXCollections.observableArrayList();
     	
-    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root"))
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
     	{
     		combobox_data.add("Administrador");
     	}
@@ -3704,6 +3819,7 @@ public class Controller implements Initializable{
     	}
     	
     	combobox_cargoUsuario.setItems(combobox_data);
+    	
     	
     }
     
@@ -4300,7 +4416,7 @@ public class Controller implements Initializable{
     }
     
     public void activarInfoAdicionalProducto(MouseEvent event) {
-    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("root")) {}
+    	if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")) {}
     	else if(!tableview_productList.getSelectionModel().isEmpty() && Controladora.getInstance().getUsuarioLogueado().getCargo().isInfoproductos()) {
     		button_abrirInfoAdicional.setDisable(false);
     	}

@@ -31,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <MenuBar VBox.vgrow="NEVER" />
       <HBox alignment="CENTER_LEFT" prefHeight="574.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
@@ -59,7 +59,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/selected_button_productos.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_productos" mnemonicParsing="false" onAction="#productos_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: TRANSPARENT;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_productos.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -78,7 +85,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_ventas" mnemonicParsing="false" onAction="#ventas_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_ventas.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_ventas" mnemonicParsing="false" onAction="#ventas_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_ventas.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -97,7 +111,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_rh" mnemonicParsing="false" onAction="#rh_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_rh.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_rh" mnemonicParsing="false" onAction="#rh_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_rh.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -116,7 +137,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_admin" mnemonicParsing="false" onAction="#admin_pressed" prefHeight="31.0" prefWidth="201.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_admin.png'); -fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;" />
+                        <Button fx:id="button_admin" mnemonicParsing="false" onAction="#admin_pressed" prefHeight="31.0" prefWidth="201.0" style="-fx-background-repeat: no-repeat; -fx-background-color: TRANSPARENT;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_admin.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -135,7 +163,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_gastos" mnemonicParsing="false" onAction="#gastos_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_gastos.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_gastos" mnemonicParsing="false" onAction="#gastos_pressed" prefHeight="31.0" prefWidth="200.0" style="-fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_gastos.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -154,7 +189,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_historial.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_historial" mnemonicParsing="false" onAction="#historial_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_historial.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -173,7 +215,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_config" mnemonicParsing="false" onAction="#config_pressed" prefHeight="31.0" prefWidth="226.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_config.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_config" mnemonicParsing="false" onAction="#config_pressed" prefHeight="31.0" prefWidth="226.0" style="-fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_config.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -192,7 +241,14 @@
                               <Insets right="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="button_help" mnemonicParsing="false" onAction="#help_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/button_help.png'); -fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;" />
+                        <Button fx:id="button_help" mnemonicParsing="false" onAction="#help_pressed" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: TRANSPARENT; -fx-background-repeat: no-repeat;">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/button_help.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></Button>
                      </children>
                      <padding>
                         <Insets top="40.0" />
@@ -313,13 +369,34 @@
                                                                                                    <children>
                                                                                                       <HBox prefHeight="200.0" prefWidth="629.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                                          <children>
-                                                                                                            <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
-                                                                                                            <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_modificar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                            <Button fx:id="button_nuevoProducto" mnemonicParsing="false" onAction="#pressed_nuevoProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                               <effect>
+                                                                                                                  <ImageInput>
+                                                                                                                     <source>
+                                                                                                                        <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/producto_nuevo.png" />
+                                                                                                                     </source>
+                                                                                                                  </ImageInput>
+                                                                                                               </effect></Button>
+                                                                                                            <Button fx:id="button_modificarProducto" mnemonicParsing="false" onAction="#pressed_modificarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                                                <padding>
                                                                                                                   <Insets right="50.0" />
                                                                                                                </padding>
+                                                                                                               <effect>
+                                                                                                                  <ImageInput>
+                                                                                                                     <source>
+                                                                                                                        <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/producto_modificar.png" />
+                                                                                                                     </source>
+                                                                                                                  </ImageInput>
+                                                                                                               </effect>
                                                                                                             </Button>
-                                                                                                            <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-image: url('file:src/visual/images/buttons/producto_eliminar.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                                            <Button fx:id="button_eliminarProducto" mnemonicParsing="false" onAction="#pressed_eliminarProducto" prefHeight="76.0" prefWidth="244.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                               <effect>
+                                                                                                                  <ImageInput>
+                                                                                                                     <source>
+                                                                                                                        <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/producto_eliminar.png" />
+                                                                                                                     </source>
+                                                                                                                  </ImageInput>
+                                                                                                               </effect></Button>
                                                                                                             <Separator prefWidth="100.0" HBox.hgrow="ALWAYS" />
                                                                                                             <VBox prefHeight="114.0" prefWidth="317.0">
                                                                                                                <children>
@@ -668,9 +745,23 @@
                                                                                        <children>
                                                                                           <HBox prefHeight="64.0" prefWidth="610.0">
                                                                                              <children>
-                                                                                                <Button fx:id="button_rubroNuevo" mnemonicParsing="false" onAction="#activarRegistro" prefHeight="64.0" prefWidth="192.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_add.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                                <Button fx:id="button_rubroNuevo" mnemonicParsing="false" onAction="#activarRegistro" prefHeight="64.0" prefWidth="192.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                   <effect>
+                                                                                                      <ImageInput>
+                                                                                                         <source>
+                                                                                                            <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/rubro_add.png" />
+                                                                                                         </source>
+                                                                                                      </ImageInput>
+                                                                                                   </effect></Button>
                                                                                                 <Separator opacity="0.0" prefHeight="0.0" prefWidth="86.0" style="-fx-background-color: TRANSPARENT;" />
-                                                                                                <Button fx:id="button_rubroEliminar" disable="true" mnemonicParsing="false" onAction="#eliminarRubro" prefHeight="64.0" prefWidth="192.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                                                <Button fx:id="button_rubroEliminar" disable="true" mnemonicParsing="false" onAction="#eliminarRubro" prefHeight="64.0" prefWidth="192.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                                   <effect>
+                                                                                                      <ImageInput>
+                                                                                                         <source>
+                                                                                                            <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/rubro_delete.png" />
+                                                                                                         </source>
+                                                                                                      </ImageInput>
+                                                                                                   </effect></Button>
                                                                                              </children>
                                                                                              <VBox.margin>
                                                                                                 <Insets top="5.0" />
@@ -860,7 +951,7 @@
                                                                               </TableView>
                                                                               <HBox prefHeight="135.0" prefWidth="630.0">
                                                                                  <children>
-                                                                                    <Button mnemonicParsing="false" onAction="#abrir_titledpaneNuevaPeticion" prefHeight="78.0" prefWidth="199.0" style="-fx-background-image: url('file:src/visual/images/buttons/peticion_nueva.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                    <Button fx:id="button_peticion_nueva" mnemonicParsing="false" onAction="#abrir_titledpaneNuevaPeticion" prefHeight="78.0" prefWidth="199.0" style="-fx-background-image: url('file:src/visual/images/buttons/peticion_nueva.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                        <HBox.margin>
                                                                                           <Insets left="10.0" />
                                                                                        </HBox.margin>
@@ -1251,10 +1342,17 @@
                                                                         </TableView>
                                                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
-                                                                              <Button fx:id="button_nuevaFactura" mnemonicParsing="false" onAction="#pressed_nuevaFactura" prefHeight="82.0" prefWidth="206.0" style="-fx-background-image: url('file:src/visual/images/buttons/factura_nueva.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                              <Button fx:id="button_nuevaFactura" mnemonicParsing="false" onAction="#pressed_nuevaFactura" prefHeight="82.0" prefWidth="206.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                  <HBox.margin>
                                                                                     <Insets right="10.0" />
                                                                                  </HBox.margin>
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/factura_nueva.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect>
                                                                               </Button>
                                                                               <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="401.0" HBox.hgrow="ALWAYS">
                                                                                  <children>
@@ -1426,11 +1524,25 @@
                                                                               <Insets bottom="50.0" left="10.0" right="10.0" top="10.0" />
                                                                            </VBox.margin>
                                                                            <children>
-                                                                              <Button fx:id="button_nuevaPromocion" mnemonicParsing="false" onAction="#pressed_nuevaPromocion" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/promo_nueva.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
-                                                                              <Button fx:id="button_eliminarPromocion" mnemonicParsing="false" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/promo_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                              <Button fx:id="button_nuevaPromocion" mnemonicParsing="false" onAction="#pressed_nuevaPromocion" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/promo_nueva.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
+                                                                              <Button fx:id="button_eliminarPromocion" mnemonicParsing="false" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                  <HBox.margin>
                                                                                     <Insets left="40.0" />
                                                                                  </HBox.margin>
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/promo_delete.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect>
                                                                               </Button>
                                                                            </children>
                                                                         </HBox>
@@ -1479,9 +1591,23 @@
                                                                         </TableView>
                                                                         <HBox prefHeight="83.0" prefWidth="610.0">
                                                                            <children>
-                                                                              <Button fx:id="button_nuevoCliente" mnemonicParsing="false" onAction="#pressed_nuevoCliente" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/client_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_nuevoCliente" mnemonicParsing="false" onAction="#pressed_nuevoCliente" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/client_nuevo.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                               <Separator opacity="0.0" prefHeight="0.0" prefWidth="99.0" />
-                                                                              <Button fx:id="button_eliminarCliente" mnemonicParsing="false" onAction="#pressed_eliminarCliente" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/client_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_eliminarCliente" mnemonicParsing="false" onAction="#pressed_eliminarCliente" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/client_delete.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1535,9 +1661,23 @@
                                                                         </TableView>
                                                                         <HBox prefHeight="78.0" prefWidth="630.0">
                                                                            <children>
-                                                                              <Button fx:id="button_nuevoProveedor" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_nuevo.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_nuevoProveedor" mnemonicParsing="false" onAction="#pressed_nuevoProveedor" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/provee_nuevo.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                               <Separator opacity="0.0" prefHeight="2.0" prefWidth="98.0" />
-                                                                              <Button fx:id="button_eliminarProveedor" mnemonicParsing="false" onAction="#pressed_eliminarProveedor" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_eliminarProveedor" mnemonicParsing="false" onAction="#pressed_eliminarProveedor" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/provee_delete.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1606,9 +1746,23 @@
                                                                         </TableView>
                                                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                                                            <children>
-                                                                              <Button fx:id="button_nuevoEmpleado" mnemonicParsing="false" onAction="#pressed_nuevoEmpleado" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/empleado_new.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_nuevoEmpleado" mnemonicParsing="false" onAction="#pressed_nuevoEmpleado" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/empleado_new.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                               <Separator opacity="0.0" prefHeight="0.0" prefWidth="94.0" />
-                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" onAction="#pressed_eliminarEmpleado" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/empleado_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                              <Button fx:id="button_eliminarVendedor" mnemonicParsing="false" onAction="#pressed_eliminarEmpleado" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                 <effect>
+                                                                                    <ImageInput>
+                                                                                       <source>
+                                                                                          <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/empleado_delete.png" />
+                                                                                       </source>
+                                                                                    </ImageInput>
+                                                                                 </effect></Button>
                                                                            </children>
                                                                            <VBox.margin>
                                                                               <Insets bottom="90.0" left="10.0" right="10.0" />
@@ -1790,12 +1944,26 @@
                                                                         <Insets bottom="70.0" left="10.0" right="10.0" />
                                                                      </VBox.margin>
                                                                      <children>
-                                                                        <Button mnemonicParsing="false" onAction="#habilitarNuevoUsuario" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/user_new.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;" />
+                                                                        <Button fx:id="button_nuevo_usuario" mnemonicParsing="false" onAction="#habilitarNuevoUsuario" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                           <effect>
+                                                                              <ImageInput>
+                                                                                 <source>
+                                                                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/user_new.png" />
+                                                                                 </source>
+                                                                              </ImageInput>
+                                                                           </effect></Button>
                                                                         <Separator opacity="0.0" prefWidth="20.0" />
-                                                                        <Button mnemonicParsing="false" prefHeight="76.0" prefWidth="202.0" style="-fx-background-image: url('file:src/visual/images/buttons/user_delete.png'); -fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                        <Button fx:id="button_eliminar_usuario" mnemonicParsing="false" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                            <HBox.margin>
                                                                               <Insets left="40.0" />
-                                                                           </HBox.margin></Button>
+                                                                           </HBox.margin>
+                                                                           <effect>
+                                                                              <ImageInput>
+                                                                                 <source>
+                                                                                    <Image url="file:/C:/Users/Saul%20Feliciano/git/RealERP/ERP/src/visual/images/buttons/user_delete.png" />
+                                                                                 </source>
+                                                                              </ImageInput>
+                                                                           </effect></Button>
                                                                      </children>
                                                                   </HBox>
                                                                </children>
