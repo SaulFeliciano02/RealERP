@@ -158,6 +158,7 @@ public class ControllerNuevaPromocion implements Initializable{
     }
     
     public void activarGuardar(ActionEvent event) {
+    	System.out.println("I got in here!");
     	if((listview_promocionSeleccionados.getItems().size() > 0 && textfield_promocionNombre.getLength() > 0) && (datepicker_fechaFinal.getValue() != null && datepicker_fechaInicial.getValue() != null
     			|| (checkbox_lunes.isSelected() || checkbox_martes.isSelected() || checkbox_miercoles.isSelected() || checkbox_jueves.isSelected() || checkbox_viernes.isSelected() || checkbox_sabado.isSelected() ||
     					checkbox_domingo.isSelected()))) {
@@ -395,6 +396,7 @@ public class ControllerNuevaPromocion implements Initializable{
     		checkbox_sabado.setSelected(false);
     		checkbox_martes.setSelected(false);
     	}
+    	activarGuardar(null);
     }
     
     public void sendPromocion(ActionEvent event) {
