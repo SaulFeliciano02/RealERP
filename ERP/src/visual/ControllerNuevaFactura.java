@@ -926,20 +926,10 @@ public class ControllerNuevaFactura implements Initializable{
         	if(isValid) {
         		precioConvertido = cantidadConvertida * Float.parseFloat(Controladora.getInstance().findFacturaCosto(item));
         		String itemNombre = Controladora.getInstance().findFacturaNombre(item);
-        		Boolean hasPromotion = false;
         		String dayOfWeek = LocalDate.now().getDayOfWeek().toString();
         		String dia = turnDaysInSpanish(dayOfWeek);
 				//float precioPromocion = 0;
-				for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
-					for(Producto promoProductos : promocion.getProductos()) {
-							if(promoProductos.equals(producto) && 
-									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
-									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
-									|| promocion.getDia().equalsIgnoreCase(dia))) {
-								hasPromotion = true;
-							}
-					}
-				}
+        		Boolean hasPromotion = (Boolean) checkPromotion(producto, dia).get(0);
 				String itemMedida = "";
 				if(hasPromotion) {
 					if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
@@ -1085,19 +1075,11 @@ public class ControllerNuevaFactura implements Initializable{
 		String dia = turnDaysInSpanish(dayOfWeek);
 		if(producto == null) {
 			for(Producto p : Controladora.getInstance().getMisProductos()) {
-				Boolean hasPromotion = false;
-				float precioPromocion = 0;
-				for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
-					for(Producto promoProductos : promocion.getProductos()) {
-							if(promoProductos.equals(p) && 
-									((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
-									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)
-									|| promocion.getDia().equalsIgnoreCase(dia))) {
-								hasPromotion = true;
-								precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;
-							}
-					}
-				}
+				//El objeto precio_hasPromotion contiene el boolean que indica si el producto aplica la promocion y el precio de dicha promocion
+				ArrayList<Object> precio_hasPromotion = checkPromotion (p, dia);
+				Boolean hasPromotion = (Boolean) precio_hasPromotion.get(0);
+				float precioPromocion = (float) precio_hasPromotion.get(1);
+				
 				if(!p.isBorrado()) {
 					if(p.getUnidadMedida() == null) {
 						if(hasPromotion) {
@@ -1437,29 +1419,56 @@ public class ControllerNuevaFactura implements Initializable{
 	public String turnDaysInSpanish(String dayOfTheWeek) {
 		String dia = "";
 		switch (dayOfTheWeek) {
-  	  		case "Monday":
+  	  		case "MONDAY":
   	  			dia = "lunes";
   	  			break;
-  	  		case "Tuesday":
+  	  		case "TUESDAY":
   	  			dia = "martes";
   	  			break;
-  	  		case "Wednesday":
-  	  			dia = "miércoles";
+  	  		case "WEDNESDAY":
+  	  			dia = "miercoles";
   	  			break;
-  	  		case "Thursday":
+  	  		case "THURSDAY":
   	  			dia = "jueves";
   	  			break;
-  	  		case "Friday":
+  	  		case "FRIDAY":
   	  			dia = "viernes";
   	  			break;
-  	  		case "Saturday":
-  	  			dia = "sábado";
+  	  		case "SATURDAY":
+  	  			dia = "sabado";
   	  			break;
-  	  		case "Sunday":
+  	  		case "SUNDAY":
   	  			dia = "domingo";
   	  			break;
 		}
 		return dia;
+	}
+	
+	public ArrayList<Object> checkPromotion(Producto p, String dia) {
+		ArrayList<Object> has_precio_promocion = new ArrayList<>();
+		float precioPromocion = 0;
+		boolean hasPromotion = false;
+		for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
+			for(Producto promoProductos : promocion.getProductos()) {
+				if(promoProductos.equals(p)) {
+					if(promocion.getFechaInicio() == null) {
+						if(promocion.getDia().equalsIgnoreCase(dia)) {
+							hasPromotion = true;
+						}
+					}
+					else {
+						if((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
+							&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)) {
+							hasPromotion = true;
+						}
+					}
+					if(hasPromotion) {precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;}
+				}
+			}
+		}
+		has_precio_promocion.add(hasPromotion);
+		has_precio_promocion.add(precioPromocion);
+		return has_precio_promocion;
 	}
 
 }
