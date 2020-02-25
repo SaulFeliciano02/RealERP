@@ -12179,6 +12179,1408 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 	}**/
 	
 	
+public void reiniciarInfoEmpresa() {
+		
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE infoempresa ALTER COLUMN IDINFOEMPRESA RESTART WITH 1");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE rangonumerosvalorfiscal ALTER COLUMN IDRANGONUMEROSVALORFISCAL RESTART WITH 1");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE aniofiscal ALTER COLUMN IDANIOFISCAL RESTART WITH 1");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			
+			System.out.println("AutoIncrement modified!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+		
+		
+	}
+
+public void reiniciarClientes() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE clientes ALTER COLUMN IDCLIENTES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+	
+public void reiniciarRubros() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE rubros ALTER COLUMN IDRUBROS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarGastosGenerales() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE gastosgenerales ALTER COLUMN IDGASTOSGENERALES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarProveedores() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE proveedores ALTER COLUMN IDPROVEEDORES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarCategoriaEmpleado() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE categoriaempleado ALTER COLUMN IDCATEGORIAEMPLEADO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarEmpleados() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE empleados ALTER COLUMN IDEMPLEADOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPrecios() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE precio ALTER COLUMN IDPRECIO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarProducto() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE productos ALTER COLUMN IDPRODUCTOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE estandar ALTER COLUMN IDESTANDAR RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE precioproducto ALTER COLUMN IDPRECIOPRODUCTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+
+public void reiniciarPartida() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE partida ALTER COLUMN IDPARTIDA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE estandar ALTER COLUMN IDESTANDAR RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE productopartida ALTER COLUMN IDPRODUCTOPARTIDA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE partidaprodutil ALTER COLUMN IDPARTIDAPRODUTIL RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarGrupoAtributos() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE grupoatributo ALTER COLUMN IDGRUPOATRIBUTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarAtributos() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE atributos ALTER COLUMN IDATRIBUTOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarMatriz() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE combinaciones ALTER COLUMN IDCOMBINACIONES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE combinacionesatributos ALTER COLUMN IDCOMBINACIONESATRIBUTOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE matriz ALTER COLUMN IDMATRIZ RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarKit() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE kit ALTER COLUMN IDKIT RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE kitproductos ALTER COLUMN IDKITPRODUCTOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarServicio() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE servicios ALTER COLUMN IDSERVICIOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE serviciomateriales ALTER COLUMN IDSERVICIOMATERIALES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarManoDeObra() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE manodeobra ALTER COLUMN IDMANODEOBRA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE manodeobraproducto ALTER COLUMN IDMANODEOBRAPRODUCTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE manodeobraservicio ALTER COLUMN IDMANODEOBRASERVICIO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarCostoIndirecto() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE costoindirecto ALTER COLUMN IDCOSTODIRECTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPromedioGananciaAnual() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE promediogananciaanual ALTER COLUMN IDPROMEDIOGANANCIAANUAL RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarUsuarios() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE usuarios ALTER COLUMN IDUSUARIOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE usuariocontrasena ALTER COLUMN IDUSUARIOCONTRASENA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE usuariocargo ALTER COLUMN IDUSUARIOCARGO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarFactura() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE facturas ALTER COLUMN IDFACTURAS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE productosfacturados ALTER COLUMN IDPRODUCTOSFACTURADOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE kitsfacturados ALTER COLUMN IDKITSFACTURADOS RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE serviciosfacturado ALTER COLUMN IDSERVICIOSFACTURADO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE facturacreditocliente ALTER COLUMN IDFACTURACREDITOCLIENTE RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE pagosfacturacreditocliente ALTER COLUMN IDPAGOSFACTURACREDITOCLIENTE RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPromocion() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE promocion ALTER COLUMN IDPROMOCION RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE promoproducto ALTER COLUMN IDPROMOPRODUCTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarImagenProducto() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE imagenproducto ALTER COLUMN IDIMAGENPRODUCTO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarFacturaCreditoCliente() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE facturacreditocliente ALTER COLUMN IDFACTURACREDITOCLIENTE RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPeticiones() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE peticiones ALTER COLUMN IDPETICIONES RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPeticionesCredito() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE peticionescredito ALTER COLUMN IDPETICIONESCREDITO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarPagoPeticionesCredito() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE pagopeticionescredito ALTER COLUMN IDPAGOPETICIONESCREDITO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarCajaChica() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE transaccionescajachica ALTER COLUMN IDTRANSACCIONESCAJACHICA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE cajachica ALTER COLUMN IDCAJACHICA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public void reiniciarCuentaBancaria() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE transaccionescuentabancaria ALTER COLUMN IDTRANSACCIONESCUENTABANCARIA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE montocuentabancaria ALTER COLUMN IDMONTOCUENTABANCARIA RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+
 }
 
 

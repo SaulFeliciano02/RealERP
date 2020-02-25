@@ -232,6 +232,7 @@ public class Main extends Application{
 					if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
 						Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
+						
 					}
 					else {
 						Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
@@ -338,77 +339,153 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadInfoEmpresa();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarInfoEmpresa();
+					}
 					if(Controladora.getInstance().activarLoadCliente())
 					{
 						Controladora.getInstance().loadCliente();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarClientes();
 					}
 					if(Controladora.getInstance().activarLoadGastosGenerales())
 					{
 						Controladora.getInstance().loadGastosGenerales();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarGastosGenerales();
+					}
 					if(Controladora.getInstance().activarRecuperarRubros())
 					{
 						Controladora.getInstance().recuperarRubros();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarRubros();
 					}
 					if(Controladora.getInstance().activarLoadProveedores())
 					{
 						Controladora.getInstance().loadProveedores();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarProveedores();
+					}
 					if(Controladora.getInstance().activarLoadCategoriaEmpleado())
 					{
 						Controladora.getInstance().loadCategoriaEmpleado();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarCategoriaEmpleado();
 					}
 					if(Controladora.getInstance().activarLoadEmpleados())
 					{
 						Controladora.getInstance().loadEmpleados();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarEmpleados();
+					}
 					if(Controladora.getInstance().activarLoadPrecio())
 					{
 						Controladora.getInstance().loadPrecio();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarPrecios();
 					}
 					if(Controladora.getInstance().activarLoadProductos())
 					{
 						Controladora.getInstance().loadProductos();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarProducto();
+					}
 					if(Controladora.getInstance().activarLoadPartida())
 					{
 						Controladora.getInstance().loadPartida();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarPartida();
 					}
 					if(Controladora.getInstance().activarLoadGrupoAtributo())
 					{
 						Controladora.getInstance().loadGrupoAtributo();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarGrupoAtributos();
+					}
 					if(Controladora.getInstance().activarLoadAtributos())
 					{
 						Controladora.getInstance().loadAtributos();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarAtributos();
 					}
 					if(Controladora.getInstance().activarloadMatriz())
 					{
 						Controladora.getInstance().loadMatriz();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarMatriz();
+					}
 					if(Controladora.getInstance().activarLoadKit())
 					{
 						Controladora.getInstance().loadKit();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarKit();
 					}
 					if(Controladora.getInstance().activarLoadServicios())
 					{
 						Controladora.getInstance().loadServicios();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarServicio();
+					}
 					if(Controladora.getInstance().activarLoadManoDeObra())
 					{
 						Controladora.getInstance().loadManoDeObra();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarManoDeObra();
 					}
 					if(Controladora.getInstance().activarLoadCostoIndirecto())
 					{
 						Controladora.getInstance().loadCostoIndirecto();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarCostoIndirecto();
+					}
 					if(Controladora.getInstance().activarLoadPromedioGananciaAnual())
 					{
 						Controladora.getInstance().loadPromedioGananciaAnual();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarPromedioGananciaAnual();
+					}
 					if(Controladora.getInstance().activarLoadUsuarios())
 					{
 						Controladora.getInstance().loadUsuarios();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarUsuarios();
 					}
 					Controladora.getInstance().loadFactura();
 					Controladora.getInstance().loadPromocion();
@@ -416,29 +493,57 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().loadImagenProducto();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarImagenProducto();
+					}
 					if(Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
 					{
 						Controladora.getInstance().loadFacturaCreditoCliente();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarFacturaCreditoCliente();
 					}
 					if(Controladora.getInstance().activarLoadPeticiones())
 					{
 						Controladora.getInstance().loadPeticiones();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarPeticiones();
+					}
 					if(Controladora.getInstance().activarLoadPeticionesCredito())
 					{
 						Controladora.getInstance().loadPeticionesCredito();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarPeticionesCredito();
 					}
 					if(Controladora.getInstance().activarLoadPagoPeticionesCredito())
 					{
 						Controladora.getInstance().loadPagoPeticionesCredito();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarPagoPeticionesCredito();
+					}
 					if(Controladora.getInstance().activarLoadCajaChica())
 					{
 						Controladora.getInstance().loadCajaChica();
 					}
+					else
+					{
+						Controladora.getInstance().reiniciarCajaChica();
+					}
 					if(Controladora.getInstance().activarLoadCuentaBancaria())
 					{
 						Controladora.getInstance().loadCuentaBancaria();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarCuentaBancaria();
 					}
 					if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
 						Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
