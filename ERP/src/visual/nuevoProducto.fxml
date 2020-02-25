@@ -26,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1150.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevoProducto">
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1190.0">
          <children>
@@ -253,7 +253,7 @@
                                     <ComboBox fx:id="combobox_costosTiempoFabricacion" layoutX="221.0" layoutY="102.0" prefHeight="31.0" prefWidth="107.0" />
                                     <Text layoutX="82.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encargados de fabricación" />
                                     <ComboBox fx:id="combobox_costosEncargadosFabricacion" layoutX="82.0" layoutY="193.0" prefHeight="31.0" prefWidth="244.0" />
-                                    <TextField fx:id="textfield_TotalManoObra" alignment="TOP_RIGHT" disable="true" layoutX="83.0" layoutY="306.0" promptText="0.0" />
+                                    <TextField fx:id="textfield_TotalManoObra" alignment="TOP_RIGHT" editable="false" layoutX="83.0" layoutY="306.0" promptText="0.0" />
                                     <Text layoutX="82.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total mano de obra" />
                                  </children>
                                  <padding>
@@ -643,14 +643,14 @@
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="231.0">
                                                    <children>
-                                                      <ListView fx:id="listView_combinaciones" prefHeight="408.0" prefWidth="231.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <ListView fx:id="listView_combinaciones" onMouseClicked="#listview_viewCombinacionesClicked" prefHeight="408.0" prefWidth="231.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                             </content>
                                           </ScrollPane>
                                           <HBox alignment="BOTTOM_LEFT" prefHeight="55.0" prefWidth="218.0">
                                              <children>
-                                                <Button disable="true" mnemonicParsing="false" text="Borrar" />
+                                                <Button fx:id="button_borrarCombinacion" disable="true" mnemonicParsing="false" onAction="#borrarCombinacion" text="Borrar" />
                                                 <Button fx:id="button_combinar" disable="true" mnemonicParsing="false" onAction="#createCombination" text="Combinar">
                                                    <HBox.margin>
                                                       <Insets left="10.0" />

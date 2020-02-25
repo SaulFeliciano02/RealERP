@@ -70,6 +70,7 @@ import logico.Proveedores;
 import logico.Rubro;
 import logico.Servicio;
 import logico.UnidadMedida;
+import logico.Volumen;
 
 public class ControllerNuevoProducto implements Initializable {
 	
@@ -228,6 +229,7 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private Button button_atributosEliminar;
     @FXML private Button button_cerrarBusquedaAtributo;
     @FXML private TitledPane titledpane_productoBuscarAtributo;
+    @FXML private Button button_borrarCombinacion;
     
     //VARIABLES PARA LA BUSQUEDA DE UNIDAD DE MEDIDAS
     
@@ -1879,6 +1881,39 @@ public class ControllerNuevoProducto implements Initializable {
     	return true;
     }
     
+    public String findNumeroSerie(String combinacion) {
+    	int i = 0;
+    	String result = "";
+    	System.out.println(combinacion);
+    	while(Character.isDigit(combinacion.charAt(i))) {
+    		System.out.println(combinacion.charAt(i));
+    		result += combinacion.charAt(i);
+    		i++;
+    	}
+    	return result;
+    }
+    
+    public void listview_viewCombinacionesClicked(MouseEvent event) {
+    	if(!listView_combinaciones.getSelectionModel().getSelectedItem().isEmpty() && !modificado) {
+    		button_borrarCombinacion.setDisable(false);
+    	}
+    	else {
+    		button_borrarCombinacion.setDisable(true);
+    	}
+    }
+    
+    public void borrarCombinacion(ActionEvent event) {
+    	String combinacionSelected = listView_combinaciones.getSelectionModel().getSelectedItem();
+    	String numeroSerieCombinacion = findNumeroSerie(combinacionSelected);
+    	listView_combinaciones.getItems().remove(combinacionSelected);
+    	for(Combinaciones c : combinacionFinal) {
+    		if(numeroSerieCombinacion.equalsIgnoreCase(c.getNumeroSerie())) {
+    			combinacionFinal.remove(c);
+    		}
+    	}
+    	button_borrarCombinacion.setDisable(true);
+    }
+    
     
     //COSTOS
 	public void costosRadioButton(ActionEvent event) {
@@ -2739,7 +2774,13 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void returnUnidadSearch(ActionEvent event) {
-    	textfield_generalUnidad.setText(tableview_unidadList.getSelectionModel().getSelectedItem().getNombre());
+    	String unidadSelected = tableview_unidadList.getSelectionModel().getSelectedItem().getNombre();
+    	if(unidadSelected.equalsIgnoreCase("Unidad")) {
+    		textfield_generalUnidad.setText("");
+    	}
+    	else {
+    		textfield_generalUnidad.setText(unidadSelected);
+    	}
     	button_aceptarUnidad.setDisable(true);
     	titledpane_productoBuscarUnidadMedida.setVisible(false);
     }
@@ -2801,7 +2842,9 @@ public class ControllerNuevoProducto implements Initializable {
 	
 	public void fillUnidadMedida(ArrayList<UnidadMedida> u) {
 		ObservableList<UnidadMedida> data = FXCollections.observableArrayList();
+		Volumen defaultUnidad = new Volumen("Unidad", "Unidad", "Und");
 		if(u == null) {
+			data.add(defaultUnidad);
 			data.addAll(Controladora.getInstance().getMisUnidadMedida());
 		}
 		else {
