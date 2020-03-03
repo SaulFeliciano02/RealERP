@@ -466,12 +466,13 @@ public class ControllerNuevoProducto implements Initializable {
     	    }
     	}
     	
+    	float precioImpuesto = Float.parseFloat(textfield_preciosImpuestos.getText());
     	if(Controladora.getInstance().getMiEmpresa() != null && checkbox_Impuestos.isSelected()) {
-    		costoitbis = (float) (((precio.getPrecio() * (18.0/100.0)) * 100.0) / 100.0);
+    		costoitbis = (float) (((precio.getPrecio() * (precioImpuesto/100.0)) * 100.0) / 100.0);
     		System.out.println("El valor del costoitbis1: " + costoitbis + "Precio: " + precio.getPrecio());
     	}
     	else if(checkbox_Impuestos.isSelected()) {
-    		costoitbis = (float) (((precio.getPrecio() * (18.0/100.0)) * 100.0) / 100.0);
+    		costoitbis = (float) (((precio.getPrecio() * (precioImpuesto/100.0)) * 100.0) / 100.0);
     		System.out.println("El valor del costoitbis2: " + costoitbis + "Precio: " + precio.getPrecio());
     	}
     	
@@ -2801,7 +2802,7 @@ public class ControllerNuevoProducto implements Initializable {
 		
 		//Seteando listview gastosgenerales
 		rellenarCostosGenerales(null);
-		textfield_preciosImpuestos.setEditable(false);
+		//textfield_preciosImpuestos.setEditable(false);
 		
 		Image partida_derecha = new Image(getClass().getResourceAsStream("images/misc/derecha.png"));
 	    ImageInput partida_derecha1 = new ImageInput();
