@@ -3101,25 +3101,7 @@ public class Controller implements Initializable{
             	else if(radiobutton_peticionTarjeta.isSelected()) {
             		metodoPago = "Tarjeta";
             	}
-    			if(combobox_peticionEstado.getValue().equalsIgnoreCase("Aceptada")) {
-    				Producto productoSuma = tableview_peticionList.getSelectionModel().getSelectedItem().getProducto();
-    				//int indiceProducto = Controladora.getInstance().getMisProductos().indexOf(productoSuma);
-    				if(productoSuma.getTipoProducto().equalsIgnoreCase("Estandar") || productoSuma.getTipoProducto().equalsIgnoreCase("Matriz")) {
-    					Estandar productoSumaEstandar = (Estandar) productoSuma;
-    					int indiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoSumaEstandar);
-    					Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).setExistenciaActual(
-    							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual() + spinner_peticionCantidad.getValue());
-    					Controladora.getInstance().sumarExistenciaActual(
-    							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual(), indiceProductoEstandar+1);
-    				}
-    				else if(productoSuma.getTipoProducto().equalsIgnoreCase("Kit")) {
-    					Kit productoSumakit = (Kit) productoSuma;
-    					int indiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(productoSumakit);
-    					Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).setExistenciaActual(
-    						Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual() + spinner_peticionCantidad.getValue());
-    					Controladora.getInstance().sumarExistenciaActualKit(
-    							Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual(), indiceProductoKit);
-    				}
+    			//if(combobox_peticionEstado.getValue().equalsIgnoreCase("Aceptada")) {
     				Peticion peticionModificar = tableview_peticionList.getSelectionModel().getSelectedItem();
     				int indicePeticion = Controladora.getInstance().getMisPeticiones().indexOf(peticionModificar);
     				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setEstado("Aceptada");
@@ -3131,8 +3113,8 @@ public class Controller implements Initializable{
     				Controladora.getInstance().getMisProveedores().get(indiceProveedor).setSaldo(
     						Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo() + peticionModificar.getMonto());
     				Controladora.getInstance().modificarProveedorSaldo(Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo(), indiceProveedor+1);
-    			}
-    			else if(combobox_peticionEstado.getValue().equalsIgnoreCase("Rechazada")) {
+    			//}
+    			/**else if(combobox_peticionEstado.getValue().equalsIgnoreCase("Rechazada")) {
     				Alert alert = new Alert(AlertType.CONFIRMATION, "¿Desea declinar esta petición?", ButtonType.YES, ButtonType.NO);
     		    	alert.showAndWait();
     		    	if(alert.getResult() == ButtonType.YES) {
@@ -3142,7 +3124,7 @@ public class Controller implements Initializable{
         				Controladora.getInstance().getMisPeticiones().get(indicePeticion).setMetodoPago(metodoPago);
         				Controladora.getInstance().modificarEstadoPeticion("Declinada", metodoPago, peticionModificar.getCodigo());
     		    	}
-    			}
+    			}**/
     			fillProductList(null, "");
     			fillProveedorList(null, "");
     			fillProveedorList(null, "Peticion");
@@ -3151,6 +3133,27 @@ public class Controller implements Initializable{
     			
     		}
     		else {
+    			//Producto producto = tableview_peticionList.getSelectionModel().getSelectedItem().getProducto();
+				//int indiceProducto = Controladora.getInstance().getMisProductos().indexOf(productoSuma);
+				if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
+					System.out.println("Estoy dentro de un producto estandar");
+					Estandar productoSumaEstandar = (Estandar) producto;
+					int indiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoSumaEstandar);
+					Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).setExistenciaActual(
+							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual() + spinner_peticionCantidad.getValue());
+					Controladora.getInstance().sumarExistenciaActual(
+							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual(), indiceProductoEstandar+1);
+				}
+				else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
+					Kit productoSumakit = (Kit) producto;
+					int indiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(productoSumakit);
+					Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).setExistenciaActual(
+						Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual() + spinner_peticionCantidad.getValue());
+					Controladora.getInstance().sumarExistenciaActualKit(
+							Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual(), indiceProductoKit);
+				}
+    			
+    			
     			String codigo = "00000" + Controladora.getInstance().getMisPeticiones().size()+1;
             	Proveedores proveedor = Controladora.getInstance().buscarProveedorCodigo(textfield_peticionProveedor.getText());
             	
@@ -3192,6 +3195,8 @@ public class Controller implements Initializable{
             	radiobutton_peticionEfectivo.setDisable(true);
             	radiobutton_peticionCredito.setDisable(true);
             	radiobutton_peticionTarjeta.setDisable(true);
+            	
+            	tableview_productList.refresh();
     		}        	
         	fillPeticion();
     	}
