@@ -30,7 +30,16 @@ public class Empresa {
 		this.fechasecvencimiento = fechasecvencimiento;
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
-		this.ITBIS = 18;
+		//this.ITBIS = 18;
+		this.cajaMaximo = cajaMaximo;
+	}
+	public Empresa(String nombre, String rnc, String telefono, String domicilio, float cajaMaximo)
+	{
+		super();
+		this.nombre = nombre;
+		this.rnc = rnc;
+		this.telefono = telefono;
+		this.domicilio = domicilio;
 		this.cajaMaximo = cajaMaximo;
 	}
 	public String getNombre() {

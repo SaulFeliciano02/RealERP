@@ -3173,7 +3173,7 @@ public class Controladora implements Serializable{
 			
 			if(empresa.getITBIS() != 18) {
 				p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis, limitemontocajachica) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					c.prepareStatement("INSERT INTO infoempresa (nombre, rnc, telefono, domicilio, itbis, limitemontocajachica) VALUES (?, ?, ?, ?, ?, ?)");
 				p.setInt(6, empresa.getITBIS());
 			}else {
 				p = (PreparedStatement)
@@ -6235,32 +6235,49 @@ public class Controladora implements Serializable{
 				
 			}
 			
-			c2 = con.conectar();
-			
-			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-			s2 = (Statement) c2.createStatement();
-			r2 = s2.executeQuery("SELECT * FROM rangonumerosvalorfiscal");
-			while(r2.next())
+			if(activarLoadRangoNumeroValorFiscal())
 			{
-				valorfiscalinferior = r2.getInt(2);
-				valorfiscalsuperior = r2.getInt(3);
-				fechasolicitada = r2.getDate(4);
-				fechaVencimiento = r2.getDate(5);
+				c2 = con.conectar();
+			
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s2 = (Statement) c2.createStatement();
+				r2 = s2.executeQuery("SELECT * FROM rangonumerosvalorfiscal");
+				while(r2.next())
+				{
+					valorfiscalinferior = r2.getInt(2);
+					valorfiscalsuperior = r2.getInt(3);
+					fechasolicitada = r2.getDate(4);
+					fechaVencimiento = r2.getDate(5);
+				}
 			}
 			
-			c3 = con.conectar();
-			
-			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
-			s3 = (Statement) c3.createStatement();
-			r3 = s3.executeQuery("SELECT * FROM aniofiscal");
-			while(r3.next())
+			if(activarLoadAnioFiscal())
 			{
-				fechainicio = r3.getDate(2);
-				fechaFinal = r3.getDate(3);
-				borradoAnioFiscal = r3.getBoolean(4);
+				c3 = con.conectar();
+				
+				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+				s3 = (Statement) c3.createStatement();
+				r3 = s3.executeQuery("SELECT * FROM aniofiscal");
+				while(r3.next())
+				{
+					fechainicio = r3.getDate(2);
+					fechaFinal = r3.getDate(3);
+					borradoAnioFiscal = r3.getBoolean(4);
+				}
 			}
 			
-			Empresa emp = new Empresa(nombre, rnc, telefono, domicilio, valorfiscalinferior, valorfiscalsuperior, LocalDate.parse(fechasolicitada.toString()), LocalDate.parse(fechaVencimiento.toString()), LocalDate.parse(fechainicio.toString()), LocalDate.parse(fechaFinal.toString()), limiteMontoCajaChica);
+			Empresa emp = null;
+			
+			if(activarLoadAnioFiscal() && activarLoadRangoNumeroValorFiscal())
+			{
+				emp = new Empresa(nombre, rnc, telefono, domicilio, valorfiscalinferior, valorfiscalsuperior, LocalDate.parse(fechasolicitada.toString()), LocalDate.parse(fechaVencimiento.toString()), LocalDate.parse(fechainicio.toString()), LocalDate.parse(fechaFinal.toString()), limiteMontoCajaChica);
+			}
+			else
+			{
+				emp = new Empresa(nombre, rnc, telefono, domicilio, limiteMontoCajaChica);
+			}
+			
+			
 			Controladora.getInstance().setMiEmpresa(emp);
 			
 		} catch (SQLException e) {
@@ -6391,6 +6408,120 @@ public class Controladora implements Serializable{
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 			s = (Statement) c.createStatement();
 			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM montocuentabancaria");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarLoadRangoNumeroValorFiscal()
+	{
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM rangonumerosvalorfiscal");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarLoadAnioFiscal()
+	{
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM aniofiscal");
 			
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
@@ -13580,6 +13711,450 @@ public void reiniciarCuentaBancaria() {
 	
 }
 
+public void RecordarContrasena(String usuario)
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	java.sql.Connection c3 = null;
+	Statement s = null;
+	Statement s3 = null;
+	ResultSet r = null;
+	ResultSet t = null;
+	PreparedStatement p = null;
+	int idUsuario = 0;
+	
+	try {
+		c3 = con.conectar();
+		
+		s3 = (Statement) c3.createStatement();
+		t = s3.executeQuery("SELECT * FROM usuarios where usuario = " + "'" + usuario + "'" + ";");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(t.next())
+		{
+			idUsuario = t.getInt(1);
+			
+		}
+		
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("INSERT INTO usuariorecordado (idusuario) VALUES (?)");
+		p.setInt(1, idUsuario);
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("Datos guardados!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(c3!=null) {
+						c3.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(s3!=null) {
+						s3.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+					if(t!=null) {
+						t.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+}
+
+public void OlvidarContrasena(String usuario)
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	java.sql.Connection c3 = null;
+	Statement s = null;
+	Statement s3 = null;
+	ResultSet r = null;
+	ResultSet t = null;
+	PreparedStatement p = null;
+	int idUsuario = 0;
+	
+	try {
+		//c3 = con.conectar();
+		
+		//s3 = (Statement) c3.createStatement();
+		//t = s3.executeQuery("SELECT * FROM usuarios where usuario = " + "'" + usuario + "'" + ";");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		//while(t.next())
+		//{
+			//idUsuario = t.getInt(1);
+			
+		//}
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("delete from usuariorecordado where idusuariorecordado = 1");
+		//p.setInt(1, idUsuario);
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("Datos guardados!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+}
+
+public void reiniciarUsuarioRecordado() {
+	
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE USUARIORECORDADO ALTER COLUMN IDUSUARIORECORDADO RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+	
+}
+
+public boolean activarUsuarioRecordado()
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	boolean activar = false;
+	int cuenta = 0;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM usuariorecordado");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			cuenta = r.getInt(1);
+		}
+		
+		if(cuenta > 0)
+		{
+			activar = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return activar;
+}
+
+public boolean verificarUsuarioRecordado(String usuario, String contrasena)
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
+	java.sql.Connection c3 = null;
+	Statement s = null;
+	Statement s2 = null;
+	Statement s3 = null;
+	ResultSet r = null;
+	ResultSet q = null;
+	ResultSet t = null;
+	PreparedStatement p = null;
+	int idUsuario = 0;
+	int idUsuario2 = 0;
+	String password = null;
+	boolean bandera = false;
+	String nomUsu = null;
+	Usuario usu = buscarUsuario(usuario, contrasena);
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM usuariorecordado");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			idUsuario = r.getInt(2);
+			
+		}
+		
+		c2 = con.conectar();
+		
+		s2 = (Statement) c2.createStatement();
+		q = s2.executeQuery("SELECT * FROM USUARIOCONTRASENA where usuario = " + idUsuario);
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(q.next())
+		{
+			idUsuario2 = q.getInt(2);
+			password = q.getString(3);
+			
+		}
+		
+		c3 = con.conectar();
+		
+		s3 = (Statement) c3.createStatement();
+		t = s3.executeQuery("SELECT * FROM usuarios where idusuarios = " + idUsuario);
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(t.next())
+		{
+			nomUsu = t.getString(2);
+			
+		}
+		
+		System.out.println("Usu1: " + idUsuario + " Usu2: " + idUsuario2 + " contrasena: " + contrasena + " password: " + password);
+		
+		if(idUsuario != 0)
+		{
+			if(idUsuario == idUsuario2 && password.equals(contrasena) && nomUsu.equals(usuario))
+			{
+				System.out.println("Entre a el if de la bandera de verificacion");
+				bandera = true;
+			}
+		}
+		
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(c2!=null) {
+				c2.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(q!=null) {
+				q.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return bandera;
+}
+
+public String datosUsuarioRecordado()
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
+	java.sql.Connection c3 = null;
+	Statement s = null;
+	Statement s2 = null;
+	Statement s3 = null;
+	ResultSet r = null;
+	ResultSet q = null;
+	ResultSet t = null;
+	int idUsuario = 0;
+	int idUsuario2 = 0;
+	String password = null;
+	String username = null;
+	
+	try {
+		
+		//Recuperar precios
+		c = con.conectar();
+		
+		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+		s = (Statement) c.createStatement();
+		r = s.executeQuery("SELECT * FROM usuariorecordado");
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(r.next())
+		{
+			idUsuario = r.getInt(2);
+			
+		}
+		
+		c2 = con.conectar();
+		
+		s2 = (Statement) c2.createStatement();
+		q = s2.executeQuery("SELECT * FROM USUARIOCONTRASENA where usuario = " + idUsuario);
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(q.next())
+		{
+			idUsuario2 = q.getInt(2);
+			password = q.getString(3);
+			
+		}
+		
+		c3 = con.conectar();
+		
+		s3 = (Statement) c3.createStatement();
+		t = s3.executeQuery("SELECT * FROM usuarios where idusuarios = " + idUsuario);
+		
+		//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+		while(t.next())
+		{
+			username = t.getString(2);
+			
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+	finally {
+		try {
+			
+			if(c!=null) {
+				c.close();
+			}
+			
+			if(c2!=null) {
+				c2.close();
+			}
+			
+			if(s!=null) {
+				s.close();
+			}
+			
+			if(s2!=null) {
+				s2.close();
+			}
+			
+			if(r!=null) {
+				r.close();
+			}
+			
+			if(q!=null) {
+				q.close();
+			}
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return username + " " + password;
+}
 
 }
 

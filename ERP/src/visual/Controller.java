@@ -114,6 +114,7 @@ public class Controller implements Initializable{
     @FXML private Tab tab_proveedores;
     @FXML private Tab tab_clientes;
     @FXML private Tab tab_empleados;
+    @FXML private Tab tab_CategoriaEmpleado;
     @FXML private TextField textfield_nombreCategoriaEmp;
     @FXML private TextField textfield_salarioCategoriaEmp;
     @FXML private Button button_guardarCategoriaEmp;
@@ -1360,6 +1361,41 @@ public class Controller implements Initializable{
            		textfield_montoGastoG.setText("");
            		textarea_descricionGastoG.setText("");
            		datepicker_fechaGastoG.setValue(LocalDate.now());
+           		
+           		if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+        		{
+        				button_gastos.setDisable(false);
+        				button_productos.setDisable(true);
+        				button_ventas.setDisable(true);
+        				button_historial.setDisable(true);
+        				button_admin.setDisable(false);
+        				button_rh.setDisable(false);
+        				button_help.setDisable(false); 
+        				button_config.setDisable(false); 
+          	        
+        				tab_administracionGeneral.setDisable(false);
+        				tab_administracionCajaChica.setDisable(true);
+        				tab_administracionCuentaBanco.setDisable(true);
+        				admin_pressed(null);
+        				selectTabAdministracionGeneral();
+        		}
+        		else {
+        		      	rh_pressed(null);
+        		      	selectTabEmpleado();
+        		      	//selectTabCategoriaEmpleado();
+        		        button_gastos.setDisable(true);
+        		        button_productos.setDisable(true);
+        		        button_ventas.setDisable(true);
+        		        button_historial.setDisable(true);
+        		        button_admin.setDisable(true);
+        		        button_rh.setDisable(false);
+        		        button_help.setDisable(false); 
+        		        button_config.setDisable(false); 
+        		        
+        		        tab_administracionGeneral.setDisable(true);
+        		        tab_administracionCajaChica.setDisable(true);
+        		        tab_administracionCuentaBanco.setDisable(true);
+        		}
            	}
     	}   	
     	
@@ -2666,6 +2702,41 @@ public class Controller implements Initializable{
     		data.add(cat);
     		tableview_CategoriaEmp.getItems().add(cat);
     		tableview_CategoriaEmp.refresh();	
+    		
+    		if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+    		{
+    				button_gastos.setDisable(true);
+    				button_productos.setDisable(true);
+    				button_ventas.setDisable(true);
+    				button_historial.setDisable(true);
+    				button_admin.setDisable(false);
+    				button_rh.setDisable(false);
+    				button_help.setDisable(true); 
+    				button_config.setDisable(false); 
+      	        
+    				tab_administracionGeneral.setDisable(true);
+    				tab_administracionCajaChica.setDisable(true);
+    				tab_administracionCuentaBanco.setDisable(true);
+    				admin_pressed(null);
+    				selectTabUsuarios();
+    		}
+    		else {
+    		      	rh_pressed(null);
+    		      	selectTabEmpleado();
+    		      	//selectTabCategoriaEmpleado();
+    		        button_gastos.setDisable(true);
+    		        button_productos.setDisable(true);
+    		        button_ventas.setDisable(true);
+    		        button_historial.setDisable(true);
+    		        button_admin.setDisable(true);
+    		        button_rh.setDisable(false);
+    		        button_help.setDisable(false); 
+    		        button_config.setDisable(false); 
+    		        
+    		        tab_administracionGeneral.setDisable(true);
+    		        tab_administracionCajaChica.setDisable(true);
+    		        tab_administracionCuentaBanco.setDisable(true);
+    		}
     	}
     }
     
@@ -2945,6 +3016,42 @@ public class Controller implements Initializable{
 	    	alert = new Alert(AlertType.INFORMATION, "Operación satisfactoria");
     		alert.setTitle("Informaciones");
     		alert.showAndWait();
+    		
+    		
+    		if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+    		{
+    				button_gastos.setDisable(true);
+    				button_productos.setDisable(true);
+    				button_ventas.setDisable(true);
+    				button_historial.setDisable(true);
+    				button_admin.setDisable(false);
+    				button_rh.setDisable(false);
+    				button_help.setDisable(true); 
+    				button_config.setDisable(false); 
+      	        
+    				tab_administracionGeneral.setDisable(true);
+    				tab_administracionCajaChica.setDisable(true);
+    				tab_administracionCuentaBanco.setDisable(true);
+    				admin_pressed(null);
+    				selectTabUsuarios();
+    		}
+    		else {
+    		      	rh_pressed(null);
+    		      	//selectTabEmpleado();
+    		      	selectTabCategoriaEmpleado();
+    		        button_gastos.setDisable(true);
+    		        button_productos.setDisable(true);
+    		        button_ventas.setDisable(true);
+    		        button_historial.setDisable(true);
+    		        button_admin.setDisable(true);
+    		        button_rh.setDisable(false);
+    		        button_help.setDisable(false); 
+    		        button_config.setDisable(false); 
+    		        
+    		        tab_administracionGeneral.setDisable(true);
+    		        tab_administracionCajaChica.setDisable(true);
+    		        tab_administracionCuentaBanco.setDisable(true);
+    		}
     	}
     	/*textfield_empresaNombre.setText("");
     	textfield_empresaRNC.setText("");
@@ -3422,85 +3529,105 @@ public class Controller implements Initializable{
 		//root es el usuario por defecto del programa, no esta guardado en la base de datos,
     	//algunas situaciones han sido validadas, pero recomendamos tener cuidado al trabajar
     	//en el programa con este usuario.
-		if(user.getUsuario().equalsIgnoreCase("administrador")) {
-			admin_pressed(null);
-			selectTabUsuarios();
-	    	button_gastos.setDisable(true);
-	    	button_productos.setDisable(true);
-	    	button_ventas.setDisable(true);
-	    	button_historial.setDisable(true);
-	    	button_admin.setDisable(false);
-	    	button_rh.setDisable(false);
-	    	button_help.setDisable(true); 
-	    	button_config.setDisable(true); 
-	    	
-	    	tab_administracionGeneral.setDisable(true);
-	    	tab_administracionCajaChica.setDisable(true);
-	    	tab_administracionCuentaBanco.setDisable(true);
+		
+		if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+		{
+				button_gastos.setDisable(false);
+				button_productos.setDisable(true);
+				button_ventas.setDisable(true);
+				button_historial.setDisable(true);
+				button_admin.setDisable(false);
+				button_rh.setDisable(false);
+				button_help.setDisable(true); 
+				button_config.setDisable(false); 
+  	        
+				tab_administracionGeneral.setDisable(true);
+				tab_administracionCajaChica.setDisable(true);
+				tab_administracionCuentaBanco.setDisable(true);
+				admin_pressed(null);
+				selectTabUsuarios();
 		}
 		else {
-			if(!user.getCargo().isManejodeproductos())
-			{
-				button_nuevoProducto.setDisable(true);
-				button_modificarProducto.setDisable(true);
-				button_eliminarProducto.setDisable(true);
+			if(user.getUsuario().equalsIgnoreCase("administrador")) {
+				//selectTabUsuarios();
+		    	button_gastos.setDisable(true);
+		    	button_productos.setDisable(true);
+		    	button_ventas.setDisable(true);
+		    	button_historial.setDisable(true);
+		    	button_admin.setDisable(true);
+		    	button_rh.setDisable(true);
+		    	button_help.setDisable(false); 
+		    	button_config.setDisable(false); 
+		    	config_pressed(null);
+		    
+		    	
+		    	tab_administracionGeneral.setDisable(true);
+		    	tab_administracionCajaChica.setDisable(true);
+		    	tab_administracionCuentaBanco.setDisable(true);
 			}
-			
-			if(!user.getCargo().isInfoproductos())
-			{
-				button_abrirInfoAdicional.setDisable(true);
-				button_exportarInventario.setDisable(true);
+			else {
+				if(!user.getCargo().isManejodeproductos())
+				{
+					button_nuevoProducto.setDisable(true);
+					button_modificarProducto.setDisable(true);
+					button_eliminarProducto.setDisable(true);
+				}
+				
+				if(!user.getCargo().isInfoproductos())
+				{
+					button_abrirInfoAdicional.setDisable(true);
+					button_exportarInventario.setDisable(true);
+				}
+				
+				if(!user.getCargo().isFacturarcompra())
+				{
+					button_nuevaFactura.setDisable(true);
+				}
+				
+				if(!user.getCargo().isInfofactura())
+				{
+					button_facturaInfoAdicional.setDisable(true);
+				}
+				
+				if(!user.getCargo().isManejopromociones())
+				{
+					button_nuevaPromocion.setDisable(true);
+					button_eliminarPromocion.setDisable(true);
+				}
+				
+				if(!user.getCargo().isAccesomodulorrhh())
+				{
+					selected_rh.setDisable(true);
+					button_rh.setDisable(true);
+				}
+				
+				if(!user.getCargo().isAccesomodulogastos())
+				{
+					selected_Gastos.setDisable(true);
+					button_gastos.setDisable(true);
+				}
+				
+				if(!user.getCargo().isAccesomodulohistorial())
+				{
+					selected_historial.setDisable(true);
+					button_historial.setDisable(true);
+				}
+				
+				if(!user.getCargo().isAccesomoduloconfiguracion())
+				{
+					selected_config.setDisable(true);
+					button_config.setDisable(true);
+				}
+				
+				if(user.getCargo().getNombre().equalsIgnoreCase("Cajero"))
+				{
+					selected_admin.setDisable(true);
+					button_admin.setDisable(true);
+					tab_atributos.setDisable(true);
+					tab_rubros.setDisable(true);
+				}
 			}
-			
-			if(!user.getCargo().isFacturarcompra())
-			{
-				button_nuevaFactura.setDisable(true);
-			}
-			
-			if(!user.getCargo().isInfofactura())
-			{
-				button_facturaInfoAdicional.setDisable(true);
-			}
-			
-			if(!user.getCargo().isManejopromociones())
-			{
-				button_nuevaPromocion.setDisable(true);
-				button_eliminarPromocion.setDisable(true);
-			}
-			
-			if(!user.getCargo().isAccesomodulorrhh())
-			{
-				selected_rh.setDisable(true);
-				button_rh.setDisable(true);
-			}
-			
-			if(!user.getCargo().isAccesomodulogastos())
-			{
-				selected_Gastos.setDisable(true);
-				button_gastos.setDisable(true);
-			}
-			
-			if(!user.getCargo().isAccesomodulohistorial())
-			{
-				selected_historial.setDisable(true);
-				button_historial.setDisable(true);
-			}
-			
-			if(!user.getCargo().isAccesomoduloconfiguracion())
-			{
-				selected_config.setDisable(true);
-				button_config.setDisable(true);
-			}
-			
-			if(user.getCargo().getNombre().equalsIgnoreCase("Cajero"))
-			{
-				selected_admin.setDisable(true);
-				button_admin.setDisable(true);
-				tab_atributos.setDisable(true);
-				tab_rubros.setDisable(true);
-			}
-		}	
-		
+		}
 	}
 
     @Override
@@ -4249,6 +4376,40 @@ public class Controller implements Initializable{
     	        		Controladora.getInstance().guardarPromedioGananciaAnualSQL(monto);
     	    		}
     	}
+    	if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+		{
+				button_gastos.setDisable(false);
+				button_productos.setDisable(true);
+				button_ventas.setDisable(true);
+				button_historial.setDisable(true);
+				button_admin.setDisable(false);
+				button_rh.setDisable(false);
+				button_help.setDisable(false); 
+				button_config.setDisable(false); 
+  	        
+				tab_administracionGeneral.setDisable(false);
+				tab_administracionCajaChica.setDisable(true);
+				tab_administracionCuentaBanco.setDisable(true);
+				admin_pressed(null);
+				selectTabUsuarios();
+		}
+		else {
+		      	rh_pressed(null);
+		      	selectTabEmpleado();
+		      	//selectTabCategoriaEmpleado();
+		        button_gastos.setDisable(true);
+		        button_productos.setDisable(true);
+		        button_ventas.setDisable(true);
+		        button_historial.setDisable(true);
+		        button_admin.setDisable(true);
+		        button_rh.setDisable(false);
+		        button_help.setDisable(false); 
+		        button_config.setDisable(false); 
+		        
+		        tab_administracionGeneral.setDisable(true);
+		        tab_administracionCajaChica.setDisable(true);
+		        tab_administracionCuentaBanco.setDisable(true);
+		}
     }
     
     public void selectTabCliente() {
@@ -4259,8 +4420,16 @@ public class Controller implements Initializable{
     	tabpane_Ventas.getSelectionModel().select(tab_proveedores);;
     }
     
+    public void selectTabAdministracionGeneral() {
+    	tabpane_Ventas.getSelectionModel().select(tab_administracionGeneral);;
+    }
+    
     public void selectTabEmpleado() {
     	tabpane_recursosHumanos.getSelectionModel().select(tab_empleados);;
+    }
+    
+    public void selectTabCategoriaEmpleado() {
+    	tabpane_recursosHumanos.getSelectionModel().select(tab_CategoriaEmpleado);;
     }
     
     public void selectTabFacturas() {
@@ -4782,6 +4951,7 @@ public class Controller implements Initializable{
 							
 					    			Controladora.getInstance().getMisEmpleados().add(newEmpleado);
 					    			Controladora.getInstance().guardarEmpleadoSQL(newEmpleado);
+					    			
 								
 					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setNombre(t.getNewValue());
 					    			fillEmpleadoList(null, "");
@@ -4974,6 +5144,8 @@ public class Controller implements Initializable{
 					}
     		    }
     		);
+    	
+    	
     }
     
     public void setEditRubros() {

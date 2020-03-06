@@ -67,8 +67,16 @@ public class ControllerNuevoEmpleado implements Initializable{
         	FXMLLoader f = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 		    Parent root = f.load();
 		    Controller c = f.getController();
-		    c.rh_pressed(null);
-		    c.selectTabEmpleado();
+		    if(!Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+		    {
+		    	c.rh_pressed(null);
+			    c.selectTabEmpleado();
+		    }
+		    else
+		    {
+		    	c.gastos_pressed(null);
+				//c.selectTabUsuarios();
+		    }
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
 		    primaryStage.setTitle("Centro Pymes");
