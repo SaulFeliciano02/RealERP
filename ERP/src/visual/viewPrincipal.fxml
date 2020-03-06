@@ -1774,7 +1774,7 @@
                                                             </AnchorPane>
                                                          </content>
                                                       </Tab>
-                                                      <Tab text="Categoría de Empleados">
+                                                      <Tab fx:id="tab_CategoriaEmpleado" text="Categoría de Empleados">
                                                         <content>
                                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                <children>

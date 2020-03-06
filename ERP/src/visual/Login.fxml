@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressBar?>
@@ -70,6 +71,7 @@
                      </effect></Button>
                   <Label fx:id="message" layoutX="100.0" layoutY="132.0" />
                   <ProgressBar fx:id="loading_progress" layoutX="134.0" layoutY="179.0" prefHeight="18.0" prefWidth="195.0" progress="0.0" visible="false" />
+                  <CheckBox fx:id="checkremember" layoutX="143.0" layoutY="153.0" mnemonicParsing="false" onAction="#field_clicked" text="Recordar contraseña" />
                </children>
             </AnchorPane>
          </children>

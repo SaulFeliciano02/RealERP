@@ -22,7 +22,7 @@ public class BootstrapServices {
 		promediogananciaanual(con); promocion(con); promoproducto(con); proveedoressecproducto(con); proveedorprincipaproducto(con);
 		rangonumerosvalorfiscal(con); rubroproducto(con); serviciomateriales(con); serviciosfacturado(con); transaccionescajachica(con);
 		transaccionescuentabancaria(con); unidadmedidaproductoarea(con); unidadmedidaproductolongitud(con); unidadmedidaproductomasa(con);
-		volumen(con); unidadmedidaproductovolumen(con); usuariocargo(con); usuariocontrasena(con);
+		volumen(con); unidadmedidaproductovolumen(con); usuariocargo(con); usuariocontrasena(con); usuariorecordado(con);
 		con.close();
 		System.out.println("Tablas creadas!");
 	}
@@ -970,6 +970,11 @@ public class BootstrapServices {
 		statement.execute(sql);
 	}
 	
+	public void usuariorecordado(Connection con) throws SQLException {
+		String sql = "create table IF NOT EXISTS usuariorecordado (idusuariorecordado INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, idusuario integer(10), foreign key (idusuario) references usuarios (idusuarios));";
+		Statement statement = con.createStatement();
+		statement.execute(sql);
+	}
 	
 	
 	

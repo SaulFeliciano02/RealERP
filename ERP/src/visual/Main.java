@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
@@ -42,7 +43,8 @@ public class Main extends Application{
 	@FXML private Label message;
 	@FXML private ProgressBar loading_progress;
 	@FXML private TextField textfield_usuario;
-	
+	@FXML private CheckBox checkremember;
+	String usu;
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -65,6 +67,18 @@ public class Main extends Application{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void field_clicked(ActionEvent event) 
+	{
+		if(Controladora.getInstance().activarUsuarioRecordado() && checkremember.isSelected())
+	    {
+	    	usu = Controladora.getInstance().datosUsuarioRecordado();
+	    	textfield_usuario.setText(usu.substring(0, usu.indexOf(" ")));
+	    	passwordfield_login.setText(usu.substring(usu.indexOf(" ")+1, usu.length()));
+	    	System.out.println(usu.substring(usu.indexOf(" ")+1, usu.length()));
+	    }
+		
 	}
 	
 	public void access_clicked(ActionEvent event) throws IOException, InterruptedException {
@@ -285,7 +299,7 @@ public class Main extends Application{
 		String user = textfield_usuario.getText();
 		String passwordHash = DigestUtils.md5Hex(passwordfield_login.getText());
 		
-		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText())) {
+		if (passwordfield_login.getText().equals("") || !Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()) || (!checkremember.isSelected() && !Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText()))) {
 			message.setText("¡Tu usuario o contraseña es incorrecta!");
 			message.setTextFill(Color.rgb(210, 39, 30));
 			
@@ -299,15 +313,29 @@ public class Main extends Application{
 	    		textfield_usuario.setText("administrador");
 	    		passwordfield_login.setText("administrador");
 			}
+			//passwordfield_login.clear();
 		} 
 		
 		if(((passwordfield_login.getText().equalsIgnoreCase("administrador") && textfield_usuario.getText().equalsIgnoreCase("administrador")) && !Controladora.getInstance().activarLoadUsuarios()) ||
-				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()))
+				Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()) || (checkremember.isSelected() && Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText())))
 		{
 			System.out.println("wawawa");
 			/**ABRIENDO viewPrincipal.fxml**/
 			message.setText("Tu contraseña ha sido confirmada");
 			message.setTextFill(Color.rgb(21, 117, 84));
+			
+			if(Controladora.getInstance().activarUsuarioRecordado() && !Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText()))
+			{
+				//no esta borrando bien
+				Controladora.getInstance().OlvidarContrasena(textfield_usuario.getText());
+				Controladora.getInstance().reiniciarUsuarioRecordado();
+			}
+			
+			if(checkremember.isSelected() && Controladora.getInstance().validarUsuario(textfield_usuario.getText(), passwordfield_login.getText()) && !Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText()))
+			{
+				System.out.println("Entre al if de rememberme " + textfield_usuario.getText());
+				Controladora.getInstance().RecordarContrasena(textfield_usuario.getText());
+			}
 			
 			loading_progress.setVisible(true);
 			
@@ -550,7 +578,15 @@ public class Main extends Application{
 						Controladora.getInstance().setUsuarioLogueado(userRoot);
 					}
 					else {
-						Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+						if(checkremember.isSelected() && Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText()))
+						{
+							Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordfield_login.getText()));
+						}
+						else
+						{
+							Controladora.getInstance().setUsuarioLogueado(Controladora.getInstance().buscarUsuario(user, passwordHash));
+						}
+						
 					}
 						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("viewPrincipal.fxml"));
 						Parent root1;
@@ -576,9 +612,9 @@ public class Main extends Application{
 			
 			loading_progress.setVisible(false);
 			loading_progress.setProgress(0);
+			passwordfield_login.clear();
 		}
 		
-		passwordfield_login.clear();
 	}
 		
 		
