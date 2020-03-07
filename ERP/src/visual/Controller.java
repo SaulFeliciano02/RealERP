@@ -1400,7 +1400,7 @@ public class Controller implements Initializable{
         				admin_pressed(null);
         				selectTabAdministracionGeneral();
         		}
-        		else {
+        		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
         		      	rh_pressed(null);
         		      	selectTabEmpleado();
         		      	//selectTabCategoriaEmpleado();
@@ -2741,7 +2741,7 @@ public class Controller implements Initializable{
     				admin_pressed(null);
     				selectTabUsuarios();
     		}
-    		else {
+    		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
     		      	rh_pressed(null);
     		      	selectTabEmpleado();
     		      	//selectTabCategoriaEmpleado();
@@ -3056,7 +3056,7 @@ public class Controller implements Initializable{
     				admin_pressed(null);
     				selectTabUsuarios();
     		}
-    		else {
+    		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
     		      	rh_pressed(null);
     		      	//selectTabEmpleado();
     		      	selectTabCategoriaEmpleado();
@@ -4435,7 +4435,7 @@ public class Controller implements Initializable{
 				admin_pressed(null);
 				selectTabUsuarios();
 		}
-		else {
+		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
 		      	rh_pressed(null);
 		      	selectTabEmpleado();
 		      	//selectTabCategoriaEmpleado();
@@ -4443,7 +4443,7 @@ public class Controller implements Initializable{
 		        button_productos.setDisable(true);
 		        button_ventas.setDisable(true);
 		        button_historial.setDisable(true);
-		        button_admin.setDisable(true);
+		        button_admin.setDisable(false);
 		        button_rh.setDisable(false);
 		        button_help.setDisable(false); 
 		        button_config.setDisable(false); 
