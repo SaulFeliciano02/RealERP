@@ -700,7 +700,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="646.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
+            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="646.0" mnemonicParsing="false" onAction="#guardarProducto" text="Aplicar" />
             <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="646.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
          </children>
       </AnchorPane>

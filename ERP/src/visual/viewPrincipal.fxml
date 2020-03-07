@@ -30,7 +30,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.Controller">
    <children>
       <ImageView fitHeight="1040.0" fitWidth="1920.0" pickOnBounds="true">
@@ -3396,9 +3395,349 @@
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="pane_Ayuda" disable="true" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <VBox fx:id="pane_Ayuda" prefHeight="555.2" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                          <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <VBox prefHeight="963.2" prefWidth="1634.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso rápido" underline="true">
+                                                               <VBox.margin>
+                                                                  <Insets left="10.0" />
+                                                               </VBox.margin>
+                                                               <font>
+                                                                  <Font name="System Bold" size="18.0" />
+                                                               </font>
+                                                            </Text>
+                                                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpProductos" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Productos" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpRubro" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Rubro" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpAtributos" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Atributos" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <Button fx:id="button_helpVentas" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Ventas" textFill="#3185bd">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Button>
+                                                                  <Button fx:id="button_helpRRHH" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Recursos Humanos " textFill="#3187bc">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Button>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpAdmin" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Administración" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpUsuarios" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Usuarios" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpCajaChica" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Caja chica" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpCuentaBanco" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Cuenta de banco" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpGastos" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Gastos" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpGastosGenerales" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Gastos Generales" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpHistorial" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Historial" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpTransacciones" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Transacciones" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpConfig" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Configuración" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpConfigGeneral" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="General" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                            </HBox>
+                                                            <ScrollPane fx:id="help_scrollPane" hbarPolicy="NEVER" pannable="true" vbarPolicy="ALWAYS">
+                                                               <content>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Productos">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="86.0" prefWidth="1534.0" style="-fx-background-color: transparent;" text="En la pestaña general se muestra una tabla con los datos de todos los productos existentes en la empresa. La tabla se puede filtrar por código, nombre, proveedor o rubro del producto, filtro especificado&#10;en la barra superior derecha. Para ver la información adicional de un producto se debe seleccionar un producto de la tabla, entonces se habilitará el botón “Información adicional del producto” en la parte&#10;inferior derecha de la tabla. Para fines de análisis del inventario se puede exportar en el botón inferior derecho “Exportar inventario a Excel”. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rubro">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="86.0" prefWidth="1534.0" style="-fx-background-color: transparent;" text="Los rubros son agrupaciones de productos que poseen características en común. &#10;Ej: &#10;Fresas, manzanas, peras y bananas, pertenecen al rubro de las frutas. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Atributos">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="137.0" prefWidth="1483.0" style="-fx-background-color: transparent;" text="Acá son definidos los atributos y sus familias de nuestras matrices de productos. Productos de tipo matriz: son aquellos productos que poseen distintas versiones de sí mismo y no poseen variaciones&#10; en su precio. Estos productos podrían variar en color, tamaño, sabor, entre otras características. La familia de atributo es un concepto que relaciona a todos los atributos de un mismo tipo. &#10;Ej: &#10;Atributo: Rojo, Familia: Color &#10;Atributo: XL, Familia: Talla ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ventas">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="218.0" prefWidth="1534.0" style="-fx-background-color: transparent;" text="En la pestaña de Facturación se muestra una tabla con un historial de los datos de las facturaciones previamente realizadas, junto al usuario quien la hizo y otros datos importantes. Para ver la &#10;información adicional de una factura se debe seleccionar una factura de la tabla, entonces se habilitará el botón “Información adicional de factura” en la parte inferior derecha de la tabla. &#10;&#10;En la pestaña de Promoción se muestra una tabla con un historial de todas las promociones creadas, así como botones para crear o eliminar estas. &#10;&#10;En la pestaña de Clientes se muestra una tabla con todos los clientes actuales, así como botones para añadir o eliminar estos. &#10;&#10;En la pestaña de Proveedores se muestra una tabla con todos los proveedores actuales, así como botones para añadir o eliminar estos. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recursos Humanos">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="142.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="En los recursos humanos se administran los empleados de la empresa, su información básica y su sueldo. En la pestaña de Categoría de Empleados se muestra una lista de los cargos de la empresa, &#10;así como su sueldo por hora. &#10;&#10;Al momento de agregar una nueva categoría, si el salario es “Por día”, el programa lo calculará en función de horas, ya que este formato de salario es utilizado para el cálculo de la mano de obra de&#10; los productos a los que aplique. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Administración">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Usuarios">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="45.0" prefWidth="1483.0" style="-fx-background-color: transparent;" text="En esta sección tenemos una tabla con datos de los usuarios registrados dentro del sistema, presentando el nombre de usuario, nombre de empleado, cargo del usuario y fecha de ultimo acceso al sistema. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Caja chica">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="45.0" prefWidth="1483.0" style="-fx-background-color: transparent;" text="En esta ventana tenemos el manejo de la caja chica, donde podemos visualizar el monto actual de esta, además de añadir o retirar fondos con la posibilidad de agregar una descripción a dicha transacción. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cuenta de banco">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="64.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="En esta ventana tenemos el manejo de la cuenta bancaria relacionada a la empresa (esto es un valor únicamente representativo, no es posible realizar una transacción bancaria a través de este programa), &#10;donde podemos visualizar el monto actual de esta, además de añadir o retirar fondos con la posibilidad de agregar una descripción a dicha transacción. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gastos">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gastos generales">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="116.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="Este módulo es dedicado al registro de los datos de los gastos indirectos de la empresa, colocando el monto del pago mensual que recae sobre ese gasto, además del nombre, fecha del registro y una&#10; posible descripción.  &#10;Ej: &#10;Nombre: Agua potable. Monto: $5000. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Historial">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transacciones">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="82.0" prefWidth="1536.0" style="-fx-background-color: transparent;">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Configuración">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="General">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="10.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="116.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="Modulo dedicado a guardar datos propios de la empresa como son su nombre, numeración de identificación fiscal, domicilio (dirección del local), teléfono y monto máximo para la caja chica. Esto compone&#10; los elementos necesarios sobre los datos de la empresa, los cuales serán utilizados para la generación de facturas para las ventas y manejo de la caja chica. &#10;&#10;Como elementos opcionales tenemos el rango de numeración de valor fiscal y año fiscal, fecha en la que fue solicitado el rango de numeración de valor fiscal y fecha de vencimiento esta. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </content>
+                                                               <VBox.margin>
+                                                                  <Insets top="5.0" />
+                                                               </VBox.margin>
+                                                            </ScrollPane>
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                             <VBox.margin>
+                                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </ScrollPane>
                                        </children>
                                     </VBox>
                                     <VBox fx:id="pane_Config" disable="true" layoutX="188.0" layoutY="110.0" prefHeight="618.4" prefWidth="629.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
