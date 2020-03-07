@@ -143,8 +143,8 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Button button_GuardarCostos;
 	@FXML private ListView<String> listview_CostosResumen;
 	@FXML private ListView<String> listview_GastosGeneralesIndirectos;
-	@FXML private Button button_DerCostoIndirecto;
-	@FXML private Button button_IzqCostoIndirecto;
+	@FXML private ImageView button_DerCostoIndirecto;
+	@FXML private ImageView button_IzqCostoIndirecto;
 	@FXML private ListView<String> listview_CostosSelecIndirectos;
 	@FXML private Button button_GuardarCostoIndirecto;
 	private ArrayList<CostoDirecto> gastosDirectos = new ArrayList<>();

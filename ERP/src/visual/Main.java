@@ -1,6 +1,8 @@
 package visual;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -33,17 +35,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 public class Main extends Application{
 	
-	@FXML private Button button_acceder;
-	@FXML private Button button_salir;
+	@FXML private ImageView button_acceder;
+	@FXML private ImageView button_salir;
 	@FXML private PasswordField passwordfield_login;
 	@FXML private Label message;
 	@FXML private ProgressBar loading_progress;
 	@FXML private TextField textfield_usuario;
 	@FXML private CheckBox checkremember;
+	
 	String usu;
 	
 	@Override
@@ -58,6 +64,7 @@ public class Main extends Application{
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 		    primaryStage.setMaximized(false);
 		    primaryStage.setResizable(false);
+		    primaryStage.sizeToScene();
 		    primaryStage.show();
 		    /*Image access = new Image(getClass().getResourceAsStream("images/misc/access.png"));
 		    ImageInput access1 = new ImageInput();
@@ -67,6 +74,7 @@ public class Main extends Application{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void field_clicked(ActionEvent event) 
@@ -81,7 +89,7 @@ public class Main extends Application{
 		
 	}
 	
-	public void access_clicked(ActionEvent event) throws IOException, InterruptedException {
+	public void access_clicked(MouseEvent event) throws IOException, InterruptedException {
 		//Process process = Runtime.getRuntime().exec("C:\\xampp\\xampp_start.exe");
 		//TimeUnit.SECONDS.sleep(2);
 		String user = textfield_usuario.getText();
@@ -596,6 +604,7 @@ public class Main extends Application{
 						stage.setScene(new Scene(root1)); 
 						stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
 						stage.setMaximized(true);
+						
 
 						stage.showAndWait();
 						
@@ -616,9 +625,10 @@ public class Main extends Application{
 		}
 		
 	}
+	
 		
 		
-	public void handleCloseButtonAction(ActionEvent event) {
+	public void handleCloseButtonAction(MouseEvent event) {
 	    Stage stage = (Stage) button_salir.getScene().getWindow();
 	    stage.close();
 	}

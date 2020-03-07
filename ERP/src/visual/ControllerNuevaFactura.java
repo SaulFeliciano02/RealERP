@@ -37,6 +37,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -79,8 +80,8 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private AnchorPane paneCredito;
 	    @FXML private AnchorPane paneTarjeta;
 	   
-	    @FXML private Button button_sendProducto;
-	    @FXML private Button button_returnProducto;
+	    @FXML private ImageView button_sendProducto;
+	    @FXML private ImageView button_returnProducto;
 	    @FXML private Button guardarFactura;
 	    
 	    @FXML private ComboBox<String> combobox_facturaMedida;
@@ -771,7 +772,7 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     }
     
-    public void sendProducto(ActionEvent event) {
+    public void sendProducto(MouseEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	a.setAlertType(AlertType.ERROR);
     	boolean isValid = true;
@@ -972,7 +973,7 @@ public class ControllerNuevaFactura implements Initializable{
     	}
     }
     
-    public void returnProducto(ActionEvent event) {
+    public void returnProducto(MouseEvent event) {
     	String producto = listview_productosFacturados.getSelectionModel().getSelectedItem();
     	listview_productosFacturados.getItems().remove(producto);
     	listview_productosFacturados.refresh();

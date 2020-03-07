@@ -15,7 +15,7 @@
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1150.0">
          <children>
-            <ImageView fitHeight="790.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="790.0" fitWidth="1190.0" pickOnBounds="true">
                <image>
                   <Image url="@images/background/Popup_background.png" />
                </image>

@@ -25,6 +25,11 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1354.0" style="-fx-background-image: url('file:src/visual/images/background/Popup_background.png'); -fx-background-size: stretch;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visual.ControllerNuevaFactura">
    <children>
+      <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/background/Popup_background.png" />
+         </image>
+      </ImageView>
       <AnchorPane layoutX="244.0" layoutY="16.0" prefHeight="682.0" prefWidth="1094.0">
          <children>
             <TabPane layoutY="-7.0" prefHeight="682.0" prefWidth="1094.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
@@ -1152,11 +1157,14 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Button fx:id="button_sendProducto" mnemonicParsing="false" onAction="#sendProducto" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/derecha.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
+                                    <ImageView fx:id="button_sendProducto" fitHeight="40.0" fitWidth="60.0" onMouseClicked="#sendProducto" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@images/misc/derecha.png" />
+                                       </image>
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </VBox.margin>
-                                    </Button>
+                                    </ImageView>
                                     <Label text="Cantidad:" />
                                     <TextField fx:id="textfield_facturaCantidad" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="57.0" text="1">
                                        <VBox.margin>
@@ -1168,11 +1176,14 @@
                                           <Insets top="5.0" />
                                        </VBox.margin>
                                     </ComboBox>
-                                    <Button fx:id="button_returnProducto" mnemonicParsing="false" onAction="#returnProducto" prefHeight="40.0" prefWidth="62.0" style="-fx-background-image: url('file:src/visual/images/misc/izquierda.png'); -fx-background-color: transparent; -fx-background-size: stretch;">
+                                    <ImageView fx:id="button_returnProducto" fitHeight="40.0" fitWidth="60.0" onMouseClicked="#returnProducto" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@images/misc/izquierda.png" />
+                                       </image>
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </VBox.margin>
-                                    </Button>
+                                    </ImageView>
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -1229,9 +1240,9 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="253.0" layoutY="180.0" prefHeight="560.0" prefWidth="940.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="9.600000381469727" layoutY="9.600000381469727" prefHeight="656.0" prefWidth="1092.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="tableview_clienteList" onMouseClicked="#selectingCliente" prefHeight="520.0" prefWidth="695.0">
+                              <TableView fx:id="tableview_clienteList" onMouseClicked="#selectingCliente" prefHeight="520.0" prefWidth="1061.0" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="tablecolumn_clienteCodigo" prefWidth="75.0" text="Código" />
                                   <TableColumn fx:id="tablecolumn_clienteNombre" prefWidth="75.0" text="Nombre" />
@@ -1240,42 +1251,23 @@
                                     <TableColumn fx:id="tablecolumn_clienteRNC" prefWidth="75.0" text="RNC" />
                                     <TableColumn fx:id="tablecolumn_clienteTipo" prefWidth="75.0" text="Tipo de cliente" />
                                 </columns>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <AnchorPane prefHeight="520.0" prefWidth="238.0">
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
+                              <AnchorPane prefHeight="138.0" prefWidth="1074.0">
                                  <children>
-                                    <VBox layoutX="136.0" layoutY="78.0" prefHeight="520.0" prefWidth="280.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <HBox alignment="CENTER" prefHeight="45.0" prefWidth="281.0">
-                                             <children>
-                                                <ComboBox prefHeight="26.0" prefWidth="133.0" promptText="Buscar por:" />
-                                                <TextField prefHeight="26.0" prefWidth="154.0" />
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                    <Button fx:id="button_clienteSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#clienteSelect" text="Seleccionar">
+                                    <Button fx:id="button_clienteSeleccionar" disable="true" layoutX="793.0" layoutY="44.0" mnemonicParsing="false" onAction="#clienteSelect" text="Seleccionar">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrarBusquedaCliente" text="Cerrar" />
-                                    <TextField fx:id="textfield_clienteSeleccionado" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="191.0" />
+                                    <Button layoutX="1011.0" layoutY="88.0" mnemonicParsing="false" onAction="#cerrarBusquedaCliente" text="Cerrar" />
+                                    <TextField fx:id="textfield_clienteSeleccionado" editable="false" layoutX="793.0" layoutY="14.0" prefHeight="26.0" prefWidth="191.0" />
                                  </children>
                               </AnchorPane>
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                   </AnchorPane>
               </content>
@@ -1284,9 +1276,9 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="185.0" layoutY="250.0" prefHeight="656.0" prefWidth="1092.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="20.0" layoutY="20.0" prefHeight="656.0" prefWidth="1092.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="tableview_facturaPeticionList" onMouseClicked="#pressed_tableviewFacturaPeticionList" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                              <TableView fx:id="tableview_facturaPeticionList" onMouseClicked="#pressed_tableviewFacturaPeticionList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                  <columns>
                                     <TableColumn fx:id="tablecolumn_facturaPeticionCodigo" prefWidth="75.0" text="Código" />
                                     <TableColumn fx:id="tablecolumn_facturaPeticionProveedor" prefWidth="75.0" text="Proveedor" />
@@ -1300,36 +1292,20 @@
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
                               </TableView>
-                              <AnchorPane prefHeight="520.0" prefWidth="238.0">
+                              <AnchorPane prefHeight="126.0" prefWidth="1074.0">
                                  <children>
-                                    <VBox layoutX="136.0" layoutY="78.0" prefHeight="520.0" prefWidth="280.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <HBox alignment="CENTER" prefHeight="45.0" prefWidth="281.0">
-                                             <children>
-                                                <ComboBox prefHeight="26.0" prefWidth="133.0" promptText="Buscar por:" />
-                                                <TextField prefHeight="26.0" prefWidth="154.0" />
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                    <Button fx:id="button_facturaPeticionSeleccionar" disable="true" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#selectPeticion" text="Seleccionar">
+                                    <Button fx:id="button_facturaPeticionSeleccionar" disable="true" layoutX="799.0" layoutY="47.0" mnemonicParsing="false" onAction="#selectPeticion" text="Seleccionar">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="232.0" layoutY="480.0" mnemonicParsing="false" onAction="#cerrarBusquedaPeticion" text="Cerrar" />
-                                    <TextField fx:id="textfield_facturaPeticionSeleccionada" editable="false" layoutX="14.0" layoutY="213.0" prefHeight="26.0" prefWidth="191.0" />
+                                    <Button layoutX="1003.0" layoutY="91.0" mnemonicParsing="false" onAction="#cerrarBusquedaPeticion" text="Cerrar" />
+                                    <TextField fx:id="textfield_facturaPeticionSeleccionada" editable="false" layoutX="799.0" layoutY="14.0" prefHeight="26.0" prefWidth="191.0" />
                                  </children>
                               </AnchorPane>
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                   </AnchorPane>
               </content>
