@@ -48,7 +48,7 @@
                               <Image url="@images/Logo.png" />
                            </image>
                         </ImageView>
-                        <HBox fx:id="box_productos" alignment="CENTER_LEFT">
+                        <HBox fx:id="box_productos" alignment="CENTER_LEFT"> 
                            <children>
                               <Button fx:id="selected_productos" mnemonicParsing="false" prefHeight="30.0" prefWidth="2.0" style="-fx-background-color: ffb767; -fx-text-fill: white;">
                                  <graphic>
