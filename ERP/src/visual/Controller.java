@@ -3842,7 +3842,7 @@ public class Controller implements Initializable{
     	
     	Image rubro_eliminar = new Image(getClass().getResourceAsStream("images/buttons/rubro_delete.png"));
 	    ImageInput rubro_eliminar1 = new ImageInput();
-	    rubro_eliminar1.setSource(rubro_nuevo);
+	    rubro_eliminar1.setSource(rubro_eliminar);
     	button_rubroEliminar.setEffect(rubro_eliminar1);
     	
     	Image peticion_nueva = new Image(getClass().getResourceAsStream("images/buttons/peticion_nueva.png"));
