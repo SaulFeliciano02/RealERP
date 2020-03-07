@@ -1,5 +1,6 @@
 package visual;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,10 +41,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import javafx.scene.paint.Paint;
 //import jdk.nashorn.internal.ir.SetSplitState;
 import logico.Atributos;
 import logico.CajaChica;
@@ -498,6 +501,24 @@ public class Controller implements Initializable{
     @FXML private Tab tab_administracionCuentaBanco;
     @FXML private Button button_nuevo_usuario;
     @FXML private Button button_eliminar_usuario;
+    
+    //Ayuda
+    @FXML private Button button_helpProductos;
+    @FXML private Button button_helpRubro;
+    @FXML private Button button_helpAtributos;
+    @FXML private Button button_helpVentas;
+    @FXML private Button button_helpRRHH;
+    @FXML private Button button_helpAdmin;
+    @FXML private Button button_helpUsuarios;
+    @FXML private Button button_helpCajaChica;
+    @FXML private Button button_helpCuentaBanco;
+    @FXML private Button button_helpGastos;
+    @FXML private Button button_helpGastosGenerales;
+    @FXML private Button button_helpHistorial;
+    @FXML private Button button_helpTransacciones;
+    @FXML private Button button_helpConfig;
+    @FXML private Button button_helpConfigGeneral;
+    @FXML private ScrollPane help_scrollPane;
     
     //MENU PRINCIPAL
     @FXML private AnchorPane menuPane;
@@ -2206,7 +2227,7 @@ public class Controller implements Initializable{
 			Window owner = button_nuevoEmpleado.getScene().getWindow();
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
-			stage.setTitle("Nuevo Vendedor");
+			stage.setTitle("Nuevo Empleado");
 			stage.setScene(new Scene(root1));  
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -3910,6 +3931,22 @@ public class Controller implements Initializable{
 	    proveedor_delete1.setSource(proveedor_delete);
     	button_eliminarProveedor.setEffect(proveedor_delete1);
     	
+    	button_helpProductos.setStyle("-fx-background-color: transparent");
+    	button_helpRubro.setStyle("-fx-background-color: transparent");
+    	button_helpAtributos.setStyle("-fx-background-color: transparent");
+    	button_helpVentas.setStyle("-fx-background-color: transparent");
+    	button_helpRRHH.setStyle("-fx-background-color: transparent");
+    	button_helpAdmin.setStyle("-fx-background-color: transparent");
+    	button_helpUsuarios.setStyle("-fx-background-color: transparent");
+    	button_helpCajaChica.setStyle("-fx-background-color: transparent");
+    	button_helpCuentaBanco.setStyle("-fx-background-color: transparent");
+    	button_helpGastos.setStyle("-fx-background-color: transparent");
+    	button_helpGastosGenerales.setStyle("-fx-background-color: transparent");
+    	button_helpHistorial.setStyle("-fx-background-color: transparent");
+    	button_helpTransacciones.setStyle("-fx-background-color: transparent");
+    	button_helpConfig.setStyle("-fx-background-color: transparent");
+    	button_helpConfigGeneral.setStyle("-fx-background-color: transparent");
+    	
     	pressed_productos1.setSource(pressed_productos); 
     	nonpressed_principal1.setSource(nonpressed_principal); 
     	nonpressed_gastos1.setSource(nonpressed_gastos ); 
@@ -5605,4 +5642,86 @@ public class Controller implements Initializable{
         	}
     	}
     }
+    
+    public void changeColorFontExited (MouseEvent event) {
+    	Button button = (Button) event.getSource();
+    	button.setStyle("-fx-text-fill: #3187bc");
+    	button.setStyle("-fx-background-color: transparent");
+    }
+    public void changeColorFontEnter (MouseEvent event) {
+    	Button button = (Button) event.getSource();
+    	button.setStyle("-fx-background-color: transparent");
+    	button.setStyle("-fx-text-fill: #ea9b46");
+    	
+    }
+
+    public void scrollValue(ActionEvent event) {
+    	Button button = (Button) event.getSource();
+    	String id = button.getId();
+    	
+    	switch (id)
+    	{ 
+    	  case "button_helpProductos":
+    	        help_scrollPane.setVvalue(0);
+    	        break;
+    	        
+    	  case "button_helpRubro":
+  	        help_scrollPane.setVvalue(0.12);
+  	        break;
+  	        
+    	  case "button_helpAtributos":
+    	        help_scrollPane.setVvalue(0.23);
+    	        break;
+    	        
+    	  case "button_helpVentas":
+  	        help_scrollPane.setVvalue(0.40);
+  	        break;
+  	        
+    	  case "button_helpRRHH":
+    	        help_scrollPane.setVvalue(0.64);
+    	        break;
+    	        
+    	  case "button_helpAdmin":
+  	        help_scrollPane.setVvalue(0.81);
+  	        break;
+  	        
+    	  case "button_helpUsuarios":
+    	        help_scrollPane.setVvalue(0.85);
+    	        break;
+    	        
+    	  case "button_helpCajaChica":
+  	        help_scrollPane.setVvalue(0.93);
+  	        break;
+  	        
+    	  case "button_helpCuentaBanco":
+    	        help_scrollPane.setVvalue(1);
+    	        break;
+    	        
+    	  case "button_helpGastos":
+  	        help_scrollPane.setVvalue(1);
+  	        break;
+  	        
+    	  case "button_helpGastosGenerales":
+    	        help_scrollPane.setVvalue(1);
+    	        break;
+    	        
+    	  case "button_helpHistorial":
+  	        help_scrollPane.setVvalue(1);
+  	        break;
+  	        
+    	  case "button_helpTransacciones":
+    	        help_scrollPane.setVvalue(1);
+    	        break;
+    	        
+    	  case "button_helpConfig":
+  	        help_scrollPane.setVvalue(1);
+  	        break;
+  	        
+    	  case "button_helpConfigGeneral":
+    	        help_scrollPane.setVvalue(1);
+    	        break;
+    	}
+    }
+    
+    
 }
