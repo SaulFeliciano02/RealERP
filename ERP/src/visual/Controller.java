@@ -421,6 +421,8 @@ public class Controller implements Initializable{
     @FXML private TableView<Empleado> tableview_usuarioEmpleadoList;
     
     @FXML private Button button_seleccionarEmpleadoUsuario;
+    @FXML private VBox vbox_infoEmpresa;
+    @FXML private AnchorPane anchorPane_infoAdicionalEmpresa;
     
     
     //Historial
@@ -3946,6 +3948,9 @@ public class Controller implements Initializable{
     	button_helpTransacciones.setStyle("-fx-background-color: transparent");
     	button_helpConfig.setStyle("-fx-background-color: transparent");
     	button_helpConfigGeneral.setStyle("-fx-background-color: transparent");
+    	
+    	vbox_infoEmpresa.setStyle("-fx-border-color: lightgray");
+    	anchorPane_infoAdicionalEmpresa.setStyle("-fx-border-color: lightgray");
     	
     	pressed_productos1.setSource(pressed_productos); 
     	nonpressed_principal1.setSource(nonpressed_principal); 
