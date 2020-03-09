@@ -3018,6 +3018,16 @@ public class Controller implements Initializable{
     
     //Guarda los datos de la empresa (puede usar refinamiento).
     public void guardarEmpresa(ActionEvent event) {
+    	
+    	if(textfield_empresaNombre.getText().isEmpty() == true || textfield_empresaRNC.getText().isEmpty() == true || textarea_empresaDomicilio.getText().isEmpty() == true || textfield_empresaTelefono.getText().isEmpty() == true || textfield_cajaMaximo.getText().isEmpty() == true ) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error");
+    		alert.setHeaderText("Información faltante");
+    		alert.setContentText("Debe completar todos los campos obligatorios (*).");
+
+    		alert.showAndWait();
+    	} 
+    	else {
     	Alert alert = new Alert(AlertType.CONFIRMATION, "¿Desea actualizar la información de su empresa?", ButtonType.YES, ButtonType.NO);
     	alert.showAndWait();
     	if(alert.getResult() == ButtonType.YES) {
@@ -3098,6 +3108,7 @@ public class Controller implements Initializable{
     		        tab_administracionGeneral.setDisable(true);
     		        tab_administracionCajaChica.setDisable(true);
     		        tab_administracionCuentaBanco.setDisable(true);
+    		} 
     		}
     	}
     	/*textfield_empresaNombre.setText("");
