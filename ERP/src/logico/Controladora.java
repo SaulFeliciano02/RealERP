@@ -3466,6 +3466,15 @@ public class Controladora implements Serializable{
 		return c;
 	}
 	
+	public boolean isCategoria(String nombre) {
+		for(CategoriaEmpleado c : Controladora.getInstance().getMisCategoriasEmpleado()) {
+			if(c.getNombre().equalsIgnoreCase(nombre)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public ArrayList<Estandar> searchProductsEstandar(String buscador, String tipoBusqueda){
 		int j = 0;
 		ArrayList<Estandar> searchProductoEstandar = new ArrayList<>();

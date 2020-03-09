@@ -1230,7 +1230,7 @@ public class ControllerNuevaFactura implements Initializable{
 	public void fillPeticion() {
     	ObservableList<Peticion> data = FXCollections.observableArrayList();
     	for(Peticion peticion : Controladora.getInstance().getMisPeticiones()) {
-    		if(peticion.getMetodoPago().equalsIgnoreCase("Credito")) {
+    		if(peticion.getMetodoPago().equalsIgnoreCase("Credito") && peticion.getAdeudado() > 0) {
     			data.add(peticion);
     		}
 	    }
@@ -1240,7 +1240,7 @@ public class ControllerNuevaFactura implements Initializable{
 	   	tablecolumn_facturaPeticionCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     	tablecolumn_facturaPeticionMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
     	tablecolumn_facturaPeticionMetodo.setCellValueFactory(new PropertyValueFactory<>("metodoPago"));
-	    tablecolumn_facturaPeticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+	    //tablecolumn_facturaPeticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 	   	tablecolumn_facturaPeticionFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
 
 	   	tableview_facturaPeticionList.setItems(data);

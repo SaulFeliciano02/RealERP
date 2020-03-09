@@ -1241,7 +1241,7 @@ public class Controller implements Initializable{
         	ArrayList<GastoGeneral> m = Controladora.getInstance().getMisGastosGenerales();
         	for(i=0; i<m.size(); i++)
         	{
-        		if(m.get(i).getNombre().equalsIgnoreCase(gasto))
+        		if(m.get(i).getNombre().equalsIgnoreCase(gasto) && !m.get(i).isBorrado())
         		{
         			GastoGeneral encontrado = m.get(i);
         			textfield_nombreGastoG.setText(encontrado.getNombre());
@@ -1364,13 +1364,18 @@ public class Controller implements Initializable{
         	}
         		
            	if(canRegister) {
+           		System.out.println("Estoy a punto de registrar un gasto");
+           		System.out.println(nombre);
+           		System.out.println(monto);
            		GastoGeneral g = new GastoGeneral(nombre, monto, descripcion, fecha);
            		int indice = listview_gastosG.getSelectionModel().getSelectedIndex();
-           	
+           		System.out.println(indice);
            		if(indice <= -1)
             	{
+           			System.out.println("El indice es -1");
             		Controladora.getInstance().addGastoGeneral(g);
-           			listview_gastosG.getItems().add(g.getNombre());
+            		fillGastosGenerales(null);
+           			//listview_gastosG.getItems().add(g.getNombre());
            		}
            		else
            		{
@@ -1818,6 +1823,7 @@ public class Controller implements Initializable{
     		}
     		
     		if(canModify) {
+    			System.out.println("Voy a modificar este gasto");
     			int indice = Controladora.getInstance().getMisGastosGenerales().indexOf(gasto);
     			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarGastoGeneral(indice+1);
@@ -1884,6 +1890,7 @@ public class Controller implements Initializable{
     			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarGastoGeneral(indice+1);
     			listview_gastosG.getItems().clear();
+    			listview_gastosG.refresh();
     			fillGastosGenerales(null);
     		}
     		else {
@@ -2707,29 +2714,30 @@ public class Controller implements Initializable{
     	if(!textfield_nombreCategoriaEmp.getText().isEmpty() && !textfield_salarioCategoriaEmp.getText().isEmpty())
     	{
     		String nombre = textfield_nombreCategoriaEmp.getText();
-    		float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
+    		if(!Controladora.getInstance().isCategoria(nombre)){
+    			float salario = Float.parseFloat(textfield_salarioCategoriaEmp.getText());
 		
-    		if(radiobutton_PorDia.isSelected())
-    		{
-    			salario = salario/8;
-    		}
+    			if(radiobutton_PorDia.isSelected())
+    			{
+    				salario = salario/8;
+    			}
 		
-    		CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
+    			CategoriaEmpleado cat = new CategoriaEmpleado(nombre, salario);
 		
-    		Controladora.getInstance().addCategoriaEmpleado(cat);
+    			Controladora.getInstance().addCategoriaEmpleado(cat);
 		
-    		tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-    		tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
+    			tablecolumn_NombreCategoria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    			tablecolumn_SueldoCategoria.setCellValueFactory(new PropertyValueFactory<>("sueldo"));
 		
-    		textfield_nombreCategoriaEmp.setText("");
-    		textfield_salarioCategoriaEmp.setText("");
-    		ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
-    		data.add(cat);
-    		tableview_CategoriaEmp.getItems().add(cat);
-    		tableview_CategoriaEmp.refresh();	
+    			textfield_nombreCategoriaEmp.setText("");
+    			textfield_salarioCategoriaEmp.setText("");
+    			ObservableList<CategoriaEmpleado> data = FXCollections.observableArrayList();
+    			data.add(cat);
+    			tableview_CategoriaEmp.getItems().add(cat);
+    			tableview_CategoriaEmp.refresh();	
     		
-    		if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
-    		{
+    			if(Controladora.getInstance().activarLoadEmpleados() && Controladora.getInstance().activarLoadInfoEmpresa() && Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador"))
+    			{
     				button_gastos.setDisable(true);
     				button_productos.setDisable(true);
     				button_ventas.setDisable(true);
@@ -2744,8 +2752,8 @@ public class Controller implements Initializable{
     				tab_administracionCuentaBanco.setDisable(true);
     				admin_pressed(null);
     				selectTabUsuarios();
-    		}
-    		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
+    			}
+    			else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
     		      	rh_pressed(null);
     		      	selectTabEmpleado();
     		      	//selectTabCategoriaEmpleado();
@@ -2762,16 +2770,28 @@ public class Controller implements Initializable{
     		        tab_administracionCajaChica.setDisable(true);
     		        tab_administracionCuentaBanco.setDisable(true);
     		        tab_empleados.setDisable(false);
+    			}
     		}
+    		
     	}
     }
     
     public void tableview_categoriaClicked(MouseEvent event) {
     	CategoriaEmpleado categoria = tableview_CategoriaEmp.getSelectionModel().getSelectedItem();
-    	textfield_nombreCategoriaEmp.setText(categoria.getNombre());
-    	textfield_nombreCategoriaEmp.setEditable(false);
-    	textfield_salarioCategoriaEmp.setPromptText(Float.toString(categoria.getSueldo()));
-    	button_editarCategoria.setDisable(false);
+    	tableview_CategoriaEmp.getSelectionModel().clearSelection();
+    	if(categoria != null) {
+    		textfield_nombreCategoriaEmp.setText(categoria.getNombre());
+    		textfield_nombreCategoriaEmp.setEditable(false);
+    		textfield_salarioCategoriaEmp.setPromptText(Float.toString(categoria.getSueldo()));
+    		button_editarCategoria.setDisable(false);
+    		
+    	}else {
+    		textfield_nombreCategoriaEmp.setText("");
+    		textfield_nombreCategoriaEmp.setEditable(true);
+    		textfield_salarioCategoriaEmp.setPromptText("");
+    		button_editarCategoria.setDisable(true);
+    	}
+    	
     }
     
     public void editarCategoria(ActionEvent event) {
@@ -3303,7 +3323,7 @@ public class Controller implements Initializable{
             	else if(radiobutton_peticionTarjeta.isSelected()) {
             		metodoPago = "Tarjeta";
             	}
-            	String estado = combobox_peticionEstado.getValue();
+            	String estado = "Aceptada";
             	LocalDate fecha = LocalDate.now();
             	Peticion peticion = new Peticion(codigo, proveedor, producto, cantidad, monto, metodoPago, estado, fecha);
             	Controladora.getInstance().getMisPeticiones().add(peticion);
@@ -3317,7 +3337,7 @@ public class Controller implements Initializable{
             	textfield_peticionProveedor.setText("");;
             	spinner_peticionCantidad.getValueFactory().setValue(0);
             	textfield_peticionMonto.setText("");
-            	combobox_peticionEstado.getSelectionModel().clearSelection();
+            	//combobox_peticionEstado.getSelectionModel().clearSelection();
             	radiobutton_peticionEfectivo.setSelected(true);
             	radiobutton_peticionCredito.setSelected(false);
             	radiobutton_peticionTarjeta.setSelected(false);
@@ -3325,7 +3345,7 @@ public class Controller implements Initializable{
             	textfield_peticionProveedor.setDisable(true);
             	spinner_peticionCantidad.setDisable(true);
             	textfield_peticionMonto.setDisable(true);
-            	combobox_peticionEstado.setDisable(true);
+            	//combobox_peticionEstado.setDisable(true);
             	radiobutton_peticionEfectivo.setDisable(true);
             	radiobutton_peticionCredito.setDisable(true);
             	radiobutton_peticionTarjeta.setDisable(true);
@@ -4135,8 +4155,10 @@ public class Controller implements Initializable{
     
     public void fillGastosGenerales(ArrayList<GastoGeneral> g)
     {
+    	listview_gastosG.refresh();
     	for(GastoGeneral gasto : Controladora.getInstance().getMisGastosGenerales()) {
     		if(!gasto.isBorrado()) {
+    			System.out.println("El nombre y el precio del gasto es: " + gasto.getNombre() + " " + gasto.getPrecioUnitario());
     			listview_gastosG.getItems().add(gasto.getNombre());
     		}
     	}
@@ -4800,7 +4822,7 @@ public class Controller implements Initializable{
     	tablecolumn_peticionCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
     	tablecolumn_peticionMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
     	tablecolumn_peticionMetodo.setCellValueFactory(new PropertyValueFactory<>("metodoPago"));
-    	tablecolumn_peticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+    	//tablecolumn_peticionEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
     	tablecolumn_peticionFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
     	
     	tableview_peticionList.setItems(data);
@@ -4823,10 +4845,10 @@ public class Controller implements Initializable{
     	}
     	//combobox_peticionProveedor.setItems(combobox_data);
     	
-    	combobox_data = FXCollections.observableArrayList();
+    	/**combobox_data = FXCollections.observableArrayList();
     	combobox_data.addAll("Aceptada", "Declinada", "Pendiente");
     	combobox_peticionEstado.setItems(combobox_data);
-    	combobox_peticionEstado.getSelectionModel().select("Pendiente");
+    	combobox_peticionEstado.getSelectionModel().select("Pendiente");**/
     	
     	//Spinner
     	SpinnerValueFactory<Integer> cantidad = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 9999999, 0);
@@ -4900,7 +4922,7 @@ public class Controller implements Initializable{
         	textfield_peticionProveedor.setText("");;
         	spinner_peticionCantidad.getValueFactory().setValue(0);
         	textfield_peticionMonto.setText("");
-        	combobox_peticionEstado.getSelectionModel().clearSelection();
+        	//combobox_peticionEstado.getSelectionModel().clearSelection();
         	radiobutton_peticionEfectivo.setSelected(true);
         	radiobutton_peticionCredito.setSelected(false);
         	radiobutton_peticionTarjeta.setSelected(false);
