@@ -269,8 +269,6 @@
                                     <ListView fx:id="listview_partida" onMouseClicked="#listview_PartidaClicked" prefHeight="431.0" prefWidth="322.0" />
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="button_partidaSendTo" disable="true" layoutX="435.0" layoutY="116.0" mnemonicParsing="false" onAction="#movePartida" prefHeight="40.0" prefWidth="62.0" style="-fx-background-color: transparent; -fx-background-size: stretch;" />
-                              <Button fx:id="button_partidaSendBack" disable="true" layoutX="448.0" layoutY="407.0" mnemonicParsing="false" onAction="#movePartidaSelect" prefHeight="40.0" prefWidth="62.0" style="-fx-background-color: transparent; -fx-background-size: stretch;" />
                               <Text layoutX="424.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad" />
                               <TextField fx:id="textfield_partidaCantidad" alignment="CENTER_RIGHT" disable="true" layoutX="424.0" layoutY="212.0" onKeyTyped="#floatFieldPressed" prefHeight="31.0" prefWidth="77.0" promptText="0" />
                               <ListView fx:id="listview_partidaSelect" layoutX="578.0" layoutY="51.0" onMouseClicked="#listview_partidaSelectClicked" prefHeight="431.0" prefWidth="322.0" />
@@ -285,6 +283,16 @@
                               <ImageView fx:id="help_cantidadPartida" fitHeight="26.0" fitWidth="26.0" layoutX="510.0" layoutY="215.0" onMouseClicked="#infoCantidadPartida" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="button_partidaSendTo" fitHeight="40.0" fitWidth="62.0" layoutX="435.0" layoutY="116.0" onMouseClicked="#movePartida" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/misc/derecha.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="button_partidaSendBack" fitHeight="40.0" fitWidth="62.0" layoutX="435.0" layoutY="387.0" onMouseClicked="#movePartidaSelect" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/misc/izquierda.png" />
                                  </image>
                               </ImageView>
                            </children>

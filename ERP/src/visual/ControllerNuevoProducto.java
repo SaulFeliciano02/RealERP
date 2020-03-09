@@ -125,8 +125,8 @@ public class ControllerNuevoProducto implements Initializable {
 	//PARTIDA
 	@FXML private ListView<String> listview_partida;
 	@FXML private ListView<String> listview_partidaSelect;
-	@FXML private Button button_partidaSendTo;
-	@FXML private Button button_partidaSendBack;
+	@FXML private ImageView button_partidaSendTo;
+	@FXML private ImageView button_partidaSendBack;
 	@FXML private TextField textfield_partidaCantidad;
 	@FXML private ComboBox<String> combobox_ConversorUnidad;
 	
@@ -138,8 +138,8 @@ public class ControllerNuevoProducto implements Initializable {
 	@FXML private Pane pane_costosIndirectos;
 	@FXML private ListView<String> listview_CostosGenerales;
 	@FXML private ListView<String> listview_CostosSelect;
-	@FXML private Button button_derCosto;
-	@FXML private Button button_izqCosto;
+	@FXML private ImageView button_derCosto;
+	@FXML private ImageView button_izqCosto;
 	@FXML private Button button_GuardarCostos;
 	@FXML private ListView<String> listview_CostosResumen;
 	@FXML private ListView<String> listview_GastosGeneralesIndirectos;
@@ -1951,14 +1951,14 @@ public class ControllerNuevoProducto implements Initializable {
 		}
 	}
     
-    public void pasarDerCosto(ActionEvent event)
+    public void pasarDerCosto(MouseEvent event)
     {
     	String costo = listview_CostosGenerales.getSelectionModel().getSelectedItem();
     	listview_CostosSelect.getItems().add(costo);
     	listview_CostosGenerales.getItems().remove(costo);
     }
     
-    public void pasarIzqCosto(ActionEvent event)
+    public void pasarIzqCosto(MouseEvent event)
     {
     	String costo = listview_CostosSelect.getSelectionModel().getSelectedItem();
     	listview_CostosGenerales.getItems().add(costo);
@@ -1989,7 +1989,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
-    public void pasarDerCostoIndirecto(ActionEvent event)
+    public void pasarDerCostoIndirecto(MouseEvent event)
     {
     	String costo = listview_GastosGeneralesIndirectos.getSelectionModel().getSelectedItem();
     	if(costo != null)
@@ -2004,7 +2004,7 @@ public class ControllerNuevoProducto implements Initializable {
     	
     }
     
-    public void pasarIzqCostoIndirecto(ActionEvent event)
+    public void pasarIzqCostoIndirecto(MouseEvent event)
     {
     	String costo = listview_CostosSelecIndirectos.getSelectionModel().getSelectedItem();
     	if(costo != null)
@@ -2166,7 +2166,7 @@ public class ControllerNuevoProducto implements Initializable {
     	
     }
     
-    public void movePartida(ActionEvent event) {
+    public void movePartida(MouseEvent event) {
     	Alert a = new Alert(AlertType.NONE); 
     	boolean isAlreadySelected = false;
     	//String selection = null;
@@ -2394,7 +2394,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
-    public void movePartidaSelect(ActionEvent event) {
+    public void movePartidaSelect(MouseEvent event) {
     	String select_items = listview_partidaSelect.getSelectionModel().getSelectedItem();
     	String nombreSelect = Controladora.getInstance().findPartidaNombre(select_items);
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
