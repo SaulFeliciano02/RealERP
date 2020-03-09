@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -463,21 +462,6 @@ public class ControllerNuevoProducto implements Initializable {
     
     //Guardar Producto
     public void guardarProducto(ActionEvent event) {
-    	
-    	/*if(textfield_preciosPrecio.getText().isEmpty() == true) {
-    		Alert alert = new Alert(AlertType.CONFIRMATION);
-    		alert.setTitle("Confirma");
-    		alert.setHeaderText("");
-    		alert.setContentText("Tu producto no tiene precio, ¿está seguro de proceder?");
-
-    		Optional<ButtonType> result = alert.showAndWait();
-    		if (result.get() == ButtonType.OK){
-    		    // ... user chose OK
-    		} else {
-    		    // ... user chose CANCEL or closed the dialog
-    		}
-    	} */
-    	
     	Alert a = new Alert(AlertType.NONE); 
     	a.setAlertType(AlertType.ERROR);
     	Alert success = new Alert(AlertType.INFORMATION, "Los datos han sido guardados exitosamente.");
@@ -1776,25 +1760,6 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     public void createCombination(ActionEvent event) {
-    	
-    	if(textfield_numSerie.getText().isEmpty() == true) {
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar el número de serie de la combinación.");
-
-    		alert.showAndWait();
-    	}
-    	
-    	else if(textfield_cantidadComb.getText().isEmpty() == true) {
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar la cantidad de la combinación.");
-
-    		alert.showAndWait();
-    	}
-    	else {
     	String atributo1 = listView_atributos1.getSelectionModel().getSelectedItem();
     	String atributo2 = listView_atributos2.getSelectionModel().getSelectedItem();
     	String atributo3 = listView_atributos3.getSelectionModel().getSelectedItem();
@@ -1846,7 +1811,6 @@ public class ControllerNuevoProducto implements Initializable {
     			listView_atributos2.getSelectionModel().clearSelection();
     			listView_atributos3.getSelectionModel().clearSelection();
     		}		
-    	}
     	}
     }
     
@@ -2209,25 +2173,6 @@ public class ControllerNuevoProducto implements Initializable {
     	//int posicion;
     	//posicion = listview_partida.getSelectionModel().getSelectedItem().indexOf("[");
 		//selection = listview_partida.getSelectionModel().getSelectedItem().substring(0, posicion);
-    	
-    	if(textfield_partidaCantidad.getText().isEmpty() == true) {
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar datos en el campo de Cantidad.");
-
-    		alert.showAndWait();
-    	} 
-    	else if(exAct.getText().isEmpty() == true) {
-    		Alert alert = new Alert(AlertType.ERROR);
-    		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar datos en el campo de Existencia (Cantidad actual) en la pestaña General.");
-
-    		alert.showAndWait();
-    	}
-    	
-    	else {
     	String select_items = listview_partida.getSelectionModel().getSelectedItem();
     	String cantidad = Controladora.getInstance().findPartidaCantidad(select_items);
     	String nameOriginal = Controladora.getInstance().findPartidaNombre(select_items);
@@ -2446,7 +2391,6 @@ public class ControllerNuevoProducto implements Initializable {
     		button_partidaSendTo.setDisable(true);
     		textfield_partidaCantidad.setDisable(true);
     		textfield_partidaCantidad.clear();
-    	}
     	}
     }
     
@@ -3767,14 +3711,7 @@ public class ControllerNuevoProducto implements Initializable {
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Información");
     	alert.setHeaderText("Información sobre número de serie");
-    	alert.setContentText("El número de serie es un identificador para la combinación a crear.\r\n" + 
-    			"Ej: Atributo #1: Color, Rojo\r\n" + 
-    			"Atributo #2: Tamaño, Small\r\n" + 
-    			"Número de Serie: NRS001\r\n" + 
-    			"Cantidad: 10\r\n" + 
-    			"\r\n" + 
-    			"La combinación se vería como tal: NRS001 Color: Azul, Tamaño: Small, Existencia: 10.0\r\n" + 
-    			"");
+    	alert.setContentText("El número de serie es un identificador para la combinación a crear.");
 
     	alert.showAndWait();
     }
