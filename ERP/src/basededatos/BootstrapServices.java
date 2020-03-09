@@ -222,6 +222,7 @@ public class BootstrapServices {
 				"  `idclientedeuda` int(11) NOT NULL AUTO_INCREMENT,\r\n" + 
 				"  `cliente` int(11) NOT NULL,\r\n" + 
 				"  `deuda` float NOT NULL,\r\n" + 
+				" `fecha` date NOT NULL,\r\n" +
 				"  `borrado` tinyint(4) NOT NULL DEFAULT '0',\r\n" + 
 				"  PRIMARY KEY (`idclientedeuda`),\r\n" +  
 				"  CONSTRAINT `clientedeud` FOREIGN KEY (`cliente`) REFERENCES `clientes` (`idclientes`) ON DELETE NO ACTION ON UPDATE NO ACTION\r\n" + 

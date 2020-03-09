@@ -373,6 +373,16 @@ public class ControllerNuevoProducto implements Initializable {
     				button_productGuardar.setDisable(true);
     			}
     		}
+    		else if(tipoProducto.equalsIgnoreCase("Estandar")) {
+    			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0
+    					&& exAct.getLength() > 0 && exMax.getLength() > 0 && exAct.getLength() > 0 && textfield_generalNombre.getLength() > 0
+    					&& textfield_generalProveedor.getLength() > 0) {
+    				button_productGuardar.setDisable(false);
+    			}
+    			else {
+    				button_productGuardar.setDisable(true);
+    			}
+    		}
     	}
     		
     }
