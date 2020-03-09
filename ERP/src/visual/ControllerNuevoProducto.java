@@ -197,7 +197,7 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML private TextField textfield_rubroCodigo;
     @FXML private TextField textfield_rubroNombre;
     @FXML private Button button_rubroGuardar;
-    @FXML private Button button_rubroEliminar;
+    @FXML private ImageView button_rubroEliminar;
     
     //COMBINACIONES
     @FXML private TextField textfield_busquedaFamilia1;
@@ -243,6 +243,29 @@ public class ControllerNuevoProducto implements Initializable {
     @FXML TextField textfield_imagen;
     @FXML ImageView imageview_imagen;
     @FXML Button button_agregarImagen;
+    
+    //VARIABLES PARA AYUDA
+    @FXML CheckBox checkbox_habilitarAyuda;
+    @FXML ImageView help_tipoProducto;
+    @FXML ImageView help_producible;
+    @FXML ImageView help_unidadMedida;
+    @FXML ImageView help_rubro;
+    @FXML ImageView help_proveedor;
+    @FXML ImageView help_cantidadActual;
+    @FXML ImageView help_cantidadMin;
+    @FXML ImageView help_cantidadMax;
+    @FXML ImageView help_busquedaPartida;
+    @FXML ImageView help_cantidadPartida;
+    @FXML ImageView help_precioEstimado;
+    @FXML ImageView help_precioCompra;
+    @FXML ImageView help_costosIndirectos;
+    @FXML ImageView help_costosDirectos;
+    @FXML ImageView help_tabPrecios;
+    @FXML ImageView help_tabImagen;
+    @FXML ImageView help_tabSustitutos;
+    @FXML ImageView help_tabPromocion;
+    @FXML ImageView help_tabCombinaciones;
+    @FXML ImageView help_numeroSerie;
     
     /**FUNCIONES GENERALES**/
     
@@ -2697,7 +2720,7 @@ public class ControllerNuevoProducto implements Initializable {
     	activarProductoGuardar(null);
     }
     
-    public void activarRegistro(ActionEvent event) {
+    public void activarRegistro(MouseEvent event) {
     	pane_nuevorubro.setVisible(true);
     }
     
@@ -2733,7 +2756,7 @@ public class ControllerNuevoProducto implements Initializable {
     }
     
     
-    public void eliminarRubro(ActionEvent event) {
+    public void eliminarRubro(MouseEvent event) {
     	Rubro rubro = tableview_rubroBuscar.getSelectionModel().getSelectedItem();
     	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar " + rubro.getNombreRubro() + "?", ButtonType.YES, ButtonType.NO);
     	alert.showAndWait();
@@ -3421,5 +3444,276 @@ public class ControllerNuevoProducto implements Initializable {
 		getGastosDirectos().clear();
 		getGastosIndirectos().clear();
     }
+    
+    public void habilitarAyuda(ActionEvent event) {
+    	if(checkbox_habilitarAyuda.isSelected()) {
+    		help_tipoProducto.setVisible(true);
+    		help_producible.setVisible(true);
+    		help_unidadMedida.setVisible(true);
+    		help_rubro.setVisible(true);
+    		help_proveedor.setVisible(true);
+    		help_cantidadActual.setVisible(true);
+    		help_cantidadMin.setVisible(true);
+    		help_cantidadMax.setVisible(true);
+    		help_busquedaPartida.setVisible(true);
+    		help_cantidadPartida.setVisible(true);
+    		help_precioEstimado.setVisible(true);
+    		help_precioCompra.setVisible(true);
+    		help_costosIndirectos.setVisible(true);
+    		help_costosDirectos.setVisible(true);
+    		help_tabPrecios.setVisible(true);
+    		help_tabImagen.setVisible(true);
+    		help_tabSustitutos.setVisible(true);
+    		help_tabPromocion.setVisible(true);
+    		help_tabCombinaciones.setVisible(true);
+    		help_numeroSerie.setVisible(true);
+    	} else {
+    		help_tipoProducto.setVisible(false);
+    		help_producible.setVisible(false);
+    		help_unidadMedida.setVisible(false);
+    		help_rubro.setVisible(false);
+    		help_proveedor.setVisible(false);
+    		help_cantidadActual.setVisible(false);
+    		help_cantidadMin.setVisible(false);
+    		help_cantidadMax.setVisible(false);
+    		help_busquedaPartida.setVisible(false);
+    		help_cantidadPartida.setVisible(false);
+    		help_precioEstimado.setVisible(false);
+    		help_precioCompra.setVisible(false);
+    		help_costosIndirectos.setVisible(false);
+    		help_costosDirectos.setVisible(false);
+    		help_tabPrecios.setVisible(false);
+    		help_tabImagen.setVisible(false);
+    		help_tabSustitutos.setVisible(false);
+    		help_tabPromocion.setVisible(false);
+    		help_tabCombinaciones.setVisible(false);
+    		help_numeroSerie.setVisible(false);
+    	}
+    }
+    
+    public void infoTipoProducto(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre los tipos de productos");
+    	alert.setContentText("Estándar: es el tipo de producto por defecto, normalmente utilizado para materias primas o productos corriente.\r\n" + 
+    			" Ej:  Azucar, tomate, vino, etc. \r\n" + 
+    			"\r\n" + 
+    			"Kit: producto que se compone de varios productos que se venden en conjunto y estos también se venden como productos estándar.\r\n" + 
+    			"Ej: Productos estándar: Pasta dental y cepillo dental. \r\n" + 
+    			"Producto kit: combo de pasta dental con cepillo dental incluido. \r\n" + 
+    			"\r\n" + 
+    			"Servicio: producto sin existencia agotable y depende del personal capacitado del negocio. Estos pueden requerir el uso de algún producto, también descontando la existencia del producto. \r\n" + 
+    			"Ej: Servicios: masajes. \r\n" + 
+    			"Producto relacionado: crema corporal. \r\n" + 
+    			"\r\n" + 
+    			"Productos de matriz: son aquellos productos que poseen distintas versiones de sí mismo y no poseen variaciones en su precio. Estos productos podrían variar en color, tamaño, sabor, entre otras características. \r\n" + 
+    			"Ej: T-Shirt de la marca Polo color rojo, T-Shirt de la marca Polo color azul. \r\n" + 
+    			"");
+    			
+    	alert.showAndWait();
+    }
+    
+    public void infoProducible(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre producible");
+    	alert.setContentText("Al marcar esta opción se indica que este producto es creado en su negocio y es necesario agregarle contos relacionados a la materia prima y mano de obra involucrada.");
 
+    	alert.showAndWait();
+    }
+    
+    public void infoUnidadMedida(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre unidad de medida");
+    	alert.setContentText("Al presionar el botón de buscar, se presentará una tabla con todas las unidades de medida disponibles en el programa, agrupadas por longitud, masa, volumen, área y unidad. Al elegir una de estas unidades de medida, en base a esta es que se debe colocar la existencia del producto. \r\n" + 
+    			"Ej: Producto: Alcohol \r\n" + 
+    			"Unidad de medida: Litros \r\n" + 
+    			"Existencia: 200 \r\n" + 
+    			"Esto es equivalente a 200 litros de alcohol en el inventario. \r\n" + 
+    			"\r\n" + 
+    			"Las unidades de medida de longitud, masa, volumen y área son recomendadas para productos que se venderán al detalle o serán utilizadas medidas exactas de estos para la fabricación de otros productos (partida). \r\n" + 
+    			"\r\n" + 
+    			"La unidad de medida del tipo unidad son para los productos que se venderán o utilizaran como tal. \r\n" + 
+    			"Ej:  \r\n" + 
+    			"Producto: Una botella de alcohol. \r\n" + 
+    			"Unidad de medida: Unidad \r\n" + 
+    			"Existencia: 200 \r\n" + 
+    			"Esto es equivalente a 200 botellas de alcohol en el inventario. \r\n" + 
+    			"");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoRubro(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre rubro");
+    	alert.setContentText("Los rubros son agrupaciones de productos que poseen características en común. \r\n" + 
+    			"Ej: Fresas, manzanas, peras y bananas, pertenecen al rubro de las frutas. \r\n" + 
+    			"\r\n" + 
+    			"Al presionar el botón de buscar, mostrará una tabla con todos sus rubros registrados y podrá seleccionar uno para este producto. \r\n" + 
+    			"");
+
+    	alert.showAndWait();
+    }
+
+    public void infoProveedor(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre proveedor");
+    	alert.setContentText("Al presionar el botón de buscar, mostrará una tabla con todos sus proveedores registrados y podrá seleccionar uno para este producto. Este campo estará deshabilitado para productos producibles, ya que el proveedor será la empresa misma. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCantidadActual(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre cantidad actual");
+    	alert.setContentText("Cantidad existente del producto en el inventario. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCantMinima(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre existencia mínima");
+    	alert.setContentText("Cantidad mínima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia mínima, indicándole que debe reabastecerse del producto. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCantMax(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre existencia máxima");
+    	alert.setContentText("Cantidad máxima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia máxima, indicándole que debe reducir la del producto para evitar gastos extra. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoBusquedaProducto(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre búsqueda de productos");
+    	alert.setContentText("Es posible buscar un producto en este campo por su nombre. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCantidadPartida(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre cantidad");
+    	alert.setContentText("En este campo se coloca la cantidad a utilizar del producto seleccionado en la partida del producto a fabricar. Debajo contamos con un pequeño menú de las unidades de medidas de la misma categoría (longitud, masa, volumen o área), a las que es posible convertir la unidad de medida del producto seleccionado. \r\n" + 
+    			"Ej: Producto: Alcohol \r\n" + 
+    			"Unidad de medida: Litros \r\n" + 
+    			"Existencia: 200 \r\n" + 
+    			"Cantidad a utilizar: 50 \r\n" + 
+    			"\r\n" + 
+    			"Medida a utilizar para la aplicación de este producto en la partida del producto a fabricar: Mililitros \r\n" + 
+    			"50 mililitros = 0.05 litros de alcohol serán utilizados en la fabricación de este producto. \r\n" + 
+    			"");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoPrecioEstimado(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre precio estimado del producto");
+    	alert.setContentText("Precio de venta que se estima que el producto posea. Se recomienda calcular el precio promedio del producto en el mercado y colocarlo en este campo. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoPrecioCompra(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre precio de compra del producto");
+    	alert.setContentText("Colocar el precio de compra del producto en este campo. No aplica para productos producibles. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCostosIndirectos(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre costos indirectos");
+    	alert.setContentText("Listado de los costos indirectos de su empresa registrados en el sistema. En este campo puede seleccionar los costos indirectos que aplicaran para este producto clicándolo en la lista y enviándolo a la lista de los seleccionados con la flecha a derecha. Esto aumentara el costo del producto para cubrir gastos de la empresa. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCostosDirectos(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre costos directos");
+    	alert.setContentText("En esta sección se calculará el costo atribuido a su producto por su mano de obra. Es necesario indicar el tiempo de fabricación (que requiera intervención humana) del producto y la categoría de empleados encargados de la fabricación del producto. \r\n" + 
+    			"\r\n" + 
+    			"Al presionar el botón de aplicar, se calculará el costo atribuido por mano de obra al precio del producto. (Solo aplica a productos producibles). \r\n" + 
+    			"");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoPrecios(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre precios");
+    	alert.setContentText("En esta ventana se puede visualizar el costo del producto generado por mano de obra (para producto producible), costo de compra y costos indirectos de la empresa. Es posible aplicarle un porcentaje de ganancia al producto y de impuestos, aumentando el precio de venta del producto. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoImagen(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre imagen");
+    	alert.setContentText("Al presionar el botón agregar, puede buscar dentro de su ordenador una imagen para asignársela a su producto y visualizarla en la información adicional del producto en el listado de productos. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoSustitutos(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre productos sustitutos");
+    	alert.setContentText("Es posible colocar productos para ofrecer al cliente como sustituto del producto que desee en caso de que este no se encuentre disponible para la venta. \r\n" + 
+    			"\r\n" + 
+    			"Ej: El cliente busca un pantalón de la marca X y este no se encuentra disponible en el inventario, así que puede ofrecerle un pantalón de la marca Y o Z a ver si alguno de estos también cumple sus necesidades y expectativas.  \r\n" + 
+    			"");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoPromocion(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre promoción");
+    	alert.setContentText("Puede incluir al producto en una de las promociones disponibles de la empresa. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoCombinaciones(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre combinaciones");
+    	alert.setContentText("En esta sección puede generar combinaciones de atributos para sus productos de tipo matriz. En las barras de arriba puede colocar el nombre de la familia de atributos que desea utilizar y presiona el botón de buscar para que se muestren en la lista. Una vez mostrados en la lista, debe cliquear uno o varios atributos que vaya a utilizar, colocarle un número de serie y la cantidad (existencia) de esta combinación en el stock. Para terminar de procesar dicha combinación, debe cliquear el botón “combinar”. ");
+
+    	alert.showAndWait();
+    }
+    
+    public void infoNumeroSerie(MouseEvent event){
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Información");
+    	alert.setHeaderText("Información sobre número de serie");
+    	alert.setContentText("El número de serie es un identificador para la combinación a crear.");
+
+    	alert.showAndWait();
+    }
+    
 }
