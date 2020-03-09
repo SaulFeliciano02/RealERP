@@ -74,8 +74,10 @@ public class ControllerNuevoEmpleado implements Initializable{
 		    }
 		    else
 		    {
-		    	c.gastos_pressed(null);
+		    	//c.gastos_pressed(null);
 				//c.selectTabUsuarios();
+		    	c.admin_pressed(null);
+				c.selectTabAdministracionGeneral();
 		    }
 		    Scene sc = new Scene(root);
 		    primaryStage.setScene(sc);
