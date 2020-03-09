@@ -30,7 +30,7 @@
    <children>
       <AnchorPane prefHeight="750.0" prefWidth="1190.0">
          <children>
-            <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true">
+            <ImageView fitHeight="798.0" fitWidth="1200.0" pickOnBounds="true">
                <image>
                   <Image url="@images/background/Popup_background.png" />
                </image>
@@ -70,42 +70,42 @@
                               <Text layoutX="42.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unidad de medida" />
                               <TextField fx:id="textfield_generalUnidad" layoutX="42.0" layoutY="158.0" prefHeight="26.0" prefWidth="190.0" />
                               <Button fx:id="button_BuscarUnidadMedida" layoutX="235.0" layoutY="158.0" mnemonicParsing="false" onAction="#buscarUnidadMedida" text="Buscar" />
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="248.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_tipoProducto" fitHeight="26.0" fitWidth="26.0" layoutX="248.0" layoutY="26.0" onMouseClicked="#infoTipoProducto" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="575.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_producible" fitHeight="26.0" fitWidth="26.0" layoutX="575.0" layoutY="26.0" onMouseClicked="#infoProducible" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="302.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_unidadMedida" fitHeight="26.0" fitWidth="26.0" layoutX="302.0" layoutY="158.0" onMouseClicked="#infoUnidadMedida" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="415.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_rubro" fitHeight="26.0" fitWidth="26.0" layoutX="415.0" layoutY="370.0" onMouseClicked="#infoRubro" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="906.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_proveedor" fitHeight="26.0" fitWidth="26.0" layoutX="906.0" layoutY="370.0" onMouseClicked="#infoProveedor" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="231.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_cantidadActual" fitHeight="26.0" fitWidth="26.0" layoutX="231.0" layoutY="465.0" onMouseClicked="#infoCantidadActual" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="562.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_cantidadMin" fitHeight="26.0" fitWidth="26.0" layoutX="562.0" layoutY="465.0" onMouseClicked="#infoCantMinima" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="879.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_cantidadMax" fitHeight="26.0" fitWidth="26.0" layoutX="879.0" layoutY="465.0" onMouseClicked="#infoCantMax" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
@@ -125,8 +125,6 @@
                                              </effect>
                                           </Button>
                                           <ComboBox fx:id="combobox_productoBusquedaProveedor" layoutX="467.0" layoutY="16.0" prefHeight="26.0" prefWidth="103.0" promptText="Codigo" />
-                                          <Button fx:id="button_nuevoProveedor" layoutX="14.0" layoutY="417.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_nuevo.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
-                                          <Button fx:id="button_eliminarProveedor" layoutX="256.0" layoutY="417.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/provee_delete.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                                           <Button fx:id="button_cerrarBusquedaProveedor" layoutX="810.0" layoutY="468.0" mnemonicParsing="false" onAction="#cerrarBusquedaProveedor" text="Cerrar" />
                                           <TableView fx:id="tableview_proveedorBuscar" layoutX="14.0" layoutY="47.0" onMouseClicked="#proveedorTableViewClicked" prefHeight="380.0" prefWidth="892.0">
                                             <columns>
@@ -145,7 +143,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <Button fx:id="button_aceptarBusquedaProveedor" disable="true" layoutX="723.0" layoutY="468.0" mnemonicParsing="false" onAction="#returnProveedorSearch" text="Seleccionar" />
+                                          <Button fx:id="button_aceptarBusquedaProveedor" disable="true" layoutX="662.0" layoutY="468.0" mnemonicParsing="false" onAction="#returnProveedorSearch" text="Seleccionar" />
                                        </children>
                                     </AnchorPane>
                                 </content>
@@ -154,8 +152,6 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <Button layoutX="14.0" layoutY="384.0" mnemonicParsing="false" onAction="#activarRegistro" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_add.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
-                                          <Button fx:id="button_rubroEliminar" layoutX="240.0" layoutY="384.0" mnemonicParsing="false" onAction="#eliminarRubro" prefHeight="76.0" prefWidth="190.0" style="-fx-background-image: url('file:src/visual/images/buttons/rubro_delete.png'); -fx-background-color: transparent; -fx-background-size: stretch;" />
                                           <TextField fx:id="textfield_productoBusquedaRubro" layoutX="680.0" layoutY="14.0" onKeyTyped="#buscarRubros" prefHeight="31.0" prefWidth="223.0" promptText="Búsqueda" />
                                           <ComboBox fx:id="combobox_productoBusquedaRubro" layoutX="564.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="Buscar por: " />
                                           <Button fx:id="button_cerrarBusquedaRubro" layoutX="810.0" layoutY="469.0" mnemonicParsing="false" onAction="#cerrarBusquedaRubro" prefHeight="26.0" prefWidth="68.0" text="Cerrar" />
@@ -168,7 +164,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <Button fx:id="button_aceptarBusquedaRubro" disable="true" layoutX="722.0" layoutY="469.0" mnemonicParsing="false" onAction="#returnRubroSearch" text="Seleccionar" />
+                                          <Button fx:id="button_aceptarBusquedaRubro" disable="true" layoutX="696.0" layoutY="469.0" mnemonicParsing="false" onAction="#returnRubroSearch" text="Seleccionar" />
                                           <AnchorPane fx:id="pane_nuevorubro" layoutX="20.0" layoutY="47.0" prefHeight="231.0" prefWidth="282.0" visible="false">
                                              <children>
                                                 <VBox layoutX="41.0" layoutY="7.0" prefHeight="231.2" prefWidth="282.4" style="-fx-border-color: lightgray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -223,6 +219,16 @@
                                                 </VBox>
                                              </children>
                                           </AnchorPane>
+                                          <ImageView fitHeight="76.0" fitWidth="190.0" layoutX="14.0" layoutY="431.0" onMouseClicked="#activarRegistro" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/buttons/rubro_add.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="button_rubroEliminar" fitHeight="76.0" fitWidth="190.0" layoutX="230.0" layoutY="432.0" onMouseClicked="#eliminarRubro" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/buttons/rubro_delete.png" />
+                                             </image>
+                                          </ImageView>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -271,12 +277,12 @@
                               <TextField layoutX="43.0" layoutY="25.0" prefHeight="31.0" prefWidth="222.0" promptText="Búsqueda" />
                               <Text layoutX="391.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversión unidad-medida" />
                               <ComboBox fx:id="combobox_ConversorUnidad" layoutX="388.0" layoutY="294.0" prefWidth="150.0" />
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="265.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_busquedaPartida" fitHeight="26.0" fitWidth="26.0" layoutX="265.0" layoutY="28.0" onMouseClicked="#infoBusquedaProducto" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="510.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_cantidadPartida" fitHeight="26.0" fitWidth="26.0" layoutX="510.0" layoutY="215.0" onMouseClicked="#infoCantidadPartida" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
@@ -310,7 +316,7 @@
                                           <Font size="15.0" />
                                        </font></TextField>
                                     <Text layoutX="83.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total mano de obra" />
-                                    <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="165.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="help_costosDirectos" fitHeight="26.0" fitWidth="26.0" layoutX="165.0" layoutY="17.0" onMouseClicked="#infoCostosDirectos" pickOnBounds="true" preserveRatio="true" visible="false">
                                        <image>
                                           <Image url="@images/misc/help.png" />
                                        </image>
@@ -343,7 +349,7 @@
                                        </font>
                                     </Text>
                                     <Button fx:id="button_GuardarCostoIndirecto" layoutX="427.0" layoutY="371.0" mnemonicParsing="false" onAction="#agregarNuevosCostos" text="Guardar" />
-                                    <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="175.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="help_costosIndirectos" fitHeight="26.0" fitWidth="26.0" layoutX="175.0" layoutY="15.0" onMouseClicked="#infoCostosIndirectos" pickOnBounds="true" preserveRatio="true" visible="false">
                                        <image>
                                           <Image url="@images/misc/help.png" />
                                        </image>
@@ -371,12 +377,12 @@
                               <Text layoutX="296.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio de compra del producto" />
                               <TextField fx:id="textfield_costoPrecioCompraProducto" alignment="CENTER_RIGHT" layoutX="296.0" layoutY="39.0" onKeyTyped="#floatFieldPressed" prefHeight="26.0" prefWidth="148.0" promptText="0.0" />
                               <Text layoutX="445.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="222.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_precioEstimado" fitHeight="26.0" fitWidth="26.0" layoutX="222.0" layoutY="38.0" onMouseClicked="#infoPrecioEstimado" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="474.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_precioCompra" fitHeight="26.0" fitWidth="26.0" layoutX="474.0" layoutY="38.0" onMouseClicked="#infoPrecioCompra" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
@@ -423,7 +429,7 @@
                                     <Text layoutX="705.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
                                     <Text layoutX="239.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
                                     <Text layoutX="479.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RD$" />
-                                    <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="852.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="help_tabPrecios" fitHeight="26.0" fitWidth="26.0" layoutX="852.0" layoutY="21.0" onMouseClicked="#infoPrecios" pickOnBounds="true" preserveRatio="true" visible="false">
                                        <image>
                                           <Image url="@images/misc/help.png" />
                                        </image>
@@ -444,10 +450,10 @@
                                  </children>
                               </Pane>
                               <Text layoutX="51.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ruta de la imagen:" />
-                              <TextField fx:id="textfield_imagen" layoutX="163.0" layoutY="406.0" prefHeight="31.0" prefWidth="265.0" />
+                              <TextField fx:id="textfield_imagen" layoutX="180.0" layoutY="406.0" prefHeight="31.0" prefWidth="265.0" />
                               <Button fx:id="button_agregarImagen" layoutX="602.0" layoutY="393.0" mnemonicParsing="false" onAction="#seleccionarFoto" text="Agregar" />
                               <Button layoutX="687.0" layoutY="393.0" mnemonicParsing="false" text="Eliminar" />
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="440.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_tabImagen" fitHeight="26.0" fitWidth="26.0" layoutX="877.0" layoutY="14.0" onMouseClicked="#infoImagen" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
@@ -461,7 +467,6 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Text layoutX="40.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posibles productos sustitutos" />
-                              <Text layoutX="46.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Al momento de facturar, el sistema te va a sugerir estos sustitutos cuando no existan unidades disponibles para vender." wrappingWidth="275.6337890625" />
                               <TableView layoutX="40.0" layoutY="70.0" prefHeight="313.0" prefWidth="851.0">
                                 <columns>
                                   <TableColumn prefWidth="182.0" text="Campo 1" />
@@ -472,7 +477,7 @@
                               </TableView>
                               <Button layoutX="817.0" layoutY="407.0" mnemonicParsing="false" text="Agregar" />
                               <Button layoutX="729.0" layoutY="407.0" mnemonicParsing="false" text="Eliminar" />
-                              <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="878.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="help_tabSustitutos" fitHeight="26.0" fitWidth="26.0" layoutX="878.0" layoutY="14.0" onMouseClicked="#infoSustitutos" pickOnBounds="true" preserveRatio="true" visible="false">
                                  <image>
                                     <Image url="@images/misc/help.png" />
                                  </image>
@@ -519,7 +524,7 @@
                                           </Button>
                                        </children>
                                     </VBox>
-                                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="help_tabPromocion" fitHeight="26.0" fitWidth="26.0" onMouseClicked="#infoPromocion" pickOnBounds="true" preserveRatio="true" visible="false">
                                        <image>
                                           <Image url="@images/misc/help.png" />
                                        </image>
@@ -570,7 +575,7 @@
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
                                                 </TextField>
-                                                <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="help_numeroSerie" fitHeight="26.0" fitWidth="26.0" onMouseClicked="#infoNumeroSerie" pickOnBounds="true" preserveRatio="true" visible="false">
                                                    <image>
                                                       <Image url="@images/misc/help.png" />
                                                    </image>
@@ -684,7 +689,7 @@
                                           <Insets right="10.0" top="50.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="help_tabCombinaciones" fitHeight="26.0" fitWidth="26.0" onMouseClicked="#infoCombinaciones" pickOnBounds="true" preserveRatio="true" visible="false">
                                        <image>
                                           <Image url="@images/misc/help.png" />
                                        </image>
@@ -700,8 +705,16 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button fx:id="button_productGuardar" disable="true" layoutX="984.0" layoutY="646.0" mnemonicParsing="false" onAction="#guardarProducto" text="Aplicar" />
+            <Button fx:id="button_productGuardar" disable="true" layoutX="969.0" layoutY="639.0" mnemonicParsing="false" onAction="#guardarProducto" text="Aplicar">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
             <Button fx:id="button_productCancel" layoutX="1075.0" layoutY="646.0" mnemonicParsing="false" onAction="#cancelCreation" text="Cancelar" />
+            <CheckBox fx:id="checkbox_habilitarAyuda" layoutX="218.0" layoutY="646.0" mnemonicParsing="false" onAction="#habilitarAyuda" text="Habilitar Modo Ayuda">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </CheckBox>
          </children>
       </AnchorPane>
    </children>

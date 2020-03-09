@@ -2331,6 +2331,7 @@ public class Controller implements Initializable{
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(owner);
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("images/favicon.png")));
+			stage.sizeToScene();
 			//Teníamos la dificultad en que no podíamos actualizar los datos de la ventana principal una vez añadida una nueva información en otra ventana,
 			//el código dentro de setOnCloseRequest se encarga de cerrar y abrir la ventana principal una vez se salga de la ventana externa, esta hecho de
 			//forma que retorne al punto desde donde se ingresó a la ventana externa, eres bienvenido a intentar una solución alterna puesto que entendemos
