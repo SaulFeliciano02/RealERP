@@ -1404,9 +1404,9 @@ public class Controller implements Initializable{
         		}
         		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
         		      	rh_pressed(null);
-        		      	selectTabEmpleado();
-        		      	//selectTabCategoriaEmpleado();
-        		        button_gastos.setDisable(true);
+        		      	//selectTabEmpleado();
+        		      	selectTabCategoriaEmpleado();
+        		        button_gastos.setDisable(false);
         		        button_productos.setDisable(true);
         		        button_ventas.setDisable(true);
         		        button_historial.setDisable(true);
@@ -1418,6 +1418,7 @@ public class Controller implements Initializable{
         		        tab_administracionGeneral.setDisable(true);
         		        tab_administracionCajaChica.setDisable(true);
         		        tab_administracionCuentaBanco.setDisable(true);
+        		        tab_empleados.setDisable(true);
         		}
            	}
     	}   	
@@ -2734,7 +2735,7 @@ public class Controller implements Initializable{
     				button_historial.setDisable(true);
     				button_admin.setDisable(false);
     				button_rh.setDisable(false);
-    				button_help.setDisable(true); 
+    				button_help.setDisable(false); 
     				button_config.setDisable(false); 
       	        
     				tab_administracionGeneral.setDisable(true);
@@ -2759,6 +2760,7 @@ public class Controller implements Initializable{
     		        tab_administracionGeneral.setDisable(true);
     		        tab_administracionCajaChica.setDisable(true);
     		        tab_administracionCuentaBanco.setDisable(true);
+    		        tab_empleados.setDisable(false);
     		}
     	}
     }
@@ -3049,7 +3051,7 @@ public class Controller implements Initializable{
     				button_historial.setDisable(true);
     				button_admin.setDisable(false);
     				button_rh.setDisable(false);
-    				button_help.setDisable(true); 
+    				button_help.setDisable(false); 
     				button_config.setDisable(false); 
       	        
     				tab_administracionGeneral.setDisable(true);
@@ -3059,15 +3061,16 @@ public class Controller implements Initializable{
     				selectTabUsuarios();
     		}
     		else if(Controladora.getInstance().getUsuarioLogueado().getUsuario().equalsIgnoreCase("administrador")){
-    		      	rh_pressed(null);
+    		      	//rh_pressed(null);
+    				gastos_pressed(null);
     		      	//selectTabEmpleado();
-    		      	selectTabCategoriaEmpleado();
-    		        button_gastos.setDisable(true);
+    		      	//selectTabCategoriaEmpleado();
+    		        button_gastos.setDisable(false);
     		        button_productos.setDisable(true);
     		        button_ventas.setDisable(true);
     		        button_historial.setDisable(true);
     		        button_admin.setDisable(true);
-    		        button_rh.setDisable(false);
+    		        button_rh.setDisable(true);
     		        button_help.setDisable(false); 
     		        button_config.setDisable(false); 
     		        
@@ -3566,14 +3569,14 @@ public class Controller implements Initializable{
 				button_historial.setDisable(true);
 				button_admin.setDisable(false);
 				button_rh.setDisable(false);
-				button_help.setDisable(true); 
+				button_help.setDisable(false); 
 				button_config.setDisable(false); 
   	        
-				tab_administracionGeneral.setDisable(true);
+				tab_administracionGeneral.setDisable(false);
 				tab_administracionCajaChica.setDisable(true);
 				tab_administracionCuentaBanco.setDisable(true);
-				admin_pressed(null);
-				selectTabUsuarios();
+				config_pressed(null);
+				
 		}
 		else {
 			if(user.getUsuario().equalsIgnoreCase("administrador")) {
