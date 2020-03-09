@@ -8660,6 +8660,7 @@ public void loadProductos()
 		while(r.next())
 		{
 			id = r.getInt(1);
+			System.out.println("El id de este producto es " + id);
 			codigo = r.getString(2);
 			nombre = r.getString(3);				
 			descripcion = r.getString(4);
@@ -8675,6 +8676,7 @@ public void loadProductos()
 			r2 = s2.executeQuery("SELECT * FROM estandar WHERE producto = '"+id+"'");
 			while(r2.next())
 			{
+				System.out.println("Ciclo r2");
 				idestandar = r2.getInt(1);
 				producto = r2.getInt(2);
 				exitmin = r2.getFloat(3);
@@ -8691,6 +8693,7 @@ public void loadProductos()
 				r3 = s3.executeQuery("SELECT * FROM precioproducto WHERE producto = '"+id+"'");
 				while(r3.next())
 				{
+					System.out.println("Ciclo r3");
 					idprecioprod = r3.getInt(1);
 					precioidp = r3.getInt(2);
 					productoidp = r3.getInt(3);
@@ -8702,6 +8705,7 @@ public void loadProductos()
 				r4 = s4.executeQuery("SELECT * FROM precio WHERE idprecio = '"+precioidp+"'");
 				while(r4.next())
 				{
+					System.out.println("Ciclo r4");
 					idprecio = r4.getInt(1);
 					montoprecio = r4.getFloat(2);
 					descripcionprecio = r4.getString(3);
@@ -8713,6 +8717,7 @@ public void loadProductos()
 				r5 = s5.executeQuery("SELECT * FROM rubroproducto WHERE producto = '"+id+"'");
 				while(r5.next())
 				{
+					System.out.println("Ciclo r5");
 					idrubroproducto = r5.getInt(1);
 					rubroid = r5.getInt(2);
 					productorubroid = r5.getInt(3);
@@ -8723,6 +8728,7 @@ public void loadProductos()
 				r6 = s6.executeQuery("SELECT * FROM rubros WHERE idrubros = '"+rubroid+"'");
 				while(r6.next())
 				{
+					System.out.println("Ciclo r6");
 					idrubros = r6.getInt(1);
 					codigorubro = r6.getString(2);
 					nombrerubro = r6.getString(3);
@@ -8733,6 +8739,7 @@ public void loadProductos()
 				r7 = s7.executeQuery("SELECT * FROM proveedorprincipaproducto WHERE producto = '"+id+"'");
 				while(r7.next())
 				{
+					System.out.println("Ciclo r7");
 					idproveedorprincipal = r7.getInt(1);
 					idproveedor = r7.getInt(2);
 					idprodproveedor = r7.getInt(3);
@@ -8743,14 +8750,16 @@ public void loadProductos()
 				r8 = s8.executeQuery("SELECT nombre FROM proveedores WHERE idproveedores = '"+idproveedor+"'");
 				while(r8.next())
 				{
+					System.out.println("Ciclo r8");
 					nombreproveedor = r8.getString(1);
 				}
 				
 				//RECUPERAR UNIDAD DE MEDIDA
-				
+				System.out.println("Seccion de recuperar medida");
 				unidad1 = buscarUnidadMedida(unidadmedida);
 				
 				//CREAR EL ESTANDAR
+				System.out.println("Seccion de crear estandar");
 				Rubro ru = buscarRubro(nombrerubro);
 				Proveedores pro = buscarProveedor(nombreproveedor);
 				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
@@ -8767,6 +8776,7 @@ public void loadProductos()
 					System.out.println(estandar.getUnidadMedida().getAbreviatura());
 				}
 				Controladora.getInstance().getMisProductos().add(estandar);
+				System.out.println("La cantidad de productos es " + Controladora.getInstance().getMisProductos().size());
 				Controladora.getInstance().getMisProductosEstandar().add(estandar);
 			}
 		}
