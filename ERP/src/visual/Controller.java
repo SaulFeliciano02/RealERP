@@ -2429,6 +2429,23 @@ public class Controller implements Initializable{
 		}
     }
     
+    public void eliminarPromocion(ActionEvent event) {
+    	Promocion promocion = tableview_promocionList.getSelectionModel().getSelectedItem();
+    	if(promocion != null) {  	
+        	Alert alert = new Alert(AlertType.CONFIRMATION, "Desea eliminar esta promoción: " + promocion.getNombre() + "?", ButtonType.YES, ButtonType.NO);
+        	alert.showAndWait();
+        	if (alert.getResult() == ButtonType.YES) {
+        		int index = Controladora.getInstance().getMisPromociones().indexOf(promocion);
+        		Controladora.getInstance().getMisPromociones().get(index).setBorrado(true);
+        		Controladora.getInstance().setPromocionBorrado(index+1);
+        		new Alert(AlertType.INFORMATION, "Operación Satisfactoria!").showAndWait();
+        		tableview_promocionList.getItems().remove(promocion);
+        		tableview_promocionList.refresh();
+        	}
+        	
+    	}
+    }
+    
     /**FUNCIONES GENERALES**/
     
     //Verifica si el input de un textfield es un número.
@@ -3178,6 +3195,11 @@ public class Controller implements Initializable{
     public void peticionCalcularMonto(MouseEvent event) {
     	Producto producto = Controladora.getInstance().buscarProducto(textfield_peticionProducto.getText());
     	textfield_peticionMonto.setText(Float.toString(producto.getCosto()*spinner_peticionCantidad.getValue()));
+    }
+    
+    public void peticionSendToCalcular(KeyEvent event) {
+    	System.out.println("Voy a dirigirme a calcular el monto!");
+    	peticionCalcularMonto(null);
     }
     
     //Activa el botón para poder administrar una petición.
@@ -4696,7 +4718,11 @@ public class Controller implements Initializable{
     public void fillPromocion(ArrayList<Promocion> promocion) {
     	ObservableList<Promocion> data = FXCollections.observableArrayList();
     	if(promocion == null) {
-    		data.addAll(Controladora.getInstance().getMisPromociones());
+    		for(Promocion p : Controladora.getInstance().getMisPromociones()) {
+    			if(!p.isBorrado()) {
+    				data.addAll(Controladora.getInstance().getMisPromociones());
+    			}
+    		}	
     	}
     	else {
     		data.addAll(promocion);

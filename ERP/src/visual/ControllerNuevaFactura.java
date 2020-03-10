@@ -614,6 +614,12 @@ public class ControllerNuevaFactura implements Initializable{
     	textfield_pagorecibido.setText("");
     	textfield_balancependiente.setText("");
     	
+    	textfield_buscarClienteFactura.setText("");
+		textfield_clienteNombre.setText("");
+		textfield_clienteRNC.setText("");
+		textfield_clienteCredito.setText("");
+		textfield_clienteDeuda.setText("");
+    	
     	
     	//System.out.print(Controladora.getInstance().getMisFacturas().size());
     	if(checkbox_facturaValorFiscal.isSelected())
@@ -1450,20 +1456,22 @@ public class ControllerNuevaFactura implements Initializable{
 		float precioPromocion = 0;
 		boolean hasPromotion = false;
 		for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
-			for(Producto promoProductos : promocion.getProductos()) {
-				if(promoProductos.equals(p)) {
-					if(promocion.getFechaInicio() == null) {
-						if(promocion.getDia().equalsIgnoreCase(dia)) {
-							hasPromotion = true;
+			if(!promocion.isBorrado()) {
+				for(Producto promoProductos : promocion.getProductos()) {
+					if(promoProductos.equals(p)) {
+						if(promocion.getFechaInicio() == null) {
+							if(promocion.getDia().equalsIgnoreCase(dia)) {
+								hasPromotion = true;
+							}
 						}
-					}
-					else {
-						if((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
-							&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)) {
-							hasPromotion = true;
+						else {
+							if((LocalDate.now().compareTo(promocion.getFechaInicio()) >= 0 && LocalDate.now().compareTo(promocion.getFechaFinal()) <= 0
+									&& LocalTime.now().compareTo(promocion.getHoraInicio()) >= 0 && LocalTime.now().compareTo(promocion.getHoraFinal()) <= 0)) {
+								hasPromotion = true;
+							}
 						}
+						if(hasPromotion) {precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;}
 					}
-					if(hasPromotion) {precioPromocion = ((100-promocion.getPorcentajeDescuento())*p.getPrecio()) / 100;}
 				}
 			}
 		}
