@@ -1056,7 +1056,7 @@
                                                                                                       <Insets left="10.0" />
                                                                                                    </VBox.margin>
                                                                                                 </Label>
-                                                                                                <Spinner fx:id="spinner_peticionCantidad" disable="true" onMouseClicked="#peticionCalcularMonto" prefHeight="26.0" prefWidth="106.0">
+                                                                                                <Spinner fx:id="spinner_peticionCantidad" disable="true" editable="true" onInputMethodTextChanged="#peticionSendToCalcular" onMouseClicked="#peticionCalcularMonto" prefHeight="26.0" prefWidth="106.0">
                                                                                                    <VBox.margin>
                                                                                                       <Insets bottom="10.0" left="5.0" />
                                                                                                    </VBox.margin>
@@ -1550,7 +1550,7 @@
                                                                                           </ImageInput>
                                                                                        </effect>
                                                                                     </Button>
-                                                                                    <Button fx:id="button_eliminarPromocion" mnemonicParsing="false" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
+                                                                                    <Button fx:id="button_eliminarPromocion" mnemonicParsing="false" onAction="#eliminarPromocion" prefHeight="76.0" prefWidth="202.0" style="-fx-background-color: TRANSPARENT; -fx-background-size: stretch;">
                                                                                        <HBox.margin>
                                                                                           <Insets left="40.0" />
                                                                                        </HBox.margin>

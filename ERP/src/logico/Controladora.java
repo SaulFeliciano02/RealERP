@@ -1770,6 +1770,41 @@ public class Controladora implements Serializable{
 			}
 		}
 	}
+	
+	public void setPromocionBorrado(int index) {
+		Conexion con = new Conexion();
+		java.sql.Connection cSQL = null;
+		Statement sSQL = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		try {
+			cSQL = con.conectar();
+			sSQL = (Statement) cSQL.createStatement();
+			p = (PreparedStatement)
+					cSQL.prepareStatement("UPDATE promocion SET borrado = 1 WHERE idpromocion = '"+index+"'");
+			p.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(cSQL!=null) {
+					cSQL.close();
+				}
+				
+				if(sSQL!=null) {
+					sSQL.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+			}
+			catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 
 	public void guardarFacturaSQL(Factura factura, String tipoFactura) {
 		Conexion con = new Conexion();
@@ -5891,7 +5926,6 @@ public class Controladora implements Serializable{
 				horaFinal = r.getTime(7);
 				dia = r.getString(8);
 				borrado = r.getBoolean(9);
-				
 				c2 = con.conectar();
 				
 				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
@@ -5914,12 +5948,14 @@ public class Controladora implements Serializable{
 				{
 					Promocion promo = new Promocion(porcientoDescuento, nombre, LocalDate.parse(fechaInicial.toString()), LocalDate.parse(fechaFinal.toString()), LocalTime.parse(horaInicio.toString()), LocalTime.parse(horaFinal.toString()));
 					promo.setProductos(productos);
+					promo.setBorrado(borrado);
 					Controladora.getInstance().getMisPromociones().add(promo);
 				}
 				else
 				{
 					Promocion promo = new Promocion(porcientoDescuento, nombre, dia);
 					promo.setProductos(productos);
+					promo.setBorrado(borrado);
 					Controladora.getInstance().getMisPromociones().add(promo);
 				}
 			}
