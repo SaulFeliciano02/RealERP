@@ -194,13 +194,14 @@ abstract public class Producto {
 
 	public float getPrecioPorPromocion()
 	{
-		float precio = 0;
-		if(this.getPromocion() != null)
-		{
-			precio = (getPromocion().getPorcentajeDescuento()/100)*getPrecio();
+		for(Promocion promocion : Controladora.getInstance().getMisPromociones()) {
+			for(Producto p : promocion.getProductos()) {
+				if(this.codigo.equalsIgnoreCase(p.getCodigo())) {
+					return getPrecio()-( (float) promocion.getPorcentajeDescuento()/100  )*getPrecio();
+				}
+			}
 		}
-		setPrecioPromocion(precio);
-		return precio;
+		return 0;
 	}
 	
 	public ArrayList<CostoDirecto> getCostosDirectos() {

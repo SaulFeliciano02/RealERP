@@ -1517,7 +1517,7 @@
                                                                                     </Button>
                                                                                  </children>
                                                                               </HBox>
-                                                                              <TableView fx:id="tableview_promocionList" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                              <TableView fx:id="tableview_promocionList" editable="true" onMouseClicked="#tableview_productoPromocionClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                 <columns>
                                                                                   <TableColumn fx:id="tablecolumn_promocionCodigo" prefWidth="75.0" text="Nombre" />
                                                                                   <TableColumn prefWidth="75.0" text="Producto" />
@@ -1564,7 +1564,7 @@
                                                                                     </Button>
                                                                                     <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
                                                                                        <children>
-                                                                                          <Button mnemonicParsing="false" onAction="#abrirInfoAdicionalPromo" text="Información adicional de Promoción" />
+                                                                                          <Button fx:id="button_infoPromocion" disable="true" mnemonicParsing="false" onAction="#abrirInfoAdicionalPromo" text="Información adicional de Promoción" />
                                                                                        </children>
                                                                                        <HBox.margin>
                                                                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
