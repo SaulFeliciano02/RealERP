@@ -5956,6 +5956,7 @@ public class Controladora implements Serializable{
 					Promocion promo = new Promocion(porcientoDescuento, nombre, dia);
 					promo.setProductos(productos);
 					promo.setBorrado(borrado);
+					System.out.println("El valor de borrado de esta promocion es: " + promo.isBorrado());
 					Controladora.getInstance().getMisPromociones().add(promo);
 				}
 			}
@@ -9664,6 +9665,7 @@ public void loadCategoriaEmpleado()
 				int id = r.getInt(1);
 				String nombre = r.getString(2);
 				int idgrupoatributo = r.getInt(3);
+				boolean borrado = r.getBoolean("borrado");
 			
 				c2 = con.conectar();
 				s2 = (Statement) c2.createStatement();
@@ -9677,7 +9679,8 @@ public void loadCategoriaEmpleado()
 					GrupoAtributo pre = buscarGrupoAtributo(nombrecategoria);
 				
 					Atributos atr = new Atributos(nombre, pre);
-				
+					atr.setBorrado(borrado);
+					
 					Controladora.getInstance().getMisAtributos().add(atr);
 				}
 			
@@ -10622,9 +10625,9 @@ public void loadCategoriaEmpleado()
 		try {
 			cSQL = con.conectar();
 			sSQL = (Statement) cSQL.createStatement();
-			p = (PreparedStatement)
-					cSQL.prepareStatement("UPDATE atributos SET borrado = 1 WHERE grupoatributo = '"+indiceGrupoAtributo+"'");
-			p.executeUpdate();
+			//p = (PreparedStatement)
+			//		cSQL.prepareStatement("UPDATE atributos SET borrado = 1 WHERE grupoatributo = '"+indiceGrupoAtributo+"'");
+			//p.executeUpdate();
 			
 			p = (PreparedStatement)
 					cSQL.prepareStatement("UPDATE grupoatributo SET borrado = 1 WHERE idgrupoatributo = '"+indiceGrupoAtributo+"'");
