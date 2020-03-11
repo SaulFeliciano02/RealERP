@@ -66,6 +66,14 @@ public class Main extends Application{
 		    primaryStage.setResizable(false);
 		    primaryStage.sizeToScene();
 		    primaryStage.show();
+		    /*if(!Controladora.getInstance().activarLoadUsuarios())
+		    {
+		    	checkremember.setVisible(false);
+		    }
+		    if(Controladora.getInstance().activarUsuarioRecordado())
+		    {
+		    	checkremember.setText("Recuperar datos");
+		    }*/
 		    /*Image access = new Image(getClass().getResourceAsStream("images/misc/access.png"));
 		    ImageInput access1 = new ImageInput();
 		    access1.setSource(access);
@@ -106,8 +114,8 @@ public class Main extends Application{
 					{
 						Alert alert = new Alert(AlertType.INFORMATION, "Usted no posee usuarios registrados. Favor de acceder al sistema con la siguiente información: \n\nUsuario: administrador \nContraseña: administrador");
 			    		alert.showAndWait();
-			    		textfield_usuario.setText("administrador");
-			    		passwordfield_login.setText("administrador");
+			    		//textfield_usuario.setText("administrador");
+			    		//passwordfield_login.setText("administrador");
 					}
 					//passwordfield_login.clear();
 				} 
@@ -122,7 +130,6 @@ public class Main extends Application{
 					
 					if(Controladora.getInstance().activarUsuarioRecordado() && !Controladora.getInstance().verificarUsuarioRecordado(textfield_usuario.getText(), passwordfield_login.getText()))
 					{
-						//no esta borrando bien
 						Controladora.getInstance().OlvidarContrasena(textfield_usuario.getText());
 						Controladora.getInstance().reiniciarUsuarioRecordado();
 					}
@@ -131,6 +138,9 @@ public class Main extends Application{
 					{
 						System.out.println("Entre al if de rememberme " + textfield_usuario.getText());
 						Controladora.getInstance().RecordarContrasena(textfield_usuario.getText());
+						
+						Alert alert = new Alert(AlertType.INFORMATION, "Usted ha guardado los datos de su usuario en acceso directo. Para rellenar los campos de nombre de usuario y contraseña automaticamente, marque de nuevo el cuadro de 'recordar contraseña' en su próximo acceso. \n\nSi quiere eliminar el acceso directo a su usuario, acceda al sistema con los datos de su usuario \n *Nombre de usuario\n *Contraseña\n\ny el cuadro de 'recordar contraseña' desmarcado.");
+			    		alert.showAndWait();
 					}
 					
 					loading_progress.setVisible(true);
@@ -369,6 +379,10 @@ public class Main extends Application{
 							{
 								Controladora.getInstance().reiniciarCuentaBancaria();
 							}
+							if(!Controladora.getInstance().activarUsuarioRecordado())
+							{
+								Controladora.getInstance().reiniciarUsuarioRecordado();
+							}
 							if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
 								Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
 								Controladora.getInstance().setUsuarioLogueado(userRoot);
@@ -432,8 +446,8 @@ public class Main extends Application{
 			{
 				Alert alert = new Alert(AlertType.INFORMATION, "Usted no posee usuarios registrados. Favor de acceder al sistema con la siguiente información: \n\nUsuario: administrador \nContraseña: administrador");
 	    		alert.showAndWait();
-	    		textfield_usuario.setText("administrador");
-	    		passwordfield_login.setText("administrador");
+	    		//textfield_usuario.setText("administrador");
+	    		//passwordfield_login.setText("administrador");
 			}
 			//passwordfield_login.clear();
 		} 
@@ -457,6 +471,9 @@ public class Main extends Application{
 			{
 				System.out.println("Entre al if de rememberme " + textfield_usuario.getText());
 				Controladora.getInstance().RecordarContrasena(textfield_usuario.getText());
+				
+				Alert alert = new Alert(AlertType.INFORMATION, "Usted ha guardado los datos de su usuario en acceso directo. Para rellenar los campos de nombre de usuario y contraseña automaticamente, marque de nuevo el cuadro de 'recordar contraseña' en su próximo acceso. \n\nSi quiere eliminar el acceso directo a su usuario, acceda al sistema con los datos de su usuario \n *Nombre de usuario\n *Contraseña\n\ny el cuadro de 'recordar contraseña' desmarcado.");
+	    		alert.showAndWait();
 			}
 			
 			loading_progress.setVisible(true);
@@ -694,6 +711,10 @@ public class Main extends Application{
 					else
 					{
 						Controladora.getInstance().reiniciarCuentaBancaria();
+					}
+					if(!Controladora.getInstance().activarUsuarioRecordado())
+					{
+						Controladora.getInstance().reiniciarUsuarioRecordado();
 					}
 					if(textfield_usuario.getText().equalsIgnoreCase("administrador")) {
 						Usuario userRoot = new Usuario("administrador", null, true, "administrador", true, null);
