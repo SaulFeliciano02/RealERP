@@ -189,6 +189,8 @@ public class Controller implements Initializable{
     @FXML private TableColumn<CantBienesYServiciosUtilizados, Float> tablecolumn_facturaProductoValor;
     @FXML private TableView<CantBienesYServiciosUtilizados> tableview_facturaProductoList;
     
+    //DESPLIEGUE DE PROMOCIONES
+    
     @FXML private TableColumn<Promocion, String> tablecolumn_promocionCodigo;
     @FXML private TableColumn<Promocion, Integer> tablecolumn_promocionPorcentaje;
     @FXML private TableColumn<Promocion, LocalDate> tablecolumn_promocionFechaInicial;
@@ -197,6 +199,15 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Promocion, LocalTime> tablecolumn_promocionHoraFinal;
     @FXML private TableColumn<Promocion, String> tablecolumn_promocionDia;
     @FXML private TableView<Promocion> tableview_promocionList;
+    
+    @FXML private TableColumn<Producto, String> tablecolumn_productoPromocionCodigo;
+    @FXML private TableColumn<Producto, String> tablecolumn_productoPromocionNombre;
+    @FXML private TableColumn<Producto, String> tablecolumn_productoPromocionTipo;
+    @FXML private TableColumn<Producto, String> tablecolumn_productoPromocionRubro;
+    @FXML private TableColumn<Producto, String> tablecolumn_productoPromocionProveedor;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productoPromocionPrecioOriginal;
+    @FXML private TableColumn<Producto, Float> tablecolumn_productoPromocionPrecioPromocion;
+    @FXML private TableView<Producto> tableview_productoPromocion;
     
     
     @FXML private TableColumn<CostoIndirectoProducto, String> tablecolumn_productoCostoIndirectoNombre;
@@ -2703,11 +2714,12 @@ public class Controller implements Initializable{
     					if(a.getGrupoAtributo().equals(grupoAtributo)) {
     						int indiceAtributo = Controladora.getInstance().getMisAtributos().indexOf(a);
     						Controladora.getInstance().getMisAtributos().get(indiceAtributo).setBorrado(true);
+    						Controladora.getInstance().borrarAtributo(indiceAtributo+1);
     					}
     				}
     				int indice = Controladora.getInstance().getMisGrupoAtributo().indexOf(grupoAtributo);
     				Controladora.getInstance().getMisGrupoAtributo().get(indice).setBorrado(true);
-    				Controladora.getInstance().borrarAtributo(indice+1);
+    				//Controladora.getInstance().borrarGrupoAtributo(indice+1);
     				fillAtributesList(null);
     			}
     		}
@@ -4248,6 +4260,17 @@ public class Controller implements Initializable{
         	
         	setPeticiones();
     	}
+    	else if(belongsTo.equalsIgnoreCase("Promocion")) {
+    		tablecolumn_productoPromocionCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        	tablecolumn_productoPromocionNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        	tablecolumn_productoPromocionTipo.setCellValueFactory(new PropertyValueFactory<>("tipoProducto"));
+        	tablecolumn_productoPromocionRubro.setCellValueFactory(new PropertyValueFactory<>("rubroProductoNombre"));
+        	tablecolumn_productoPromocionProveedor.setCellValueFactory(new PropertyValueFactory<>("proveedorPrin"));
+        	tablecolumn_productoPromocionPrecioOriginal.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        	tablecolumn_productoPromocionPrecioPromocion.setCellValueFactory(new PropertyValueFactory<>("precioPorPromocion"));
+        	tableview_productoPromocion.setItems(data);
+        	tableview_peticionProducto.refresh();
+    	}
     	
     }
     
@@ -4725,7 +4748,7 @@ public class Controller implements Initializable{
     	if(promocion == null) {
     		for(Promocion p : Controladora.getInstance().getMisPromociones()) {
     			if(!p.isBorrado()) {
-    				data.addAll(Controladora.getInstance().getMisPromociones());
+    				data.add(p);
     			}
     		}	
     	}
@@ -5797,10 +5820,13 @@ public class Controller implements Initializable{
     }
     
     public void abrirInfoAdicionalPromo(ActionEvent event) {
+    	fillProductList(null, "Promocion");
     	anchorpane_infoAdicionalPromo.setVisible(true);
     }
     
     public void cerrarInfoAdicionalPromo(ActionEvent event) {
+    	tableview_productoPromocion.getItems().clear();
+    	tableview_productoPromocion.refresh();
     	anchorpane_infoAdicionalPromo.setVisible(false);
     }
     

@@ -869,7 +869,7 @@
                                                                                                 <VBox prefHeight="435.0" prefWidth="161.0" HBox.hgrow="ALWAYS">
                                                                                                    <children>
                                                                                                       <TextField fx:id="textfield_infoFamilia" alignment="TOP_CENTER" disable="true" editable="false" prefHeight="26.0" prefWidth="717.0" promptText="Resumen de la Familia" />
-                                                                                                      <TableView fx:id="tableView_atributos" editable="true" prefHeight="478.0" prefWidth="162.0">
+                                                                                                      <TableView fx:id="tableView_atributos" editable="true" onMouseClicked="#activarEliminarAtributo" prefHeight="478.0" prefWidth="162.0">
                                                                                                          <columns>
                                                                                                             <TableColumn fx:id="tablecolumn_atributogrupo" prefWidth="360.0" text="Familia" />
                                                                                                             <TableColumn fx:id="tablecolumn_atributonombre" prefWidth="350.0" text="Atributo" />
@@ -881,12 +881,12 @@
                                                                                                       <Pane prefHeight="200.0" prefWidth="390.0">
                                                                                                          <children>
                                                                                                             <Button fx:id="button_atributosEliminar" disable="true" layoutX="113.0" layoutY="31.0" mnemonicParsing="false" onAction="#eliminarAtributo" text="Eliminar" />
-                                                                                                            <RadioButton layoutX="22.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Atributos">
+                                                                                                            <RadioButton fx:id="radiobutton_atributo" layoutX="22.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Atributos">
                                                                                                                <toggleGroup>
                                                                                                                   <ToggleGroup fx:id="manejarAtributoFamilia" />
                                                                                                                </toggleGroup>
                                                                                                             </RadioButton>
-                                                                                                            <RadioButton layoutX="22.0" layoutY="43.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
+                                                                                                            <RadioButton fx:id="radiobutton_familia" layoutX="22.0" layoutY="43.0" mnemonicParsing="false" text="Familias" toggleGroup="$manejarAtributoFamilia" />
                                                                                                             <Text layoutX="23.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manejar:" />
                                                                                                          </children>
                                                                                                       </Pane>
@@ -1590,15 +1590,15 @@
                                                                                           </Text>
                                                                                        </children>
                                                                                     </VBox>
-                                                                                    <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                                    <TableView fx:id="tableview_productoPromocion" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                                                                       <columns>
-                                                                                        <TableColumn prefWidth="75.0" text="Código" />
-                                                                                        <TableColumn prefWidth="75.0" text="Nombre" />
-                                                                                          <TableColumn prefWidth="75.0" text="Tipo" />
-                                                                                          <TableColumn prefWidth="75.0" text="Rubro" />
-                                                                                          <TableColumn prefWidth="75.0" text="Proveedor" />
-                                                                                          <TableColumn prefWidth="75.0" text="Precio original" />
-                                                                                          <TableColumn prefWidth="75.0" text="Precio en promoción" />
+                                                                                        <TableColumn fx:id="tablecolumn_productoPromocionCodigo" prefWidth="75.0" text="Código" />
+                                                                                        <TableColumn fx:id="tablecolumn_productoPromocionNombre" prefWidth="75.0" text="Nombre" />
+                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionTipo" prefWidth="75.0" text="Tipo" />
+                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionRubro" prefWidth="75.0" text="Rubro" />
+                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionProveedor" prefWidth="75.0" text="Proveedor" />
+                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionPrecioOriginal" prefWidth="75.0" text="Precio original" />
+                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionPrecioPromocion" prefWidth="75.0" text="Precio en promoción" />
                                                                                       </columns>
                                                                                        <columnResizePolicy>
                                                                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

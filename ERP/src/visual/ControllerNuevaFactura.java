@@ -1303,6 +1303,7 @@ public class ControllerNuevaFactura implements Initializable{
 			Controladora.getInstance().guardarPagoPeticionesCreditoSQL(peticion, monto, tipoPago);
 			Controladora.getInstance().pagarDeudaPeticion(peticion, monto);
 			
+			new Alert(AlertType.INFORMATION, "Operación Satisfactoria").showAndWait();
 			textfield_buscarPeticionFactura.setText("");
 			textfield_facturaPeticionProducto.setText("");
 			textfield_facturaPeticionProveedor.setText("");

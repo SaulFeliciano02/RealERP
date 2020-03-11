@@ -105,7 +105,13 @@ abstract public class Producto {
 		catch(NullPointerException e) {
 			return "";
 		}
-		
+	}
+	public String getRubroProductoNombre() {
+		try {
+			return rubroProducto.getNombreRubro();
+		}catch(NullPointerException e) {
+			return "";
+		}
 	}
 	public void setRubroProducto(Rubro rubroProducto) {
 		this.rubroProducto = rubroProducto;
@@ -186,7 +192,7 @@ abstract public class Producto {
 		this.promocion = promocion;
 	}
 
-	public float precioPorPromocion()
+	public float getPrecioPorPromocion()
 	{
 		float precio = 0;
 		if(this.getPromocion() != null)
@@ -265,6 +271,7 @@ abstract public class Producto {
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
 	}
+	
 	
 	
 }
