@@ -14033,6 +14033,7 @@ public boolean verificarUsuarioRecordado(String usuario, String contrasena)
 			{
 				System.out.println("Entre a el if de la bandera de verificacion");
 				bandera = true;
+				System.out.println("Valor de la bandera: " + bandera);
 			}
 		}
 		
