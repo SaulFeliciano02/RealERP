@@ -387,6 +387,7 @@ public class Controller implements Initializable{
     @FXML private Button button_eliminarPromocion;
     @FXML private AnchorPane anchorpane_infoAdicionalPromo;
     @FXML private VBox vbox_infoAdicionalPromoHeader;
+    @FXML private VBox vBox_paneInfoAdicionalPromo;
     
     //CONFIGURACION
     @FXML private AnchorPane pane_nuevoUsuario;
@@ -4024,6 +4025,7 @@ public class Controller implements Initializable{
     	anchorPane_infoAdicionalEmpresa.setStyle("-fx-border-color: lightgray");
     	
     	anchorpane_infoAdicionalPromo.setStyle("-fx-border-color: gray");
+    	anchorpane_infoAdicionalPromo.setStyle("-fx-background-color: white");
     	vbox_infoAdicionalPromoHeader.setStyle("-fx-background-color:  #e6e6e6");
     	
     	pressed_productos1.setSource(pressed_productos); 
@@ -5821,14 +5823,13 @@ public class Controller implements Initializable{
     
     public void abrirInfoAdicionalPromo(ActionEvent event) {
     	fillProductList(null, "Promocion");
-    	anchorpane_infoAdicionalPromo.setVisible(true);
+    	vBox_paneInfoAdicionalPromo.setVisible(true);
     }
     
     public void cerrarInfoAdicionalPromo(ActionEvent event) {
     	tableview_productoPromocion.getItems().clear();
     	tableview_productoPromocion.refresh();
-    	anchorpane_infoAdicionalPromo.setVisible(false);
-    }
+    	vBox_paneInfoAdicionalPromo.setVisible(false);    }
     
     
 }

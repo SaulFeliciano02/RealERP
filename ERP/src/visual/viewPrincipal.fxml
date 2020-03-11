@@ -1574,55 +1574,62 @@
                                                                               </HBox>
                                                                            </children>
                                                                         </VBox>
-                                                                        <AnchorPane fx:id="anchorpane_infoAdicionalPromo" layoutX="207.0" layoutY="94.0" prefHeight="562.0" prefWidth="1102.0" visible="false">
+                                                                        <VBox fx:id="vBox_paneInfoAdicionalPromo" layoutX="207.0" layoutY="94.0" prefHeight="934.4" prefWidth="1636.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <VBox layoutX="284.0" layoutY="165.0" prefHeight="562.4" prefWidth="1102.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                              <AnchorPane fx:id="anchorpane_infoAdicionalPromo" prefHeight="562.0" prefWidth="1102.0">
                                                                                  <children>
-                                                                                    <VBox fx:id="vbox_infoAdicionalPromoHeader" alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="1102.0">
+                                                                                    <VBox layoutX="284.0" layoutY="165.0" prefHeight="562.4" prefWidth="1102.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
-                                                                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Información adicional de promoción">
+                                                                                          <VBox fx:id="vbox_infoAdicionalPromoHeader" alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="1102.0">
+                                                                                             <children>
+                                                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Información adicional de promoción">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets left="20.0" />
+                                                                                                   </VBox.margin>
+                                                                                                   <font>
+                                                                                                      <Font size="17.0" />
+                                                                                                   </font>
+                                                                                                </Text>
+                                                                                             </children>
+                                                                                          </VBox>
+                                                                                          <TableView fx:id="tableview_productoPromocion" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                                                                            <columns>
+                                                                                              <TableColumn fx:id="tablecolumn_productoPromocionCodigo" prefWidth="75.0" text="Código" />
+                                                                                              <TableColumn fx:id="tablecolumn_productoPromocionNombre" prefWidth="75.0" text="Nombre" />
+                                                                                                <TableColumn fx:id="tablecolumn_productoPromocionTipo" prefWidth="75.0" text="Tipo" />
+                                                                                                <TableColumn fx:id="tablecolumn_productoPromocionRubro" prefWidth="75.0" text="Rubro" />
+                                                                                                <TableColumn fx:id="tablecolumn_productoPromocionProveedor" prefWidth="75.0" text="Proveedor" />
+                                                                                                <TableColumn fx:id="tablecolumn_productoPromocionPrecioOriginal" prefWidth="75.0" text="Precio original" />
+                                                                                                <TableColumn fx:id="tablecolumn_productoPromocionPrecioPromocion" prefWidth="75.0" text="Precio en promoción" />
+                                                                                            </columns>
+                                                                                             <columnResizePolicy>
+                                                                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                                                             </columnResizePolicy>
                                                                                              <VBox.margin>
-                                                                                                <Insets left="20.0" />
+                                                                                                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                                                                                              </VBox.margin>
-                                                                                             <font>
-                                                                                                <Font size="17.0" />
-                                                                                             </font>
-                                                                                          </Text>
-                                                                                       </children>
-                                                                                    </VBox>
-                                                                                    <TableView fx:id="tableview_productoPromocion" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                                                                                      <columns>
-                                                                                        <TableColumn fx:id="tablecolumn_productoPromocionCodigo" prefWidth="75.0" text="Código" />
-                                                                                        <TableColumn fx:id="tablecolumn_productoPromocionNombre" prefWidth="75.0" text="Nombre" />
-                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionTipo" prefWidth="75.0" text="Tipo" />
-                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionRubro" prefWidth="75.0" text="Rubro" />
-                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionProveedor" prefWidth="75.0" text="Proveedor" />
-                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionPrecioOriginal" prefWidth="75.0" text="Precio original" />
-                                                                                          <TableColumn fx:id="tablecolumn_productoPromocionPrecioPromocion" prefWidth="75.0" text="Precio en promoción" />
-                                                                                      </columns>
-                                                                                       <columnResizePolicy>
-                                                                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                                                       </columnResizePolicy>
-                                                                                       <VBox.margin>
-                                                                                          <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
-                                                                                       </VBox.margin>
-                                                                                    </TableView>
-                                                                                    <VBox alignment="CENTER_RIGHT" prefHeight="62.0" prefWidth="1102.0">
-                                                                                       <children>
-                                                                                          <Button mnemonicParsing="false" onAction="#cerrarInfoAdicionalPromo" text="Cerrar">
+                                                                                          </TableView>
+                                                                                          <VBox alignment="CENTER_RIGHT" prefHeight="62.0" prefWidth="1102.0">
+                                                                                             <children>
+                                                                                                <Button mnemonicParsing="false" onAction="#cerrarInfoAdicionalPromo" text="Cerrar">
+                                                                                                   <VBox.margin>
+                                                                                                      <Insets right="10.0" />
+                                                                                                   </VBox.margin>
+                                                                                                </Button>
+                                                                                             </children>
                                                                                              <VBox.margin>
-                                                                                                <Insets right="10.0" />
+                                                                                                <Insets bottom="20.0" />
                                                                                              </VBox.margin>
-                                                                                          </Button>
+                                                                                          </VBox>
                                                                                        </children>
-                                                                                       <VBox.margin>
-                                                                                          <Insets bottom="20.0" />
-                                                                                       </VBox.margin>
                                                                                     </VBox>
                                                                                  </children>
-                                                                              </VBox>
+                                                                              </AnchorPane>
                                                                            </children>
-                                                                        </AnchorPane>
+                                                                           <padding>
+                                                                              <Insets bottom="90.0" left="90.0" right="90.0" top="90.0" />
+                                                                           </padding>
+                                                                        </VBox>
                                                                      </children>
                                                                   </AnchorPane>
                                                               </content>
