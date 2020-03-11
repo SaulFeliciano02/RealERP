@@ -191,6 +191,7 @@ public class Controller implements Initializable{
     
     //DESPLIEGUE DE PROMOCIONES
     
+    @FXML private Button button_infoPromocion;
     @FXML private TableColumn<Promocion, String> tablecolumn_promocionCodigo;
     @FXML private TableColumn<Promocion, Integer> tablecolumn_promocionPorcentaje;
     @FXML private TableColumn<Promocion, LocalDate> tablecolumn_promocionFechaInicial;
@@ -5821,15 +5822,33 @@ public class Controller implements Initializable{
     	}
     }
     
+    
+    /**INFO ADICIONAL DE PROMOCION**/
+    
     public void abrirInfoAdicionalPromo(ActionEvent event) {
-    	fillProductList(null, "Promocion");
+    	Promocion promocion = tableview_promocionList.getSelectionModel().getSelectedItem();
+    	System.out.println("La cantidad de productos que tiene esta promocion es: " + promocion.getProductos().size());
+    	fillProductList(promocion.getProductos(), "Promocion");
     	vBox_paneInfoAdicionalPromo.setVisible(true);
     }
     
     public void cerrarInfoAdicionalPromo(ActionEvent event) {
     	tableview_productoPromocion.getItems().clear();
     	tableview_productoPromocion.refresh();
-    	vBox_paneInfoAdicionalPromo.setVisible(false);    }
+    	tableview_promocionList.getSelectionModel().clearSelection();
+    	button_infoPromocion.setDisable(true);
+    	vBox_paneInfoAdicionalPromo.setVisible(false); 
+    }
+    
+    public void tableview_productoPromocionClicked(MouseEvent event) {
+    	System.out.println("Klk");
+    	if(tableview_promocionList.getSelectionModel().getSelectedItem() != null) {
+    		button_infoPromocion.setDisable(false);
+    	}
+    	else {
+    		button_infoPromocion.setDisable(true);
+    	}
+    }
     
     
 }

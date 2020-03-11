@@ -269,6 +269,7 @@ public class ControllerNuevaPromocion implements Initializable{
         	
         	radiobutton_producto.setSelected(true);
         	radiobutton_rubro.setSelected(false);
+        	button_guardarPromocion.setDisable(true);
         	cambiodePane(null);
     	}
     	
