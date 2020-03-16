@@ -560,9 +560,36 @@ public class ControllerNuevaFactura implements Initializable{
     		{
     			plazoPagoDias = 90;
     		}
-    		float porcientoDescuento = Float.parseFloat(textfield_descuento.getText());
-    		LocalDate fechaLimiteDescuento = datepicker_fechaDePago.getValue();
-    		float porcientoPenalizacion = Float.parseFloat(textfield_penalizacion.getText());
+    		
+    		float porcientoDescuento;
+    		
+    		if(!textfield_descuento.getText().isEmpty())
+    		{
+    			porcientoDescuento = Float.parseFloat(textfield_descuento.getText());
+    		}
+    		else
+    		{
+    			porcientoDescuento = 0;
+    		}
+    		
+    		LocalDate fechaLimiteDescuento = null;
+    		
+    		if(!datepicker_fechaDePago.equals(null))
+    		{
+    			fechaLimiteDescuento = datepicker_fechaDePago.getValue();
+    		}
+    		
+    		float porcientoPenalizacion;
+    		
+    		if(!textfield_penalizacion.getText().isEmpty())
+    		{
+    			porcientoPenalizacion = Float.parseFloat(textfield_penalizacion.getText());
+    		}
+    		else
+    		{
+    			porcientoPenalizacion = 0;
+    		}
+    		
     		montoRecibido = Float.parseFloat(textfield_pagorecibido.getText());
     		
     		factura = new Factura(prodFacturados, kitFacturados, serviciosFacturados, montoTotal, tipoPago, montoRecibido, 0, cliente, tipoFactura, cantcopias, estado, adeudado, plazoPagoDias, porcientoDescuento, fechaLimiteDescuento, porcientoPenalizacion);
