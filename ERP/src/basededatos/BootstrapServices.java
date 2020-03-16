@@ -389,9 +389,9 @@ public class BootstrapServices {
 				"  `factura` int(11) NOT NULL,\r\n" + 
 				"  `adeudado` float NOT NULL,\r\n" + 
 				"  `plazopagodias` int(11) NOT NULL,\r\n" + 
-				"  `porcientodescuento` float NOT NULL,\r\n" + 
-				"  `fechalimitedescuento` date NOT NULL,\r\n" + 
-				"  `porcientopenalizacion` float NOT NULL,\r\n" + 
+				"  `porcientodescuento` float,\r\n" + 
+				"  `fechalimitedescuento` date,\r\n" + 
+				"  `porcientopenalizacion` float,\r\n" + 
 				"  PRIMARY KEY (`idfacturacreditocliente`),\r\n" + 
 				"  CONSTRAINT `facturacredito` FOREIGN KEY (`factura`) REFERENCES `facturas` (`idfacturas`) ON DELETE NO ACTION ON UPDATE NO ACTION\r\n" + 
 				");";
@@ -629,7 +629,8 @@ public class BootstrapServices {
 				"  `idpagopeticionescredito` int(11) NOT NULL AUTO_INCREMENT,\r\n" + 
 				"  `peticion` int(11) NOT NULL,\r\n" + 
 				"  `montopagado` float NOT NULL,\r\n" + 
-				"  `fechadelpago` date NOT NULL,\r\n" + 
+				"  `fechadelpago` date NOT NULL,\r\n" +
+				"  `tipodepago` varchar(45) NOT NULL,\r\n" +
 				"  PRIMARY KEY (`idpagopeticionescredito`),\r\n" + 
 				"  CONSTRAINT `peticionpagocredito` FOREIGN KEY (`peticion`) REFERENCES `peticionescredito` (`peticion`) ON DELETE NO ACTION ON UPDATE NO ACTION\r\n" + 
 				");";

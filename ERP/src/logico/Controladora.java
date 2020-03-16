@@ -10818,7 +10818,7 @@ public void loadCategoriaEmpleado()
 						CantProductosUtilizados cpu = new CantProductosUtilizados(est, cantidad);
 						System.out.println("CantProductosUtilizados: " + cpu.getNombre() + " " + cpu.getCantidad());
 						cantProdFact.add(cpu);
-						Controladora.getInstance().getMisCantProductosUtilizados().add(cpu);
+						Controladora.getInstance().getMisCantProductosUtilizados().add(cpu); 
 					}
 				}
 				
@@ -11346,7 +11346,8 @@ public void loadCategoriaEmpleado()
 				for (Factura fac : misFacturas) {
 					if((fac.getFecha().isAfter(inicio) && fac.getFecha().isBefore(fin)) || (fac.getFecha().isEqual(inicio) || fac.getFecha().isEqual(fin)))
 					{
-						setIngresosVentasPagadas(getIngresosVentasPagadas() + fac.calcularIngreso());
+						//setIngresosVentasPagadas(getIngresosVentasPagadas() + fac.calcularIngreso());
+						setIngresosVentasPagadas(fac.calcularIngreso());
 					}
 				}
 			}
@@ -11356,7 +11357,8 @@ public void loadCategoriaEmpleado()
 			if(misFacturas.size() > 0)
 			{
 				for (Factura fac : misFacturas) {
-					setIngresosVentasPagadas(getIngresosVentasPagadas() + fac.calcularIngreso());
+					//setIngresosVentasPagadas(getIngresosVentasPagadas() + fac.calcularIngreso());
+					setIngresosVentasPagadas(fac.calcularIngreso());
 				}
 			}
 		}	
@@ -11403,6 +11405,7 @@ public void loadCategoriaEmpleado()
 		{
 			if(misFacturas.size() > 0)
 			{
+				System.out.println("Entre el if de calcular los ingresos por pagar");
 				for (Factura fac : misFacturas) {
 					ingresosVentasPorPagar += fac.calcularIngresoPorPagar();
 				}
@@ -11434,6 +11437,7 @@ public void loadCategoriaEmpleado()
 	public void calcularIngresoTotal()
 	{
 		ingresoTotal = ingresosVentasPagadas + ingresosVentasPorPagar;
+		//ingresoTotal = ingresosVentasPagadas + pagosDeudasClientesTotal;
 	}
 	
 	public void calcularGanaciaTotal(LocalDate inicio, LocalDate fin)
@@ -11564,7 +11568,14 @@ public void loadCategoriaEmpleado()
 			p.setFloat(2, factura.getAdeudado());
 			p.setInt(3, factura.getPlazoPagoDias());
 			p.setFloat(4, factura.getPorcientoDescuento());
-			p.setDate(5, (java.sql.Date.valueOf(factura.getFechaLimiteDescuento())));
+			if(!(factura.getFechaLimiteDescuento() == null))
+			{
+				p.setDate(5, (java.sql.Date.valueOf(factura.getFechaLimiteDescuento())));
+			}
+			else
+			{
+				p.setDate(5, null);
+			}
 			p.setFloat(6, factura.getPorcientoPenalizacion());
 			
 			//ejecutar el preparedStatement
@@ -11617,6 +11628,120 @@ public void loadCategoriaEmpleado()
 			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 			s = (Statement) c.createStatement();
 			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM facturacreditocliente");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarLoadFacturas()
+	{
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM facturas");
+			
+			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
+			while(r.next())
+			{
+				cuenta = r.getInt(1);
+			}
+			
+			if(cuenta > 0)
+			{
+				activar = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+		finally {
+			try {
+				
+				if(c!=null) {
+					c.close();
+				}
+				
+				if(s!=null) {
+					s.close();
+				}
+				
+				if(r!=null) {
+					r.close();
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return activar;
+	}
+	
+	public boolean activarLoadPromocion()
+	{
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		boolean activar = false;
+		int cuenta = 0;
+		
+		try {
+			
+			//Recuperar precios
+			c = con.conectar();
+			
+			//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
+			s = (Statement) c.createStatement();
+			r = s.executeQuery("SELECT COUNT(*) AS TOTAL FROM PROMOCION");
 			
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
@@ -12826,10 +12951,15 @@ public void reiniciarPartida() {
 		//ejecutar el preparedStatement
 		p.executeUpdate();
 		
-		p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
+		if(!Controladora.getInstance().activarLoadFacturas() && !Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
+		{
+			System.out.println("If para reiniciar cantidad producto utilizado");
+			
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
 		
-		//ejecutar el preparedStatement
-		p.executeUpdate();
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+		}
 		
 		System.out.println("AutoIncrement modified!");
 		
@@ -13029,10 +13159,15 @@ public void reiniciarKit() {
 		//ejecutar el preparedStatement
 		p.executeUpdate();
 		
-		p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
+		if(!Controladora.getInstance().activarLoadFacturas() && !Controladora.getInstance().activarLoadFacturaCreditoClienteSQL())
+		{
+			System.out.println("If para reiniciar cantidad producto utilizado");
+			
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE cantproductosutilizados ALTER COLUMN IDCANTPRODUCTOSUTILIZADOS RESTART WITH 1");
 		
-		//ejecutar el preparedStatement
-		p.executeUpdate();
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+		}
 		System.out.println("AutoIncrement modified!");
 		
 	} catch (Exception e2) {
@@ -13487,9 +13622,11 @@ public void reiniciarFacturaCreditoCliente() {
 	
 	Conexion con = new Conexion();
 	java.sql.Connection c = null;
+	java.sql.Connection c2 = null;
 	Statement s = null;
 	ResultSet r = null;
 	PreparedStatement p = null;
+	PreparedStatement p2 = null;
 	
 	try {
 		c = con.conectar();
@@ -13498,6 +13635,13 @@ public void reiniciarFacturaCreditoCliente() {
 		
 		//ejecutar el preparedStatement
 		p.executeUpdate();
+		
+		c2 = con.conectar();
+		
+		p2 = (PreparedStatement) c2.prepareStatement("ALTER TABLE PAGOSFACTURACREDITOCLIENTE ALTER COLUMN IDPAGOSFACTURACREDITOCLIENTE RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p2.executeUpdate(); 
 		
 		System.out.println("AutoIncrement modified!");
 		
@@ -13511,6 +13655,10 @@ public void reiniciarFacturaCreditoCliente() {
 					
 					if(c!=null) {
 						c.close();
+					}
+					
+					if(c2!=null) {
+						c2.close();
 					}
 					
 					if(s!=null) {

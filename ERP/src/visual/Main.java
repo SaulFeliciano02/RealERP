@@ -321,8 +321,22 @@ public class Main extends Application{
 							{
 								Controladora.getInstance().reiniciarUsuarios();
 							}
-							Controladora.getInstance().loadFactura();
-							Controladora.getInstance().loadPromocion();
+							if(Controladora.getInstance().activarLoadFacturas())
+							{
+								Controladora.getInstance().loadFactura();
+							}
+							else
+							{
+								Controladora.getInstance().reiniciarFactura();
+							}
+							if(Controladora.getInstance().activarLoadPromocion())
+							{
+								Controladora.getInstance().loadPromocion();
+							}
+							else
+							{
+								Controladora.getInstance().reiniciarPromocion();
+							}
 							if(Controladora.getInstance().activarLoadImagenProducto())
 							{
 								Controladora.getInstance().loadImagenProducto();
@@ -654,8 +668,22 @@ public class Main extends Application{
 					{
 						Controladora.getInstance().reiniciarUsuarios();
 					}
-					Controladora.getInstance().loadFactura();
-					Controladora.getInstance().loadPromocion();
+					if(Controladora.getInstance().activarLoadFacturas())
+					{
+						Controladora.getInstance().loadFactura();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarFactura();
+					}
+					if(Controladora.getInstance().activarLoadPromocion())
+					{
+						Controladora.getInstance().loadPromocion();
+					}
+					else
+					{
+						Controladora.getInstance().reiniciarPromocion();
+					}
 					if(Controladora.getInstance().activarLoadImagenProducto())
 					{
 						Controladora.getInstance().loadImagenProducto();
