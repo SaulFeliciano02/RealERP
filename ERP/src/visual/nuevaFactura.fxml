@@ -32,7 +32,7 @@
       </ImageView>
       <AnchorPane layoutX="237.0" layoutY="59.0" prefHeight="682.0" prefWidth="1094.0">
          <children>
-            <TabPane layoutX="14.0" layoutY="14.0" prefHeight="682.0" prefWidth="1094.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="14.0">
+            <TabPane fx:id="tabpane_factura" layoutX="14.0" layoutY="14.0" prefHeight="682.0" prefWidth="1094.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="14.0">
               <tabs>
                 <Tab fx:id="tab_facturarProducto" text="Facturar productos">
                   <content>
@@ -904,7 +904,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Facturas de peticiones">
+                  <Tab fx:id="tab_facturarPeticion" text="Facturas de peticiones">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

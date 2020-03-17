@@ -250,6 +250,7 @@ public class Controller implements Initializable{
     @FXML private RadioButton radiobutton_peticionEfectivo;
     @FXML private RadioButton radiobutton_peticionCredito;
     @FXML private RadioButton radiobutton_peticionTarjeta;
+    @FXML private Button button_guardarPeticion;
     
     @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoCodigo;
     @FXML private TableColumn<Producto, String> tablecolumn_peticionProductoNombre;
@@ -2346,6 +2347,10 @@ public class Controller implements Initializable{
 			root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			Window owner = button_nuevaFactura.getScene().getWindow();
+			ControllerNuevaFactura c = fxmlLoader.getController();
+			if(event.getSource().equals(button_guardarPeticion)) {
+				c.openTabFacturaPeticion();
+			}
 			//stage.initModality(Modality.APPLICATION_MODAL);
 			//stage.initStyle(StageStyle.UNDECORATED);
 			stage.setTitle("Nueva Factura");
@@ -3401,8 +3406,17 @@ public class Controller implements Initializable{
             	radiobutton_peticionTarjeta.setDisable(true);
             	
             	tableview_productList.refresh();
+            	Alert facturar = new Alert(AlertType.CONFIRMATION, "Desea facturar esta petición?", ButtonType.YES, ButtonType.NO);
+            	if(peticion.getMetodoPago().equalsIgnoreCase("credito")) {
+            		facturar.showAndWait();
+            		if(facturar.getResult() == ButtonType.YES) {
+            			System.out.println("VOY A ABRIR LAS FACTURAS");
+            			pressed_nuevaFactura(event);
+            		}
+            	}
     		}        	
         	fillPeticion();
+        	
     	}
     }
 

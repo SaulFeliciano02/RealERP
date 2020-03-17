@@ -30,6 +30,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -169,8 +170,10 @@ public class ControllerNuevaFactura implements Initializable{
 	    @FXML private RadioButton radiobutton_peticionFacturaTarjeta;
 	    @FXML private TextField textfield_peticionFacturaTotalPagado;
 	    
+	    @FXML private TabPane tabpane_factura;
 	    @FXML private Tab tab_facturarProducto;
 	    @FXML private Tab tab_facturarCredito;
+	    @FXML private Tab tab_facturarPeticion;
 	    
 
 	public void reload(Stage stage) {
@@ -1506,6 +1509,10 @@ public class ControllerNuevaFactura implements Initializable{
 		has_precio_promocion.add(hasPromotion);
 		has_precio_promocion.add(precioPromocion);
 		return has_precio_promocion;
+	}
+	
+	public void openTabFacturaPeticion() {
+		tabpane_factura.getSelectionModel().select(tab_facturarPeticion);
 	}
 
 }
