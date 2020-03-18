@@ -5903,7 +5903,7 @@ public class Controladora implements Serializable{
 		int promocion = 0;
 		float precioPromocion = 0;
 		boolean borrado2 = false;
-		ArrayList<Producto> productos = new ArrayList<>();
+		ArrayList<Producto> productos = null;
 		
 		try {
 			
@@ -5917,6 +5917,7 @@ public class Controladora implements Serializable{
 			//Bucle para recibir cada valor de las columnas, fila por fila, e imprimirlos en consola
 			while(r.next())
 			{
+				productos = new ArrayList<>();
 				idpromocion = r.getInt(1);
 				porcientoDescuento = r.getInt(2);
 				nombre = r.getString(3);
@@ -5930,7 +5931,7 @@ public class Controladora implements Serializable{
 				
 				//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 				s2 = (Statement) c2.createStatement();
-				r2 = s2.executeQuery("SELECT * FROM promoproducto");
+				r2 = s2.executeQuery("SELECT * FROM promoproducto where promocion = '"+idpromocion+"'");
 				
 				while(r2.next())
 				{
@@ -5940,7 +5941,10 @@ public class Controladora implements Serializable{
 					precioPromocion = r2.getFloat(4);
 					borrado2 = r2.getBoolean(5);
 					
+					System.out.println("Vuelta promocion con: " + idProducto + " Size de productos: " + Controladora.getInstance().getMisProductos().size());
+					
 					productos.add(Controladora.getInstance().getMisProductos().get(idProducto-1));
+					System.out.println("Cruce la promo");
 				}
 				
 				
@@ -5959,6 +5963,8 @@ public class Controladora implements Serializable{
 					System.out.println("El valor de borrado de esta promocion es: " + promo.isBorrado());
 					Controladora.getInstance().getMisPromociones().add(promo);
 				}
+				
+				productos = null;
 			}
 			
 			
@@ -12936,10 +12942,13 @@ public void reiniciarPartida() {
 		//ejecutar el preparedStatement
 		p.executeUpdate();
 		
-		p = (PreparedStatement) c.prepareStatement("ALTER TABLE estandar ALTER COLUMN IDESTANDAR RESTART WITH 1");
-		
-		//ejecutar el preparedStatement
-		p.executeUpdate();
+		if(!activarLoadProductos())
+		{
+			p = (PreparedStatement) c.prepareStatement("ALTER TABLE estandar ALTER COLUMN IDESTANDAR RESTART WITH 1");
+			
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+		}
 		
 		p = (PreparedStatement) c.prepareStatement("ALTER TABLE productopartida ALTER COLUMN IDPRODUCTOPARTIDA RESTART WITH 1");
 		
