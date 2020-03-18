@@ -992,9 +992,9 @@
                                                                                     </HBox>
                                                                                  </children>
                                                                               </VBox>
-                                                                              <AnchorPane fx:id="titledPane_nuevaPeticion" layoutX="21.0" layoutY="29.0" prefHeight="200.0" prefWidth="338.0" style="-fx-background-color: WHITE;" visible="false">
+                                                                              <AnchorPane fx:id="titledPane_nuevaPeticion" layoutX="21.0" layoutY="29.0" prefHeight="389.0" prefWidth="338.0" style="-fx-background-color: WHITE;" visible="false">
                                                                                  <children>
-                                                                                    <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="430.0" prefWidth="338.0" snapToPixel="false" style="-fx-border-color: LIGHTGRAY;">
+                                                                                    <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="385.0" prefWidth="338.0" snapToPixel="false" style="-fx-border-color: LIGHTGRAY;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                        <children>
                                                                                           <HBox prefHeight="30.0" prefWidth="338.0" style="-fx-background-color: GRAY;">
                                                                                              <children>
@@ -1005,7 +1005,7 @@
                                                                                                 </Label>
                                                                                              </children>
                                                                                           </HBox>
-                                                                                          <VBox alignment="CENTER_LEFT" prefHeight="433.0" prefWidth="306.0" style="-fx-border-color: LIGHTGRAY;">
+                                                                                          <VBox alignment="CENTER_LEFT" prefHeight="310.0" prefWidth="306.0" style="-fx-border-color: LIGHTGRAY;">
                                                                                              <children>
                                                                                                 <Label text="Producto">
                                                                                                    <VBox.margin>
@@ -1075,16 +1075,6 @@
                                                                                                       <Insets bottom="10.0" left="10.0" />
                                                                                                    </VBox.margin>
                                                                                                 </AnchorPane>
-                                                                                                <Label text="Estado">
-                                                                                                   <VBox.margin>
-                                                                                                      <Insets left="10.0" />
-                                                                                                   </VBox.margin>
-                                                                                                </Label>
-                                                                                                <ComboBox fx:id="combobox_peticionEstado" disable="true" prefWidth="150.0">
-                                                                                                   <VBox.margin>
-                                                                                                      <Insets bottom="10.0" left="10.0" />
-                                                                                                   </VBox.margin>
-                                                                                                </ComboBox>
                                                                                                 <Label text="Método de pago">
                                                                                                    <VBox.margin>
                                                                                                       <Insets bottom="5.0" left="10.0" />
