@@ -2100,7 +2100,7 @@ public class ControllerNuevoProducto implements Initializable {
 			
     	}
     	
-    	if(!textfield_costosValor.getText().isEmpty())
+    	if((!textfield_costosValor.getText().isEmpty() && (!textfield_costoPrecioCompraProducto.getText().isEmpty() && !checkbox_generalProducible.isSelected())) || (!textfield_costosValor.getText().isEmpty() && (textfield_costoPrecioCompraProducto.isDisable() && checkbox_generalProducible.isSelected())))
     	{	
     		if(radiobutton_costosIndirectos.isSelected())
         	{
@@ -2136,7 +2136,16 @@ public class ControllerNuevoProducto implements Initializable {
         	a.setAlertType(AlertType.WARNING);
         	a.setContentText("Necesita Ingresar el precio estimado del producto.");
         	a.show();
+        	
     	}
+    	if(textfield_costoPrecioCompraProducto.getText().isEmpty() && !checkbox_generalProducible.isSelected())
+    	{
+    		Alert b = new Alert(AlertType.NONE); 
+        	b.setAlertType(AlertType.WARNING);
+        	b.setContentText("Necesita Ingresar el costo de compra del producto.");
+        	b.show();
+    	}
+    	
     }
     
     //FUNCIONES CREACION DE LA PARTIDA
