@@ -38,7 +38,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class Main extends Application{
 	
@@ -49,6 +52,15 @@ public class Main extends Application{
 	@FXML private ProgressBar loading_progress;
 	@FXML private TextField textfield_usuario;
 	@FXML private CheckBox checkremember;
+	@FXML private AnchorPane pane_forgotPass;
+	@FXML private VBox vbox_userDataForgotPass;
+	@FXML private VBox vbox_securityQuestions;
+	@FXML private HBox hbox_siguiente;
+	@FXML private Text text_userNoExist;
+	@FXML private Text text_questionsIncorrect;
+	@FXML private Button button_siguiente;
+	@FXML private Button button_guardar;
+	@FXML private VBox vbox_newPassword;
 	
 	String usu;
 	
@@ -78,6 +90,7 @@ public class Main extends Application{
 		    ImageInput access1 = new ImageInput();
 		    access1.setSource(access);
 			button_acceder.setEffect(access1);*/
+		    
 		    
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -788,6 +801,54 @@ public class Main extends Application{
 		}
 		
 	}
+	
+    public void changeColorFontExited (MouseEvent event) {
+    	Label label = (Label) event.getSource();
+    	label.setStyle("-fx-text-fill: #000000");
+    }
+    public void changeColorFontEnter (MouseEvent event) {
+    	Label label = (Label) event.getSource();
+    	label.setStyle("-fx-text-fill: #3c80df");
+    	
+    }
+    
+    public void openPaneForgotPas(MouseEvent event) {
+    	
+    	pane_forgotPass.setVisible(true);
+    	
+    	pane_forgotPass.setStyle("-fx-border-color: #0000");
+    	pane_forgotPass.setStyle("-fx-background-color: white");
+    	vbox_userDataForgotPass.setStyle("-fx-border-color: lightgray");
+    	vbox_securityQuestions.setStyle("-fx-border-color: lightgray");
+    	vbox_newPassword.setStyle("-fx-border-color: lightgray");
+    	
+    	
+    }
+    
+    public void verificarPreguntas(ActionEvent event) {
+    	//Las respuestas fueron verificadas
+    	vbox_securityQuestions.setVisible(false);
+    	button_siguiente.setVisible(false);
+    	button_guardar.setVisible(true);
+    	vbox_newPassword.setVisible(true);
+    	
+    	
+    	//Error al verificar respuestas
+    	text_questionsIncorrect.setVisible(true);
+    	
+    }
+    
+    public void verificarUsuario(ActionEvent event) {
+    	vbox_securityQuestions.setDisable(false);
+    	hbox_siguiente.setDisable(false);
+    	
+    	//Usuario no existe
+    	text_userNoExist.setVisible(true);
+    }
+    
+    public void cerrarRecuperacion(MouseEvent event) {
+    	pane_forgotPass.setVisible(false);
+    }
 	
 		
 		
