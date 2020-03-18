@@ -688,6 +688,12 @@ public class BootstrapServices {
 		statement.execute(sql);
 	}
 	
+	public void preguntasrecuperacion(Connection con) throws SQLException {
+		String sql = "create table if not exists `preguntasrecuperacion` (`idpreguntasrecuperacion` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, `primerapregunta` varchar(80) not null, `segundapregunta` varchar(80) not null, `usuario` int(10) unsigned,  CONSTRAINT fkusuarioidpreg FOREIGN KEY (`usuario`) REFERENCES usuarios (`idusuarios`));";
+		Statement statement = con.createStatement();
+		statement.execute(sql);
+	}
+	
 	public void precioproducto(Connection con) throws SQLException {
 		String sql = "CREATE TABLE IF NOT EXISTS `precioproducto` (\r\n" + 
 				"  `idprecioproducto` int(11) NOT NULL AUTO_INCREMENT,\r\n" + 
