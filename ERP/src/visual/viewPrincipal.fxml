@@ -3494,17 +3494,45 @@
                                                                               <Font size="15.0" />
                                                                            </font>
                                                                         </Button>
+                                                                        <Button fx:id="button_helpPeticiones" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Peticiones" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
                                                                      </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </VBox>
-                                                                  <Button fx:id="button_helpVentas" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Ventas" textFill="#3185bd">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font>
-                                                                  </Button>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Button fx:id="button_helpVentas" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Ventas" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpFacturacion" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Facturación" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                        <Button fx:id="button_helpPromociones" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Promociones" textFill="#3185bd">
+                                                                           <font>
+                                                                              <Font size="15.0" />
+                                                                           </font>
+                                                                        </Button>
+                                                                     </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
+                                                                  </VBox>
                                                                   <Button fx:id="button_helpRRHH" mnemonicParsing="false" onAction="#scrollValue" onMouseEntered="#changeColorFontEnter" onMouseExited="#changeColorFontExited" text="Recursos Humanos " textFill="#3187bc">
                                                                      <font>
                                                                         <Font name="System Bold" size="15.0" />
                                                                      </font>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </Button>
                                                                   <VBox>
                                                                      <children>
@@ -3529,6 +3557,9 @@
                                                                            </font>
                                                                         </Button>
                                                                      </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
@@ -3543,6 +3574,9 @@
                                                                            </font>
                                                                         </Button>
                                                                      </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
@@ -3557,6 +3591,9 @@
                                                                            </font>
                                                                         </Button>
                                                                      </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
@@ -3571,6 +3608,9 @@
                                                                            </font>
                                                                         </Button>
                                                                      </children>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
                                                                   </VBox>
                                                                </children>
                                                             </HBox>
@@ -3626,6 +3666,22 @@
                                                                               <Insets bottom="15.0" left="30.0" right="80.0" top="10.0" />
                                                                            </VBox.margin>
                                                                         </TextArea>
+                                                                        <Text fill="#747474" strokeType="OUTSIDE" strokeWidth="0.0" text="Peticiones">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="30.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="257.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="Aquí es donde se registra una orden de compra (o solicitud) de un producto. Cuando se está haciendo el registro se tiene que indicar cual es el producto que se está solicitando, el proveedor que brindara&#10; el producto, la cantidad de dicho producto y si el pago será realizado por efectivo o será en crédito. &#10;Un pago en efectivo significa que no hay necesidad de facturar la petición, sin embargo, si es en crédito, en la sección de facturación en el tab de facturación de peticiones se registrara los pagos que se &#10;hagan a dicha petición. &#10;Ej. &#10;Producto: Agua (costo 15) &#10;Código Proveedor: 00001 &#10;Cantidad: 5 &#10;Monto (calculado automáticamente): $75 &#10;Pago: Efectivo ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="30.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
                                                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ventas" underline="true">
                                                                            <font>
                                                                               <Font name="System Bold" size="18.0" />
@@ -3640,6 +3696,38 @@
                                                                            </font>
                                                                            <VBox.margin>
                                                                               <Insets bottom="15.0" left="10.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text fill="#747474" strokeType="OUTSIDE" strokeWidth="0.0" text="Facturación">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="30.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="160.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="Esta sección es para facturación normal de productos cuando se realiza una venta, primero se ingresa a la ventana de buscar productos donde se seleccione los productos (con su cantidad) que serán&#10; facturados, una vez determinado cuales productos van a ser facturados se encuentra la opción de asignar la factura a un cliente especifico o no, si se le asigna un cliente la opción de cobrar a crédito se &#10;encontrara disponible. &#10;&#10;Si el pago es a crédito, significa que el cliente no pago la totalidad de la venta y por lo tanto esta será facturada más adelante, si es en efectivo se determina la cantidad de dinero que fue entregado&#10; (el cambio es calculado automáticamente). ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="30.0" right="80.0" top="10.0" />
+                                                                           </VBox.margin>
+                                                                        </TextArea>
+                                                                        <Text fill="#747474" strokeType="OUTSIDE" strokeWidth="0.0" text="Promociones">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets left="30.0" />
+                                                                           </VBox.margin>
+                                                                        </Text>
+                                                                        <TextArea editable="false" prefHeight="361.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="En esta sección se crean las promociones que pueden ser asignadas a un producto en específico (agua, jugo, refrescos) o a un rubro de productos (bebidas). &#10;Una vez que se determine a cuáles productos se le va a aplicar la promoción, se escribe el nombre por el cual será conocida dicha promoción y se determina el por ciento de descuento el cual se le &#10;aplicara a la promoción. &#10;Existen dos métricas para elegir en que tiempo la promoción estará disponible, se puede elegir por fecha en donde se asignará la fecha de inicio y final de la promoción y en cuales horas estará &#10;disponible. Esta también la opción de que sea por día, de esta forma solo tiene que especificar cuáles días se desea que aplique la promoción y esta estará activa por la duración completa de ese día. &#10;Una vez realizada una promoción, si esta se encuentra activa el nuevo precio de venta será reflejado al momento de facturar el producto sobre el que aplica la promoción. &#10;&#10;Ej: &#10;Producto: Agua &#10;Nombre promoción: Promo de agua. &#10;Por ciento de descuento: 10% &#10;Tiempo: Por día &#10;Días: lunes, miércoles, viernes &#10;El agua normalmente cuesta $15 los días en los que aplique la promoción con un descuento del 10% esta tendrá un precio de $13.5. ">
+                                                                           <font>
+                                                                              <Font size="16.0" />
+                                                                           </font>
+                                                                           <VBox.margin>
+                                                                              <Insets bottom="15.0" left="30.0" right="80.0" top="10.0" />
                                                                            </VBox.margin>
                                                                         </TextArea>
                                                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recursos Humanos" underline="true">
@@ -3754,7 +3842,7 @@
                                                                               <Insets left="30.0" top="10.0" />
                                                                            </VBox.margin>
                                                                         </Text>
-                                                                        <TextArea editable="false" prefHeight="82.0" prefWidth="1536.0" style="-fx-background-color: transparent;">
+                                                                        <TextArea editable="false" prefHeight="237.0" prefWidth="1536.0" style="-fx-background-color: transparent;" text="Ingresos (general): ganancias de la empresa hasta el momento. (Ingresos + pagos) &#10;Egresos (general): monto total de la inversión de la empresa en reabastecer su inventario.  &#10;Balance (general):  Contraste entre las ganancias de la empresa y lo invertido en el inventario. &#10;Ganancia (Ventas pagadas): sumatoria de la diferencia entre el costo de compra o producción de cada producto y el precio de venta. &#10;Cantidad (Ventas por cobrar): cantidad de las ventas por cobrar. &#10;Ingresos (Ventas por cobrar): ganancias de la empresa por las ventas por cobrar. &#10;Deuda (Ventas por cobrar): monto pendiente por las ventas por cobrar. &#10;Pagos: (Ventas por cobrar): monto total de los pagos realizados por las ventas por cobrar. &#10;Total de ingresos: monto teórico del ingreso de la empresa. (ingresos ventas pagadas + ingresos ventas por cobrar). ">
                                                                            <font>
                                                                               <Font size="16.0" />
                                                                            </font>

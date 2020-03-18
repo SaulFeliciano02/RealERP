@@ -537,6 +537,9 @@ public class Controller implements Initializable{
     @FXML private Button button_helpTransacciones;
     @FXML private Button button_helpConfig;
     @FXML private Button button_helpConfigGeneral;
+    @FXML private Button button_helpFacturacion;
+    @FXML private Button button_helpPeticiones;
+    @FXML private Button button_helpPromociones;
     @FXML private ScrollPane help_scrollPane;
     
     //MENU PRINCIPAL
@@ -4036,6 +4039,9 @@ public class Controller implements Initializable{
     	button_helpTransacciones.setStyle("-fx-background-color: transparent");
     	button_helpConfig.setStyle("-fx-background-color: transparent");
     	button_helpConfigGeneral.setStyle("-fx-background-color: transparent");
+    	button_helpPromociones.setStyle("-fx-background-color: transparent");
+    	button_helpPeticiones.setStyle("-fx-background-color: transparent");
+    	button_helpFacturacion.setStyle("-fx-background-color: transparent");
     	
     	vbox_infoEmpresa.setStyle("-fx-border-color: lightgray");
     	anchorPane_infoAdicionalEmpresa.setStyle("-fx-border-color: lightgray");
@@ -5809,23 +5815,35 @@ public class Controller implements Initializable{
     	        break;
     	        
     	  case "button_helpRubro":
-  	        help_scrollPane.setVvalue(0.12);
+  	        help_scrollPane.setVvalue(0.05);
   	        break;
   	        
     	  case "button_helpAtributos":
-    	        help_scrollPane.setVvalue(0.23);
+    	        help_scrollPane.setVvalue(0.12);
     	        break;
     	        
+    	  case "button_helpPeticiones":
+  	        help_scrollPane.setVvalue(0.20);
+  	        break;
+    	        
     	  case "button_helpVentas":
-  	        help_scrollPane.setVvalue(0.40);
+  	        help_scrollPane.setVvalue(0.34);
   	        break;
   	        
+    	  case "button_helpFacturacion":
+    	        help_scrollPane.setVvalue(0.46);
+    	        break;
+    	        
+    	  case "button_helpPromociones":
+    	        help_scrollPane.setVvalue(0.56);
+    	        break;
+  	        
     	  case "button_helpRRHH":
-    	        help_scrollPane.setVvalue(0.64);
+    	        help_scrollPane.setVvalue(0.75);
     	        break;
     	        
     	  case "button_helpAdmin":
-  	        help_scrollPane.setVvalue(0.81);
+  	        help_scrollPane.setVvalue(0.83);
   	        break;
   	        
     	  case "button_helpUsuarios":
@@ -5833,15 +5851,15 @@ public class Controller implements Initializable{
     	        break;
     	        
     	  case "button_helpCajaChica":
-  	        help_scrollPane.setVvalue(0.93);
+  	        help_scrollPane.setVvalue(0.89);
   	        break;
   	        
     	  case "button_helpCuentaBanco":
-    	        help_scrollPane.setVvalue(1);
+    	        help_scrollPane.setVvalue(0.94);
     	        break;
     	        
     	  case "button_helpGastos":
-  	        help_scrollPane.setVvalue(1);
+  	        help_scrollPane.setVvalue(0.99);
   	        break;
   	        
     	  case "button_helpGastosGenerales":
