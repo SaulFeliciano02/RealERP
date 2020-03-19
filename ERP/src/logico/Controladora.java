@@ -4182,6 +4182,8 @@ public class Controladora implements Serializable{
 		
 		while(i < getMisProductos().size() || encontrado == null)
 		{
+			System.out.println("El indice es: " + i);
+			System.out.println("El size de los productos es " + getMisProductos().size());
 			if(!Controladora.getInstance().getMisProductos().get(i).isBorrado()) {
 				if(p.equalsIgnoreCase(Controladora.getInstance().getMisProductos().get(i).getNombre()))
 				{
@@ -4589,6 +4591,15 @@ public class Controladora implements Serializable{
 		}
 		
 		return result;
+	}
+	
+	public Usuario buscarUsuario(String usuario) {
+		for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+			if(u.getUsuario().equalsIgnoreCase(usuario)) {
+				return u;
+			}
+		}
+		return null;
 	}
 	
 	public boolean emptyProveedores()
@@ -14371,6 +14382,77 @@ public String datosUsuarioRecordado()
 	
 	return username + " " + password;
 }
+
+	public void guardarPreguntaSeguridad(String pregunta1, String respuesta1, String pregunta2, String respuesta2, int usuarioID) {
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		
+		try {
+			System.out.println("Estoy guardando las preguntas de seguridad");
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("INSERT INTO preguntasrecuperacion(primerapregunta, segundapregunta, primerarespuesta, segundarespuesta, usuario) VALUES (?, ?, ?, ?, ?)");
+			p.setString(1, pregunta1);
+			p.setString(2, pregunta2);
+			p.setString(3, respuesta1);
+			p.setString(4, respuesta2);
+			p.setInt(5, usuarioID);
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Datos guardados!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
+	public PreguntaSeguridad buscarPreguntaSeguridad(int usuarioID) throws SQLException {
+		Conexion con = new Conexion();
+		java.sql.Connection c = con.conectar();
+		Statement s = null;
+		ResultSet r = null;
+		String query = "SELECT * FROM preguntasrecuperacion where usuario = ?";
+		PreparedStatement p = c.prepareStatement(query);
+		p.setInt(1, usuarioID);
+		
+		r = p.executeQuery();
+		String pregunta1 = "";
+		String pregunta2 = "";
+		String respuesta1 = "";
+		String respuesta2 = "";
+		while(r.next()) {
+			pregunta1 = r.getString("primerapregunta");
+			pregunta2 = r.getString("segundapregunta");
+			respuesta1 = r.getString("primerarespuesta");
+			respuesta2 = r.getString("segundarespuesta");
+		}
+		PreguntaSeguridad ps = new PreguntaSeguridad(pregunta1, respuesta1, pregunta2, respuesta2);
+		return ps;
+	}
 
 }
 

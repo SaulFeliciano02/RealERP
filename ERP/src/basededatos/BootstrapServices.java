@@ -22,7 +22,7 @@ public class BootstrapServices {
 		promediogananciaanual(con); promocion(con); promoproducto(con); proveedoressecproducto(con); proveedorprincipaproducto(con);
 		rangonumerosvalorfiscal(con); rubroproducto(con); serviciomateriales(con); serviciosfacturado(con); transaccionescajachica(con);
 		transaccionescuentabancaria(con); unidadmedidaproductoarea(con); unidadmedidaproductolongitud(con); unidadmedidaproductomasa(con);
-		volumen(con); unidadmedidaproductovolumen(con); usuariocargo(con); usuariocontrasena(con); usuariorecordado(con);
+		volumen(con); unidadmedidaproductovolumen(con); usuariocargo(con); usuariocontrasena(con); usuariorecordado(con); preguntasrecuperacion(con);
 		con.close();
 		System.out.println("Tablas creadas!");
 	}
@@ -689,7 +689,7 @@ public class BootstrapServices {
 	}
 	
 	public void preguntasrecuperacion(Connection con) throws SQLException {
-		String sql = "create table if not exists `preguntasrecuperacion` (`idpreguntasrecuperacion` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, `primerapregunta` varchar(80) not null, `segundapregunta` varchar(80) not null, `usuario` int(10) unsigned,  CONSTRAINT fkusuarioidpreg FOREIGN KEY (`usuario`) REFERENCES usuarios (`idusuarios`));";
+		String sql = "create table if not exists `preguntasrecuperacion` (`idpreguntasrecuperacion` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, `primerapregunta` varchar(80) not null, `segundapregunta` varchar(80) not null, `primerarespuesta` varchar(80) not null, `segundarespuesta` varchar(80) not null, `usuario` int(10) unsigned,  CONSTRAINT fkusuarioidpreg FOREIGN KEY (`usuario`) REFERENCES usuarios (`idusuarios`));";
 		Statement statement = con.createStatement();
 		statement.execute(sql);
 	}
