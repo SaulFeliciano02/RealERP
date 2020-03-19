@@ -413,6 +413,8 @@ public class Controller implements Initializable{
     
     @FXML private Button button_empresaGuardar;
     
+    //DESPLIEGUE USUARIOS
+    
     @FXML private TextField textfield_usuario;
     @FXML private TextField textfield_empleadoUsuario;
     @FXML private ComboBox<String> combobox_cargoUsuario = new ComboBox<String>();
@@ -425,6 +427,11 @@ public class Controller implements Initializable{
     @FXML private TableColumn<Usuario, String> tablecolumn_usuarioCargo;
     @FXML private TableColumn<Usuario, String> tablecolumn_usuarioUltimaVez;
     @FXML private TableView<Usuario> tableview_usuarioList;
+    
+    @FXML private TextField textfield_pregunta1;
+    @FXML private TextField textfield_respuesta1;
+    @FXML private TextField textfield_pregunta2;
+    @FXML private TextField textfield_respuesta2;
     
     @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoCodigo;
     @FXML private TableColumn<Empleado, String> tablecolumn_usuarioEmpleadoNombre;
@@ -2324,19 +2331,29 @@ public class Controller implements Initializable{
     {
     	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
     	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
-    	if(!textfield_usuario.getText().equals("") && !textfield_empleadoUsuario.getText().equals("") && !textfield_passwordUsuario.getText().equals("") && combobox_cargoUsuario.getSelectionModel().getSelectedIndex()>0)
+    	if(!textfield_usuario.getText().equals("") && !textfield_empleadoUsuario.getText().equals("") && !textfield_passwordUsuario.getText().equals("") && combobox_cargoUsuario.getSelectionModel().getSelectedIndex()>0
+    			&& textfield_pregunta1.getText().equals("") && textfield_respuesta1.getText().equals("") && textfield_pregunta2.getText().equals("") && textfield_respuesta2.getText().equals(""))
     	{
     		Alert alert = new Alert(AlertType.CONFIRMATION, "Confirmar creación del usuario" + textfield_usuario, ButtonType.YES, ButtonType.NO);
         	alert.showAndWait();
-        	
-        	if (alert.getResult() == ButtonType.YES) {
+        	boolean canRegister = true;
+        	String usuario = textfield_usuario.getText();
+        	for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+        		if(u.getUsuario().equalsIgnoreCase(usuario)) {
+        			canRegister = false;
+        		}
+        	}
+        	if (alert.getResult() == ButtonType.YES && canRegister) {
         		Empleado emp = Controladora.getInstance().buscarEmpleado(textfield_empleadoUsuario.getText());
         		String contrasena = textfield_passwordUsuario.getText();
-        		String usuario = textfield_usuario.getText();
+        		
         		Cargo cargo = Controladora.getInstance().buscarCargo(combobox_cargoUsuario.getSelectionModel().getSelectedItem());
         		Usuario usu = new Usuario(usuario, emp, true, contrasena, true, cargo);
         		Controladora.getInstance().getMisUsuarios().add(usu);
         		
+        	}
+        	else {
+        		new Alert(AlertType.WARNING, "Nombre de usuario ya existe!").showAndWait();
         	}
         }
     	
@@ -3463,6 +3480,13 @@ public class Controller implements Initializable{
     		a.show();
     		canRegister = false;
     	}
+    	for(Usuario u : Controladora.getInstance().getMisUsuarios()) {
+    		if(u.getUsuario().equalsIgnoreCase(usuarioNombre)) {
+    			canRegister = false;
+    			a.setContentText("Nombre de usuario ya existe!");
+    			a.show();
+    		}
+    	}
     	
     	if(canRegister) {
     		Alert alert = new Alert(AlertType.CONFIRMATION, "Confirmar creación del usuario" + " " + textfield_usuario.getText(), ButtonType.YES, ButtonType.NO);
@@ -3476,6 +3500,18 @@ public class Controller implements Initializable{
         	
         		Controladora.getInstance().getMisUsuarios().add(usuario);
         		Controladora.getInstance().guardarUsuarioSQL(usuario);
+        		
+        		int index = Controladora.getInstance().getMisUsuarios().indexOf(usuario) + 1;
+        		String pregunta1 = textfield_pregunta1.getText();
+        		String respuesta1 = textfield_respuesta1.getText();
+        		String pregunta2 = textfield_pregunta2.getText();
+        		String respuesta2 = textfield_respuesta2.getText();
+        		Controladora.getInstance().guardarPreguntaSeguridad(pregunta1, respuesta1, pregunta2, respuesta2, index);
+        		
+        		textfield_pregunta1.setText("");
+        		textfield_respuesta1.setText("");
+        		textfield_pregunta2.setText("");
+        		textfield_respuesta2.setText("");
         		
         		combobox_cargoUsuario.setValue("Seleccione");
         		textfield_usuario.setText("");

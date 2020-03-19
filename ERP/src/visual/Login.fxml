@@ -130,7 +130,7 @@
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin></Label>
-                                    <TextField>
+                                    <TextField fx:id="textfield_usuarioBusqueda">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -162,7 +162,7 @@
                                                 <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="472.0">
                                                    <children>
                                                       <Label text="Pregunta 1:" />
-                                                      <TextField editable="false" prefHeight="26.0" prefWidth="270.0">
+                                                      <TextField fx:id="textfield_pregunta1" editable="false" prefHeight="26.0" prefWidth="270.0">
                                                          <HBox.margin>
                                                             <Insets left="11.0" />
                                                          </HBox.margin>
@@ -172,7 +172,7 @@
                                                 <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="472.0">
                                                    <children>
                                                       <Label text="Respuesta 1:" />
-                                                      <TextField prefHeight="26.0" prefWidth="270.0">
+                                                      <TextField fx:id="textfield_respuesta1" prefHeight="26.0" prefWidth="270.0">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
                                                          </HBox.margin>
@@ -192,7 +192,7 @@
                                                 <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="472.0">
                                                    <children>
                                                       <Label text="Pregunta 2:" />
-                                                      <TextField editable="false" prefWidth="270.0">
+                                                      <TextField fx:id="textfield_pregunta2" editable="false" prefWidth="270.0">
                                                          <HBox.margin>
                                                             <Insets left="11.0" />
                                                          </HBox.margin>
@@ -202,7 +202,7 @@
                                                 <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="472.0">
                                                    <children>
                                                       <Label text="Respuesta 2:" />
-                                                      <TextField prefWidth="270.0">
+                                                      <TextField fx:id="textfield_respuesta2" prefWidth="270.0">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
                                                          </HBox.margin>

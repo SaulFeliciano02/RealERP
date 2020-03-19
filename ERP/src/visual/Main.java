@@ -2,6 +2,7 @@ package visual;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import logico.Controladora;
+import logico.PreguntaSeguridad;
 import logico.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -62,7 +64,14 @@ public class Main extends Application{
 	@FXML private Button button_guardar;
 	@FXML private VBox vbox_newPassword;
 	
+	@FXML private TextField textfield_usuarioBusqueda;
+	@FXML private TextField textfield_pregunta1;
+	@FXML private TextField textfield_respuesta1;
+	@FXML private TextField textfield_pregunta2;
+	@FXML private TextField textfield_respuesta2;
+	
 	String usu;
+	PreguntaSeguridad ps = null;
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -78,6 +87,11 @@ public class Main extends Application{
 		    primaryStage.setResizable(false);
 		    primaryStage.sizeToScene();
 		    primaryStage.show();
+		    
+		    if(Controladora.getInstance().activarLoadUsuarios()) {
+		    	Controladora.getInstance().loadEmpleados();
+		    	Controladora.getInstance().loadUsuarios();
+		    }
 		    /*if(!Controladora.getInstance().activarLoadUsuarios())
 		    {
 		    	checkremember.setVisible(false);
@@ -232,7 +246,7 @@ public class Main extends Application{
 							}
 							if(Controladora.getInstance().activarLoadEmpleados())
 							{
-								Controladora.getInstance().loadEmpleados();
+								//Controladora.getInstance().loadEmpleados();
 							}
 							else
 							{
@@ -328,7 +342,7 @@ public class Main extends Application{
 							}
 							if(Controladora.getInstance().activarLoadUsuarios())
 							{
-								Controladora.getInstance().loadUsuarios();
+								//Controladora.getInstance().loadUsuarios();
 							}
 							else
 							{
@@ -579,7 +593,7 @@ public class Main extends Application{
 					}
 					if(Controladora.getInstance().activarLoadEmpleados())
 					{
-						Controladora.getInstance().loadEmpleados();
+						//Controladora.getInstance().loadEmpleados();
 					}
 					else
 					{
@@ -675,7 +689,7 @@ public class Main extends Application{
 					}
 					if(Controladora.getInstance().activarLoadUsuarios())
 					{
-						Controladora.getInstance().loadUsuarios();
+						//Controladora.getInstance().loadUsuarios();
 					}
 					else
 					{
@@ -827,23 +841,33 @@ public class Main extends Application{
     
     public void verificarPreguntas(ActionEvent event) {
     	//Las respuestas fueron verificadas
-    	vbox_securityQuestions.setVisible(false);
-    	button_siguiente.setVisible(false);
-    	button_guardar.setVisible(true);
-    	vbox_newPassword.setVisible(true);
+    	if(textfield_respuesta1.getText().equalsIgnoreCase(ps.getRespuesta1()) && textfield_respuesta2.getText().equalsIgnoreCase(ps.getRespuesta2())) {
+    		vbox_securityQuestions.setVisible(false);
+    		button_siguiente.setVisible(false);
+    		button_guardar.setVisible(true);
+    		vbox_newPassword.setVisible(true);	
+    	}
+    	else {
+    		//Error al verificar respuestas
+    		text_questionsIncorrect.setVisible(true);
+    	}
     	
-    	
-    	//Error al verificar respuestas
-    	text_questionsIncorrect.setVisible(true);
     	
     }
     
-    public void verificarUsuario(ActionEvent event) {
-    	vbox_securityQuestions.setDisable(false);
-    	hbox_siguiente.setDisable(false);
-    	
-    	//Usuario no existe
-    	text_userNoExist.setVisible(true);
+    public void verificarUsuario(ActionEvent event) throws SQLException {
+    	Usuario usuario = Controladora.getInstance().buscarUsuario(textfield_usuarioBusqueda.getText());
+    	if(usuario != null) {
+    		int index = Controladora.getInstance().getMisUsuarios().indexOf(usuario) + 1;
+    		ps = Controladora.getInstance().buscarPreguntaSeguridad(index);
+    		textfield_pregunta1.setText(ps.getPregunta1());
+    		textfield_pregunta2.setText(ps.getPregunta2());
+    		vbox_securityQuestions.setDisable(false);
+    		hbox_siguiente.setDisable(false);
+    	}else {
+    		//Usuario no existe
+    		text_userNoExist.setVisible(true);
+    	} 	
     }
     
     public void cerrarRecuperacion(MouseEvent event) {
