@@ -249,7 +249,8 @@ public class Main extends Application{
 							}
 							if(Controladora.getInstance().activarLoadEmpleados())
 							{
-								//Controladora.getInstance().loadEmpleados();
+								Controladora.getInstance().setMisEmpleadosToNull();
+								Controladora.getInstance().loadEmpleados();
 							}
 							else
 							{
@@ -345,7 +346,8 @@ public class Main extends Application{
 							}
 							if(Controladora.getInstance().activarLoadUsuarios())
 							{
-								//Controladora.getInstance().loadUsuarios();
+								Controladora.getInstance().setMisUsuariosToNull();
+								Controladora.getInstance().loadUsuarios();
 							}
 							else
 							{
@@ -597,7 +599,8 @@ public class Main extends Application{
 					}
 					if(Controladora.getInstance().activarLoadEmpleados())
 					{
-						//Controladora.getInstance().loadEmpleados();
+						Controladora.getInstance().setMisEmpleadosToNull();
+						Controladora.getInstance().loadEmpleados();
 					}
 					else
 					{
@@ -693,7 +696,8 @@ public class Main extends Application{
 					}
 					if(Controladora.getInstance().activarLoadUsuarios())
 					{
-						//Controladora.getInstance().loadUsuarios();
+						Controladora.getInstance().setMisUsuariosToNull();
+						Controladora.getInstance().loadUsuarios();
 					}
 					else
 					{

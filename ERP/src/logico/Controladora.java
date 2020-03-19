@@ -7164,6 +7164,14 @@ public class Controladora implements Serializable{
 		}
 	}
 	
+	public void setMisEmpleadosToNull() {
+		this.misEmpleados.clear();
+	}
+	
+	public void setMisUsuariosToNull() {
+		this.misUsuarios.clear();
+	}
+
 	public boolean activarLoadKit()
 	{
 		Conexion con = new Conexion();
