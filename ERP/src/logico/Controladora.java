@@ -12611,6 +12611,50 @@ public void reiniciarClientes() {
 	
 }
 	
+public void reiniciarPreguntasRecuperacion()
+{
+	Conexion con = new Conexion();
+	java.sql.Connection c = null;
+	Statement s = null;
+	ResultSet r = null;
+	PreparedStatement p = null;
+	
+	try {
+		c = con.conectar();
+		
+		p = (PreparedStatement) c.prepareStatement("ALTER TABLE PREGUNTASRECUPERACION ALTER COLUMN IDPREGUNTASRECUPERACION RESTART WITH 1");
+		
+		//ejecutar el preparedStatement
+		p.executeUpdate();
+		System.out.println("AutoIncrement modified!");
+		
+	} catch (Exception e2) {
+		e2.printStackTrace();
+	}
+	
+	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+			finally {
+				try {
+					
+					if(c!=null) {
+						c.close();
+					}
+					
+					if(s!=null) {
+						s.close();
+					}
+					
+					if(r!=null) {
+						r.close();
+					}
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+	}
+	
+}
+
 public void reiniciarRubros() {
 	
 	Conexion con = new Conexion();
@@ -14454,6 +14498,54 @@ public String datosUsuarioRecordado()
 		return ps;
 	}
 
+	public void nuevaContrasena(String password, Usuario usu)
+	{
+		Conexion con = new Conexion();
+		java.sql.Connection c = null;
+		Statement s = null;
+		ResultSet r = null;
+		PreparedStatement p = null;
+		String passHash = DigestUtils.md5Hex(password); 
+		int id = Controladora.getInstance().getMisUsuarios().indexOf(usu)+1;
+		
+		try {
+			System.out.println("Estoy guardando las preguntas de seguridad");
+			c = con.conectar();
+			
+			p = (PreparedStatement) c.prepareStatement("UPDATE USUARIOCONTRASENA SET contrasena = ? WHERE USUARIO = ?");
+			p.setString(1, passHash);
+			p.setInt(2, id);
+
+			//ejecutar el preparedStatement
+			p.executeUpdate();
+			System.out.println("Actualizacion de password realizada correctamente!");
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
+				finally {
+					try {
+						
+						if(c!=null) {
+							c.close();
+						}
+						
+						if(s!=null) {
+							s.close();
+						}
+						
+						if(r!=null) {
+							r.close();
+						}
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		}
+	}
+	
 }
 
 

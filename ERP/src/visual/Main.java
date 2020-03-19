@@ -69,6 +69,9 @@ public class Main extends Application{
 	@FXML private TextField textfield_respuesta1;
 	@FXML private TextField textfield_pregunta2;
 	@FXML private TextField textfield_respuesta2;
+	@FXML private TextField textfield_nuevaContrasena;
+	@FXML private TextField textfield_confirmarNuevaContrasena;
+	
 	
 	String usu;
 	PreguntaSeguridad ps = null;
@@ -347,6 +350,7 @@ public class Main extends Application{
 							else
 							{
 								Controladora.getInstance().reiniciarUsuarios();
+								Controladora.getInstance().reiniciarPreguntasRecuperacion();
 							}
 							if(Controladora.getInstance().activarLoadFacturas())
 							{
@@ -694,6 +698,7 @@ public class Main extends Application{
 					else
 					{
 						Controladora.getInstance().reiniciarUsuarios();
+						Controladora.getInstance().reiniciarPreguntasRecuperacion();
 					}
 					if(Controladora.getInstance().activarLoadFacturas())
 					{
@@ -853,6 +858,29 @@ public class Main extends Application{
     	}
     	
     	
+    }
+    
+    public void actualizarContrasena(ActionEvent event)
+    {
+    	if(!textfield_nuevaContrasena.getText().isEmpty() && !textfield_confirmarNuevaContrasena.getText().isEmpty() && (textfield_nuevaContrasena.getText().equals(textfield_confirmarNuevaContrasena.getText())))
+    	{
+    		Usuario usuario = Controladora.getInstance().buscarUsuario(textfield_usuarioBusqueda.getText());
+    		Controladora.getInstance().nuevaContrasena(textfield_nuevaContrasena.getText(), usuario);
+    		
+    		pane_forgotPass.setVisible(false);
+    		
+    		Alert a = new Alert(AlertType.INFORMATION);
+    		a.setContentText("La contraseña ha sido actualizada satisfactoriamente!");
+    		a.show();
+    	}
+    	else {
+    		//Error al verificar respuestas
+    		Alert a = new Alert(AlertType.INFORMATION);
+    		a.setContentText("Las contraseñas escritas en ambos campos no coinciden. Favor de escribirlas correctamente.");
+    		a.show();
+    		textfield_nuevaContrasena.clear();
+    		textfield_confirmarNuevaContrasena.clear();
+    	}
     }
     
     public void verificarUsuario(ActionEvent event) throws SQLException {
