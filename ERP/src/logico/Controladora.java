@@ -4197,6 +4197,46 @@ public class Controladora implements Serializable{
 		return encontrado;
 	}
 	
+	public int getProductoIndice(Producto producto) {
+		for(int i = 0; i < Controladora.getInstance().getMisProductos().size(); i++) {
+			Producto p = Controladora.getInstance().getMisProductos().get(i);
+			if(p.getCodigo().equalsIgnoreCase(producto.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getProductoEstandarIndice(Producto producto) {
+		for(int i = 0; i < Controladora.getInstance().getMisProductosEstandar().size(); i++) {
+			Producto p = Controladora.getInstance().getMisProductosEstandar().get(i);
+			if(p.getCodigo().equalsIgnoreCase(producto.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getProductoKitIndice(Producto producto) {
+		for(int i = 0; i < Controladora.getInstance().getMisProductosKit().size(); i++) {
+			Producto p = Controladora.getInstance().getMisProductosKit().get(i);
+			if(p.getCodigo().equalsIgnoreCase(producto.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getProductoServicioIndice(Producto producto) {
+		for(int i = 0; i < Controladora.getInstance().getMisProductosServicio().size(); i++) {
+			Producto p = Controladora.getInstance().getMisProductosServicio().get(i);
+			if(p.getCodigo().equalsIgnoreCase(producto.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public Cliente buscarCliente(String codigo) {
 		Cliente encontrado = null;
 		int i = 0;
