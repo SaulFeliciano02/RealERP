@@ -570,14 +570,13 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	//Iniciado del modificar
     	if(modificado) {
-    		Alert alertModify = new Alert(AlertType.CONFIRMATION, "Está seguro que desea guardar estos cambios?");
+    		Alert alertModify = new Alert(AlertType.CONFIRMATION, "Está seguro que desea guardar estos cambios?", ButtonType.YES, ButtonType.NO);
     		ArrayList<Producto> producto = Controladora.getInstance().searchProducts(codigo, "Codigo");
     		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Estandar")) {
     			Estandar estandar = (Estandar) producto.get(0);
     			float existenciaInicial = estandar.getExistenciaInicial();
-    			
-    			if(!estandar.getNombre().equalsIgnoreCase(nombre) || !estandar.getProveedorPrinClass().equals(proveedor) || !estandar.getRubroProductoClass().equals(rubro)
-    				|| !estandar.getUnidadMedida().equals(unidad) || estandar.getExistenciaActual() != Float.parseFloat(exAct.getText()) || estandar.getExistenciaMinima() != Float.parseFloat(exMin.getText())
+    			if(!estandar.getNombre().equalsIgnoreCase(nombre) || estandar.getProveedorPrinClass() != proveedor || estandar.getRubroProductoClass() != rubro
+    				|| estandar.getUnidadMedida() != unidad || estandar.getExistenciaActual() != Float.parseFloat(exAct.getText()) || estandar.getExistenciaMinima() != Float.parseFloat(exMin.getText())
     				|| estandar.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || estandar.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
     				|| estandar.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || estandar.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
     				|| checkPartida(estandar) || checkCostosIndirectos(estandar) || checkManoDeObra(estandar)) {
@@ -585,6 +584,7 @@ public class ControllerNuevoProducto implements Initializable {
     				
     				alertModify.showAndWait();
     				if(alertModify.getResult() == ButtonType.YES) {
+    					System.out.println("Klk");
     					String existenciaActual = exAct.getText();
         	    		String existenciaMinima = exMin.getText();
         	    		String existenciaMaxima = exMax.getText();
@@ -662,7 +662,6 @@ public class ControllerNuevoProducto implements Initializable {
         	    			}
         	    		}
         	    		
-        	    		
         	    		//No se registra nombre, fecha, y muchas otras cosas
         	    		if(canRegister) {
         	    			Controladora.getInstance().getMisPrecios().add(precio);
@@ -705,16 +704,19 @@ public class ControllerNuevoProducto implements Initializable {
         	    			
         	    			Controladora.getInstance().guardarPrecioProductoSQL(newEstandar, precio);
         	    			
-        	    			Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newEstandar, proveedor);
+        	    			if(proveedor != null) {
+        	    				Controladora.getInstance().guardarProveedorPrincipalProductoSQL(newEstandar, proveedor);
+        	    			}
+        	    					
         	    			
         	    			Controladora.getInstance().guardarRubroProductoSQL(newEstandar, rubro);
         	    			
-        	    			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(estandar);
-        	    			int oldIndiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
+        	    			int oldIndiceProducto = Controladora.getInstance().getProductoIndice(estandar);//Controladora.getInstance().getMisProductos().indexOf(estandar);
+        	    			int oldIndiceProductoEstandar = Controladora.getInstance().getProductoEstandarIndice(estandar);//Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
         	    			
         	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
         	    			Controladora.getInstance().getMisProductosEstandar().get(oldIndiceProductoEstandar).setBorrado(true);
-        	    			
+        
         	    			Controladora.getInstance().borrarProducto(oldIndiceProducto+1);
         	    			
         	    			success.showAndWait();
@@ -731,7 +733,7 @@ public class ControllerNuevoProducto implements Initializable {
     			Kit kit = (Kit) producto.get(0);
     			float existenciaInicial = kit.getExistenciaInicial();
    
-    			if(!kit.getNombre().equalsIgnoreCase(nombre) || !kit.getProveedorPrinClass().equals(proveedor) || !kit.getRubroProductoClass().equals(rubro)
+    			if(!kit.getNombre().equalsIgnoreCase(nombre) || kit.getProveedorPrinClass() != proveedor || kit.getRubroProductoClass() != rubro
         				|| kit.getUnidadMedida() != unidad || kit.getExistenciaActual() != Float.parseFloat(exAct.getText()) || kit.getExistenciaMinima() != Float.parseFloat(exMin.getText())
         				|| kit.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || kit.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || kit.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
         				|| checkPartida(kit) || checkCostosIndirectos(kit)) {
@@ -829,8 +831,8 @@ public class ControllerNuevoProducto implements Initializable {
                 				Controladora.getInstance().guardarKitProductosSQL(newKit, c);
                 			}
                 			
-                			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(kit);
-        	    			int oldIndiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(kit);
+                			int oldIndiceProducto = Controladora.getInstance().getProductoIndice(kit);
+        	    			int oldIndiceProductoKit = Controladora.getInstance().getProductoKitIndice(kit);
         	    			
         	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
         	    			Controladora.getInstance().getMisProductosKit().get(oldIndiceProductoKit).setBorrado(true);
@@ -848,7 +850,7 @@ public class ControllerNuevoProducto implements Initializable {
     		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Servicio")) {
     			Servicio servicio = (Servicio) producto.get(0);
     			
-    			if(!servicio.getNombre().equalsIgnoreCase(nombre) || servicio.getProveedorPrinClass() != proveedor || !servicio.getRubroProductoClass().equals(rubro)
+    			if(!servicio.getNombre().equalsIgnoreCase(nombre) || servicio.getProveedorPrinClass() != proveedor || servicio.getRubroProductoClass() != rubro
         				|| servicio.getUnidadMedida() != unidad || servicio.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) 
         				|| servicio.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
         				|| checkPartida(servicio) || checkCostosIndirectos(servicio) || checkManoDeObra(servicio)) {
@@ -940,8 +942,8 @@ public class ControllerNuevoProducto implements Initializable {
                					Controladora.getInstance().guardarManoDeObraServicioSQL(newServicio, infoManoDeObra, categoriaempleado);
                				}
                 			
-                			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(servicio);
-        	    			int oldIndiceProductoServicio = Controladora.getInstance().getMisProductosServicio().indexOf(servicio);
+                			int oldIndiceProducto = Controladora.getInstance().getProductoIndice(servicio);
+        	    			int oldIndiceProductoServicio = Controladora.getInstance().getProductoServicioIndice(servicio);
         	    			
         	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
         	    			Controladora.getInstance().getMisProductosServicio().get(oldIndiceProductoServicio).setBorrado(true);
@@ -960,8 +962,8 @@ public class ControllerNuevoProducto implements Initializable {
     			Estandar matriz = (Estandar) producto.get(0);
     			float existenciaInicial = matriz.getExistenciaInicial();
     			
-    			if(!matriz.getNombre().equalsIgnoreCase(nombre) || !matriz.getProveedorPrinClass().equals(proveedor) || !matriz.getRubroProductoClass().equals(rubro)
-        				|| !matriz.getUnidadMedida().equals(unidad) || matriz.getExistenciaMinima() != Float.parseFloat(exMin.getText())
+    			if(!matriz.getNombre().equalsIgnoreCase(nombre) || matriz.getProveedorPrinClass() != proveedor || matriz.getRubroProductoClass() != rubro
+        				|| matriz.getUnidadMedida() != unidad || matriz.getExistenciaMinima() != Float.parseFloat(exMin.getText())
         				|| matriz.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || matriz.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
         				|| matriz.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || matriz.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
         				|| checkPartida(matriz) || checkCostosIndirectos(matriz) || checkManoDeObra(matriz) || checkCombinaciones(matriz)){
@@ -1092,8 +1094,8 @@ public class ControllerNuevoProducto implements Initializable {
                 			
                 			Controladora.getInstance().guardarRubroProductoSQL(newMatriz, rubro);
                 			
-                			int oldIndiceProducto = Controladora.getInstance().getMisProductos().indexOf(matriz);
-        	    			int oldIndiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz);
+                			int oldIndiceProducto = Controladora.getInstance().getProductoIndice(matriz);
+        	    			int oldIndiceProductoEstandar = Controladora.getInstance().getProductoEstandarIndice(matriz);
         	    			
         	    			Controladora.getInstance().getMisProductos().get(oldIndiceProducto).setBorrado(true);
         	    			Controladora.getInstance().getMisProductosEstandar().get(oldIndiceProductoEstandar).setBorrado(true);
@@ -3149,7 +3151,7 @@ public class ControllerNuevoProducto implements Initializable {
     	modificado = true;
     	textfield_generalCodigo.setEditable(false);
     	button_productGuardar.setDisable(false);
-    	
+    	System.out.println(producto);
     	textfield_generalCodigo.setText(producto.getCodigo());
     	textfield_generalNombre.setText(producto.getNombre());
     	if(producto.getUnidadMedida() != null) {
@@ -3332,17 +3334,19 @@ public class ControllerNuevoProducto implements Initializable {
     	int check = 0;
     	if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     		Estandar estandar = (Estandar) producto;
-    		for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
-    			for(String s : listview_partidaSelect.getItems()) {
-    				String nombre = Controladora.getInstance().findPartidaNombre(s);
-    				float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
-    				if(nombre.equalsIgnoreCase(c.getProducto().getNombre()) && cantidad == c.getCantidad()) {
-    					check++;
+    		if(estandar.getPartida() != null) {
+    			for(CantProductosUtilizados c : estandar.getPartida().getListaMateriales()) {
+    				for(String s : listview_partidaSelect.getItems()) {
+    					String nombre = Controladora.getInstance().findPartidaNombre(s);
+    					float cantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(s));
+    					if(nombre.equalsIgnoreCase(c.getProducto().getNombre()) && cantidad == c.getCantidad()) {
+    						check++;
+    					}
     				}
     			}
-    		}
-    		if(check != estandar.getPartida().getListaMateriales().size()) {
-    			isDifferent = true;
+    			if(check != estandar.getPartida().getListaMateriales().size()) {
+    				isDifferent = true;
+    			}
     		}
     	}
     	
@@ -3361,6 +3365,7 @@ public class ControllerNuevoProducto implements Initializable {
     			isDifferent = true;
     		}
     	}
+    	System.out.println("Chequee las partidas");
     	return isDifferent;
     }
     
@@ -3377,6 +3382,7 @@ public class ControllerNuevoProducto implements Initializable {
     	if(check != producto.getCostosIndirectos().size()) {
     		isDifferent = true;
     	}
+    	System.out.println("Chequee los costos indirectos");
     	return isDifferent;
     }
     
@@ -3384,23 +3390,27 @@ public class ControllerNuevoProducto implements Initializable {
     	boolean isDifferent = false;
     	if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     		Estandar estandar = (Estandar) producto;
-    		String categoria = estandar.getInfoManoDeObra().getCategoria().getNombre();
-    		float sueldo = estandar.getInfoManoDeObra().getCategoria().getSueldo();
-    		if(estandar.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
+    		if(estandar.getInfoManoDeObra() != null) {
+    			String categoria = estandar.getInfoManoDeObra().getCategoria().getNombre();
+    			float sueldo = estandar.getInfoManoDeObra().getCategoria().getSueldo();
+    			if(estandar.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
     				combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().equalsIgnoreCase(categoria + ": " + Float.toString(sueldo) + "$")) {
-    			isDifferent = true;
-    		}
+    				isDifferent = true;
+    			}
+    		}	
     	}
     	else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
     		Servicio servicio = (Servicio) producto;
-    		String categoria = servicio.getInfoManoDeObra().getCategoria().getNombre();
-    		float sueldo = servicio.getInfoManoDeObra().getCategoria().getSueldo();
-    		if(servicio.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
+    		if(servicio.getInfoManoDeObra() != null) {
+    			String categoria = servicio.getInfoManoDeObra().getCategoria().getNombre();
+    			float sueldo = servicio.getInfoManoDeObra().getCategoria().getSueldo();
+    			if(servicio.getInfoManoDeObra().getCantidadHoras() == Float.parseFloat(textfield_costosTiempoFabricacion.getText()) &&
     				combobox_costosEncargadosFabricacion.getSelectionModel().getSelectedItem().equalsIgnoreCase(categoria + ": " + Float.toString(sueldo) + "$")) {
-    			isDifferent = true;
+    				isDifferent = true;
+    			}
     		}
     	}
-    	
+    	System.out.println("Chequee la mano de obra");
     	return isDifferent;
     }
     

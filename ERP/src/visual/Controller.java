@@ -4308,6 +4308,7 @@ public class Controller implements Initializable{
     	if(p == null) {
     		for(Producto productos : Controladora.getInstance().getMisProductos()) {
     			if(!productos.isBorrado()) {
+    				
     				data.add(productos);
     			}
     		}
@@ -5555,6 +5556,54 @@ public class Controller implements Initializable{
 					}
     		    }
     		);
+    	tablecolumn_clienteTipo.setCellFactory(TextFieldTableCell.forTableColumn());
+    	tablecolumn_clienteTipo.setOnEditCommit(
+    		    new EventHandler<CellEditEvent<Cliente, String>>() {
+					@Override
+					public void handle(CellEditEvent<Cliente, String> t) {
+						if(!t.getOldValue().equalsIgnoreCase(t.getNewValue())) {
+							Cliente cliente = tableview_clientesList.getSelectionModel().getSelectedItem();
+							Cliente newCliente = new Cliente(cliente.getCodigo(), cliente.getNombre(), cliente.getTelefono(), t.getNewValue(), 
+									cliente.getCumpleanos(), cliente.getRnc());
+
+							if(Controladora.getInstance().isClienteInFactura(cliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "Cliente en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setTipoCliente(t.getOldValue());
+								fillClientList(null);
+							}
+							else if(Controladora.getInstance().clienteRNCExists(newCliente)) {
+								Alert alert = new Alert(AlertType.WARNING, "RNC en uso.");
+								alert.showAndWait();
+								t.getTableView().getItems().get(t.getTablePosition().getRow()).setRnc(t.getOldValue());
+								fillClientList(null);
+							}
+							else {
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+					    		alert.showAndWait();
+					    		if(alert.getResult() == ButtonType.YES) {
+					    			System.out.println("Cambie el cliente...");
+					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
+					    			Controladora.getInstance().borrarCliente(index+1);
+							
+					    			Controladora.getInstance().getMisClientes().add(newCliente);
+					    			Controladora.getInstance().guardarClienteSQL(newCliente);;
+								
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTipoCliente(t.getNewValue());
+									fillClientList(null);
+					    		}
+					    		else {
+					    			t.getTableView().getItems().get(t.getTablePosition().getRow()).setTipoCliente(t.getOldValue());
+									fillClientList(null);
+					    		}
+							}
+						}
+						
+					}
+    		    }
+    		);
+    	
     }
     
     public void setEditProveedores() {
