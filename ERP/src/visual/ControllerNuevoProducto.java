@@ -270,7 +270,7 @@ public class ControllerNuevoProducto implements Initializable {
     
     /**FUNCIONES GENERALES**/
     
-    //Verifica si el input de un textfield es un número.
+    //Verifica si el input de un textfield es un nï¿½mero.
     public void numericFieldPressed(KeyEvent event) {
     	if(!Controladora.getInstance().isNumber(event.getCharacter()) && !event.getCode().equals(KeyCode.BACK_SPACE)) {
     		event.consume();
@@ -291,7 +291,7 @@ public class ControllerNuevoProducto implements Initializable {
     	}
     }
     
-    //Función que determina si la tecla presionada en un textfield cumple con los parámetros para ser considero un valor de tipo float.
+    //Funciï¿½n que determina si la tecla presionada en un textfield cumple con los parï¿½metros para ser considero un valor de tipo float.
     public void floatFieldPressed(KeyEvent event) {
     	
     	TextField source = (TextField) event.getSource();
@@ -343,11 +343,11 @@ public class ControllerNuevoProducto implements Initializable {
 	   	reload(stage);
     }
     
-    //Determina si los parámetros de un producto están completos.
+    //Determina si los parï¿½metros de un producto estï¿½n completos.
     public void activarProductoGuardar(KeyEvent event) {
     	String tipoProducto = combobox_generalTipoProducto.getSelectionModel().getSelectedItem();
     	//Nota sobre los guardar: En el programa encontraras que algunas funciones de guardar tratan de manera diferente
-    	//la validación de los parámetros, si se te es posible estandarizarlo, recomendamos hacerlo.
+    	//la validaciï¿½n de los parï¿½metros, si se te es posible estandarizarlo, recomendamos hacerlo.
     	if(!modificado) {
     		if(tipoProducto.equalsIgnoreCase("Matriz")) {
     			if(textfield_generalCodigo.getLength() > 0 && textfield_generalRubro.getLength() > 0 && textfield_generalProveedor.getLength() > 0 && textfield_generalNombre.getLength() > 0) {
@@ -478,7 +478,7 @@ public class ControllerNuevoProducto implements Initializable {
     		Alert alert = new Alert(AlertType.CONFIRMATION);
     		alert.setTitle("Confirma");
     		alert.setHeaderText("");
-    		alert.setContentText("Tu producto no tiene precio, ¿está seguro de proceder?");
+    		alert.setContentText("Tu producto no tiene precio, ï¿½estï¿½ seguro de proceder?");
 
     		Optional<ButtonType> result = alert.showAndWait();
     		if (result.get() == ButtonType.OK){
@@ -497,7 +497,7 @@ public class ControllerNuevoProducto implements Initializable {
     	Rubro rubro = null;
     	Proveedores proveedor = null;
     	setCostoYPrecioTotal(null);
-    	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true);
+    	Precio precio = new Precio(Float.parseFloat(textfield_preciosPrecio.getText()), "", true, Integer.parseInt(textfield_preciosPorcientoGanancia.getText()), Integer.parseInt(textfield_preciosImpuestos.getText()));
     	float costoitbis = 0;
     	byte[] foto = null;
     	
@@ -570,7 +570,7 @@ public class ControllerNuevoProducto implements Initializable {
     	
     	//Iniciado del modificar
     	if(modificado) {
-    		Alert alertModify = new Alert(AlertType.CONFIRMATION, "Está seguro que desea guardar estos cambios?", ButtonType.YES, ButtonType.NO);
+    		Alert alertModify = new Alert(AlertType.CONFIRMATION, "Estï¿½ seguro que desea guardar estos cambios?", ButtonType.YES, ButtonType.NO);
     		ArrayList<Producto> producto = Controladora.getInstance().searchProducts(codigo, "Codigo");
     		if(producto.get(0).getTipoProducto().equalsIgnoreCase("Estandar")) {
     			Estandar estandar = (Estandar) producto.get(0);
@@ -579,7 +579,7 @@ public class ControllerNuevoProducto implements Initializable {
     				|| estandar.getUnidadMedida() != unidad || estandar.getExistenciaActual() != Float.parseFloat(exAct.getText()) || estandar.getExistenciaMinima() != Float.parseFloat(exMin.getText())
     				|| estandar.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || estandar.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
     				|| estandar.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || estandar.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
-    				|| checkPartida(estandar) || checkCostosIndirectos(estandar) || checkManoDeObra(estandar)) {
+    				|| checkPartida(estandar) || checkCostosIndirectos(estandar) || checkManoDeObra(estandar) || estandar.getPrecioClass().getPorc_ganancia() != Integer.parseInt(textfield_preciosPorcientoGanancia.getText()) || estandar.getPrecioClass().getItbis() != Integer.parseInt(textfield_preciosImpuestos.getText())) {
     				
     				
     				alertModify.showAndWait();
@@ -736,7 +736,9 @@ public class ControllerNuevoProducto implements Initializable {
     			if(!kit.getNombre().equalsIgnoreCase(nombre) || kit.getProveedorPrinClass() != proveedor || kit.getRubroProductoClass() != rubro
         				|| kit.getUnidadMedida() != unidad || kit.getExistenciaActual() != Float.parseFloat(exAct.getText()) || kit.getExistenciaMinima() != Float.parseFloat(exMin.getText())
         				|| kit.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || kit.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || kit.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
-        				|| checkPartida(kit) || checkCostosIndirectos(kit)) {
+        				|| checkPartida(kit) || checkCostosIndirectos(kit) 
+        				|| kit.getPrecioClass().getPorc_ganancia() != Integer.parseInt(textfield_preciosPorcientoGanancia.getText()) 
+        				|| kit.getPrecioClass().getItbis() != Integer.parseInt(textfield_preciosImpuestos.getText())) {
     				
     				alertModify.showAndWait();
     				if(alertModify.getResult() == ButtonType.YES) {
@@ -853,7 +855,9 @@ public class ControllerNuevoProducto implements Initializable {
     			if(!servicio.getNombre().equalsIgnoreCase(nombre) || servicio.getProveedorPrinClass() != proveedor || servicio.getRubroProductoClass() != rubro
         				|| servicio.getUnidadMedida() != unidad || servicio.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) 
         				|| servicio.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
-        				|| checkPartida(servicio) || checkCostosIndirectos(servicio) || checkManoDeObra(servicio)) {
+        				|| checkPartida(servicio) || checkCostosIndirectos(servicio) || checkManoDeObra(servicio) 
+        				|| servicio.getPrecioClass().getPorc_ganancia() != Integer.parseInt(textfield_preciosPorcientoGanancia.getText()) 
+        				|| servicio.getPrecioClass().getItbis() != Integer.parseInt(textfield_preciosImpuestos.getText())) {
     				alertModify.showAndWait();
     				if(alertModify.getResult() == ButtonType.YES) {
     					a.setAlertType(AlertType.WARNING);
@@ -966,7 +970,9 @@ public class ControllerNuevoProducto implements Initializable {
         				|| matriz.getUnidadMedida() != unidad || matriz.getExistenciaMinima() != Float.parseFloat(exMin.getText())
         				|| matriz.getExistenciaMaxima() != Float.parseFloat(exMax.getText()) || matriz.getCostoDeCompra() != Float.parseFloat(textfield_costoPrecioCompraProducto.getText())
         				|| matriz.getCosto() != Float.parseFloat(textfield_preciosCostos.getText()) || matriz.getPrecio() != Float.parseFloat(textfield_preciosPrecio.getText())
-        				|| checkPartida(matriz) || checkCostosIndirectos(matriz) || checkManoDeObra(matriz) || checkCombinaciones(matriz)){
+        				|| checkPartida(matriz) || checkCostosIndirectos(matriz) || checkManoDeObra(matriz) || checkCombinaciones(matriz) 
+        				|| matriz.getPrecioClass().getPorc_ganancia() != Integer.parseInt(textfield_preciosPorcientoGanancia.getText()) 
+        				|| matriz.getPrecioClass().getItbis() != Integer.parseInt(textfield_preciosImpuestos.getText())){
     				alertModify.showAndWait();
     				if(alertModify.getResult() == ButtonType.YES) {
     	   				float existenciaActual = 0;
@@ -1792,8 +1798,8 @@ public class ControllerNuevoProducto implements Initializable {
     	if(textfield_numSerie.getText().isEmpty() == true) {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar el número de serie de la combinación.");
+    		alert.setHeaderText("Informaciï¿½n faltante");
+    		alert.setContentText("Debe ingresar el nï¿½mero de serie de la combinaciï¿½n.");
 
     		alert.showAndWait();
     	}
@@ -1801,8 +1807,8 @@ public class ControllerNuevoProducto implements Initializable {
     	else if(textfield_cantidadComb.getText().isEmpty() == true) {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar la cantidad de la combinación.");
+    		alert.setHeaderText("Informaciï¿½n faltante");
+    		alert.setContentText("Debe ingresar la cantidad de la combinaciï¿½n.");
 
     		alert.showAndWait();
     	}
@@ -1815,7 +1821,7 @@ public class ControllerNuevoProducto implements Initializable {
     	{
     		String num = textfield_numSerie.getText();
     		if(!Controladora.getInstance().validarNumeroSerie(num) || !checkNumSerie(num)) {
-    			Alert alert = new Alert(AlertType.WARNING, "Este número de serie esta en uso.");
+    			Alert alert = new Alert(AlertType.WARNING, "Este nï¿½mero de serie esta en uso.");
     			alert.showAndWait();
     		}
     		else {
@@ -2192,7 +2198,7 @@ public class ControllerNuevoProducto implements Initializable {
             		if(p.getUnidadMedida().getCategoria().equalsIgnoreCase("Volumen"))
             		{
             			combobox_ConversorUnidad.getItems().clear();
-            			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de té", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galón", "Galón", "Barril", "Milímetros cb", "Centímetros cb", "Metros cb", "Mililitros", "Litros");
+            			combobox_ConversorUnidad.getItems().addAll("Pulgadas Cb", "Pies  Cb", "Yardas Cb", "Cuchara de tï¿½", "Cuchara de madera", "Onza fluida", "Taza", "Medio litro", "Cuarto de galï¿½n", "Galï¿½n", "Barril", "Milï¿½metros cb", "Centï¿½metros cb", "Metros cb", "Mililitros", "Litros");
             			combobox_ConversorUnidad.getSelectionModel().select(p.getUnidadMedida().getNombre());
             		}
         		}
@@ -2234,7 +2240,7 @@ public class ControllerNuevoProducto implements Initializable {
     	if(textfield_partidaCantidad.getText().isEmpty() == true) {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
+    		alert.setHeaderText("Informaciï¿½n faltante");
     		alert.setContentText("Debe ingresar datos en el campo de Cantidad.");
 
     		alert.showAndWait();
@@ -2242,8 +2248,8 @@ public class ControllerNuevoProducto implements Initializable {
     	else if(exAct.getText().isEmpty() == true) {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
-    		alert.setHeaderText("Información faltante");
-    		alert.setContentText("Debe ingresar datos en el campo de Existencia (Cantidad actual) en la pestaña General.");
+    		alert.setHeaderText("Informaciï¿½n faltante");
+    		alert.setContentText("Debe ingresar datos en el campo de Existencia (Cantidad actual) en la pestaï¿½a General.");
 
     		alert.showAndWait();
     	}
@@ -2289,8 +2295,8 @@ public class ControllerNuevoProducto implements Initializable {
     		case "Pies cb":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Pies cb", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
-    		case "Cuchara de té":
-    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuchara de té", Float.parseFloat(textfield_partidaCantidad.getText()));
+    		case "Cuchara de tï¿½":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuchara de tï¿½", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
     		case "Onza fluida":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Onza fluida", Float.parseFloat(textfield_partidaCantidad.getText()));
@@ -2301,20 +2307,20 @@ public class ControllerNuevoProducto implements Initializable {
     		case "Medio litro":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Medio litro", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
-    		case "Cuarto de galón":
-    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuarto de galón", Float.parseFloat(textfield_partidaCantidad.getText()));
+    		case "Cuarto de galï¿½n":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Cuarto de galï¿½n", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
-    		case "Galón":
-    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Galón", Float.parseFloat(textfield_partidaCantidad.getText()));
+    		case "Galï¿½n":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Galï¿½n", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
     		case "Barril":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Barril", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
-    		case "Milímetros cb":
-    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Milímetros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    		case "Milï¿½metros cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Milï¿½metros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
-    		case "Centímetros cb":
-    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Centímetros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
+    		case "Centï¿½metros cb":
+    			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Centï¿½metros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
     			break;
     		case "Metros cb":
     			cantidadConvertida = estandar.get(0).getUnidadMedida().Conversion("Metros cb", Float.parseFloat(textfield_partidaCantidad.getText()));
@@ -2642,11 +2648,17 @@ public class ControllerNuevoProducto implements Initializable {
 	public void habilitarPorcientoGanancia(ActionEvent event) {
 		if(checkbox_preciosHabilitar.isSelected()) {
 			textfield_preciosPorcientoGanancia.setDisable(false);
-			textfield_preciosPorcientoGanancia.setText("");
+			if(!modificado)
+			{
+				textfield_preciosPorcientoGanancia.setText("");
+			}
 		}
 		else {
 			textfield_preciosPorcientoGanancia.setDisable(true);
-			textfield_preciosPorcientoGanancia.setText("0");
+			if(!modificado)
+			{
+				textfield_preciosPorcientoGanancia.setText("0");
+			}
 			calcularPrecio(null);
 		}
 		
@@ -2655,18 +2667,26 @@ public class ControllerNuevoProducto implements Initializable {
 	public void habilitarImpuestos(ActionEvent event) {
 		if(checkbox_Impuestos.isSelected()) {
 			textfield_preciosImpuestos.setDisable(false);
-			if(Controladora.getInstance().getMiEmpresa() != null) {
-				textfield_preciosImpuestos.setText(Integer.toString(Controladora.getInstance().getMiEmpresa().getITBIS()));
-			}
-			else {
-				textfield_preciosImpuestos.setText("18");
+			
+			if(!modificado)
+			{
+				if(Controladora.getInstance().getMiEmpresa() != null) {
+					textfield_preciosImpuestos.setText(Integer.toString(Controladora.getInstance().getMiEmpresa().getITBIS()));
+				}
+				else {
+					textfield_preciosImpuestos.setText("18");
+				}
 			}
 			
 			calcularPrecio(null);
 		}
 		else {
 			textfield_preciosImpuestos.setDisable(true);
-			textfield_preciosImpuestos.setText("0");
+			if(!modificado)
+			{
+				textfield_preciosImpuestos.setText("0");
+			}
+			
 			calcularPrecio(null);
 		}
 
@@ -3103,7 +3123,7 @@ public class ControllerNuevoProducto implements Initializable {
 		textfield_preciosImpuestos.setText("0");
     }
     
-    public void rellenarCostosGenerales(Producto producto) //Ver porqué no funciona
+    public void rellenarCostosGenerales(Producto producto) //Ver porquï¿½ no funciona
     {
     	ObservableList<String> ob = FXCollections.observableArrayList();
     	
@@ -3154,6 +3174,8 @@ public class ControllerNuevoProducto implements Initializable {
     	System.out.println(producto);
     	textfield_generalCodigo.setText(producto.getCodigo());
     	textfield_generalNombre.setText(producto.getNombre());
+    	textfield_preciosPorcientoGanancia.setText(Integer.toString(producto.getPrecioClass().getPorc_ganancia()));
+    	textfield_preciosImpuestos.setText(Integer.toString(producto.getPrecioClass().getItbis()));
     	if(producto.getUnidadMedida() != null) {
     		textfield_generalUnidad.setText(producto.getUnidadMedida().getNombre());
     	}
@@ -3578,20 +3600,20 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoTipoProducto(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre los tipos de productos");
-    	alert.setContentText("Estándar: es el tipo de producto por defecto, normalmente utilizado para materias primas o productos corriente.\r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre los tipos de productos");
+    	alert.setContentText("Estï¿½ndar: es el tipo de producto por defecto, normalmente utilizado para materias primas o productos corriente.\r\n" + 
     			" Ej:  Azucar, tomate, vino, etc. \r\n" + 
     			"\r\n" + 
-    			"Kit: producto que se compone de varios productos que se venden en conjunto y estos también se venden como productos estándar.\r\n" + 
-    			"Ej: Productos estándar: Pasta dental y cepillo dental. \r\n" + 
+    			"Kit: producto que se compone de varios productos que se venden en conjunto y estos tambiï¿½n se venden como productos estï¿½ndar.\r\n" + 
+    			"Ej: Productos estï¿½ndar: Pasta dental y cepillo dental. \r\n" + 
     			"Producto kit: combo de pasta dental con cepillo dental incluido. \r\n" + 
     			"\r\n" + 
-    			"Servicio: producto sin existencia agotable y depende del personal capacitado del negocio. Estos pueden requerir el uso de algún producto, también descontando la existencia del producto. \r\n" + 
+    			"Servicio: producto sin existencia agotable y depende del personal capacitado del negocio. Estos pueden requerir el uso de algï¿½n producto, tambiï¿½n descontando la existencia del producto. \r\n" + 
     			"Ej: Servicios: masajes. \r\n" + 
     			"Producto relacionado: crema corporal. \r\n" + 
     			"\r\n" + 
-    			"Productos de matriz: son aquellos productos que poseen distintas versiones de sí mismo y no poseen variaciones en su precio. Estos productos podrían variar en color, tamaño, sabor, entre otras características. \r\n" + 
+    			"Productos de matriz: son aquellos productos que poseen distintas versiones de sï¿½ mismo y no poseen variaciones en su precio. Estos productos podrï¿½an variar en color, tamaï¿½o, sabor, entre otras caracterï¿½sticas. \r\n" + 
     			"Ej: T-Shirt de la marca Polo color rojo, T-Shirt de la marca Polo color azul. \r\n" + 
     			"");
     			
@@ -3600,26 +3622,26 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoProducible(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre producible");
-    	alert.setContentText("Al marcar esta opción se indica que este producto es creado en su negocio y es necesario agregarle contos relacionados a la materia prima y mano de obra involucrada.");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre producible");
+    	alert.setContentText("Al marcar esta opciï¿½n se indica que este producto es creado en su negocio y es necesario agregarle contos relacionados a la materia prima y mano de obra involucrada.");
 
     	alert.showAndWait();
     }
     
     public void infoUnidadMedida(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre unidad de medida");
-    	alert.setContentText("Al presionar el botón de buscar, se presentará una tabla con todas las unidades de medida disponibles en el programa, agrupadas por longitud, masa, volumen, área y unidad. Al elegir una de estas unidades de medida, en base a esta es que se debe colocar la existencia del producto. \r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre unidad de medida");
+    	alert.setContentText("Al presionar el botï¿½n de buscar, se presentarï¿½ una tabla con todas las unidades de medida disponibles en el programa, agrupadas por longitud, masa, volumen, ï¿½rea y unidad. Al elegir una de estas unidades de medida, en base a esta es que se debe colocar la existencia del producto. \r\n" + 
     			"Ej: Producto: Alcohol \r\n" + 
     			"Unidad de medida: Litros \r\n" + 
     			"Existencia: 200 \r\n" + 
     			"Esto es equivalente a 200 litros de alcohol en el inventario. \r\n" + 
     			"\r\n" + 
-    			"Las unidades de medida de longitud, masa, volumen y área son recomendadas para productos que se venderán al detalle o serán utilizadas medidas exactas de estos para la fabricación de otros productos (partida). \r\n" + 
+    			"Las unidades de medida de longitud, masa, volumen y ï¿½rea son recomendadas para productos que se venderï¿½n al detalle o serï¿½n utilizadas medidas exactas de estos para la fabricaciï¿½n de otros productos (partida). \r\n" + 
     			"\r\n" + 
-    			"La unidad de medida del tipo unidad son para los productos que se venderán o utilizaran como tal. \r\n" + 
+    			"La unidad de medida del tipo unidad son para los productos que se venderï¿½n o utilizaran como tal. \r\n" + 
     			"Ej:  \r\n" + 
     			"Producto: Una botella de alcohol. \r\n" + 
     			"Unidad de medida: Unidad \r\n" + 
@@ -3632,12 +3654,12 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoRubro(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre rubro");
-    	alert.setContentText("Los rubros son agrupaciones de productos que poseen características en común. \r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre rubro");
+    	alert.setContentText("Los rubros son agrupaciones de productos que poseen caracterï¿½sticas en comï¿½n. \r\n" + 
     			"Ej: Fresas, manzanas, peras y bananas, pertenecen al rubro de las frutas. \r\n" + 
     			"\r\n" + 
-    			"Al presionar el botón de buscar, mostrará una tabla con todos sus rubros registrados y podrá seleccionar uno para este producto. \r\n" + 
+    			"Al presionar el botï¿½n de buscar, mostrarï¿½ una tabla con todos sus rubros registrados y podrï¿½ seleccionar uno para este producto. \r\n" + 
     			"");
 
     	alert.showAndWait();
@@ -3645,17 +3667,17 @@ public class ControllerNuevoProducto implements Initializable {
 
     public void infoProveedor(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre proveedor");
-    	alert.setContentText("Al presionar el botón de buscar, mostrará una tabla con todos sus proveedores registrados y podrá seleccionar uno para este producto. Este campo estará deshabilitado para productos producibles, ya que el proveedor será la empresa misma. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre proveedor");
+    	alert.setContentText("Al presionar el botï¿½n de buscar, mostrarï¿½ una tabla con todos sus proveedores registrados y podrï¿½ seleccionar uno para este producto. Este campo estarï¿½ deshabilitado para productos producibles, ya que el proveedor serï¿½ la empresa misma. ");
 
     	alert.showAndWait();
     }
     
     public void infoCantidadActual(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre cantidad actual");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre cantidad actual");
     	alert.setContentText("Cantidad existente del producto en el inventario. ");
 
     	alert.showAndWait();
@@ -3663,26 +3685,26 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoCantMinima(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre existencia mínima");
-    	alert.setContentText("Cantidad mínima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia mínima, indicándole que debe reabastecerse del producto. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre existencia mï¿½nima");
+    	alert.setContentText("Cantidad mï¿½nima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia mï¿½nima, indicï¿½ndole que debe reabastecerse del producto. ");
 
     	alert.showAndWait();
     }
     
     public void infoCantMax(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre existencia máxima");
-    	alert.setContentText("Cantidad máxima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia máxima, indicándole que debe reducir la del producto para evitar gastos extra. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre existencia mï¿½xima");
+    	alert.setContentText("Cantidad mï¿½xima del producto en el inventario. El programa le notificara cuando la existencia actual se aproxime a la existencia mï¿½xima, indicï¿½ndole que debe reducir la del producto para evitar gastos extra. ");
 
     	alert.showAndWait();
     }
     
     public void infoBusquedaProducto(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre búsqueda de productos");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre bï¿½squeda de productos");
     	alert.setContentText("Es posible buscar un producto en este campo por su nombre. ");
 
     	alert.showAndWait();
@@ -3690,16 +3712,16 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoCantidadPartida(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre cantidad");
-    	alert.setContentText("En este campo se coloca la cantidad a utilizar del producto seleccionado en la partida del producto a fabricar. Debajo contamos con un pequeño menú de las unidades de medidas de la misma categoría (longitud, masa, volumen o área), a las que es posible convertir la unidad de medida del producto seleccionado. \r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre cantidad");
+    	alert.setContentText("En este campo se coloca la cantidad a utilizar del producto seleccionado en la partida del producto a fabricar. Debajo contamos con un pequeï¿½o menï¿½ de las unidades de medidas de la misma categorï¿½a (longitud, masa, volumen o ï¿½rea), a las que es posible convertir la unidad de medida del producto seleccionado. \r\n" + 
     			"Ej: Producto: Alcohol \r\n" + 
     			"Unidad de medida: Litros \r\n" + 
     			"Existencia: 200 \r\n" + 
     			"Cantidad a utilizar: 50 \r\n" + 
     			"\r\n" + 
-    			"Medida a utilizar para la aplicación de este producto en la partida del producto a fabricar: Mililitros \r\n" + 
-    			"50 mililitros = 0.05 litros de alcohol serán utilizados en la fabricación de este producto. \r\n" + 
+    			"Medida a utilizar para la aplicaciï¿½n de este producto en la partida del producto a fabricar: Mililitros \r\n" + 
+    			"50 mililitros = 0.05 litros de alcohol serï¿½n utilizados en la fabricaciï¿½n de este producto. \r\n" + 
     			"");
 
     	alert.showAndWait();
@@ -3707,8 +3729,8 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoPrecioEstimado(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre precio estimado del producto");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre precio estimado del producto");
     	alert.setContentText("Precio de venta que se estima que el producto posea. Se recomienda calcular el precio promedio del producto en el mercado y colocarlo en este campo. ");
 
     	alert.showAndWait();
@@ -3716,8 +3738,8 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoPrecioCompra(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre precio de compra del producto");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre precio de compra del producto");
     	alert.setContentText("Colocar el precio de compra del producto en este campo. No aplica para productos producibles. ");
 
     	alert.showAndWait();
@@ -3725,20 +3747,20 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoCostosIndirectos(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre costos indirectos");
-    	alert.setContentText("Listado de los costos indirectos de su empresa registrados en el sistema. En este campo puede seleccionar los costos indirectos que aplicaran para este producto clicándolo en la lista y enviándolo a la lista de los seleccionados con la flecha a derecha. Esto aumentara el costo del producto para cubrir gastos de la empresa. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre costos indirectos");
+    	alert.setContentText("Listado de los costos indirectos de su empresa registrados en el sistema. En este campo puede seleccionar los costos indirectos que aplicaran para este producto clicï¿½ndolo en la lista y enviï¿½ndolo a la lista de los seleccionados con la flecha a derecha. Esto aumentara el costo del producto para cubrir gastos de la empresa. ");
 
     	alert.showAndWait();
     }
     
     public void infoCostosDirectos(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre costos directos");
-    	alert.setContentText("En esta sección se calculará el costo atribuido a su producto por su mano de obra. Es necesario indicar el tiempo de fabricación (que requiera intervención humana) del producto y la categoría de empleados encargados de la fabricación del producto. \r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre costos directos");
+    	alert.setContentText("En esta secciï¿½n se calcularï¿½ el costo atribuido a su producto por su mano de obra. Es necesario indicar el tiempo de fabricaciï¿½n (que requiera intervenciï¿½n humana) del producto y la categorï¿½a de empleados encargados de la fabricaciï¿½n del producto. \r\n" + 
     			"\r\n" + 
-    			"Al presionar el botón de aplicar, se calculará el costo atribuido por mano de obra al precio del producto. (Solo aplica a productos producibles). \r\n" + 
+    			"Al presionar el botï¿½n de aplicar, se calcularï¿½ el costo atribuido por mano de obra al precio del producto. (Solo aplica a productos producibles). \r\n" + 
     			"");
 
     	alert.showAndWait();
@@ -3746,8 +3768,8 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoPrecios(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre precios");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre precios");
     	alert.setContentText("En esta ventana se puede visualizar el costo del producto generado por mano de obra (para producto producible), costo de compra y costos indirectos de la empresa. Es posible aplicarle un porcentaje de ganancia al producto y de impuestos, aumentando el precio de venta del producto. ");
 
     	alert.showAndWait();
@@ -3755,20 +3777,20 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoImagen(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre imagen");
-    	alert.setContentText("Al presionar el botón agregar, puede buscar dentro de su ordenador una imagen para asignársela a su producto y visualizarla en la información adicional del producto en el listado de productos. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre imagen");
+    	alert.setContentText("Al presionar el botï¿½n agregar, puede buscar dentro de su ordenador una imagen para asignï¿½rsela a su producto y visualizarla en la informaciï¿½n adicional del producto en el listado de productos. ");
 
     	alert.showAndWait();
     }
     
     public void infoSustitutos(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre productos sustitutos");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre productos sustitutos");
     	alert.setContentText("Es posible colocar productos para ofrecer al cliente como sustituto del producto que desee en caso de que este no se encuentre disponible para la venta. \r\n" + 
     			"\r\n" + 
-    			"Ej: El cliente busca un pantalón de la marca X y este no se encuentra disponible en el inventario, así que puede ofrecerle un pantalón de la marca Y o Z a ver si alguno de estos también cumple sus necesidades y expectativas.  \r\n" + 
+    			"Ej: El cliente busca un pantalï¿½n de la marca X y este no se encuentra disponible en el inventario, asï¿½ que puede ofrecerle un pantalï¿½n de la marca Y o Z a ver si alguno de estos tambiï¿½n cumple sus necesidades y expectativas.  \r\n" + 
     			"");
 
     	alert.showAndWait();
@@ -3776,8 +3798,8 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoPromocion(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre promoción");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre promociï¿½n");
     	alert.setContentText("Puede incluir al producto en una de las promociones disponibles de la empresa. ");
 
     	alert.showAndWait();
@@ -3785,24 +3807,24 @@ public class ControllerNuevoProducto implements Initializable {
     
     public void infoCombinaciones(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre combinaciones");
-    	alert.setContentText("En esta sección puede generar combinaciones de atributos para sus productos de tipo matriz. En las barras de arriba puede colocar el nombre de la familia de atributos que desea utilizar y presiona el botón de buscar para que se muestren en la lista. Una vez mostrados en la lista, debe cliquear uno o varios atributos que vaya a utilizar, colocarle un número de serie y la cantidad (existencia) de esta combinación en el stock. Para terminar de procesar dicha combinación, debe cliquear el botón “combinar”. ");
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre combinaciones");
+    	alert.setContentText("En esta secciï¿½n puede generar combinaciones de atributos para sus productos de tipo matriz. En las barras de arriba puede colocar el nombre de la familia de atributos que desea utilizar y presiona el botï¿½n de buscar para que se muestren en la lista. Una vez mostrados en la lista, debe cliquear uno o varios atributos que vaya a utilizar, colocarle un nï¿½mero de serie y la cantidad (existencia) de esta combinaciï¿½n en el stock. Para terminar de procesar dicha combinaciï¿½n, debe cliquear el botï¿½n ï¿½combinarï¿½. ");
 
     	alert.showAndWait();
     }
     
     public void infoNumeroSerie(MouseEvent event){
     	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Información");
-    	alert.setHeaderText("Información sobre número de serie");
-    	alert.setContentText("El número de serie es un identificador para la combinación a crear.\r\n" + 
+    	alert.setTitle("Informaciï¿½n");
+    	alert.setHeaderText("Informaciï¿½n sobre nï¿½mero de serie");
+    	alert.setContentText("El nï¿½mero de serie es un identificador para la combinaciï¿½n a crear.\r\n" + 
     			"Ej: Atributo #1: Color, Rojo\r\n" + 
-    			"Atributo #2: Tamaño, Small\r\n" + 
-    			"Número de Serie: NRS001\r\n" + 
+    			"Atributo #2: Tamaï¿½o, Small\r\n" + 
+    			"Nï¿½mero de Serie: NRS001\r\n" + 
     			"Cantidad: 10\r\n" + 
     			"\r\n" + 
-    			"La combinación se vería como tal: NRS001 Color: Azul, Tamaño: Small, Existencia: 10.0\r\n" + 
+    			"La combinaciï¿½n se verï¿½a como tal: NRS001 Color: Azul, Tamaï¿½o: Small, Existencia: 10.0\r\n" + 
     			"");
 
     	alert.showAndWait();
