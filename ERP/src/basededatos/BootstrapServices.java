@@ -682,6 +682,8 @@ public class BootstrapServices {
 				"  `descripcion` varchar(45) DEFAULT NULL,\r\n" + 
 				"  `fecha` date NOT NULL,\r\n" + 
 				"  `borrado` tinyint(4) DEFAULT '0',\r\n" + 
+				"  `porc_ganancia` int(11) NOT NULL,\r\n" + 
+				"  `itbis` int(11) NOT NULL,\r\n" +
 				"  PRIMARY KEY (`idprecio`)\r\n" + 
 				");";
 		Statement statement = con.createStatement();

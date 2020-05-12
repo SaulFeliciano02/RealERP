@@ -54,16 +54,16 @@ public class Controladora implements Serializable{
 	Longitud metros = new Longitud("Longitud", "Metros", "m");
 	Volumen pulgada_cb = new Volumen("Volumen", "Pulgadas cb", "ci");
 	Volumen pies_cb = new Volumen("Volumen", "Pies cb", "cft");
-	Volumen cucharaTe = new Volumen("Volumen", "Cuchara de té", "tsp");
+	Volumen cucharaTe = new Volumen("Volumen", "Cuchara de tï¿½", "tsp");
 	Volumen cucharaMadera = new Volumen("Volumen", "Cuchara de madera", "tbsp");
 	Volumen onzafluida = new Volumen("Volumen", "Onza fluida", "foz");
 	Volumen taza = new Volumen("Volumen", "Taza", "cp");
 	Volumen medioLitro = new Volumen("Volumen", "Medio litro", "L/2");
-	Volumen cuartogalon = new Volumen("Volumen", "Cuarto de galón", "gl/4");
-	Volumen galon = new Volumen("Volumen", "Galón", "gl");
+	Volumen cuartogalon = new Volumen("Volumen", "Cuarto de galï¿½n", "gl/4");
+	Volumen galon = new Volumen("Volumen", "Galï¿½n", "gl");
 	Volumen barril = new Volumen("Volumen", "Barril", "brl");
-	Volumen milimetrocb = new Volumen("Volumen", "Milímetros cb", "cmm");
-	Volumen centimetrocb = new Volumen("Volumen", "Centímetros cb", "ccm");
+	Volumen milimetrocb = new Volumen("Volumen", "Milï¿½metros cb", "cmm");
+	Volumen centimetrocb = new Volumen("Volumen", "Centï¿½metros cb", "ccm");
 	Volumen metrocb = new Volumen("Volumen", "Metros cb", "cmt");
 	Volumen mililitros = new Volumen("Volumen", "Mililitros", "ml");
 	Volumen litros = new Volumen("Volumen", "Litros", "L");
@@ -81,7 +81,7 @@ public class Controladora implements Serializable{
 	Area sq_metros = new Area("Area", "Sq Metros", "sqm");
 	ArrayList<Proveedores> provsec = new ArrayList<>();
 	Moneda dola = new Moneda(50, "dolar");
-	Precio pre = new Precio(1500f, "caro", true);
+	Precio pre = new Precio(1500f, "caro", true, 0, 0);
 	Cargo cargo1 = new Cargo("Administrador", true, true, true, true, true, true, true, true, true, true);
 	Cargo cargo2 = new Cargo("Cajero", false, false, true, false, true, false, false, false, false, false);
 	Proveedores provdefault;
@@ -1567,10 +1567,12 @@ public class Controladora implements Serializable{
 			c = con.conectar();
 			
 			p = (PreparedStatement)
-					c.prepareStatement("INSERT INTO precio (precio, descripcion, fecha) VALUES (?, ?, ?)");
+					c.prepareStatement("INSERT INTO precio (precio, descripcion, fecha, porc_ganancia, itbis) VALUES (?, ?, ?, ?, ?)");
 			p.setFloat(1, precio.getPrecio());
 			p.setString(2, precio.getDescripcion());
 			p.setDate(3, (java.sql.Date.valueOf(precio.getFecha())));
+			p.setInt(4, precio.getPorc_ganancia());
+			p.setInt(5, precio.getItbis());
 			p.executeUpdate();
 		}
 		catch(Exception e) {
@@ -3526,35 +3528,35 @@ public class Controladora implements Serializable{
 		switch(tipoBusqueda) {
 			case "Codigo":
 				for(Producto producto : Controladora.getInstance().getMisProductos()) {
-					if(producto.getCodigo().toLowerCase().contains(buscador)) {
+					if(producto.getCodigo().toLowerCase().contains(buscador.toLowerCase())) {
 						searchProducto.add(producto);
 					}		
 				}
 				break;
 			case "Nombre":
 				for(Producto producto : Controladora.getInstance().getMisProductos()) {
-					if(producto.getNombre().toLowerCase().contains(buscador)) {
+					if(producto.getNombre().toLowerCase().contains(buscador.toLowerCase())) {
 						searchProducto.add(producto);
 					}
 				}
 				break;
 			case "Descripcion":
 				for(Producto producto : Controladora.getInstance().getMisProductos()) {
-					if(producto.getDescripcion().toLowerCase().contains(buscador)) {
+					if(producto.getDescripcion().toLowerCase().contains(buscador.toLowerCase())) {
 						searchProducto.add(producto);
 					}
 				}					
 				break;
 			case "Proveedor":
 				for(Producto producto : Controladora.getInstance().getMisProductos()) {
-					if(producto.getProveedorPrinClass().getCodigo().toLowerCase().contains(buscador)) {
+					if(producto.getProveedorPrinClass().getCodigo().toLowerCase().contains(buscador.toLowerCase())) {
 						searchProducto.add(producto);
 					}
 				}
 				break;
 			case "Rubro":
 				for(Producto producto : Controladora.getInstance().getMisProductos()) {
-					if(producto.getRubroProductoClass().getCodigo().toLowerCase().contains(buscador)) {
+					if(producto.getRubroProductoClass().getCodigo().toLowerCase().contains(buscador.toLowerCase())) {
 						searchProducto.add(producto);
 					}
 					
@@ -5063,6 +5065,8 @@ public class Controladora implements Serializable{
 		String descripcion = null;
 		Date fecha = null;
 		boolean activo = false;
+		int porc_ganancia = 0;
+		int itbis = 0;
 		
 		try {
 			
@@ -5080,6 +5084,8 @@ public class Controladora implements Serializable{
 				precio = r.getFloat(2);
 				descripcion = r.getString(3);
 				fecha = r.getDate(4);
+				porc_ganancia = r.getInt(6);
+				itbis = r.getInt(7);
 				
 				c2 = con.conectar();
 				s2 = (Statement) c2.createStatement();
@@ -5091,7 +5097,7 @@ public class Controladora implements Serializable{
 					activo = r2.getBoolean(1);
 				}
 				
-				Precio pre = new Precio(precio, descripcion, activo);
+				Precio pre = new Precio(precio, descripcion, activo, porc_ganancia, itbis);
 				pre.setFecha(LocalDate.parse(fecha.toString()));
 				
 				Controladora.getInstance().getMisPrecios().add(pre);
@@ -7479,6 +7485,8 @@ public void loadKit()
 	float montoprecio = 0;
 	String descripcionprecio = null;
 	Date fechaprecio = null;
+	int porc_ganancia = 0;
+	int itbis = 0;
 	//Variables para rubroproducto
 	int idrubroproducto = 0;
 	int rubroid = 0;
@@ -7586,6 +7594,8 @@ public void loadKit()
 					montoprecio = r6.getFloat(2);
 					descripcionprecio = r6.getString(3);
 					fechaprecio = r6.getDate(4);
+					porc_ganancia = r6.getInt(6);
+					itbis = r6.getInt(7);
 				}
 				
 				c7 = con.conectar();
@@ -7627,7 +7637,7 @@ public void loadKit()
 				}
 				
 				Rubro ru = buscarRubro(nombrerubro);
-				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+				Precio pre = new Precio(montoprecio, descripcionprecio, activo, porc_ganancia, itbis);
 				Proveedores pro = buscarProveedor(nombreproveedor);
 				
 				Kit recuperado = new Kit(listado, exisactual, exisminima, exismaxima, exisinicial, null, codigo, nombre, descripcion, ru, tipoProducto, pro, null, null, observ, null, pre, null, null, 0, descripcion, null, costo, costoitbis);
@@ -7906,6 +7916,8 @@ public boolean activarLoadServicios()
 		float montoprecio = 0;
 		String descripcionprecio = null;
 		Date fechaprecio = null;
+		int porc_ganancia = 0;
+		int itbis = 0;
 		int idrubroproducto = 0;
 		int rubroid = 0;
 		int productorubroid = 0;
@@ -8018,6 +8030,8 @@ public boolean activarLoadServicios()
 						montoprecio = r6.getFloat(2);
 						descripcionprecio = r6.getString(3);
 						fechaprecio = r6.getDate(4);
+						porc_ganancia = r6.getInt(6);
+						itbis = r6.getInt(7);
 					}
 					
 					c6.close();
@@ -8044,7 +8058,7 @@ public boolean activarLoadServicios()
 					c8.close();
 					
 					Rubro ru = buscarRubro(nombrerubro);
-					Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+					Precio pre = new Precio(montoprecio, descripcionprecio, activo, porc_ganancia, itbis);
 					CategoriaEmpleado cat = buscarCategoria(nombreCat);
 				
 					Servicio serv = new Servicio(codigo, nombre, descripcion, ru, tipoProducto, null, null, observ, null, pre, null, null, descripcion, cat, listado, costo, costoitbis);
@@ -8515,7 +8529,7 @@ public void recuperarRubros()
 		//Para recibir datos desde la base de datos, se utiliza ResultSet y el Statement
 		if(Controladora.getInstance().getMisRubros().isEmpty())
 		{
-			System.out.println("Mis rubros está vacío");
+			System.out.println("Mis rubros estï¿½ vacï¿½o");
 		}
 		s = (Statement) c.createStatement();
 		r = s.executeQuery("SELECT * FROM rubros");
@@ -8870,6 +8884,8 @@ public void loadProductos()
 	float montoprecio = 0;
 	String descripcionprecio = null;
 	Date fechaprecio;
+	int porc_ganancia = 0;
+	int itbis = 0;
 	
 	//RECUPERAR RUBRO
 	int idrubroproducto = 0;
@@ -8949,6 +8965,8 @@ public void loadProductos()
 					montoprecio = r4.getFloat(2);
 					descripcionprecio = r4.getString(3);
 					fechaprecio = r4.getDate(4);
+					porc_ganancia = r4.getInt(6);
+					itbis = r4.getInt(7);
 				}
 				
 				c5 = con.conectar();
@@ -9001,7 +9019,7 @@ public void loadProductos()
 				System.out.println("Seccion de crear estandar");
 				Rubro ru = buscarRubro(nombrerubro);
 				Proveedores pro = buscarProveedor(nombreproveedor);
-				Precio pre = new Precio(montoprecio, descripcionprecio, activo);
+				Precio pre = new Precio(montoprecio, descripcionprecio, activo, porc_ganancia, itbis);
 				Estandar estandar = new Estandar(exitact, exitmin, exitmax, exitinit, fechavencimiento, costocompra, fabricado, null, codigo, nombre, descripcionprecio, ru, tipoproducto, pro, null, null, observaciones, unidad1, pre, null, null, manodeobra, descripcion, null, costo, costoitbis);
 				estandar.setBorrado(borrado);
 				
@@ -10476,7 +10494,7 @@ public void loadCategoriaEmpleado()
 		}
 	}
 	
-	//Funcion que se encarga de modificar datos de una petición.
+	//Funcion que se encarga de modificar datos de una peticiï¿½n.
 	public void modificarEstadoPeticion(String estado, String metodo, String codigo) {
 		Conexion con = new Conexion();
 		java.sql.Connection cSQL = null;
@@ -11157,7 +11175,7 @@ public void loadCategoriaEmpleado()
 				fact.setPorcientoDescuento(porcientodescuento);
 				if(pagosDeuda.size() == 0)
 				{
-					System.out.println("pagos deuda está vacio");
+					System.out.println("pagos deuda estï¿½ vacio");
 				}
 				for (Float f : pagosDeuda) {
 					System.out.println("Valor del pago deuda: " + f);
