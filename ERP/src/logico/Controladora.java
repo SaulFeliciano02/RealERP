@@ -1,6 +1,15 @@
 package logico;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +19,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -473,6 +484,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -520,6 +532,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -568,6 +581,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -619,6 +633,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -666,6 +681,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -716,6 +732,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -767,6 +784,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -812,6 +830,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -859,6 +878,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -921,6 +941,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -990,6 +1011,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1055,6 +1077,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1100,6 +1123,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1146,6 +1170,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1192,6 +1217,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1257,6 +1283,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1305,8 +1332,11 @@ public class Controladora implements Serializable{
 	public void addCategoriaEmpleado(CategoriaEmpleado c)
 	{
 		misCategoriasEmpleado.add(c);
-		
-		guardarCategoriaEmpleadoSQL(c);
+		try {
+			guardarCategoriaEmpleadoSQL(c);
+		}catch(Exception e) {
+			Controladora.getInstance().print_exception(e);
+		}
 	}
 	
 	public void addGastoGeneral(GastoGeneral g)
@@ -1339,6 +1369,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1385,6 +1416,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1431,6 +1463,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1498,6 +1531,7 @@ public class Controladora implements Serializable{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -1541,6 +1575,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1558,6 +1593,7 @@ public class Controladora implements Serializable{
 			}
 			catch(Exception e2) {
 				e2.printStackTrace();
+				Controladora.getInstance().print_exception(e2);
 			}
 		}
 	}
@@ -1580,6 +1616,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1597,6 +1634,7 @@ public class Controladora implements Serializable{
 			}
 			catch(Exception e2) {
 				e2.printStackTrace();
+				Controladora.getInstance().print_exception(e2);
 			}
 		}
 	}
@@ -1619,6 +1657,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1658,6 +1697,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1697,6 +1737,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1750,6 +1791,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1785,6 +1827,7 @@ public class Controladora implements Serializable{
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1852,6 +1895,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1890,6 +1934,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1928,6 +1973,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -1966,6 +2012,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2004,6 +2051,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2045,6 +2093,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2083,6 +2132,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2121,6 +2171,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2159,6 +2210,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2197,6 +2249,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2235,6 +2288,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2273,6 +2327,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2311,6 +2366,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2349,6 +2405,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2387,6 +2444,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2426,6 +2484,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2475,6 +2534,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2511,6 +2571,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2550,6 +2611,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2589,6 +2651,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2628,6 +2691,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2666,6 +2730,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2707,6 +2772,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2744,6 +2810,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2789,6 +2856,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2827,6 +2895,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2867,6 +2936,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2905,6 +2975,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2943,6 +3014,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -2981,6 +3053,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3019,6 +3092,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3058,6 +3132,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3097,6 +3172,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3136,6 +3212,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3176,6 +3253,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3223,6 +3301,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3264,6 +3343,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3303,6 +3383,7 @@ public class Controladora implements Serializable{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -3778,6 +3859,7 @@ public class Controladora implements Serializable{
 			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -3822,6 +3904,7 @@ public class Controladora implements Serializable{
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
 		finally {
@@ -3864,6 +3947,7 @@ public class Controladora implements Serializable{
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
 		finally {
@@ -3906,6 +3990,7 @@ public class Controladora implements Serializable{
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
 		finally {
@@ -3948,6 +4033,7 @@ public class Controladora implements Serializable{
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
 		finally {
@@ -4585,6 +4671,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -4673,6 +4760,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -4747,6 +4835,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -4877,6 +4966,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -4932,6 +5022,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5009,6 +5100,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5076,6 +5168,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5133,6 +5226,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5174,6 +5268,7 @@ public class Controladora implements Serializable{
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -5230,6 +5325,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5285,6 +5381,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5341,6 +5438,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5397,6 +5495,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5453,6 +5552,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5509,6 +5609,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5566,6 +5667,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5623,6 +5725,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5712,6 +5815,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5767,6 +5871,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5824,6 +5929,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -5907,6 +6013,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6021,6 +6128,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6076,6 +6184,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6142,6 +6251,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6197,6 +6307,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6263,6 +6374,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6385,6 +6497,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6470,6 +6583,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6525,6 +6639,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6582,6 +6697,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6639,6 +6755,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6724,6 +6841,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6797,6 +6915,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6852,6 +6971,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6909,6 +7029,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -6964,6 +7085,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7027,6 +7149,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7082,6 +7205,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7180,6 +7304,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7260,6 +7385,7 @@ public class Controladora implements Serializable{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7518,6 +7644,7 @@ public void loadKit()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7698,6 +7825,7 @@ public boolean activarLoadServicios()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7933,6 +8061,7 @@ public boolean activarLoadServicios()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -7988,6 +8117,7 @@ public void loadUnidadesMedida()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8187,6 +8317,7 @@ public boolean activarLoadProveedores()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8278,6 +8409,7 @@ public void loadProveedores()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8341,6 +8473,7 @@ public boolean activarRecuperarRubros()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8405,6 +8538,7 @@ public void recuperarRubros()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8460,6 +8594,7 @@ public boolean activarLoadManoDeObra()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8576,6 +8711,7 @@ public void loadManoDeObra()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8643,6 +8779,7 @@ public boolean activarLoadProductos()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -8885,6 +9022,7 @@ public void loadProductos()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9024,6 +9162,7 @@ public boolean activarLoadPartida()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9170,6 +9309,7 @@ public boolean activarLoadPartida()
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
+				Controladora.getInstance().print_exception(e);
 			}
 		
 			//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9425,6 +9565,7 @@ public boolean activarLoadPartida()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9504,6 +9645,7 @@ public void loadEmpleados()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9567,6 +9709,7 @@ public boolean activarLoadCategoriaEmpleado()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9624,6 +9767,7 @@ public void loadCategoriaEmpleado()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9679,6 +9823,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9754,6 +9899,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9821,6 +9967,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9875,6 +10022,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9930,6 +10078,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -9988,6 +10137,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -10043,6 +10193,7 @@ public void loadCategoriaEmpleado()
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -10101,6 +10252,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 	
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -10140,6 +10292,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10176,7 +10329,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println("Klk");
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10227,6 +10380,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10263,6 +10417,7 @@ public void loadCategoriaEmpleado()
 				p.executeUpdate();
 			}catch(SQLException e) {
 				e.printStackTrace();
+				Controladora.getInstance().print_exception(e);
 			}
 			finally {
 				try {
@@ -10299,6 +10454,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10338,6 +10494,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10374,6 +10531,7 @@ public void loadCategoriaEmpleado()
 				p.executeUpdate();
 			}catch(SQLException e) {
 				e.printStackTrace();
+				Controladora.getInstance().print_exception(e);
 			}
 			finally {
 				try {
@@ -10410,6 +10568,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10446,6 +10605,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10482,6 +10642,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10518,6 +10679,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10554,6 +10716,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10589,6 +10752,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10625,6 +10789,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10660,6 +10825,7 @@ public void loadCategoriaEmpleado()
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -10700,6 +10866,7 @@ public void loadCategoriaEmpleado()
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -11121,6 +11288,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11649,6 +11817,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11707,6 +11876,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11764,6 +11934,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11821,6 +11992,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11893,6 +12065,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11954,6 +12127,7 @@ public void loadCategoriaEmpleado()
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -11999,6 +12173,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12287,6 +12462,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12322,6 +12498,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12357,6 +12534,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12392,6 +12570,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12431,6 +12610,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12466,6 +12646,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12501,6 +12682,7 @@ public void pagarDeudaPeticion(Peticion peticion, float monto) {
 			p.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			Controladora.getInstance().print_exception(e);
 		}
 		finally {
 			try {
@@ -12588,6 +12770,7 @@ public void reiniciarInfoEmpresa() {
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12633,6 +12816,7 @@ public void reiniciarClientes() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12678,6 +12862,7 @@ public void reiniciarPreguntasRecuperacion()
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12722,6 +12907,7 @@ public void reiniciarRubros() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12767,6 +12953,7 @@ public void reiniciarGastosGenerales() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12812,6 +12999,7 @@ public void reiniciarProveedores() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12857,6 +13045,7 @@ public void reiniciarCategoriaEmpleado() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12902,6 +13091,7 @@ public void reiniciarEmpleados() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -12947,6 +13137,7 @@ public void reiniciarPrecios() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13002,6 +13193,7 @@ public void reiniciarProducto() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13077,6 +13269,7 @@ public void reiniciarPartida() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13123,6 +13316,7 @@ public void reiniciarGrupoAtributos() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13169,6 +13363,7 @@ public void reiniciarAtributos() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13224,6 +13419,7 @@ public void reiniciarMatriz() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13284,6 +13480,7 @@ public void reiniciarKit() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13335,6 +13532,7 @@ public void reiniciarServicio() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13390,6 +13588,7 @@ public void reiniciarManoDeObra() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13436,6 +13635,7 @@ public void reiniciarCostoIndirecto() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13482,6 +13682,7 @@ public void reiniciarPromedioGananciaAnual() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13537,6 +13738,7 @@ public void reiniciarUsuarios() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13607,6 +13809,7 @@ public void reiniciarFactura() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13658,6 +13861,7 @@ public void reiniciarPromocion() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13704,6 +13908,7 @@ public void reiniciarImagenProducto() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13759,6 +13964,7 @@ public void reiniciarFacturaCreditoCliente() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13809,6 +14015,7 @@ public void reiniciarPeticiones() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13855,6 +14062,7 @@ public void reiniciarPeticionesCredito() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13901,6 +14109,7 @@ public void reiniciarPagoPeticionesCredito() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -13952,6 +14161,7 @@ public void reiniciarCajaChica() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14003,6 +14213,7 @@ public void reiniciarCuentaBancaria() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14065,6 +14276,7 @@ public void RecordarContrasena(String usuario)
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14136,6 +14348,7 @@ public void OlvidarContrasena(String usuario)
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14180,6 +14393,7 @@ public void reiniciarUsuarioRecordado() {
 		
 	} catch (Exception e2) {
 		e2.printStackTrace();
+		Controladora.getInstance().print_exception(e2);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14237,6 +14451,7 @@ public boolean activarUsuarioRecordado()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14339,6 +14554,7 @@ public boolean verificarUsuarioRecordado(String usuario, String contrasena)
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14437,6 +14653,7 @@ public String datosUsuarioRecordado()
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
+		Controladora.getInstance().print_exception(e);
 	}
 	
 	//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14498,6 +14715,7 @@ public String datosUsuarioRecordado()
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14570,6 +14788,7 @@ public String datosUsuarioRecordado()
 			
 		} catch (Exception e2) {
 			e2.printStackTrace();
+			Controladora.getInstance().print_exception(e2);
 		}
 		
 		//Bloque que se ejecuta obligatoriamente para cerrar todos los canales abiertos
@@ -14594,8 +14813,19 @@ public String datosUsuarioRecordado()
 		}
 	}
 	
+	public void print_exception(Exception exception) {
+		File file = new File("Error " + LocalDate.now() + " " + LocalTime.now().getHour() + "-" + LocalTime.now().getMinute() + "-" + LocalTime.now().getSecond() + ".txt");
+		PrintStream ps = null;
+		try {
+			ps = new PrintStream(file);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		exception.printStackTrace(ps);
+	}
 }
 
-
+	
 
 

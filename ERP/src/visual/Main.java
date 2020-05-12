@@ -1,8 +1,10 @@
 package visual;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -107,8 +109,7 @@ public class Main extends Application{
 		    ImageInput access1 = new ImageInput();
 		    access1.setSource(access);
 			button_acceder.setEffect(access1);*/
-		    
-		    
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -493,10 +494,7 @@ public class Main extends Application{
 			{
 				Alert alert = new Alert(AlertType.INFORMATION, "Usted no posee usuarios registrados. Favor de acceder al sistema con la siguiente información: \n\nUsuario: administrador \nContraseña: administrador");
 	    		alert.showAndWait();
-	    		//textfield_usuario.setText("administrador");
-	    		//passwordfield_login.setText("administrador");
 			}
-			//passwordfield_login.clear();
 		} 
 		
 		if(((passwordfield_login.getText().equalsIgnoreCase("administrador") && textfield_usuario.getText().equalsIgnoreCase("administrador")) && !Controladora.getInstance().activarLoadUsuarios()) ||
