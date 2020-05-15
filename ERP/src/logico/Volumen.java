@@ -25,7 +25,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 46656f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.30078125f;
 					break;
 				case "Cuchara de madera":
@@ -40,19 +40,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 28.875f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 57.75f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 115.5f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 231f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 9702f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000061f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.061023744f;
 					break;
 				case "Metros cb":
@@ -80,7 +83,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 27f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.000174063f;
 					break;
 				case "Cuchara de madera":
@@ -95,19 +98,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.016710069f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.033420139f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 0.066840278f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 0.133680556f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 5.614583333f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.00000035f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.000035f;
 					break;
 				case "Metros cb":
@@ -135,7 +141,7 @@ public class Volumen extends UnidadMedida {
 				case "Pies  Cb":
 					transformado = valorTransformar * 0.037037037f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.0000064f;
 					break;
 				case "Cuchara de madera":
@@ -150,19 +156,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.000618891f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.001237783f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 0.002475566f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 0.004951132f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 0.207947531f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.0000000013f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.0000013f;
 					break;
 				case "Metros cb":
@@ -177,11 +186,11 @@ public class Volumen extends UnidadMedida {
 			}
 		}
 
-		if(this.getNombre().equalsIgnoreCase("Cuchara de té"))
+		if(this.getNombre().equalsIgnoreCase("Cuchara de tï¿½"))
 		{
 			switch(comparador)
 			{
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas Cb":
@@ -205,19 +214,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 96f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 192f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 384f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 768f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 32256f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000202884f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.202884136f;
 					break;
 				case "Metros cb":
@@ -248,7 +260,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 51705.35065f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.333333333f;
 					break;
 				case "Onza fluida":
@@ -260,19 +272,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 32f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 64f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 128f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 256f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 10752f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000068f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.067628045f;
 					break;
 				case "Metros cb":
@@ -303,7 +318,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 25852.67532f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.166666667f;
 					break;
 				case "Cuchara de madera":
@@ -315,19 +330,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 16f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 32f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 64f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 128f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 5376f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000034f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.033814023f;
 					break;
 				case "Metros cb":
@@ -358,7 +376,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 3231.584416f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.020833333f;
 					break;
 				case "Cuchara de madera":
@@ -370,19 +388,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 2f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 4f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 8f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 16f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 672f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.0000042f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.004226753f;
 					break;
 				case "Metros cb":
@@ -413,7 +434,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 1615.792208f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.010416667f;
 					break;
 				case "Cuchara de madera":
@@ -425,19 +446,22 @@ public class Volumen extends UnidadMedida {
 				case "Taza":
 					transformado = valorTransformar * 0.5f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 2f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 4f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 8f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 336f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.0000021f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.002113376f;
 					break;
 				case "Metros cb":
@@ -452,11 +476,11 @@ public class Volumen extends UnidadMedida {
 			}
 		}
 
-		if(this.getNombre().equalsIgnoreCase("Cuarto de galón"))
+		if(this.getNombre().equalsIgnoreCase("Cuarto de galï¿½n"))
 		{
 			switch(comparador)
 			{
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas Cb":
@@ -468,7 +492,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 807.8961039f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.005208333f;
 					break;
 				case "Cuchara de madera":
@@ -483,16 +507,19 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.5f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 2f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 4f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 168f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.0000011f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.001056688f;
 					break;
 				case "Metros cb":
@@ -507,11 +534,11 @@ public class Volumen extends UnidadMedida {
 			}
 		}
 
-		if(this.getNombre().equalsIgnoreCase("Galón"))
+		if(this.getNombre().equalsIgnoreCase("Galï¿½n"))
 		{
 			switch(comparador)
 			{
-				case "Galón":
+				case "Galï¿½n":
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas Cb":
@@ -523,7 +550,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 201.974026f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.001302083f;
 					break;
 				case "Cuchara de madera":
@@ -538,16 +565,19 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.125f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.25f;
+					break;
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 0.50f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 42f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.00000026f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.000264172f;
 					break;
 				case "Metros cb":
@@ -578,7 +608,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 4.80890538f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.000031f;
 					break;
 				case "Cuchara de madera":
@@ -593,16 +623,19 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.00297619f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.005952381f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 0.011904762f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 0.023809524f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.0000000063f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.0000063f;
 					break;
 				case "Metros cb":
@@ -617,11 +650,11 @@ public class Volumen extends UnidadMedida {
 			}
 		}
 
-		if(this.getNombre().equalsIgnoreCase("Milímetros cb"))
+		if(this.getNombre().equalsIgnoreCase("Milï¿½metros cb"))
 		{
 			switch(comparador)
 			{
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas Cb":
@@ -633,7 +666,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 764554858f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 4928.921594f;
 					break;
 				case "Cuchara de madera":
@@ -648,16 +681,19 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 473176.473f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 946352.946f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 1892705.892f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 3785411.784f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 158987294.9f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 1000f;
 					break;
 				case "Metros cb":
@@ -672,11 +708,11 @@ public class Volumen extends UnidadMedida {
 			}
 		}
 
-		if(this.getNombre().equalsIgnoreCase("Centímetros cb"))
+		if(this.getNombre().equalsIgnoreCase("Centï¿½metros cb"))
 		{
 			switch(comparador)
 			{
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar;
 					break;
 				case "Pulgadas Cb":
@@ -688,7 +724,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 764554.858f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 4.928921594f;
 					break;
 				case "Cuchara de madera":
@@ -703,16 +739,19 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 473.176473f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 946.352946f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 1892.706f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 3785.411784f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 158987.2949f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.001f;
 					break;
 				case "Metros cb":
@@ -743,7 +782,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 0.764554858f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.0000049f;
 					break;
 				case "Cuchara de madera":
@@ -758,19 +797,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.000473176f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.000946353f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 0.001892706f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 0.003785412f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 0.158987295f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000000001f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.000001f;
 					break;
 				case "Mililitros":
@@ -798,7 +840,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 764554.858f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 4.928921594f;
 					break;
 				case "Cuchara de madera":
@@ -813,19 +855,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 473.176473f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 946.352946f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 1892.706f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 3785.411784f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 158987.2949f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.001f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 1f;
 					break;
 				case "Metros cb":
@@ -853,7 +898,7 @@ public class Volumen extends UnidadMedida {
 				case "Yardas Cb":
 					transformado = valorTransformar * 764.554858f;
 					break;
-				case "Cuchara de té":
+				case "Cuchara de tï¿½":
 					transformado = valorTransformar * 0.004928922f;
 					break;
 				case "Cuchara de madera":
@@ -868,19 +913,22 @@ public class Volumen extends UnidadMedida {
 				case "Medio litro":
 					transformado = valorTransformar * 0.473176473f;
 					break;
-				case "Cuarto de galón":
+				case "Cuarto de galï¿½n":
 					transformado = valorTransformar * 0.946352946f;
 					break;
-				case "Galón":
+				case "Medio galÃ³n":
+					transformado = valorTransformar * 1.892706f;
+					break;
+				case "Galï¿½n":
 					transformado = valorTransformar * 3.785411784f;
 					break;
 				case "Barril":
 					transformado = valorTransformar * 158.9872949f;
 					break;
-				case "Milímetros cb":
+				case "Milï¿½metros cb":
 					transformado = valorTransformar * 0.000001f;
 					break;
-				case "Centímetros cb":
+				case "Centï¿½metros cb":
 					transformado = valorTransformar * 0.001f;
 					break;
 				case "Metros cb":

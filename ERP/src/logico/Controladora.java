@@ -59,11 +59,12 @@ public class Controladora implements Serializable{
 	Volumen onzafluida = new Volumen("Volumen", "Onza fluida", "foz");
 	Volumen taza = new Volumen("Volumen", "Taza", "cp");
 	Volumen medioLitro = new Volumen("Volumen", "Medio litro", "L/2");
-	Volumen cuartogalon = new Volumen("Volumen", "Cuarto de gal�n", "gl/4");
-	Volumen galon = new Volumen("Volumen", "Gal�n", "gl");
+	Volumen cuartogalon = new Volumen("Volumen", "Cuarto de galón", "gl/4");
+	Volumen mediogalon = new Volumen("Volumen", "Medio galón", "gl/2");
+	Volumen galon = new Volumen("Volumen", "Galón", "gl");
 	Volumen barril = new Volumen("Volumen", "Barril", "brl");
-	Volumen milimetrocb = new Volumen("Volumen", "Mil�metros cb", "cmm");
-	Volumen centimetrocb = new Volumen("Volumen", "Cent�metros cb", "ccm");
+	Volumen milimetrocb = new Volumen("Volumen", "Milímetros cb", "cmm");
+	Volumen centimetrocb = new Volumen("Volumen", "Centímetros cb", "ccm");
 	Volumen metrocb = new Volumen("Volumen", "Metros cb", "cmt");
 	Volumen mililitros = new Volumen("Volumen", "Mililitros", "ml");
 	Volumen litros = new Volumen("Volumen", "Litros", "L");
@@ -77,7 +78,7 @@ public class Controladora implements Serializable{
 	Area sq_pies = new Area("Area", "Sq Pies", "sqft");
 	Area sq_yardas = new Area("Area", "Sq Yardas", "sqyd");
 	Area sq_milimetros = new Area("Area", "Sq Milimetros", "sqmm");
-	Area sq_centimetros = new Area("Area", "Sq Centimetros", "sqcm");
+	Area sq_centimetros = new Area("Area", "Sq Centímetros", "sqcm");
 	Area sq_metros = new Area("Area", "Sq Metros", "sqm");
 	ArrayList<Proveedores> provsec = new ArrayList<>();
 	Moneda dola = new Moneda(50, "dolar");
@@ -216,6 +217,7 @@ public class Controladora implements Serializable{
 		misUnidadMedida.add(taza);
 		misUnidadMedida.add(medioLitro);
 		misUnidadMedida.add(cuartogalon);
+		misUnidadMedida.add(mediogalon);
 		misUnidadMedida.add(galon);
 		misUnidadMedida.add(barril);
 		misUnidadMedida.add(milimetrocb);
