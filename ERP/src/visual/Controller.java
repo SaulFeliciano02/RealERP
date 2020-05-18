@@ -1851,7 +1851,7 @@ public class Controller implements Initializable{
     		
     		if(canModify) {
     			System.out.println("Voy a modificar este gasto");
-    			int indice = Controladora.getInstance().getMisGastosGenerales().indexOf(gasto);
+    			int indice = Controladora.getInstance().getGastoGeneralIndice(gasto);
     			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarGastoGeneral(indice+1);
     			listview_gastosG.getItems().clear();
@@ -1906,14 +1906,14 @@ public class Controller implements Initializable{
     		ArrayList<String> productosGastos = new ArrayList<>();
     		for(Producto p : Controladora.getInstance().getMisProductos()) {
     			for(CostoIndirectoProducto g : p.getCostosIndirectos()) {
-    				if(g.getNombre() == encontrado.getNombre()) {
+    				if(g.getNombre() == encontrado.getNombre() && !p.isBorrado()) {
     					canDelete = false;
     					productosGastos.add(p.getNombre());
     				}
     			}
     		}
     		if(canDelete) {
-    			int indice = Controladora.getInstance().getMisGastosGenerales().indexOf(encontrado);
+    			int indice = Controladora.getInstance().getGastoGeneralIndice(encontrado);
     			Controladora.getInstance().getMisGastosGenerales().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarGastoGeneral(indice+1);
     			listview_gastosG.getItems().clear();
@@ -2058,18 +2058,18 @@ public class Controller implements Initializable{
 
     	if (alert.getResult() == ButtonType.YES) {
     		if(producto!=null) {
-    			int indice = Controladora.getInstance().getMisProductos().indexOf(producto);
+    			int indice = Controladora.getInstance().getProductoIndice(producto);
     			Controladora.getInstance().getMisProductos().get(indice).setBorrado(true);
     			if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
-    				int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(producto);
+    				int indiceEstandar = Controladora.getInstance().getProductoEstandarIndice(producto);
     				Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setBorrado(true);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
-    				int indiceKit = Controladora.getInstance().getMisProductosKit().indexOf(producto);
+    				int indiceKit = Controladora.getInstance().getProductoKitIndice(producto);
     				Controladora.getInstance().getMisProductosKit().get(indiceKit).setBorrado(true);
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Servicio")) {
-    				int indiceServicio = Controladora.getInstance().getMisProductosServicio().indexOf(producto);
+    				int indiceServicio = Controladora.getInstance().getProductoServicioIndice(producto);
     				Controladora.getInstance().getMisProductosServicio().get(indiceServicio).setBorrado(true);
     			}
         		Controladora.getInstance().borrarProducto(indice+1);
@@ -2177,7 +2177,7 @@ public class Controller implements Initializable{
     				creditoAlert.show();
     			}
     			else {
-    				int indice = Controladora.getInstance().getMisClientes().indexOf(cliente);
+    				int indice = Controladora.getInstance().getClienteIndice(cliente);
     				Controladora.getInstance().getMisClientes().get(indice).setBorrado(true);
     				Controladora.getInstance().borrarCliente(indice+1);
     				fillClientList(null);
@@ -2246,7 +2246,7 @@ public class Controller implements Initializable{
     	
     	if (alert.getResult() == ButtonType.YES) {
     		if(proveedor!=null) {
-    			int indice = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+    			int indice = Controladora.getInstance().getProveedorIndice(proveedor);
     			Controladora.getInstance().getMisProveedores().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarProveedor(indice+1);
     			fillProveedorList(null, "");	
@@ -2318,7 +2318,7 @@ public class Controller implements Initializable{
     	}
     	else if (alert.getResult() == ButtonType.YES) {
     		if(empleado!=null) {
-    			int indice = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+    			int indice = Controladora.getInstance().getEmpleadoIndice(empleado);
     			Controladora.getInstance().getMisEmpleados().get(indice).setBorrado(true);
     			Controladora.getInstance().borrarEmpleado(indice+1);
     			fillEmpleadoList(null, "");	
@@ -2696,7 +2696,7 @@ public class Controller implements Initializable{
     				rubroTaken.show();
     			}
     			else {
-    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
+    				int indice = Controladora.getInstance().getRubroIndice(rubro);
     				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
     				Controladora.getInstance().borrarRubro(indice+1);
     				fillRubroList(null);
@@ -2719,7 +2719,7 @@ public class Controller implements Initializable{
     				atributoUsed.showAndWait();
     			}
     			else {
-    				int indice = Controladora.getInstance().getMisAtributos().indexOf(atributo);
+    				int indice = Controladora.getInstance().getAtributoIndice(atributo);
     				Controladora.getInstance().getMisAtributos().get(indice).setBorrado(true);
     				Controladora.getInstance().borrarAtributo(indice+1);
     				fillAtributesList(null);
@@ -2740,14 +2740,14 @@ public class Controller implements Initializable{
     			else {
     				for(Atributos a : Controladora.getInstance().getMisAtributos()) {
     					if(a.getGrupoAtributo().equals(grupoAtributo)) {
-    						int indiceAtributo = Controladora.getInstance().getMisAtributos().indexOf(a);
+    						int indiceAtributo = Controladora.getInstance().getAtributoIndice(a);
     						Controladora.getInstance().getMisAtributos().get(indiceAtributo).setBorrado(true);
     						Controladora.getInstance().borrarAtributo(indiceAtributo+1);
     					}
     				}
-    				int indice = Controladora.getInstance().getMisGrupoAtributo().indexOf(grupoAtributo);
+    				int indice = Controladora.getInstance().getGrupoAtributoIndice(grupoAtributo);
     				Controladora.getInstance().getMisGrupoAtributo().get(indice).setBorrado(true);
-    				//Controladora.getInstance().borrarGrupoAtributo(indice+1);
+    				Controladora.getInstance().borrarGrupoAtributo(indice+1);
     				fillAtributesList(null);
     			}
     		}
@@ -2869,7 +2869,7 @@ public class Controller implements Initializable{
             			salario = salario/8;
             		}
             		if(salario != categoria.getSueldo()) {
-            			int index = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoria);
+            			int index = Controladora.getInstance().getCategoriaEmpleadoIndice(categoria);
             			Controladora.getInstance().getMisCategoriasEmpleado().get(index).setBorrado(true);
             			Controladora.getInstance().borrarCategoriaEmpleado(index+1);
             		
@@ -2904,22 +2904,22 @@ public class Controller implements Initializable{
         			ArrayList<Servicio> productosServicio = Controladora.getInstance().getProductsServicioWithCategory(categoria);
         			ArrayList<Empleado> empleados = Controladora.getInstance().getEmpleadoWithCategory(categoria);
         			
-        			int indexCategoria = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(categoria);
+        			int indexCategoria = Controladora.getInstance().getCategoriaEmpleadoIndice(categoria);
         			
         			Controladora.getInstance().getMisCategoriasEmpleado().get(indexCategoria).setBorrado(true);
         			Controladora.getInstance().borrarCategoriaEmpleado(indexCategoria+1);
         		
         			Controladora.getInstance().addCategoriaEmpleado(cat);
-        			int indexNewCategoria = Controladora.getInstance().getMisCategoriasEmpleado().indexOf(cat);
+        			int indexNewCategoria = Controladora.getInstance().getCategoriaEmpleadoIndice(cat);
         			
         			for(Estandar estandar : productosEstandar) {
-        				int index = Controladora.getInstance().getMisProductos().indexOf(estandar);
+        				int index = Controladora.getInstance().getProductoIndice(estandar);
         				float costo = Controladora.getInstance().getMisProductos().get(index).getCosto();
     					float costoitbis = Controladora.getInstance().getMisProductos().get(index).getCostoitbis();
     					float precio = Controladora.getInstance().getMisProductos().get(index).getPrecio();
         				if(estandar.getTipoProducto().equalsIgnoreCase("Estandar")) {
         						
-        						int indexEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
+        						int indexEstandar = Controladora.getInstance().getProductoEstandarIndice(estandar);
         						
         						ManoDeObra mano = Controladora.getInstance().getMisProductosEstandar().get(indexEstandar).getInfoManoDeObra();
         						int indexManoObra = Controladora.getInstance().getMisManosDeObras().indexOf(mano);
@@ -2957,8 +2957,8 @@ public class Controller implements Initializable{
         						
         				}
         				else if(estandar.getTipoProducto().equalsIgnoreCase("Matriz")) {
-        					int indexMatrizEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar);
-    						int indexMatriz = Controladora.getInstance().getMisProductosMatriz().indexOf(estandar);
+        					int indexMatrizEstandar = Controladora.getInstance().getProductoEstandarIndice(estandar);
+    						int indexMatriz = Controladora.getInstance().getProductoMatrizIndice(estandar);
     						
     						
     						ManoDeObra mano = Controladora.getInstance().getMisProductosMatriz().get(indexMatriz).getInfoManoDeObra();
@@ -2992,8 +2992,8 @@ public class Controller implements Initializable{
         				}
         			}
         			for(Servicio servicio : productosServicio) {
-        				int index = Controladora.getInstance().getMisProductos().indexOf(servicio);
-    					int indexServicio = Controladora.getInstance().getMisProductosServicio().indexOf(servicio);
+        				int index = Controladora.getInstance().getProductoIndice(servicio);
+    					int indexServicio = Controladora.getInstance().getProductoServicioIndice(servicio);
     					
     					float costo = Controladora.getInstance().getMisProductos().get(index).getCosto();
     					float costoitbis = Controladora.getInstance().getMisProductos().get(index).getCostoitbis();
@@ -3032,7 +3032,7 @@ public class Controller implements Initializable{
         			}
         			
         			for(Empleado empleado : empleados) {
-        				int indexEmpleado = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+        				int indexEmpleado = Controladora.getInstance().getEmpleadoIndice(empleado);
         				Controladora.getInstance().getMisEmpleados().get(indexEmpleado).setCategoria(cat);
         				Controladora.getInstance().getMisEmpleados().get(indexEmpleado).setSueldo(cat.getSueldo());
         				Controladora.getInstance().editarSueldoCategoriaEmpleado(indexEmpleado+1, indexNewCategoria+1, Controladora.getInstance().getMisEmpleados().get(indexEmpleado).getSueldo());
@@ -3338,7 +3338,7 @@ public class Controller implements Initializable{
     				Controladora.getInstance().modificarEstadoPeticion("Aceptada", metodoPago, peticionModificar.getCodigo());
     				
     				Proveedores proveedor = peticionModificar.getProveedor();
-    				int indiceProveedor = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+    				int indiceProveedor = Controladora.getInstance().getProveedorIndice(proveedor);
     				Controladora.getInstance().getMisProveedores().get(indiceProveedor).setSaldo(
     						Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo() + peticionModificar.getMonto());
     				Controladora.getInstance().modificarProveedorSaldo(Controladora.getInstance().getMisProveedores().get(indiceProveedor).getSaldo(), indiceProveedor+1);
@@ -3367,7 +3367,7 @@ public class Controller implements Initializable{
 				if(producto.getTipoProducto().equalsIgnoreCase("Estandar") || producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
 					System.out.println("Estoy dentro de un producto estandar");
 					Estandar productoSumaEstandar = (Estandar) producto;
-					int indiceProductoEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoSumaEstandar);
+					int indiceProductoEstandar = Controladora.getInstance().getProductoEstandarIndice(productoSumaEstandar);
 					Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).setExistenciaActual(
 							Controladora.getInstance().getMisProductosEstandar().get(indiceProductoEstandar).getExistenciaActual() + spinner_peticionCantidad.getValue());
 					Controladora.getInstance().sumarExistenciaActual(
@@ -3375,7 +3375,7 @@ public class Controller implements Initializable{
 				}
 				else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
 					Kit productoSumakit = (Kit) producto;
-					int indiceProductoKit = Controladora.getInstance().getMisProductosKit().indexOf(productoSumakit);
+					int indiceProductoKit = Controladora.getInstance().getProductoKitIndice(productoSumakit);
 					Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).setExistenciaActual(
 						Controladora.getInstance().getMisProductosKit().get(indiceProductoKit).getExistenciaActual() + spinner_peticionCantidad.getValue());
 					Controladora.getInstance().sumarExistenciaActualKit(
@@ -5173,7 +5173,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el empleado...");
-					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			int index = Controladora.getInstance().getEmpleadoIndice(empleado);
 					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarEmpleado(index+1);
 							
@@ -5217,7 +5217,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el empleado...");
-					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			int index = Controladora.getInstance().getEmpleadoIndice(empleado);
 					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarEmpleado(index+1);
 							
@@ -5260,7 +5260,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el empleado...");
-					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			int index = Controladora.getInstance().getEmpleadoIndice(empleado);
 					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarEmpleado(index+1);
 							
@@ -5303,7 +5303,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el empleado...");
-					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			int index = Controladora.getInstance().getEmpleadoIndice(empleado);
 					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarEmpleado(index+1);
 							
@@ -5352,7 +5352,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el empleado...");
-					    			int index = Controladora.getInstance().getMisEmpleados().indexOf(empleado);
+					    			int index = Controladora.getInstance().getEmpleadoIndice(empleado);
 					    			Controladora.getInstance().getMisEmpleados().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarEmpleado(index+1);
 							
@@ -5397,7 +5397,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el rubro...");
-					    			int index = Controladora.getInstance().getMisRubros().indexOf(rubro);
+					    			int index = Controladora.getInstance().getRubroIndice(rubro);
 					    			Controladora.getInstance().getMisRubros().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarRubro(index+1);
 							
@@ -5446,7 +5446,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el cliente...");
-					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			int index = Controladora.getInstance().getClienteIndice(cliente);
 					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarCliente(index+1);
 							
@@ -5488,7 +5488,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el cliente...");
-					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			int index = Controladora.getInstance().getClienteIndice(cliente);
 					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarCliente(index+1);
 							
@@ -5536,7 +5536,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el cliente...");
-					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			int index = Controladora.getInstance().getClienteIndice(cliente);
 					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarCliente(index+1);
 							
@@ -5583,7 +5583,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el cliente...");
-					    			int index = Controladora.getInstance().getMisClientes().indexOf(cliente);
+					    			int index = Controladora.getInstance().getClienteIndice(cliente);
 					    			Controladora.getInstance().getMisClientes().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarCliente(index+1);
 							
@@ -5624,11 +5624,11 @@ public class Controller implements Initializable{
 								fillProveedorList(null, "");
 							}
 							else {
-								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este proveedor?", ButtonType.YES, ButtonType.NO);
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			
@@ -5672,11 +5672,11 @@ public class Controller implements Initializable{
 								fillProveedorList(null, "");
 							}
 							else {
-								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este proveedor?", ButtonType.YES, ButtonType.NO);
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			
@@ -5714,11 +5714,11 @@ public class Controller implements Initializable{
 								fillProveedorList(null, "");
 							}
 							else {
-								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este proveedor?", ButtonType.YES, ButtonType.NO);
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			
@@ -5760,7 +5760,7 @@ public class Controller implements Initializable{
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			
@@ -5798,11 +5798,11 @@ public class Controller implements Initializable{
 								fillProveedorList(null, "");
 							}
 							else {
-								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este proveedor?", ButtonType.YES, ButtonType.NO);
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			
@@ -5840,11 +5840,11 @@ public class Controller implements Initializable{
 								fillProveedorList(null, "");
 							}
 							else {
-								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este cliente?", ButtonType.YES, ButtonType.NO);
+								Alert alert = new Alert(AlertType.CONFIRMATION, "Desea modificar este proveedor?", ButtonType.YES, ButtonType.NO);
 					    		alert.showAndWait();
 					    		if(alert.getResult() == ButtonType.YES) {
 					    			System.out.println("Cambie el proveedor...");
-					    			int index = Controladora.getInstance().getMisProveedores().indexOf(proveedor);
+					    			int index = Controladora.getInstance().getProveedorIndice(proveedor);
 					    			Controladora.getInstance().getMisProveedores().get(index).setBorrado(true);
 					    			Controladora.getInstance().borrarProveedor(index+1);
 					    			

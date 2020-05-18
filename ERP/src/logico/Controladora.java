@@ -4254,15 +4254,15 @@ public class Controladora implements Serializable{
 		
 		while(i < misGastosGenerales.size() || encontrado == null)
 		{
-			if(getMisGastosGenerales().get(i).getNombre().equals(g))
+			if(getMisGastosGenerales().get(i).getNombre().equals(g) && !getMisGastosGenerales().get(i).isBorrado()) 
 			{
-				encontrado = getMisGastosGenerales().get(i);
+				return encontrado;
 			}
 			
 			i++;
 		}
 		
-		return encontrado;
+		return null;
 	}
 	
 	public Producto buscarProducto(String p)
@@ -4317,6 +4317,16 @@ public class Controladora implements Serializable{
 		return -1;
 	}
 	
+	public int getProductoMatrizIndice(Producto producto) {
+		for(int i = 0; i < Controladora.getInstance().getMisProductosMatriz().size(); i++) {
+			Producto p = Controladora.getInstance().getMisProductosMatriz().get(i);
+			if(p.getCodigo().equalsIgnoreCase(producto.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public int getProductoServicioIndice(Producto producto) {
 		for(int i = 0; i < Controladora.getInstance().getMisProductosServicio().size(); i++) {
 			Producto p = Controladora.getInstance().getMisProductosServicio().get(i);
@@ -4344,6 +4354,126 @@ public class Controladora implements Serializable{
 		}
 		
 		return encontrado;
+	}
+	
+	public int getClienteIndice(Cliente cliente) {
+		for(int i = 0; i < Controladora.getInstance().getMisClientes().size(); i++) {
+			Cliente c = Controladora.getInstance().getMisClientes().get(i);
+			if(c.getCodigo().equalsIgnoreCase(cliente.getCodigo()) && !c.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getProveedorIndice(Proveedores proveedor) {
+		for(int i = 0; i < Controladora.getInstance().getMisProveedores().size(); i++) {
+			Proveedores p = Controladora.getInstance().getMisProveedores().get(i);
+			if(p.getCodigo().equalsIgnoreCase(proveedor.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getEmpleadoIndice(Empleado empleado) {
+		for(int i = 0; i < Controladora.getInstance().getMisEmpleados().size(); i++) {
+			Empleado e = Controladora.getInstance().getMisEmpleados().get(i);
+			if(e.getCodigo().equalsIgnoreCase(empleado.getCodigo()) && !e.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getPromocionIndice(Promocion promocion) {
+		/**for(int i = 0; i < Controladora.getInstance().getMisPromociones().size(); i++) {
+			Promocion p = Controladora.getInstance().getMisPromociones().get(i);
+			if(p.getCodigo().equalsIgnoreCase(promocion.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}**/
+		return -1;
+	}
+	
+	public int getRubroIndice(Rubro rubro) {
+		for(int i = 0; i < Controladora.getInstance().getMisRubros().size(); i++) {
+			Rubro r = Controladora.getInstance().getMisRubros().get(i);
+			if(r.getCodigo().equalsIgnoreCase(rubro.getCodigo()) && !r.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getAtributoIndice(Atributos atributo) {
+		for(int i = 0; i < Controladora.getInstance().getMisAtributos().size(); i++) {
+			Atributos a = Controladora.getInstance().getMisAtributos().get(i);
+			if(a.getNombre().equalsIgnoreCase(atributo.getNombre()) && !a.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getGrupoAtributoIndice(GrupoAtributo grupoAtributo) {
+		for(int i = 0; i < Controladora.getInstance().getMisGrupoAtributo().size(); i++) {
+			GrupoAtributo g = Controladora.getInstance().getMisGrupoAtributo().get(i);
+			if(g.getNombre().equalsIgnoreCase(grupoAtributo.getNombre()) && !g.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getCategoriaEmpleadoIndice(CategoriaEmpleado categoriaEmpleado) {
+		for(int i = 0; i < Controladora.getInstance().getMisCategoriasEmpleado().size(); i++) {
+			CategoriaEmpleado c = Controladora.getInstance().getMisCategoriasEmpleado().get(i);
+			if(c.getNombre().equalsIgnoreCase(categoriaEmpleado.getNombre()) && !c.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getManoDeObraIndice(ManoDeObra manoDeObra) {
+		/**for(int i = 0; i < Controladora.getInstance().getMisManosDeObras().size(); i++) {
+			ManoDeObra m = Controladora.getInstance().getMisManosDeObras().get(i);
+			if(c.getNombre().equalsIgnoreCase(categoriaEmpleado.getNombre()) && !c.isBorrado()) {
+				return i;
+			}
+		}**/
+		return -1;
+	}
+	
+	public int getPeticionIndice(Peticion peticion) {
+		/**for(int i = 0; i < Controladora.getInstance().getMisPeticiones().size(); i++) {
+			Peticion p = Controladora.getInstance().getMisPeticiones().get(i);
+			if(p.getCodigo().equalsIgnoreCase(peticion.getCodigo()) && !p.isBorrado()) {
+				return i;
+			}
+		}**/
+		return -1;
+	}
+	
+	public int getGastoGeneralIndice(GastoGeneral gastoGeneral) {
+		for(int i = 0; i < Controladora.getInstance().getMisGastosGenerales().size(); i++) {
+			GastoGeneral g = Controladora.getInstance().getMisGastosGenerales().get(i);
+			if(g.getNombre().equalsIgnoreCase(gastoGeneral.getNombre()) && !g.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getCombinacionesIndice(Combinaciones combinacion) {
+		for(int i = 0; i < Controladora.getInstance().getMisCombinaciones().size(); i++) {
+			Combinaciones c = Controladora.getInstance().getMisCombinaciones().get(i);
+			if(c.getNumeroSerie().equalsIgnoreCase(combinacion.getNumeroSerie()) && !c.isBorrado()) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	public boolean isRubroInProduct(Rubro rubro) {
@@ -4450,7 +4580,7 @@ public class Controladora implements Serializable{
 		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
 			for(Combinaciones combinacion : estandar.getCombinaciones()) {
 				for(Atributos a : combinacion.getListaAtributos()) {
-					if(a.getNombre().equalsIgnoreCase(atributo)) {
+					if(a.getNombre().equalsIgnoreCase(atributo) && !estandar.isBorrado()) {
 						return true;
 					}
 				}
@@ -4464,7 +4594,7 @@ public class Controladora implements Serializable{
 		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
 			for(Combinaciones combinacion : estandar.getCombinaciones()) {
 				for(Atributos a : combinacion.getListaAtributos()) {
-					if(a.getGrupoAtributo().getNombre().equalsIgnoreCase(familia)) {
+					if(a.getGrupoAtributo().getNombre().equalsIgnoreCase(familia) && !estandar.isBorrado()) {
 						return true;
 					}
 				}
@@ -4484,7 +4614,7 @@ public class Controladora implements Serializable{
 	
 	public boolean empleadoRNCExists(Empleado empleado) {
 		for(Empleado e : Controladora.getInstance().getMisEmpleados()) {
-			if(e.getRnc().equals(empleado.getRnc())) {
+			if(e.getRnc().equals(empleado.getRnc()) && !e.isBorrado()) {
 				return true;
 			}
 		}
@@ -4502,7 +4632,7 @@ public class Controladora implements Serializable{
 	
 	public boolean clienteCodigoExists(Cliente cliente) {
 		for(Cliente c : Controladora.getInstance().getMisClientes()) {
-			if(c.getCodigo().equalsIgnoreCase(cliente.getCodigo())) {
+			if(c.getCodigo().equalsIgnoreCase(cliente.getCodigo()) && !c.isBorrado()) {
 				return true;
 			}
 		}
@@ -4511,7 +4641,7 @@ public class Controladora implements Serializable{
 	
 	public boolean clienteRNCExists(Cliente cliente) {
 		for(Cliente c : Controladora.getInstance().getMisClientes()) {
-			if(c.getRnc().equalsIgnoreCase(cliente.getRnc())) {
+			if(c.getRnc().equalsIgnoreCase(cliente.getRnc()) && !c.isBorrado()) {
 				return true;
 			}
 		}
@@ -4520,7 +4650,7 @@ public class Controladora implements Serializable{
 	
 	public boolean isProveedorInProducto(Proveedores proveedor) {
 		for(Producto producto : Controladora.getInstance().getMisProductos()) {
-			if(producto.getProveedorPrinClass().equals(proveedor)) {
+			if(producto.getProveedorPrinClass().equals(proveedor) && !producto.isBorrado()) {
 				return true;
 			}
 		}
@@ -4529,7 +4659,7 @@ public class Controladora implements Serializable{
 	
 	public boolean proveedorRNCExists(Proveedores proveedor) {
 		for(Proveedores p : Controladora.getInstance().getMisProveedores()) {
-			if(p.getRnc().equalsIgnoreCase(proveedor.getRnc())) {
+			if(p.getRnc().equalsIgnoreCase(proveedor.getRnc()) && !p.isBorrado()) {
 				return true;
 			}
 		}
@@ -4538,17 +4668,17 @@ public class Controladora implements Serializable{
 	
 	public boolean isCategoriaInProducto(CategoriaEmpleado categoria) {
 		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
-			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria) && !estandar.isBorrado()) {
 				return true;
 			}
 		}
 		for(Estandar matriz : Controladora.getInstance().getMisProductosMatriz()) {
-			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria) && !matriz.isBorrado()) {
 				return true;
 			}
 		}
 		for(Servicio servicio : Controladora.getInstance().getMisProductosServicio()) {
-			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria) && !servicio.isBorrado()) {
 				return true;
 			}
 		}
@@ -4558,12 +4688,12 @@ public class Controladora implements Serializable{
 	public ArrayList<Estandar> getProductsEstandarWithCategory(CategoriaEmpleado categoria){
 		ArrayList<Estandar> productosEstandar = new ArrayList<>();
 		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
-			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(estandar.getInfoManoDeObra().getCategoria().equals(categoria) && !estandar.isBorrado()) {
 				productosEstandar.add(estandar);
 			}
 		}
 		for(Estandar matriz : Controladora.getInstance().getMisProductosMatriz()) {
-			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(matriz.getInfoManoDeObra().getCategoria().equals(categoria) && !matriz.isBorrado()) {
 				productosEstandar.add(matriz);
 			}
 		}
@@ -4573,7 +4703,7 @@ public class Controladora implements Serializable{
 	public ArrayList<Servicio> getProductsServicioWithCategory(CategoriaEmpleado categoria){
 		ArrayList<Servicio> productosServicio = new ArrayList<>();
 		for(Servicio servicio : Controladora.getInstance().getMisProductosServicio()) {
-			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria)) {
+			if(servicio.getInfoManoDeObra().getCategoria().equals(categoria) && !servicio.isBorrado()) {
 				productosServicio.add(servicio);
 			}
 		}
@@ -4582,7 +4712,7 @@ public class Controladora implements Serializable{
 	
 	public boolean isCategoryInEmpleado(CategoriaEmpleado categoria) {
 		for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
-			if(empleado.getCategoria().equals(categoria)) {
+			if(empleado.getCategoria().equals(categoria) && !empleado.isBorrado()) {
 				return true;
 			}
 		}
@@ -4592,7 +4722,7 @@ public class Controladora implements Serializable{
 	public ArrayList<Empleado> getEmpleadoWithCategory(CategoriaEmpleado categoria){
 		ArrayList<Empleado> empleados = new ArrayList<>();
 		for(Empleado empleado : Controladora.getInstance().getMisEmpleados()) {
-			if(empleado.getCategoria().equals(categoria)) {
+			if(empleado.getCategoria().equals(categoria) && !empleado.isBorrado()) {
 				empleados.add(empleado);
 			}
 		}
@@ -4602,7 +4732,7 @@ public class Controladora implements Serializable{
 	public boolean validarNumeroSerie(String numeroSerie) {
 		for(Estandar estandar : Controladora.getInstance().getMisProductosEstandar()) {
 			for(Combinaciones c : estandar.getCombinaciones()) {
-				if(c.getNumeroSerie().equalsIgnoreCase(numeroSerie)) {
+				if(c.getNumeroSerie().equalsIgnoreCase(numeroSerie) && !estandar.isBorrado()) {
 					return false;
 				}
 			}
@@ -14834,13 +14964,21 @@ public String datosUsuarioRecordado()
 	}
 	
 	public void print_exception(Exception exception) {
-		File file = new File("Error " + LocalDate.now() + " " + LocalTime.now().getHour() + "-" + LocalTime.now().getMinute() + "-" + LocalTime.now().getSecond() + ".txt");
+		String error = "Error " + LocalDate.now() + " " + LocalTime.now().getHour() + "-" + LocalTime.now().getMinute() + "-" + LocalTime.now().getSecond() + ".txt";
+		String fileName = "C:\\Users\\" + "\\" + System.getProperty("user.name") + "\\ERP Logs";
+		File file = new File(fileName);
+		file.mkdirs();
+		File printFile = new File(fileName, error);
 		PrintStream ps = null;
 		try {
-			ps = new PrintStream(file);
+			ps = new PrintStream(printFile);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			printFile = new File(error);
 			e1.printStackTrace();
+			try {		
+				ps = new PrintStream(file);
+			} catch (FileNotFoundException e) {
+			}
 		}
 		exception.printStackTrace(ps);
 	}

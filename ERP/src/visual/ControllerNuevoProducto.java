@@ -645,7 +645,7 @@ public class ControllerNuevoProducto implements Initializable {
         	    				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
         	    				partida.agregarProductoUtilizado(c);
         	    				
-        	    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+        	    				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(productoPart)+1;
         	    				for(String itemOriginal : listview_partida.getItems()) {
         							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
         							if(itemOriginalName.equalsIgnoreCase(nombreSelect)) {
@@ -653,7 +653,7 @@ public class ControllerNuevoProducto implements Initializable {
         								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadSelect)*Float.parseFloat(existenciaActual));
         								System.out.println("La cantidad que se esta sumando es: "  + cantidadSumar);
         								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
-        								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart);
+        								int indiceEstandar = Controladora.getInstance().getProductoEstandarIndice(productoPart);
         								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
         							}
         						}
@@ -788,14 +788,14 @@ public class ControllerNuevoProducto implements Initializable {
                 						productsForKit.add(c);
                 						
                 						//float cantidadSumar = 
-                						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+                						int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(p)+1;
                 						for(String itemOriginal : listview_partida.getItems()) {
                 							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
                 							if(itemOriginalName.equalsIgnoreCase(nombreItem)) {
                 								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
                 								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidad)*Float.parseFloat(existenciaActual));
                 								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
-                								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(p);
+                								int indiceEstandar = Controladora.getInstance().getProductoEstandarIndice(p);
                 								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
                 							}
                 						}
@@ -888,7 +888,7 @@ public class ControllerNuevoProducto implements Initializable {
                 							productsForServicio.add(c);
                 					
                 							
-                							int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+                							int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(p)+1;
                 							
                 							for(String itemOriginal : listview_partida.getItems()) {
                     							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
@@ -896,7 +896,7 @@ public class ControllerNuevoProducto implements Initializable {
                     								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
                     								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadItem));
                     								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
-                    								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(p);
+                    								int indiceEstandar = Controladora.getInstance().getProductoEstandarIndice(p);
                     								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
                     							}
                     						}
@@ -1024,7 +1024,7 @@ public class ControllerNuevoProducto implements Initializable {
                 				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
                 				partida.agregarProductoUtilizado(c);
                 				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * existenciaActual));
-                				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+                				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(productoPart)+1;
                 				
                 				for(String itemOriginal : listview_partida.getItems()) {
         							String itemOriginalName = Controladora.getInstance().findPartidaNombre(itemOriginal);
@@ -1032,7 +1032,7 @@ public class ControllerNuevoProducto implements Initializable {
         								float itemOriginalCantidad = Float.parseFloat(Controladora.getInstance().findPartidaCantidad(itemOriginal));
         								float cantidadSumar = (itemOriginalCantidad + Float.parseFloat(cantidadSelect)*existenciaActual);
         								Controladora.getInstance().sumarExistenciaActual(cantidadSumar, indiceProducto);
-        								int indiceEstandar = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart);
+        								int indiceEstandar = Controladora.getInstance().getProductoEstandarIndice(productoPart);
         								Controladora.getInstance().getMisProductosEstandar().get(indiceEstandar).setExistenciaActual(cantidadSumar);
         							}
         						}
@@ -1190,7 +1190,7 @@ public class ControllerNuevoProducto implements Initializable {
             				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
             				partida.agregarProductoUtilizado(c);
             				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * Float.parseFloat(existenciaActual)));
-            				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+            				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(productoPart)+1;
             				
             				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
             			}
@@ -1295,7 +1295,7 @@ public class ControllerNuevoProducto implements Initializable {
             						Controladora.getInstance().guardarCantProductosUtilizadosSQL(p, c);
             						productsForKit.add(c);
             						float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidad) * Float.parseFloat(existenciaActual)));
-            						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+            						int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(p)+1;
                 				
             						Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
             					}
@@ -1360,7 +1360,7 @@ public class ControllerNuevoProducto implements Initializable {
             						productsForServicio.add(c);
             					
             						float cantidadRestar = (p.getExistenciaActual() - (Float.parseFloat(cantidadItem)));
-            						int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(p)+1;
+            						int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(p)+1;
                 				
             						Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
 
@@ -1477,7 +1477,7 @@ public class ControllerNuevoProducto implements Initializable {
             				Controladora.getInstance().guardarCantProductosUtilizadosSQL(productoPart, c);
             				partida.agregarProductoUtilizado(c);
             				float cantidadRestar = (productoPart.getExistenciaActual() - (Float.parseFloat(cantidadSelect) * existenciaActual));
-            				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(productoPart)+1;
+            				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(productoPart)+1;
             				
             				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
             			}
@@ -2866,7 +2866,7 @@ public class ControllerNuevoProducto implements Initializable {
     				rubroTaken.show();
     			}
     			else {
-    				int indice = Controladora.getInstance().getMisRubros().indexOf(rubro);
+    				int indice = Controladora.getInstance().getRubroIndice(rubro);
     				Controladora.getInstance().getMisRubros().get(indice).setBorrado(true);
     				Controladora.getInstance().borrarRubro(indice+1);
     				fillRubroList(null);
