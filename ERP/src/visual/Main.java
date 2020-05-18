@@ -1,5 +1,6 @@
 package visual;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -92,6 +93,10 @@ public class Main extends Application{
 		    primaryStage.setResizable(false);
 		    primaryStage.sizeToScene();
 		    primaryStage.show();
+		    
+		    String fileName = "C:\\Users\\" + "\\" + System.getProperty("user.name") + "\\ERP Logs";
+			File file = new File(fileName);
+			file.mkdirs();
 		    
 		    if(Controladora.getInstance().activarLoadUsuarios()) {
 		    	Controladora.getInstance().loadEmpleados();
