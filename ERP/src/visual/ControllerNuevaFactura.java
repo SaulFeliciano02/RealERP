@@ -491,7 +491,7 @@ public class ControllerNuevaFactura implements Initializable{
     			
     			if(producto.getTipoProducto().equalsIgnoreCase("Estandar")) {
     				Estandar estandar = (Estandar) producto;
-    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(estandar)+1;
+    				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(estandar)+1;
     				float cantidadRestar = estandar.getExistenciaActual() - cantidad;
     				
     				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
@@ -499,7 +499,7 @@ public class ControllerNuevaFactura implements Initializable{
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Matriz")) {
     				Estandar matriz = (Estandar) producto;
-    				int indiceProducto = Controladora.getInstance().getMisProductosEstandar().indexOf(matriz)+1;
+    				int indiceProducto = Controladora.getInstance().getProductoEstandarIndice(matriz)+1;
     				System.out.println("El indice del producto tipo matriz es: " + indiceProducto);
     				float cantidadRestar = matriz.getExistenciaActual() - cantidad;
     				Controladora.getInstance().restarExistenciaActual(cantidadRestar, indiceProducto);
@@ -507,7 +507,7 @@ public class ControllerNuevaFactura implements Initializable{
     				for(Combinaciones c : Controladora.getInstance().getMisProductosEstandar().get(indiceProducto-1).getCombinaciones()) {
     					if(c.getNumeroSerie().equalsIgnoreCase(Controladora.getInstance().findFacturaNumeroSerie(items))) {
     						System.out.println("Estoy en la combinacion con la serie: " + c.getNumeroSerie());
-    						int indiceCombinacion = Controladora.getInstance().getMisCombinaciones().indexOf(c)+1;	
+    						int indiceCombinacion = Controladora.getInstance().getCombinacionesIndice(c)+1;	
     						Controladora.getInstance().restarExistenciaActualMatriz(c.getExistenciaActual()-cantidad, indiceCombinacion);
     						System.out.println("La existencia actual de este producto antes de es: " + c.getExistenciaActual());
     						c.setExistenciaActual(c.getExistenciaActual()-cantidad);
@@ -518,7 +518,7 @@ public class ControllerNuevaFactura implements Initializable{
     			}
     			else if(producto.getTipoProducto().equalsIgnoreCase("Kit")) {
     				Kit kit = (Kit) producto;
-    				int indiceProducto = Controladora.getInstance().getMisProductosKit().indexOf(kit)+1;
+    				int indiceProducto = Controladora.getInstance().getProductoKitIndice(kit)+1;
     				float cantidadRestar = kit.getExistenciaActual() - cantidad;
     				Controladora.getInstance().restarExistenciaActualKit(cantidadRestar, indiceProducto);
     				Controladora.getInstance().getMisProductosKit().get(indiceProducto-1).setExistenciaActual(cantidadRestar);
