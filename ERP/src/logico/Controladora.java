@@ -14966,8 +14966,8 @@ public String datosUsuarioRecordado()
 	public void print_exception(Exception exception) {
 		String error = "Error " + LocalDate.now() + " " + LocalTime.now().getHour() + "-" + LocalTime.now().getMinute() + "-" + LocalTime.now().getSecond() + ".txt";
 		String fileName = "C:\\Users\\" + "\\" + System.getProperty("user.name") + "\\ERP Logs";
-		File file = new File(fileName);
-		file.mkdirs();
+		//File file = new File(fileName);
+		//file.mkdirs();
 		File printFile = new File(fileName, error);
 		PrintStream ps = null;
 		try {
@@ -14976,7 +14976,7 @@ public String datosUsuarioRecordado()
 			printFile = new File(error);
 			e1.printStackTrace();
 			try {		
-				ps = new PrintStream(file);
+				ps = new PrintStream(printFile);
 			} catch (FileNotFoundException e) {
 			}
 		}
